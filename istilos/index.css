@@ -1,0 +1,130 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  color: #080808;
+}
+
+/* encabezado */
+.cabeza {
+  background-image: url(../imagenes_logos/fondo\ de\ pagian.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  height: 300px;
+  border-radius: 0 0 20% 20%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.title {
+  font-size: 40px;
+  color: azure;
+  padding-top: 5%;
+  padding-left: 40px;
+}
+b {
+  color: red;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.menu {
+  display: flex;
+  flex-direction: row;
+  padding-left: 50%;
+  padding-top: 5%;
+  padding-right: 80px;
+}
+ul {
+  list-style-type: none;
+}
+a {
+  color: #fff;
+  text-decoration: none;
+  text-align: center;
+  padding-right: 20px;
+}
+a:hover {
+  color: red;
+}
+.menu__lista {
+  display: inline-block;
+  font-size: 25px;
+  border-right: 2px solid #fff;
+  margin: 10px;
+  padding: 5px;
+}
+
+/* cuerpo de la pagian */
+.cuerpo {
+  width: 1000px;
+  margin: auto;
+  padding-top: 150px;
+  padding-bottom: 150px;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+}
+.cuerpo__informacion-content {
+  width: 600px;
+  padding-right: 30px;
+}
+.cuerpo__informacion-content-titulo {
+  font-size: 40px;
+  padding-top: 30px;
+}
+samp {
+  color: aqua;
+}
+.cuerpo__informacion-content-titulo-parrafo {
+  text-align: justify;
+  font-size: 20px;
+  padding-left: 20px;
+}
+.cuerpo__informacion-content-fotos {
+  padding: 10px;
+}
+
+/* inicio de sesion */
+.inicia_seccion {
+  background-image: url(../imagenes_logos/fondo\ de\ pagian.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  height: 50vh;
+  display: flex;
+  flex-direction: row;
+  padding-left: 250px;
+}
+form {
+  display: flex;
+}
+.Formulario {
+  display: flex;
+  width: 80vh;
+  text-align: center;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.Formulario__titulo {
+  color: #fff;
+  font-size: 50px;
+  text-align: center;
+}
+.Formulario__titulo-input {
+  width: 300px;
+  height: 40px;
+  border-radius: 20px;
+}
+.Formulario__titulo-input-opcion {
+  width: 300px;
+  height: 40px;
+  border-radius: 20px;
+}
+.Formulario__boton {
+  width: 50px;
+}
+.imagen__mapa {
+  width: 450px;
+  padding: 10px;
+  border-radius: 30px;
+}
