@@ -1,0 +1,165 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    color: #080808;
+  }
+  
+  /* Encabezado */
+  .cabeza {
+    background-image: url(../imagenes_logos/fondo\ de\ pagian.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 20vh;
+    border-radius: 0 0 20% 20%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .title {
+    font-size: 5vw;
+    color: azure;
+    padding-left: 5%;
+  }
+  b{
+    color: red;
+  }
+  .menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 2%;
+  }
+  ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+  }
+  .menu__lista {
+    margin: 0 20px;
+    font-size: 4vw;
+    border-right: 2px solid #fff;
+    padding-right: 20px;
+  }
+  .menu__lista:last-child {
+    border-right: none; 
+  }
+  a {
+    color: #fff; 
+    text-decoration: none;
+    text-align: center;
+  }
+  a:hover {
+    color: red;
+  }
+  /* centro de la pagina */
+  .contenido{
+    display: flex;
+    flex-direction: row;
+    width: 1000px;
+    padding-left: 30vh;
+    padding-top: 20vh;
+    padding-bottom: 20vh;
+  }
+  .contenido-texto{
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    text-align: justify;
+  }
+  .contenido__titulo{
+    font-size: 30px;
+    text-align: center;
+    padding-bottom: 50px;
+  }
+  .caracteristicas{
+    font-size: 20px;
+  }
+  .Amenidades{
+    font-size: 20px;
+  }
+  p{
+    padding-bottom: 15px;
+  }
+  .contenido__imagenes{
+    display: flex;
+    flex-direction: column;
+  }
+  .contenido__imagenes-1{
+    width: 400px;
+    padding-left: 20px;
+    padding-bottom: 30px;
+  }
+  .contenido__imagenes-2{
+    width: 400px;
+    padding-left: 20px;
+  }
+/* Pie de página */
+.pie {
+    background-color: #454d53;
+    padding: 40px 20px;
+    color: #fff;
+  }
+  .pie__titulo {
+    text-align: center;
+    font-size: 24px;
+    color: #fff;
+    margin-bottom: 30px;
+  }
+  .flex {
+    display: flex;
+    justify-content: space-around;
+    align-items: center; 
+  }
+  .pie__titulo-img {
+    width: 250px;
+    border-radius: 20px;
+    margin-right: 20px; /
+  }
+  .pie__titulo-img-tabla {
+    margin: 0;
+    text-align: left;
+  }
+  .pie__titulo-img-tabla th,
+  .pie__titulo-img-tabla td {
+    padding: 10px 20px; 
+    color: #fff;
+  }
+  .pie__titulo-img-tabla-titulo {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+  .pie__titulo-img-tabla td img {
+    width: 40px;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+  .pie__titulo-img-tabla td {
+    padding: 5px 0; 
+    font-size: 25px;
+  }
+  @media (min-width: 768px) {
+    .cabeza {
+      height: 200px;
+    }
+    .title {
+      font-size: 40px;
+    }
+    .menu__lista {
+      font-size: 35px;
+    }
+    .contenido{
+      max-width: 80%;
+    }
+    .contenido__imagenes-1{
+      min-width: 200px;
+    }
+    .contenido__imagenes-2{
+      min-width: 200px;
+    }
+  }
+    
