@@ -86,12 +86,33 @@ samp {
   width: 40%;
   display: flex;
   justify-content: center;
+  position: relative; /* Añadido para que los hijos con posición absoluta se posicionen dentro de este contenedor */
 }
+
 .cuerpo__informacion-content-fotos img {
   max-width: 100%;
   height: auto;
   border-radius: 20px;
 }
+
+.atras, .adelante {
+  position: absolute;
+  width: 30px; 
+  height: 50px; 
+}
+
+.atras {
+  top: 50%; 
+  left: 50px;
+  transform: translateY(-50%);
+}
+
+.adelante {
+  top: 50%; 
+  right: 50px;
+  transform: translateY(-50%);
+}
+
 
 /* Formulario */
 .inicia_seccion {

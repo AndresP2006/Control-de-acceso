@@ -110,6 +110,7 @@
     color: aqua;
     font-size: 30px;
   }
+  
 
   /* Pie de página */
 .pie {
@@ -167,8 +168,5 @@
     }
     .menu__lista {
       font-size: 35px;
-    }
-    .Formulario {
-      max-width: 60%;
     }
   }

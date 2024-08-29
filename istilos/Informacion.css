@@ -142,6 +142,38 @@
     padding: 5px 0; 
     font-size: 25px;
   }
+  .cuerpo__informacion-content-fotos {
+    width: 100%; 
+    display: flex;
+    justify-content: center;
+    position: relative; 
+  }
+  
+  .cuerpo__informacion-content-fotos img.contenido__imagenes-1 {
+    max-width: 100%;
+    height: auto;
+    border-radius: 20px;
+  }
+  
+  .atras, .adelante {
+    position: absolute;
+    width: 30px; 
+    height: 40px;
+    cursor: pointer; 
+  }
+  
+  .atras {
+    top: 50%; 
+    left: 30px; 
+    transform: translateY(-50%);
+  }
+  
+  .adelante {
+    top: 50%; 
+    right: 10px; 
+    transform: translateY(-50%);
+  }
+  
   @media (min-width: 768px) {
     .cabeza {
       height: 200px;
