@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/istilos/Visitas.css" />
+    <title>Control de visitas</title>
+</head>
+<body>
+    <div class="encabezado">
+        <div class="titulo">
+            <h1 class="titulo_1">
+                Control de registro de <b>entrada y salida</b>
+            </h1>
+        </div>
+        <button class="boton_usuario">Cambiar Usuario</button>
+    </div>
+    <div class="cuerpo">
+        <div class="contador_ingresos">
+            <h2>Han ingresado</h2>
+            <div class="contador">0</div>
+        </div>
+        <div class="opciones">
+            <input id="texto" type="text" placeholder="Buscar visitante" />
+            <button class="aceptar">Aceptar</button>
+            <div id="registrosContainer"></div>
+            <button class="nuevo_registro">Nuevo registro</button>
+            <div id="modelo" class="miModelo">
+                <div class="miModelo__content">
+                    <span class="cerrar">&times;</span>
+                    <form id="Formulario">
+                        <label for="name">Nombre y Apellido: </label>
+                        <input type="text" name="name">
+                        <br>
+                        <label for="tipo">Tipo de documento</label>
+                        <select name="doc">
+                            <option value="T.I">T.I</option>
+                            <option value="C.D">C.D</option>
+                            <option value="ETC">ETC</option>
+                        </select>
+                        <br>
+                        <label for="numero">Número de Doc</label>
+                        <input type="text" name="numero">
+                        <br>
+                        <label for="departamento">Número de departamento</label>
+                        <input type="text" name="departamento">
+                        <input type="submit" value="Enviar">
+                        <input type="reset" value="Borrar">
+                    </form>
+                </div>
+            </div>
+            <button class="paquetes">Nuevo Paquete</button>
+        </div>
+    </div>
+    <div class="pie">
+        <button class="boton_entrada">Entrada</button>
+    </div>
+    <script src="/main/Control de visitantes/visitas.js"></script>
+</body>
+</html>
+
+

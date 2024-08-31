@@ -1,3 +1,4 @@
+
 let fotos = document.querySelector("img.foto1");
 
 let fotosArray = [
@@ -16,3 +17,6 @@ function cambiarFoto(direccion) {
 
 document.querySelector("img.atras").onclick = () => cambiarFoto(-1);
 document.querySelector("img.adelante").onclick = () => cambiarFoto(1);
+
+// informacion pagina
+
