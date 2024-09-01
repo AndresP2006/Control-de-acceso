@@ -20,41 +20,41 @@
       </div>
       <div class="opciones">
         <input id="texto" type="text" placeholder="Buscar visitante" />
+          <!-- Contenedor para mostrar los datos del formulario -->
+          <div id="formData"></div>
         <button class="aceptar">Aceptar</button>
         <div class="registros">
           <button class="nuevo_registro" id="nuevo_registro">
             Nuevo registro
           </button>
 
-          <!-- formulario  -->
+          <!-- formulario de visitantes  -->
           <div id="myModal" class="modal">
             <div class="modal-content">
-                <div class="cerrado">
-                    <h3 class="titulo-form">Nuevo registro </h3>
-                    <span class="close">&times;</span>
-                </div>
+              <div class="cerrado">
+                <h3 class="titulo-form">Nuevo registro</h3>
+                <span class="close">&times;</span>
+              </div>
               <form id="myForm">
-                <label for="name"> Nombre y Apellido: </label>
+                <label for="name">Nombre y Apellido:</label>
                 <input type="text" id="name" name="name" /><br /><br />
-                <label for="document">Tipo de documento: </label>
-                <select for="document">
-                    <option value="document">T.I</option>
-                    <option value="document">C.D</option>
-                    <option value="document">ETC</option>
+                <label for="document">Tipo de documento:</label>
+                <select id="document">
+                  <option value="TI">T.I</option>
+                  <option value="CD">C.D</option>
+                  <option value="ETC">ETC</option>
                 </select>
                 <br /><br />
-                <label for="numero-Doc">Numero de Doc: </label>
+                <label for="numero-Doc">Número de Doc:</label>
                 <input type="text" name="numero-Doc" id="numero-Doc" />
                 <br /><br />
-                <label for="Departamento">Numero de Dep: </label>
+                <label for="Departamento">Número de Dep:</label>
                 <input type="text" name="Departamento" id="Departamento" />
                 <br /><br />
                 <input type="submit" value="Enviar" class="Enviar" />
-                <script src="/main/Control de visitantes/visitas.js"></script>
               </form>
             </div>
           </div>
-
           <!-- fin del formulario  -->
 
           <br />
