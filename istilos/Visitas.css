@@ -80,6 +80,7 @@ h2 {
   border-radius: 5px;
   border: 1px solid black;
   font-weight: 700;
+  
 }
 
 .aceptar,
@@ -117,7 +118,7 @@ h2 {
 .modal {
   display: none;
   position: fixed; 
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -181,8 +182,12 @@ input,select{
 
 }
 #formData{
-  position: absolute;
-  padding-top: 220px;
-  padding-right: 730px;
+  position: relative;
+  z-index: 50;
+  display: inline-block;
+  left: 25%;
+  top: -100px;
+  width: 500px;
   font-size: 20px;
+  
 }

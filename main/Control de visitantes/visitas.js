@@ -25,10 +25,12 @@ document.getElementById("myForm").onsubmit = function (event) {
   var departamento = document.getElementById("Departamento").value;
 
   var dataHtml = `
-    <p><strong>Nombre y Apellido:</strong> ${name}</p>
-    <p><strong>Tipo de documento:</strong> ${documentType}</p>
-    <p><strong>Número de Documento:</strong> ${numeroDoc}</p>
-    <p><strong>Número de Departamento:</strong> ${departamento}</p>
+    <p><strong>Nombre y Apellido:</strong>${name}</p>
+    <p><strong>Tipo de documento:</strong>${documentType}</p>
+    <p><strong>Número de Documento:</strong>${numeroDoc}</p>
+    <p><strong>Número de Departamento:</strong>${departamento}</p>
+    <p><strong>Tiene algun Paquete:</strong></p>
+    
   `;
 
   document.getElementById("formData").innerHTML = dataHtml;
