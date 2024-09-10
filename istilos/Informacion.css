@@ -1,8 +1,7 @@
-* {
-    padding: 0px;
-    margin: 0px;
-    color: #080808;
-  }
+*{
+  margin: 0%;
+  font-family: Arial, Helvetica, sans-serif !important;
+}
   
   /* Encabezado */
   .cabeza {
@@ -59,8 +58,9 @@
   .contenido{
     display: flex;
     flex-direction: row;
-    width: 1000px;
-    padding-left: 30vh;
+    width: 1300px;
+    position: relative;
+    left: 30vh;
     padding-top: 20vh;
     padding-bottom: 20vh;
   }
@@ -87,6 +87,7 @@
   .contenido__imagenes{
     display: flex;
     flex-direction: column;
+    padding-left: 50px;
   }
   .contenido__imagenes-1{
     width: 400px;
