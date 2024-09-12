@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>inicio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="istilos/index.css" />
+</head>
+
+<body>
+    <!-- encabezado de la pagina -->
+    <header class="cabeza">
+        <h1 class="title">Control de <b>Acceso</b></h1>
+
+        <nav class="menu">
+            <ul>
+                <li class="menu__lista">
+                    <a class="menu__lista-a" href="index.html">Inicio</a>
+                </li>
+                <li class="menu__lista">
+                    <a class="menu__lista-a" href="paginas/Informacion.html">Información</a>
+                </li>
+                <li class="menu__lista">
+                    <a class="menu__lista-a" href="paginas/Nosotros.html">Nosotros</a>
+                </li>
+            </ul>
+        </nav>
+        <script src="main/enlaces.js"></script>
+    </header>
+    <!-- informacion de la pagina -->
+    <article class="cuerpo">
+        <div class="cuerpo__informacion-content">
+            <h2 class="cuerpo__informacion-content-titulo">
+                ¡La Ribera Villa Rica <samp>Apartamentos!</samp>
+            </h2>
+            <p class="cuerpo__informacion-content-titulo-parrafo">
+                LA RIBERA VILLA RICA es un ambicioso proyecto de viviendas de interés social, compuesto por un total de 268 unidades residenciales, diseñado con el objetivo de mejorar la calidad de vida de las familias del municipio de Malambo, en el departamento del
+                Atlántico. Este proyecto se encuentra estratégicamente ubicado en el Barrio Villa Rica, una zona que ofrece fácil acceso a importantes puntos de referencia locales como el Parque de la Cultura y la Casa de la Cultura, lo que garantiza
+                que los futuros residentes estarán rodeados de un entorno que promueve el desarrollo comunitario y cultural. <br /><br /> Los apartamentos de LA RIBERA VILLA RICA están pensados para familias que buscan comodidad y funcionalidad
+                a un precio accesible. El proyecto ofrece tres tipos de apartamentos con áreas de 40, 44 y 46 metros cuadrados, brindando opciones que se ajustan a las diferentes necesidades familiares. Además, estos apartamentos cuentan con configuraciones
+                de 2 y 3 alcobas, proporcionando espacios versátiles para las familias de diferentes tamaños. <br /><br /> Uno de los principales atractivos de este proyecto es el enfoque en la seguridad y tranquilidad de sus habitantes, razón por la
+                cual cuenta con un cerramiento perimetral que brinda un entorno más seguro. Los residentes podrán disfrutar de la tranquilidad de vivir en un entorno protegido, donde la privacidad y el bienestar de sus familias estarán garantizados. <br
+                /><br /> Además de los apartamentos, el proyecto incluirá una plaza comercial, la cual será un punto central para las compras y servicios básicos, facilitando la vida diaria de los habitantes sin necesidad de desplazamientos largos. También
+                se construirán áreas recreativas como un parque para niños y una cancha de baloncesto, donde tanto los más pequeños como los adultos podrán disfrutar de actividades al aire libre y fomentar la convivencia familiar. <br /><br /> En resumen,
+                LA RIBERA VILLA RICA no es solo un conjunto de viviendas, sino una comunidad pensada para ofrecer un estilo de vida cómodo, seguro y accesible, en una ubicación estratégica que favorece el desarrollo social y cultural de sus habitantes.
+            </p>
+        </div>
+        <div class="cuerpo__informacion-content-fotos">
+            <img src="imagenes_logos/atras.png" alt="atras" class="atras" />
+            <img src="imagenes_logos/departamento1-inicio.jpg" alt="foto1" width="600" height="600" class="foto1" />
+            <img src="imagenes_logos/adelante.png" alt="adelante" class="adelante" />
+            <script src="main/main.js"></script>
+        </div>
+    </article>
+    <!-- formulario -->
+    <div class="inicia_seccion">
+        <form action="">
+            <div class="Formulario">
+                <h1 class="Formulario__titulo">Iniciar Sesion</h1>
+                <input class="Formulario__titulo-input" type="text" placeholder="     Usuario" />
+                <input class="Formulario__titulo-input" type="password" placeholder="   Contraseña" />
+                <select class="Formulario__titulo-input-opcion" name="" id="">
+            <option value="Rol">Rol</option>
+            <option value="Rol">Guardia</option>
+            <option value="Rol">Administrador</option>
+          </select>
+                <button class="Formulario__boton">
+            <a
+              class="Formulario__boton-a"
+              href="paginas/Guardia/Visitas.html"
+              >Ingresar</a
+            >
+          </button>
+                <a href="" class="Contraseña">¿Olvido su contraseña?</a>
+            </div>
+            <div class="imagen">
+                <img src="imagenes_logos/mapa.png" alt="mapa" class="imagen__mapa" />
+            </div>
+        </form>
+    </div>
+    <!-- pie de pagina -->
+    <footer class="pie">
+        <h3 class="pie__titulo">Comunícate con Nosotros</h3>
+        <hr>
+        <img src="imagenes_logos/Gmail.png" alt="" width="50" style="padding-right: 0px;">VillarRicaMalambo@gmail.com
+        <img src="imagenes_logos/whatsapp.png" alt="" width="50" style="padding-left: 50px;">+57 3003243242
+        <img src="imagenes_logos/instagram.png" alt="" width="50" style="padding-left: 50px;">@villaricaMalambo
+        <hr style="width: 90%; margin-left: 5%;">
+
+        <div class="lista">
+            <a href="index.html">Inicio</a>
+            <a href="paginas/Informacion.html">Información</a>
+            <a href="paginas/Nosotros.html">Nosotros</a>
+        </div>
+
+        <div class="pie__copy">
+            <p>&copy; 2024 Villarica Malambo. Todos los derechos reservados.</p>
+            <p><a href="#">Política de privacidad</a> | <a href="#">Términos y condiciones</a></p>
+        </div>
+    </footer>
+
+
+</body>
+
+</html>
