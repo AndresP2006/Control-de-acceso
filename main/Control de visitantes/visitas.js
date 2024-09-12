@@ -42,7 +42,7 @@ document.getElementById("myForm").onsubmit = function (event) {
   visitorModal.style.display = "none";
 };
 
-// Modal de paquete
+
 var packageModal = document.getElementById("packageModal");
 var newPackageBtn = document.getElementById("openModalBtn");
 var packageCloseBtn = document.getElementById("closeModal");
@@ -61,4 +61,4 @@ window.onclick = function (event) {
   }
 };
 
-// Aquí puedes agregar código para manejar el formulario del paquete si es necesario
+

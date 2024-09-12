@@ -34,3 +34,20 @@ window.onclick = function(event) {
         model.style.display = "none";
     }
 };
+var visitorModal = document.getElementById("Modal");
+var newVisitorBtn = document.getElementById("NuevoUsuaro");
+var visitorCloseBtn = document.getElementsByClassName("closes")[0];
+
+newVisitorBtn.onclick = function () {
+  visitorModal.style.display = "block";
+};
+
+visitorCloseBtn.onclick = function () {
+  visitorModal.style.display = "none";
+};
+
+window.onclick = function (event) {
+  if (event.target == visitorModal) {
+    visitorModal.style.display = "none";
+  }
+};
