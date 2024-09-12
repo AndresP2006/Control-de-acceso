@@ -112,10 +112,14 @@ h2 {
 
 
 .boton_entrada {
-  width: 100px;
+  width: 200px;
   height: 50px;
+  font-size: 20px;
+  font-weight: 700;
   background-color: darkgray;
   border-radius: 5px;
+  position: relative;
+  bottom: 150px;
 }
 
 /* formulario  */
@@ -141,10 +145,12 @@ h2 {
 .titulo-form{
   color: black;
   font-weight: 700;
+  padding-top: 20px;
+  padding-left: 30px;
 }
 
 .modal-content {
-  background-color: #fefefe;
+  background-color: #ebe8e8;
   margin: 15% auto;
   border: 4px solid #000000;
   width: 80%; 
@@ -173,6 +179,7 @@ h2 {
 label{
   font-weight: 700;
   font-size: 20px;
+  margin-left: 20px;
 }
 
 input,select{
@@ -180,24 +187,108 @@ input,select{
   height: 20px;
   font-weight: 700;
 }
+select{
+  width: 160px;
+  height: 30px;
+}
 .Enviar{
-  width: 60px;
+  width: 90px;
   height: 40px;
-
-}
-#formData{
-  position: relative;
-  z-index: 50;
   display: inline-block;
-  left: 25%;
-  top: -100px;
-  width: 500px;
   font-size: 20px;
-  
+  margin-left: 180px;
 }
+.Enviar:hover{
+  background-color: red;
+  transition: all 1s;
+}
+button {
+  font-size: 20px;
+  padding: 15px 25px;
+  border-radius: 8px;
+}
+
+.boton_usuario {
+  width: 200px;
+  height: 60px;
+  font-size: 18px;
+}
+
+.aceptar,
+.nuevo_registro,
+.paquetes {
+  width: 220px;
+  height: 50px;
+  font-size: 20px;
+}
+
+
+#displayForm {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  position:relative;
+  top: -150px;
+  right: 150px;
+  max-width: 500px;
+  margin: 40px auto;
+  font-family: 'Arial', sans-serif;
+}
+
+
+#displayForm label {
+  display: block;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+
+#displayForm input {
+  width: 80%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #0a0a0a;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  font-size: 14px;
+  color: #555;
+}
+
+
+#displayForm input[readonly] {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+
+#displayForm input:focus {
+  border-color: #007BFF;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+  outline: none;
+}
+
+
+#displayForm {
+  text-align: left;
+}
+
+
+
 .abajo{
   width: 100%;
   background-color: #aaa;
-  height: 100px;
-  margin-top: 10%;
+  height: 200px;
+  
 }
+
+
+
+
+
+
+
+
+
+

@@ -88,6 +88,7 @@ samp {
   padding-top: 40px;
 }
 .cuerpo__informacion-content-fotos {
+  margin-top: 150px;
   width: 40%;
   display: flex;
   justify-content: center;
@@ -187,7 +188,7 @@ form {
   padding: 10px;
   border-radius: 30px;
 }
-/table {
+table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 15px 0; 
@@ -206,52 +207,63 @@ form {
   }
   
 
- /* Pie de página */
-.pie {
-  background-color: #454d53;
-  padding: 50px 20px;
-  color: #fff;
-  height: 200px;
+  .pie {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
 }
+
 .pie__titulo {
-  text-align: center;
-  font-size: 20px;
-  color: #fff;
-  margin-bottom: 30px;
+    font-size: 24px;
+    margin-bottom: 10px;
 }
-.flex {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+
+.pie a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 18px;
 }
-.pie__titulo-img {
-  width: 250px;
-  border-radius: 20px;
-  margin-right: 20px;
+
+.pie a:hover {
+    text-decoration: underline;
 }
-.pie__titulo-img-tabla {
-  margin: 0;
-  text-align: left;
+
+.lista {
+    margin-top: 15px;
 }
-.pie__titulo-img-tabla th,
-.pie__titulo-img-tabla td {
-  padding: 10px 20px;
-  color: #fff;
+
+.lista a {
+    display: inline-block;
+    margin: 0 10px;
 }
-.pie__titulo-img-tabla-titulo {
-  font-size: 20px;
-  margin-bottom: 10px;
-  color: #fff;
+
+hr {
+    border: none;
+    border-top: 2px solid #fff;
+    margin: 10px 0;
 }
-.pie__titulo-img-tabla td img {
-  width: 40px;
-  margin-right: 10px;
-  vertical-align: middle;
+
+.pie__copy {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #ccc;
 }
-.pie__titulo-img-tabla td {
-  padding: 5px 0;
-  font-size: 25px;
+
+.pie__copy p {
+    margin: 5px 0;
 }
+
+.pie__copy a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.pie__copy a:hover {
+    text-decoration: underline;
+}
+
 
 @media (min-width: 768px) {
   .cabeza {

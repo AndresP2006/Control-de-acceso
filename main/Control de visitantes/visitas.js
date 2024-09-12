@@ -16,24 +16,25 @@ window.onclick = function (event) {
   }
 };
 
-document.getElementById("myForm").onsubmit = function (event) {
+document.getElementById("myForm").onsubmit = function(event) {
   event.preventDefault();
 
-  var name = document.getElementById("name").value;
-  var documentType = document.getElementById("document").value;
-  var numeroDoc = document.getElementById("numero-Doc").value;
-  var departamento = document.getElementById("Departamento").value;
+  var U_Id = document.getElementById("U_Id").value;
+  var U_Apellido = document.getElementById("U_Apellido").value;
+  var U_Fotografia = document.getElementById("U_Fotografia").value;
+  var U_Nombre = document.getElementById("U_Nombre").value;
+  var U_Telefono = document.getElementById("U_Telefono").value;
 
-  var dataHtml = `
-    <p><strong>Nombre y Apellido:</strong>${name}</p>
-    <p><strong>Tipo de documento:</strong>${documentType}</p>
-    <p><strong>Número de Documento:</strong>${numeroDoc}</p>
-    <p><strong>Número de Departamento:</strong>${departamento}</p>
-    <p><strong>Tiene algun Paquete:</strong></p>
-    
-  `;
+  // Asignar los valores a los inputs del formulario de visualización
+  document.getElementById("displayU_Id").value = U_Id;
+  document.getElementById("displayU_Apellido").value = U_Apellido;
+  document.getElementById("displayU_Fotografia").value = U_Fotografia;
+  document.getElementById("displayU_Nombre").value = U_Nombre;
+  document.getElementById("displayU_Telefono").value = U_Telefono;
 
-  document.getElementById("formData").innerHTML = dataHtml;
+  // Mostrar el formulario de visualización
+  document.getElementById("displayForm").style.display = "block";
 
+  // Ocultar el formulario modal
   modal.style.display = "none";
 };

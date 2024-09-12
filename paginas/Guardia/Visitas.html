@@ -26,7 +26,7 @@
             Nuevo registro
           </button>
 
-          <!-- formulario de visitantes  -->
+          <!-- Formulario modal de visitantes -->
           <div id="myModal" class="modal">
             <div class="modal-content">
               <div class="cerrado">
@@ -34,26 +34,39 @@
                 <span class="close">&times;</span>
               </div>
               <form id="myForm">
-                <label for="name">Nombre y Apellido:</label>
-                <input type="text" id="name" name="name" /><br /><br />
-                <label for="document">Tipo de documento:</label>
-                <select id="document">
-                  <option value="TI">T.I</option>
-                  <option value="CD">C.C</option>
-                  <option value="ETC">Otro</option>
-                </select>
-                <br /><br />
-                <label for="numero-Doc">Número de Doc:</label>
-                <input type="text" name="numero-Doc" id="numero-Doc" />
-                <br /><br />
-                <label for="Departamento">Número de Dep:</label>
-                <input type="text" name="Departamento" id="Departamento" />
-                <br /><br />
+                <label for="U_Id">ID del Usuario:</label>
+                <input type="text" id="U_Id" name="U_Id" /><br /><br />
+
+                <label for="U_Apellido">Apellido:</label>
+                <input
+                  type="text"
+                  id="U_Apellido"
+                  name="U_Apellido"
+                /><br /><br />
+
+                <label for="U_Fotografia">Fotografía:</label>
+                <input
+                  type="text"
+                  id="U_Fotografia"
+                  name="U_Fotografia"
+                  placeholder="URL de la fotografía"
+                /><br /><br />
+
+                <label for="U_Nombre">Nombre:</label>
+                <input type="text" id="U_Nombre" name="U_Nombre" /><br /><br />
+
+                <label for="U_Telefono">Teléfono:</label>
+                <input
+                  type="text"
+                  id="U_Telefono"
+                  name="U_Telefono"
+                /><br /><br />
+
                 <input type="submit" value="Enviar" class="Enviar" />
               </form>
             </div>
           </div>
-          <!-- fin del formulario  -->
+          <!-- Fin del formulario -->
 
           <br />
           <br />
@@ -62,14 +75,29 @@
         </div>
       </div>
     </div>
-    <!-- Contenedor para mostrar los datos del formulario -->
-    <div id="formData"></div>
+    <!-- Formulario para mostrar los datos -->
+    <form id="displayForm" style="display: none">
+      <div id="formData">
+        <label for="displayU_Id">ID del Usuario:</label>
+        <input type="text" id="displayU_Id" readonly /><br /><br />
+
+        <label for="displayU_Apellido">Apellido:</label>
+        <input type="text" id="displayU_Apellido" readonly /><br /><br />
+
+        <label for="displayU_Fotografia">Fotografía:</label>
+        <input type="text" id="displayU_Fotografia" readonly /><br /><br />
+
+        <label for="displayU_Nombre">Nombre:</label>
+        <input type="text" id="displayU_Nombre" readonly /><br /><br />
+
+        <label for="displayU_Telefono">Teléfono:</label>
+        <input type="text" id="displayU_Telefono" readonly /><br /><br />
+      </div>
+    </form>
     <div class="pie">
       <button class="boton_entrada">Entrada</button>
     </div>
     <script src="/main/Control de visitantes/visitas.js"></script>
-    <div class="abajo">
-      
-    </div>
+    <div class="abajo"></div>
   </body>
 </html>
