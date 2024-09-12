@@ -22,10 +22,8 @@
         <input id="texto" type="text" placeholder="Buscar visitante" />
         <button class="aceptar">Aceptar</button>
         <div class="registros">
-          <button class="nuevo_registro" id="nuevo_registro">
-            Nuevo registro
-          </button>
-
+          <button class="nuevo_registro" id="nuevo_registro">Nuevo registro</button>
+          
           <!-- Formulario modal de visitantes -->
           <div id="myModal" class="modal">
             <div class="modal-content">
@@ -34,35 +32,25 @@
                 <span class="close">&times;</span>
               </div>
               <form id="myForm">
-                <label for="U_Id">ID del Usuario:</label>
-                <input type="text" id="U_Id" name="U_Id" /><br /><br />
-
-                <label for="U_Apellido">Apellido:</label>
-                <input
-                  type="text"
-                  id="U_Apellido"
-                  name="U_Apellido"
-                /><br /><br />
-
-                <label for="U_Fotografia">Fotografía:</label>
-                <input
-                  type="text"
-                  id="U_Fotografia"
-                  name="U_Fotografia"
-                  placeholder="URL de la fotografía"
-                /><br /><br />
-
-                <label for="U_Nombre">Nombre:</label>
-                <input type="text" id="U_Nombre" name="U_Nombre" /><br /><br />
-
-                <label for="U_Telefono">Teléfono:</label>
-                <input
-                  type="text"
-                  id="U_Telefono"
-                  name="U_Telefono"
-                /><br /><br />
-
-                <input type="submit" value="Enviar" class="Enviar" />
+                <div class="content_cuerpo-bloque2-caja-titulo-contenido">
+                  <div class="content_cuerpo-bloque2-caja-titulo-contenido-bloque1">
+                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo">Numero de Documento:</p>
+                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo">Nombres:</p>
+                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo">Apellidos:</p>
+                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo">Telefono:</p>
+                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo">Motivo de Visita:</p>
+                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo">Numero de Departamento:</p>
+                    <input type="submit" value="Enviar" class="Enviar">
+                  </div>
+                  <div class="content_cuerpo-bloque2-caja-titulo-contenido-bloque2">
+                    <input type="text" id="u_id" name="u_id">
+                    <input type="text" id="U_Nombre" name="U_Nombre">
+                    <input type="text" id="U_Apellido" name="U_Apellido">
+                    <input type="text" id="U_Telefono" name="U_Telefono">
+                    <input type="text" id="U_Motivo" name="U_Motivo">
+                    <input type="text" id="U_Paquete" name="U_Paquete">
+                  </div>
+                </div>
               </form>
             </div>
           </div>
@@ -71,27 +59,63 @@
           <br />
           <br />
           <br />
-          <button class="paquetes">Nuevo Paquete</button>
+          <!-- formulario del Paquete -->
+          <button class="paquetes" id="openModalBtn">Nuevo Paquete</button>
+          
+          <!-- Formulario modal de paquetes -->
+          <div id="packageModal" class="modal">
+            <div class="modal-content2">
+              <span class="close" id="closeModal">&times;</span>
+              <form id="packageForm">
+                
+                <div class="form-group">
+                  <label for="Pa_Estado">Estado:</label>
+                  <input type="text" id="Pa_Estado" name="Pa_Estado" required>
+                </div>
+                <div class="form-group">
+                  <label for="Pa_Descripcion">Descripcion:</label>
+                  <textarea id="Pa_Descripcion" name="Pa_Descripcion" required></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="Pa_Fecha">Fecha:</label>
+                  <input type="date" id="Pa_Fecha" name="Pa_Fecha" required>
+                </div>
+                <div class="form-group">
+                  <label for="Pa_Firma">Firma:</label>
+                  <input type="text" id="Pa_Firma" name="Pa_Firma" required>
+                </div>
+                <div class="form-group">
+                  <label for="U_Id"> Num Documento:</label>
+                  <input type="text" id="U_Id" name="U_Id" required>
+                </div>
+                <button type="submit">Enviar</button>
+              </form>
+            </div>
+          </div>
+          <!-- Fin del formulario del Paquete -->
+
         </div>
       </div>
     </div>
     <!-- Formulario para mostrar los datos -->
     <form id="displayForm" style="display: none">
-      <div id="formData">
-        <label for="displayU_Id">ID del Usuario:</label>
-        <input type="text" id="displayU_Id" readonly /><br /><br />
-
-        <label for="displayU_Apellido">Apellido:</label>
-        <input type="text" id="displayU_Apellido" readonly /><br /><br />
-
-        <label for="displayU_Fotografia">Fotografía:</label>
-        <input type="text" id="displayU_Fotografia" readonly /><br /><br />
-
-        <label for="displayU_Nombre">Nombre:</label>
-        <input type="text" id="displayU_Nombre" readonly /><br /><br />
-
-        <label for="displayU_Telefono">Teléfono:</label>
-        <input type="text" id="displayU_Telefono" readonly /><br /><br />
+      <div class="content_cuerpo-bloque2-caja-titulo-contenido">
+        <div class="content_cuerpo-bloque2-caja-titulo-contenido-bloque1">
+          <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo">Numero de Documento:</p>
+          <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo">Nombres:</p>
+          <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo">Apellidos:</p>
+          <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo">Telefono:</p>
+          <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo">Motivo de Visita:</p>
+          <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo">Numero de Departamento:</p>
+        </div>
+        <div class="content_cuerpo-bloque2-caja-titulo-contenido-bloque2">
+          <input type="text" id="displayU_Id" readonly>
+          <input type="text" id="displayU_Nombre" readonly>
+          <input type="text" id="displayU_Apellido" readonly>
+          <input type="text" id="displayU_Telefono" readonly>
+          <input type="text" id="displayu_motivo" readonly>
+          <input type="text" id="displayU_Paquete" readonly>
+        </div>
       </div>
     </form>
     <div class="pie">
