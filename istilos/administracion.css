@@ -20,9 +20,12 @@
 }
 
 .content_Encabezado-titulo-boton:hover {
-    color: aliceblue;
-    background-color: brown;
+    background-color: rgb(255, 0, 0);
     font-size: 20px;
+}
+
+.link:hover {
+    color: wh;
 }
 
 .content_cuerpo {
@@ -37,7 +40,6 @@
     margin-top: 80px;
     margin-bottom: 20px;
 }
-
 
 table {
     width: 100%;
@@ -125,18 +127,18 @@ tr:hover .content__tabla-informacion {
     margin: 0;
     border: 0;
     padding: 0;
-
 }
 
 .content_cuerpo-bloque2-caja-titulo-contenido-bloque2 {
-
     margin-left: -164px;
 }
+
 .content_cuerpo-bloque2-caja-titulo-contenido-bloque2 input {
     margin-top: 5px;
     margin-bottom: 5px;
     width: 350px;
 }
+
 .content_cuerpo-bloque2-caja-titulo-contenido-parrafo {
     width: 600px;
     margin-bottom: 5px;
@@ -146,7 +148,6 @@ tr:hover .content__tabla-informacion {
 }
 
 input {
-   
     height: 30px;
     border: 2px solid;
 }
@@ -178,8 +179,7 @@ input {
 }
 
 .content_cuerpo-bloque3-botones:hover {
-    background-color: brown;
-    color: aliceblue;
+    background-color: rgb(255, 0, 0);
     font-size: 22px;
 }
 
@@ -194,63 +194,85 @@ a {
     height: 100px;
     margin-top: 10%;
 }
+
 .modal {
-    display: none; /* Ocultamos el modal por defecto */
-    position: fixed; /* Fijar el modal en la pantalla */
-    z-index: 1; /* Asegurarnos de que el modal esté por encima del contenido */
+    display: none;
+    /* Ocultamos el modal por defecto */
+    position: fixed;
+    /* Fijar el modal en la pantalla */
+    z-index: 1;
+    /* Asegurarnos de que el modal esté por encima del contenido */
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto; /* Agregar desplazamiento si es necesario */
-    background-color: rgba(0, 0, 0, 0.4); /* Fondo negro con opacidad */
+    overflow: auto;
+    /* Agregar desplazamiento si es necesario */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Fondo negro con opacidad */
 }
+
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto; /* Margen superior y centrado horizontal */
+    margin: 15% auto;
+    /* Margen superior y centrado horizontal */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Ancho del modal */
-    max-width: 800px; /* Ancho máximo del modal */
+    width: 80%;
+    /* Ancho del modal */
+    max-width: 800px;
+    /* Ancho máximo del modal */
 }
+
 .close {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
+
 .close:hover,
 .close:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
 }
+
+
 /* Estilos para la tabla */
+
 table {
     width: 100%;
     border-collapse: collapse;
 }
-th, td {
+
+th,
+td {
     border: 1px solid #ddd;
     padding: 8px;
     color: black;
     font-size: 18px;
 }
+
 th {
     background-color: #f4f4f4;
     text-align: left;
 }
+
 tr:nth-child(even) {
     background-color: #f9f9f9;
 }
+
 caption {
     font-weight: bold;
     margin: 10px 0;
 }
+
 .button-wrapper {
     text-align: center;
     margin-top: 50px;
 }
+
 .btn-wrapper button {
     padding: 10px 15px;
     border: none;
@@ -260,75 +282,87 @@ caption {
     cursor: pointer;
     margin-right: 10px;
 }
+
 .show-form-btn {
-    background-color: #2196F3; /* Azul */
+    background-color: #2196F3;
+    /* Azul */
 }
 
+
 /* Estilos para el modal */
+
 .modal-overlay {
-    display: none; 
-    position: fixed; 
-    z-index: 1; 
+    display: none;
+    position: fixed;
+    z-index: 1;
     left: 0;
     top: 0;
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; 
-    background-color: rgba(0,0,0,0.4); 
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
 }
+
 .modal-content {
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; 
+    width: 80%;
     max-width: 600px;
     border-radius: 8px;
     position: relative;
 }
+
 .modal-close {
     color: #000000;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
+
 .modal-close:hover,
 .modal-close:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
 }
-.btn-remove{
+
+.btn-remove {
     background-color: #000000;
     position: relative;
     left: 80%;
     top: 40px;
 }
+
 .modal {
-    display: none; 
-    position: fixed; 
+    display: none;
+    position: fixed;
     z-index: 1;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto; 
-    background-color: rgba(0, 0, 0, 0.4); 
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
 }
+
 .modal-content {
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; 
+    width: 80%;
     max-width: 800px;
 }
+
 .close {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
+
 .close:hover,
 .close:focus {
     color: black;

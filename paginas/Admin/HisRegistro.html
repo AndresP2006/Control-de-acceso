@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>administracion</title>
+    <link rel="icon" href="../../../imagenes_logos/logo.png">
     <link rel="stylesheet" href="../../istilos/administracion.css" />
-  </head>
+</head>
 
-  <body>
+<body>
     <header>
-      <div class="content_Encabezado">
-        <h1 class="content_Encabezado-titulo">
-          Control de registro de <br /><samp
-            style="color: red; margin-left: 30px"
-            >Entrada y Salida</samp
+        <div class="content_Encabezado">
+            <h1 class="content_Encabezado-titulo">
+                Control de registro de <br /><samp style="color: red; margin-left: 30px">Entrada y Salida</samp
           >
         </h1>
         <button class="content_Encabezado-titulo-boton" type="button">
-          Cambiar Usuario
+          <a class="link" href="../../index.html">Cerrar Sesión</a>
         </button>
       </div>
     </header>
@@ -140,6 +140,9 @@
           <button class="content_cuerpo-bloque3-botones">
             <a href="/paginas/Admin/listaV.html">Lista de visitante</a>
           </button>
+          <button class="content_cuerpo-bloque3-botones">
+            <a href="/paginas/Admin/Paquetes.html">Paquetes</a>
+          </button>
 
           <button class="content_cuerpo-bloque3-botones" id="openModalBtn">
             Editar usuario
@@ -165,13 +168,13 @@
                     <td>Andres</td>
                     <td>Andres2020</td>
                     <td>****</td>
-                    <td>[/]</td>
+                    <td><input type="checkbox"></td>
                   </tr>
                   <tr>
                     <td>Stiven</td>
                     <td>Stiven023</td>
                     <td>***</td>
-                    <td>[X]</td>
+                    <td><input type="checkbox"></td>
                   </tr>
                 </tbody>
               </table>
@@ -218,4 +221,3 @@
     <div class="abajo"></div>
   </body>
 </html>
-
