@@ -11,15 +11,77 @@
 
 <body>
     <header>
-        <div class="content_Encabezado">
-            <h1 class="content_Encabezado-titulo">
-                Control de registro de <br /><samp style="color: red; margin-left: 30px">Entrada y Salida</samp
-          >
-        </h1>
-        <button class="content_Encabezado-titulo-boton" type="button">
-          <a href="../../index.html">Cerrar Sesión</a>
-        </button>
-      </div>
+      <div class="content_Encabezado">
+
+        <h1 class="content_Encabezado-titulo">Control de registro de <br><samp style="color: red; margin-left: 30px;">Entrada y
+                Salida</samp></h1>
+     
+                <button id="cambiar-usuario">Cambiar usuario</button>
+<div id="popup-cambiar" class="ventana-emergente">
+  <div class="ventana-emergente__caja ventana-emergente__caja--opciones">
+    <span class="ventana-emergente__cerrar" id="cerrar-popup">&times;</span>
+    <button class="boton" id="boton-seguridad">Guardia</button>
+    <button class="boton" id="boton-administracion">Administración</button>
+  </div>
+</div>
+<div class="cerrar-sescion">
+    <a href="/index.html"><button class="boton">Cerrar Sesion</button></a>
+</div>
+
+<!-- Formulario de guardia -->
+<div class="ventana-emergente__seguridad" id="popup-seguridad">
+  <div class="ventana-emergente__formulario" id="formulario-seguridad">
+    <span class="ventana-emergente__cerrar" id="cerrar-seguridad">&times;</span>
+    <form action="" class="formulario-general">
+      <h2>Guardia</h2>
+      <label for="" class="formulario-general__label">
+        Usuario
+        <input
+          type="text"
+          class="formulario-general__input"
+          placeholder="Usuario"
+        />
+      </label>
+      <label for="" class="formulario-general__label">
+        Contraseña
+        <input
+          type="password"
+          class="formulario-general__input"
+          placeholder="Clave"
+        />
+      </label>
+      <a href="/paginas/Guardia/Visitas.html"><input type="button" class="formulario-general__boton" value="Ingresar" /></a>
+    </form>
+  </div>
+</div>
+
+<!-- Formulario de administración -->
+<div class="ventana-emergente__seguridad" id="popup-administracion">
+  <div class="ventana-emergente__formulario" id="formulario-administracion">
+    <span class="ventana-emergente__cerrar" id="cerrar-administracion">&times;</span>
+    <form action="" class="formulario-general">
+      <h2>Administración</h2>
+      <label for="" class="formulario-general__label">
+        Usuario
+        <input
+          type="text"
+          class="formulario-general__input"
+          placeholder="Usuario"
+        />
+      </label>
+      <label for="" class="formulario-general__label">
+        Contraseña
+        <input
+          type="password"
+          class="formulario-general__input"
+          placeholder="Clave"
+        />
+      </label>
+      <a href="/paginas/Admin/adminitracion.html"><input type="button" class="formulario-general__boton" value="Ingresar"  /></a>
+    </form>
+  </div>
+</div>
+    </div>
     </header>
     <div class="content_cuerpo">
       <div class="content_cuerpo-bloque2">

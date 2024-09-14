@@ -51,3 +51,60 @@ window.onclick = function (event) {
     visitorModal.style.display = "none";
   }
 };
+ // Administrador
+ var popupAdmin = document.getElementById("popup-administracion");
+ var btnAdmin = document.getElementById("boton-administracion");
+ var cerrarAdmin = document.getElementById("cerrar-administracion");
+
+ btnAdmin.onclick = function () {
+   popupAdmin.style.display = "block";
+ };
+
+ cerrarAdmin.onclick = function () {
+   popupAdmin.style.display = "none";
+ };
+
+ window.onclick = function (event) {
+   if (event.target == popupAdmin) {
+     popupAdmin.style.display = "none";
+   }
+ };
+
+ // Guardia
+ var popupSeguridad = document.getElementById("popup-seguridad");
+ var btnSeguridad = document.getElementById("boton-seguridad");
+ var cerrarSeguridad = document.getElementById("cerrar-seguridad");
+
+ btnSeguridad.onclick = function () {
+   popupSeguridad.style.display = "block";
+ };
+
+ cerrarSeguridad.onclick = function () {
+   popupSeguridad.style.display = "none";
+ };
+
+ window.onclick = function (event) {
+   if (event.target == popupSeguridad) {
+     popupSeguridad.style.display = "none";
+   }
+ };
+
+ // Cambiar usuario
+ var popupCambiar = document.getElementById("popup-cambiar");
+ var btnCambiarUsuario = document.getElementById("cambiar-usuario");
+ var cerrarPopup = document.getElementById("cerrar-popup");
+
+ btnCambiarUsuario.onclick = function () {
+   popupCambiar.style.display = "block";
+ };
+
+ cerrarPopup.onclick = function () {
+   popupCambiar.style.display = "none";
+ };
+
+ window.onclick = function (event) {
+   if (event.target == popupCambiar) {
+     popupCambiar.style.display = "none";
+   }
+ };
+

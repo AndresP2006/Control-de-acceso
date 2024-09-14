@@ -64,6 +64,7 @@ b {
 
 h2 {
     font-family: cursive;
+    padding-bottom: 30px;
 }
 
 .contador {
@@ -387,3 +388,157 @@ textarea {
 .boton_usuario a:hover {
     color: white;
 }
+.ventana-emergente {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .ventana-emergente__caja {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    border: 5px solid #010000;
+    width: 100%;
+    max-width: 800px;
+  }
+
+  .ventana-emergente__caja--opciones {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    height: 150px;
+    transform: translate(-50%, -50%);
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ccc;
+    width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: row;
+  }
+
+  .ventana-emergente__cerrar {
+    color: #000000;
+    font-size: 33px;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    padding-left: 5px;
+  }
+
+  .boton {
+    width: 180px;
+    padding: 10px;
+    height: 40px;
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    top: 20%;
+    font-weight: 700;
+    background-color: #888888b2;
+    border-radius: 30px;
+    font-size: 20px;
+    margin: 20px;
+  }
+ #cambiar-usuario{
+    width: 200px;
+    padding: 10px;
+    height: 40px;
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    font-weight: 700;
+    background-color: #888888b2;
+    border-radius: 30px;
+    font-size: 20px;
+    margin-left: 40%;
+ }
+  .pop{
+    display: flex;
+    flex-direction: row;
+  }
+
+  .boton:hover {
+    background-color: red;
+    box-shadow: 0px 0px 2px 0px black;
+  }
+
+  .ventana-emergente__seguridad {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .ventana-emergente__formulario {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    height: 300px;
+    transform: translate(-50%, -50%);
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ccc;
+    width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: row;
+  }
+
+  .formulario-general {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: transparent;
+  }
+
+  .formulario-general__label {
+    font-family: Arial, sans-serif;
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #333;
+  }
+
+  .formulario-general__input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+
+  .formulario-general__boton {
+    background-color: #6c6e6f;
+    color: white;
+    padding: 10px 15px;
+    font-size: 16px;
+    height: 50px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+  }
+
+  .formulario-general__boton:hover {
+    background-color: #2980b9;
+  }
