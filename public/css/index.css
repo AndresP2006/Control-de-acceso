@@ -9,7 +9,7 @@
 /* Encabezado */
 
 .cabeza {
-    background-image: url(../imagenes_logos/fondo\ de\ pagian.jpg);
+    /* background-image: url(../imagenes_logos/fondo\ de\ pagian.jpg); */
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -143,7 +143,7 @@ samp {
 /* Formulario */
 
 .inicia_seccion {
-    background-image: url(../imagenes_logos/fondo\ de\ pagian.jpg);
+    /* background-image: url(../imagenes_logos/fondo\ de\ pagian.jpg); */
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
