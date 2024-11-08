@@ -7,7 +7,7 @@
     <nav class="menu">
         <ul>
             <li class="menu__lista">
-                <a class="menu__lista-a" href="index.html">HOME</a>
+                <a class="menu__lista-a" href="index.html">Inicio</a>
             </li>
             <li class="menu__lista">
                 <a class="menu__lista-a" href="paginas/Informacion.html">Información</a>
