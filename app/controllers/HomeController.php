@@ -13,11 +13,11 @@ class HomeController extends Controlador
 
     public function index()
     {
-        $articles = $this->articleModel->getArticles();
+        // $articles = $this->articleModel->getArticles();
 
         $datos = [
             'titulo' => 'Bienvenido a MVC render2web',
-            'articles' => $articles
+            // 'articles' => $articles
         ];
 
         $this->vista('pages/homeView', $datos);
