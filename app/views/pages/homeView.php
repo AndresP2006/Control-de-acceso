@@ -50,19 +50,10 @@
             <h1 class="Formulario__titulo">Iniciar Sesion</h1>
             <input class="Formulario__titulo-input" name="usuario" type="text" placeholder="     Usuario" />
             <input class="Formulario__titulo-input" name="password" type="password" placeholder="   Contraseña" />
-            <select class="Formulario__titulo-input-opcion" name="opcion" name="" id="">
-                <option value="Rol">Rol</option>
-                <option value="Guardia">Guardia</option>
-                <option value="Admin">Administrador</option>
-            </select>
             <button type="submit" name="ingresar" class="Formulario__boton">
-                <!-- <a
-                class="Formulario__boton-a"
-                href="paginas/Guardia/Visitas.html" 
-                ></a>-->Ingresar
+                Ingresar
             </button>
             <a href="" class="Contraseña"></a>
-            <a href="<?php echo RUTA_URL; ?>/LoginController/verPorter">VER VISTA PORTERO</a>
         </div>
         <div class="imagen">
             <img src="<?php echo RUTA_URL; ?>/img/mapa.png" alt="mapa" class="imagen__mapa" />

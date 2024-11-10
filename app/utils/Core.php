@@ -51,9 +51,17 @@ class Core
 
     public function getUrl()
     {
-        //echo $_GET['url'];
-        if (isset($_GET['url'])) {
-            $url = rtrim($_GET['url'], '/');
+        $url = null;
+
+        if (isset($_GET['url']))
+            $url = $_GET['url'];
+        else{
+            $result = $_SERVER['REQUEST_URI'];
+            $url = substr($result, 1);
+        }
+
+        if (isset($url)) {
+            $url = rtrim($url, '/');
             $url = filter_var($url, FILTER_SANITIZE_URL);
 
             $url = explode('/', $url);
