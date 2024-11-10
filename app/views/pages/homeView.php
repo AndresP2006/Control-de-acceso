@@ -7,13 +7,13 @@
     <nav class="menu">
         <ul>
             <li class="menu__lista">
-                <a class="menu__lista-a" href="index.html">Inicio</a>
+                <a class="menu__lista-a" href="<?php echo RUTA_URL;?>/HomeController/index">Inicio</a>
             </li>
             <li class="menu__lista">
-                <a class="menu__lista-a" href="paginas/Informacion.html">Información</a>
+                <a class="menu__lista-a" href="<?php echo RUTA_URL;?>/HomeController/informacion">Información</a>
             </li>
             <li class="menu__lista">
-                <a class="menu__lista-a" href="paginas/Nosotros.html">Nosotros</a>
+                <a class="menu__lista-a" href="<?php echo RUTA_URL;?>/HomeController/nosotros">Nosotros</a>
             </li>
         </ul>
     </nav>

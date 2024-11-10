@@ -25,5 +25,4 @@
 <script src="<?php echo RUTA_URL; ?>/js/alert.js"></script>
 
 
-
 </html>

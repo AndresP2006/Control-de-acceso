@@ -23,6 +23,14 @@ class HomeController extends Controlador
         $this->vista('pages/homeView', $datos);
     }
 
+    // desplazamiento de vistas
+    public function informacion(){
+        $this->vista('pages/home/informacionView');
+    }
+    public function nosotros(){
+        $this->vista('pages/home/nosotrosView');
+    }
+
     public function admin()
     {
         if (!isset($_SESSION['sesion_activa'])) {
