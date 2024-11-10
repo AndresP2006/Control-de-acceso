@@ -84,6 +84,9 @@
 
 <?php require_once RUTA_APP . '/views/inc/footer-home.php'; ?>
 <script>
-    error("<?php echo $datos['messageError']; ?>")
+
+    <?php if (isset($datos['messageError'])) { ?>
+        error("<?php echo $datos['messageError']; ?>")
+    <?php } ?>
 
 </script>
