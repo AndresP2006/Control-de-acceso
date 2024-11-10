@@ -22,4 +22,21 @@ class HomeController extends Controlador
 
         $this->vista('pages/homeView', $datos);
     }
+
+    public function admin()
+    {
+        if (!isset($_SESSION['sesion_activa'])) {
+            header('location:' . RUTA_URL . '/pages/homeView');
+            exit;
+        }
+        $this->vista('pages/admin/adminView', null);
+    }
+    public function guard()
+    {
+        if (!isset($_SESSION['sesion_activa'])) {
+            header('location:' . RUTA_URL . '/pages/homeView');
+            exit;
+        }
+        $this->vista('pages/porter/porterView', null);
+    }
 }

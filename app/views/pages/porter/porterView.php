@@ -23,7 +23,8 @@
         </div>
         <div class="opciones">
             <!-- problemas  -->
-            <form action="http://localhost:8080/Control-de-acceso-main/paginas/Guardia/controllers/indexContrl.php" method="post">
+            <form action="http://localhost:8080/Control-de-acceso-main/paginas/Guardia/controllers/indexContrl.php"
+                method="post">
                 <input id="texto" type="text" placeholder="Buscar Persona con paquetes" name="residente" />
                 <input type="submit" value="Buscar" class="Buscar" id="Actualizar" name="Busca">
             </form>
@@ -49,7 +50,8 @@
                             <h4>Apellido: <input type="text" id="U_Apellido" name="U_Apellido" /></h4>
                             <h4>Telefono: <input type="text" id="U_Telefono" name="U_Telefono" /></h4>
                             <h4>Motivo de vitida: <input type="text" id="U_Motivo" name="U_Motivo" /></h4>
-                            <h4>Numero de departameto: <input type="text" id="U_Departamento" name="U_Departamento" /></h4>
+                            <h4>Numero de departameto: <input type="text" id="U_Departamento" name="U_Departamento" />
+                            </h4>
                             <center>
                                 <input type="submit" value="Enviar" class="Enviar" name="Residentes" />
                             </center>
@@ -120,4 +122,8 @@
     </div>
 </div>
 
+<?php
+
+$_SESSION;
+?>
 <?php require_once RUTA_APP . '/views/inc/footer-porter.php'; ?>
