@@ -1,5 +1,6 @@
 <!-- <script type="text/javascript" src="<?php //echo RUTA_URL; 
                                             ?>/js/main.js"></script> -->
+                                            
 <footer class="pie">
     <h3 class="pie__titulo">Comunícate con Nosotros</h3>
     <hr>
@@ -20,5 +21,9 @@
     </div>
 </footer>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="<?php echo RUTA_URL; ?>/js/alert.js"></script>
+
+
 
 </html>
