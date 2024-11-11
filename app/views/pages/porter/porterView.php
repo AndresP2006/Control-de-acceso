@@ -44,16 +44,16 @@
                             <h3 class="titulo-form">Nuevo registro</h3>
                             <span class="close" id="close">&times;</span>
                         </div>
-                        <form id="myForm" action="index.php" method="post">
+                        <form id="myForm" action="<?php echo RUTA_URL; ?>/PorterController/createGuest" method="post">
                             <h4>Cedula: <input type="text" id="u_id" name="u_id" /></h4>
                             <h4>Nombre: <input type="text" id="U_Nombre" name="U_Nombre" /></h4>
                             <h4>Apellido: <input type="text" id="U_Apellido" name="U_Apellido" /></h4>
                             <h4>Telefono: <input type="text" id="U_Telefono" name="U_Telefono" /></h4>
-                            <h4>Motivo de vitida: <input type="text" id="U_Motivo" name="U_Motivo" /></h4>
-                            <h4>Numero de departameto: <input type="text" id="U_Departamento" name="U_Departamento" />
+                            <h4>Motivo de visita: <input type="text" id="U_Motivo" name="U_Motivo" /></h4>
+                            <h4>Numero de apartameto: <input type="text" id="U_Departamento" name="U_Departamento" />
                             </h4>
                             <center>
-                                <input type="submit" value="Enviar" class="Enviar" name="Residentes" />
+                                <input type="submit" value="Enviar" class="Enviar" name="Visitantes" />
                             </center>
                         </form>
                     </div>
@@ -127,3 +127,9 @@
 $_SESSION;
 ?>
 <?php require_once RUTA_APP . '/views/inc/footer-porter.php'; ?>
+<script>
+    <?php if (isset($datos['messageInfo'])) { ?>
+        realizado("<?php echo $datos['messageInfo']; ?>")
+    <?php } ?>
+
+</script>

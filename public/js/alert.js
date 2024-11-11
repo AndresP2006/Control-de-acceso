@@ -1,7 +1,7 @@
-function realizado(messaje){
+function realizado(mensaje){
     Swal.fire({
         title: "CONFIRMACION",
-        text: messaje,
+        text: mensaje,
         icon: "success",
     });
 }
