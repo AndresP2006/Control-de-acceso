@@ -72,12 +72,12 @@
                             <h3 class="titulo-form">Registro de paquetes</h3>
                             <span class="close2" id="closeModal">&times;</span>
                         </div>
-                        <form id="packageForm" action="index.php" method="post">
-                            <h4>Estado: <input type="text" id="Pa_Estado" name="pa_estado" /></h4>
-                            <h4>Descripcio: <textarea id="Pa_Descripcion" name="pa_descripcion"></textarea></h4>
-                            <h4>Fecha de entrega: <input type="date" id="Pa_Fecha" name="Pa_Fechaf" /></h4>
-                            <h4>Responsable: <input type="text" id="Pa_Firma" name="pa_Responsable" /></h4>
-                            <h4>Documento del Residente: <input type="text" id="U_Id" name="u_id" /></h4>
+                        <form id="packageForm" action="<?php echo RUTA_URL; ?>/PorterController/enterPackage" method="post">
+                            <h4>Estado: <input type="text" id="Pa_Estado" name="estado" /></h4>
+                            <h4>Descripcio: <textarea id="Pa_Descripcion" name="descripcion"></textarea></h4>
+                            <h4>Fecha de entrega: <input type="date" id="Pa_Fecha" name="Fecha" /></h4>
+                            <h4>Recibidor: <input type="text" id="Pa_Firma" name="Recibidor" /></h4>
+                            <h4>Documento del Residente: <input type="text" id="U_Id" name="Documento" /></h4>
                             <center>
                                 <input type="submit" value="Enviar" name="Paquetes" class="Enviar" />
                             </center>

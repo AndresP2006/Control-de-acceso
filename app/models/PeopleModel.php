@@ -15,4 +15,10 @@ class PeopleModel
 
         return $this->db->registro();
     }
+    public function documentPers($document)
+    {
+        $this->db->query("SELECT Pe_id FROM persona p  WHERE  p.Ap_id = $document");
+        
+        return $this->db->registro();
+    }
 }
