@@ -53,7 +53,7 @@ CREATE TABLE `paquete` (
   `Pa_estado` varchar(250) NOT NULL,
   `Pa_descripcion` varchar(250) NOT NULL,
   `Pa_fecha` timestamp NOT NULL DEFAULT current_timestamp(),
-  `Pa_responsable` varchar(50) NOT NULL,
+  `Pa_Responsable` varchar(50) NOT NULL,
   `Pe_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`Pa_id`),
   KEY `Pe_id` (`Pe_id`),
@@ -252,4 +252,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-12 22:09:33
+-- Dump completed on 2024-11-12 22:05:03

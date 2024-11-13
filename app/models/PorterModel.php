@@ -24,13 +24,13 @@ class PorterModel
     }
     public function enterPackage($paquete)
     {
-        $this->db->query('INSERT INTO paquete (Pa_estado,Pa_descripcion,Pa_Fecha,Pa_Responsable,Pe_id)VALUE
-        (:estado, :descripcion, :fecha, :recibidor, :documento,:peoplePaq)');
+        $this->db->query('INSERT INTO paquete (Pa_estado, Pa_descripcion, Pa_fecha, Pa_responsable, Pe_id)VALUES
+        (:estado, :descripcion, :fecha, :recibidor, :peoplePaq)');
         $this->db->bind(':estado', $paquete['estado']);
         $this->db->bind(':descripcion', $paquete['descripcion']);
-        $this->db->bind(':fecha', $paquete['Fecha']);
-        $this->db->bind(':recibidor', $paquete['Recibidor']);
-        $this->db->bind(':documento', $paquete['Documento']);
+        $this->db->bind(':fecha', $paquete['fecha']);
+        $this->db->bind(':recibidor', $paquete['responsable']);
+        // $this->db->bind(':documento', $paquete['Documento']);
         $this->db->bind(':peoplePaq', $paquete['peoplePaq']);
         ($this->db->execute()) ? true : false;
     }

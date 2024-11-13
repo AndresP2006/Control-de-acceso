@@ -5,13 +5,13 @@ class PorterController extends Controlador
 
     private $PorterModel;
     private $PeopleModel;
-    private $paquetModel;
+    private $PaquetModel;
 
     public function __construct()
     {
         $this->PorterModel = $this->modelo('PorterModel');
         $this->PeopleModel = $this->modelo('PeopleModel');
-        $this->paquetModel = $this->modelo('paquetModel');
+        $this->PaquetModel = $this->modelo('PaquetModel');
         //echo 'Controlador paginas cargado';
     }
 
@@ -22,8 +22,6 @@ class PorterController extends Controlador
 
     public function createGuest()
     {
-
-
         if (isset($_POST['Visitantes'])) {
 
             $people = $this->PeopleModel->getPeopleByApart($_POST['U_Departamento']);
@@ -48,18 +46,24 @@ class PorterController extends Controlador
     }
     public function enterPackage()
     {
-        if (isset($_POST['Paquetes'])) {
-            $people = $this->paquetModel->documentPers($_POST['Documento']);
+        if (isset($_POST['paquetes'])) {
+            $people = $this->PeopleModel->documentPers($_POST['documento']);
 
             $paquete = [
-                'Estado' => trim($_POST['estado']),
-                'Descripcion' => trim(($_POST['descripcion'])),
-                'Fecha' => trim($_POST['Fecha']),
-                'Responsable' => trim($_POST['Recibidor']),
-                'Documento' => trim($_POST['Documento']),
+                'estado' => trim($_POST['estado']),
+                'descripcion' => trim(($_POST['descripcion'])),
+                'fecha' => trim($_POST['fecha']),
+                'responsable' => trim($_POST['recibidor']),
+                // 'Documento' => trim($_POST['Documento']),
                 'peoplePaq' => trim($people->Pe_id),
             ];
-            $this->vista('pages/porter/porterView', $paquete);
+            $message = 'Paquete guardado correctamente';
+            $this->PorterModel->enterPackage($paquete);
+
+            $datos = [
+                'messageInfo' => $message
+            ];
+            $this->vista('pages/porter/porterView', $datos);
         }
     }
 }
