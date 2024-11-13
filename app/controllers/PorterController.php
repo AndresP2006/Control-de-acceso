@@ -15,11 +15,6 @@ class PorterController extends Controlador
         //echo 'Controlador paginas cargado';
     }
 
-    // public function index()
-    // {
-
-    // }
-
     public function createGuest()
     {
         if (isset($_POST['Visitantes'])) {
@@ -38,8 +33,13 @@ class PorterController extends Controlador
             $message = 'Visitante guardado correctamente';
             $this->PorterModel->addGuest($datos);
 
+            $this->PeopleModel->getNumberGuest();
+            $countGuest = $this->PeopleModel->getNumberGuest();
+            $total = $countGuest->countGuest;
+
             $datos = [
-                'messageInfo' => $message
+                'messageInfo' => $message,
+                'total' => $total,
             ];
             $this->vista('pages/porter/porterView', $datos);
         }
