@@ -75,11 +75,11 @@
                         <form id="packageForm" action="<?php echo RUTA_URL; ?>/PorterController/enterPackage" method="post">
                             <h4>Estado: <input type="text" id="Pa_Estado" name="estado" /></h4>
                             <h4>Descripcio: <textarea id="Pa_Descripcion" name="descripcion"></textarea></h4>
-                            <h4>Fecha de entrega: <input type="date" id="Pa_Fecha" name="Fecha" /></h4>
-                            <h4>Recibidor: <input type="text" id="Pa_Firma" name="Recibidor" /></h4>
-                            <h4>Documento del Residente: <input type="text" id="U_Id" name="Documento" /></h4>
+                            <h4>Fecha de entrega: <input type="date" id="Pa_Fecha" name="fecha" /></h4>
+                            <h4>Recibidor: <input type="text" id="Pa_Firma" name="recibidor" /></h4>
+                            <h4>Documento del Residente: <input type="text" id="U_Id" name="documento" /></h4>
                             <center>
-                                <input type="submit" value="Enviar" name="Paquetes" class="Enviar" />
+                                <input type="submit" value="Enviar" name="paquetes" class="Enviar" />
                             </center>
                         </form>
                     </div>
