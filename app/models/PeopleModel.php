@@ -18,7 +18,16 @@ class PeopleModel
     public function documentPers($document)
     {
         $this->db->query("SELECT Pe_id FROM persona p  WHERE  p.Pe_id = $document");
-        
+
         return $this->db->registro();
     }
+
+    public function getNumberGuest()
+    {
+
+        $this->db->query("SELECT count(*)as countGuest from visitantes");
+
+        return $this->db->registro();
+    }
+
 }

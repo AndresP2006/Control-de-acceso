@@ -17,7 +17,10 @@
         <div class="contador_ingresos">
             <h2>Han ingresado</h2>
             <div class="contador">
-                <?php // echo $conteo 
+                <?php
+                if (isset($datos)) {
+                    echo $datos['total'];
+                }
                 ?>
             </div>
         </div>
