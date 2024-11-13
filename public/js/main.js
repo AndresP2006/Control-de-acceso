@@ -1,10 +1,9 @@
-
 let fotos = document.querySelector("img.foto1");
 
 let fotosArray = [
-  "img/departamento1-inicio.jpg",
-  "img/departamento2-inicio.jpg",
-  "img/departamento3-inicio.jpg",
+  "../img/departamento1-inicio.jpg",
+  "../img/departamento2-inicio.jpg",
+  "../img/departamento3-inicio.jpg",
 ];
 
 let fotoIndex = 0;
@@ -17,6 +16,3 @@ function cambiarFoto(direccion) {
 
 document.querySelector("img.atras").onclick = () => cambiarFoto(-1);
 document.querySelector("img.adelante").onclick = () => cambiarFoto(1);
-
-// informacion pagina
-
