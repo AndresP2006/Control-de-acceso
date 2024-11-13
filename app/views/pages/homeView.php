@@ -59,7 +59,7 @@
         <img src="<?php echo RUTA_URL; ?>/img/departamento1-inicio.jpg" alt="foto1" width="600" height="600"
             class="foto1" />
         <img src="<?php echo RUTA_URL; ?>/img/adelante.png" alt="adelante" class="adelante" />
-        <script src="<?php echo RUTA_URL; ?>/js/main-home.js"></script>
+        <script src="<?php echo RUTA_URL; ?>/js/main.js"></script>
     </div>
 </article>
 <!-- formulario -->
