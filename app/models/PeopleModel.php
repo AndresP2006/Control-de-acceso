@@ -37,4 +37,9 @@ class PeopleModel
         return $this->db->registro();
         
     }
+    public function getAllpeople(){
+        $this->db->query("SELECT * FROM persona");
+
+        return $this->db->registros();
+    }
 }

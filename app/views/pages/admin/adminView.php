@@ -81,7 +81,7 @@
                     <input type="text" value="">
                     <input type="text" value="">
                     <input type="text" value="">
-                    <select name="" id="select"  >
+                    <select name="" id="select" class="Rol"  >
                         <option value="1">Administrador</option>
                         <option value="2">Guardia</option>
                         <option value="3">Residente</option>
@@ -108,31 +108,41 @@
                         </div>
                         <form id="myForm" action="<?php echo RUTA_URL; ?>/UserController/createUser" method="post">
                             <div class="content_cuerpo-bloque2-caja-titulo-contenido">
-                                <div class="content_cuerpo-bloque2-caja-titulo-contenido-bloque1">
-                                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo">
+                            <div class="content_cuerpo-bloque2-caja-titulo-contenido-bloque1">
+                                    <br>
+                                    <br>
+                                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo-2">
                                         Numero de Documento:
                                     </p>
-                                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo">
+                                    <br>
+                                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo-2">
                                         Nombres:
                                     </p>
-                                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo">
+                                    <br>
+                                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo-2">
                                         Apellidos:
                                     </p>
-                                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo">
+                                    <br>
+                                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo-2">
                                         Telefono:
                                     </p>
-                                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo">
+                                    <br>
+                                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo-2">
                                         Gmail:
                                     </p>
-                                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo">
+                                    <br>
+                                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo-2">
                                         Numero de Departamento:
                                     </p>
-                                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo">
-                                        Rol:
-                                    </p>
-                                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo">
+                                    <br>
+                                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo-2">
                                         Contraseña:
                                     </p>
+                                    <br>
+                                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo-2">
+                                        Rol:
+                                    </p>
+                                    <br>
                                     <input type="submit" value="Guardar" name="Enviar" class="Enviar" />
                                 </div>
                                 <div class="content_cuerpo-bloque2-caja-titulo-contenido-bloque2">
@@ -143,7 +153,7 @@
                                     <input type="text" id="U_Gmail" name="U_Gmail" />
                                     <input type="text" id="U_Departamento" name="U_Departamento" />
                                     <input type="text" id="U_contrasena" name="U_contrasena" />
-                                    <select name="R_id" >
+                                    <select name="R_id" class="Rol" >
                                         <option value="">Seleccionar</option>
                                         <option value=1>Administrador</option>
                                         <option value=2>Guardia</option>

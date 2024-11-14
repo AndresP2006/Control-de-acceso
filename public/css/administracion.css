@@ -142,11 +142,17 @@ tr:hover .content__tabla-informacion {
 .content_cuerpo-bloque2-caja-titulo-contenido-parrafo {
     width: 600px;
     margin-bottom: 5px;
-    margin-top: 10px;
+    margin-top: 12px;
     font-weight: 800;
     font-size: 24px;
 }
-
+.content_cuerpo-bloque2-caja-titulo-contenido-parrafo-2 {
+    width: 555px;
+    margin-bottom: -16px;
+    margin-top: 9px;
+    font-weight: 800;
+    font-size: 24px;
+}   
 input {
     height: 30px;
     border: 2px solid;
@@ -348,6 +354,7 @@ caption {
 }
 
 .modal-content {
+    height: 450px;
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
@@ -523,4 +530,8 @@ caption {
 
   .formulario-general__boton:hover {
     background-color: #2980b9;
+  }
+  .Rol{
+    width: 358px;
+    height: 40px;
   }
