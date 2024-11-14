@@ -4,11 +4,12 @@ class HomeController extends Controlador
 {
 
     private $articleModel;
+    private $porterController;
 
     public function __construct()
     {
         $this->articleModel = $this->modelo('ArticleModel');
-        //echo 'Controlador paginas cargado';
+        $this->porterController = $this->controller('PorterController');
     }
 
     public function index()
@@ -45,6 +46,7 @@ class HomeController extends Controlador
             header('location:' . RUTA_URL . '/pages/homeView');
             exit;
         }
-        $this->vista('pages/porter/porterView', null);
+
+        $this->vista('pages/porter/porterView', ($this->porterController->index()));
     }
 }

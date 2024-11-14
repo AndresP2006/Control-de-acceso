@@ -30,8 +30,13 @@ class PorterModel
         $this->db->bind(':descripcion', $paquete['descripcion']);
         $this->db->bind(':fecha', $paquete['fecha']);
         $this->db->bind(':recibidor', $paquete['responsable']);
-        // $this->db->bind(':documento', $paquete['Documento']);
         $this->db->bind(':peoplePaq', $paquete['peoplePaq']);
         ($this->db->execute()) ? true : false;
     }
+
+    public function leavePackage($paquete){
+        
+    }
+
+
 }
