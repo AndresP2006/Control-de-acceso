@@ -20,13 +20,14 @@ h2 {
 }
 
 .contador {
-  width: 200px;
+  width: 250px;
   height: 200px;
   background-color: darkgray;
   border: 2px solid black;
   border-radius: 10px;
   font-size: 190px;
   text-align: center;
+  margin-left:40px ;
 }
 
 .opciones {
@@ -35,6 +36,8 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  position: relative;
+  top: 30%;
 }
 
 #texto {
@@ -147,7 +150,7 @@ form h4 {
 
 /* Estilo de los campos de entrada */
 form input[type="text"] {
-  width: 100%;
+  width: 94%;
   padding: 12px;
   margin-bottom: 15px;
   border: 2px solid transparent;
