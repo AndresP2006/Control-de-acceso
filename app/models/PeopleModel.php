@@ -35,5 +35,6 @@ class PeopleModel
         $this->db->query("delete from visitantes  where Vi_id = '$idGuest'");
 
         return $this->db->registro();
+        
     }
 }
