@@ -36,5 +36,4 @@ class PeopleModel
 
         return $this->db->registro();
     }
-
 }
