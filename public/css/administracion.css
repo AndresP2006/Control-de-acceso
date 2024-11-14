@@ -227,6 +227,7 @@ a {
     width: 80%;
     /* Ancho del modal */
     max-width: 800px;
+    height: 445px;
     /* Ancho máximo del modal */
 }
 
@@ -309,16 +310,16 @@ caption {
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-.modal-content {
+.modal-content2 {
+    height: 282px;
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-    max-width: 600px;
-    border-radius: 8px;
-    position: relative;
+    max-width: 800px;
 }
+
 
 .modal-close {
     color: #000000;
@@ -353,8 +354,8 @@ caption {
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-.modal-content {
-    height: 450px;
+.modal-content3 {
+    height: 196px;
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;

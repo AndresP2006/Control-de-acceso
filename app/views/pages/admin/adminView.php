@@ -181,7 +181,7 @@
                     Editar usuario
                 </button>
                 <div id="myModal" class="modal">
-                    <div class="modal-content">
+                    <div class="modal-content2">
                         <span class="close">&times;</span>
                         <h2>Usuarios y Contraseñas</h2>
                         <table>
@@ -221,7 +221,7 @@
                     Eliminar historial
                 </button>
                 <div id="modalOverlay" class="modal-overlay">
-                    <div class="modal-content">
+                    <div class="modal-content3">
                         <span class="modal-close">&times;</span>
                         <div class="form-area">
                             <h1>Formulario de Control</h1>
