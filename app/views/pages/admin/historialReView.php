@@ -1,91 +1,33 @@
-<?php require_once RUTA_APP . '/views/inc/header-admin.php'; ?>
+<?php require_once RUTA_APP . '/views/inc/header-registro.php'; ?>
 
-<script>
-    // Función para enviar el formulario al seleccionar un usuario
-    function enviarFormulario() {
-        var select = document.getElementById('miSelect');
-        var valorSeleccionado = select.value;
 
-        // Crear un formulario temporal
-        var form = document.createElement('form');
-        form.method = 'POST';
-        form.action = ''; // Acción del formulario
-
-        // Crear un campo oculto para enviar el valor
-        var input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = 'id_usuario';
-        input.value = valorSeleccionado;
-        form.appendChild(input);
-
-        // Enviar el formulario
-        document.body.appendChild(form);
-        form.submit();
-    }
-</script>
-
-<div class="content">
-
-    <div class="content_cuerpo">
-        <div class="content_cuerpo-bloque1">
-            <div class="content_cuerpo-bloque1-texto">
-                <input id="texto" type="text"> <button class="content_cuerpo-bloque1-boton">Buscar</button>
-            </div>
-            <select name="Select" id="miSelect">
-                <option value="">Seleccionar</option>
-                <?php
-                $peopleModel = new PeopleModel();
-                $people = $peopleModel->getAllPeople();
-
-                if (empty($people)) {
-                    echo 'No se encontraron personas.';
-                } else {
-                    foreach ($people as $person) {
-                        echo '<option value="' . $person->Pe_id . '">' . $person->Pe_nombre . ' ' . $person->Pe_apellidos . '</option>';
-                    }
-                }
-                ?>
-            </select>
+<div class="content_cuerpo">
+    <div class="content_cuerpo-bloque2">
+        <div class="content_cuerpo-bloque2-caja">
+            <h1 class="content_cuerpo-bloque2-caja-titulo">Historial de Registro</h1>
         </div>
-        <div class="content_cuerpo-bloque2">
-            <div class="content_cuerpo-bloque2-caja">
-                <h1 class="content_cuerpo-bloque2-caja-titulo">Datos Basicos</h1>
-            </div>
-            <div class="content_cuerpo-bloque2-caja-titulo-contenido">
-                <div class="content_cuerpo-bloque2-caja-titulo-contenido-bloque1">
-                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo">Numero de Documento:
-                    </p>
-
-                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo"> Nombres: </p>
-                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo"> Apellidos:</p>
-                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo">Telefono:</p>
-
-
-                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo">Gmail: </p>
-                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo">Numero de Departamento: </p>
-                    <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo">Rol: </p>
-                </div>
-                <div class="content_cuerpo-bloque2-caja-titulo-contenido-bloque2">
-                    <input type="text" value="">
-                    <input type="text" value="">
-                    <input type="text" value="">
-                    <input type="text" value="">
-                    <input type="text" value="">
-                    <input type="text" value="">
-                    <select name="" id="select" class="Rol">
-                        <option value="1">Administrador</option>
-                        <option value="2">Guardia</option>
-                        <option value="3">Residente</option>
-                    </select>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="content_cuerpo-bloque3">
+        <table>
+            <tr>
+                <th class="content__tabla-titulo">Nombre y Apellido</th>
+                <th class="content__tabla-titulo">Fecha de ingreso</th>
+                <th class="content__tabla-titulo">Hora de entrada</th>
+                <th class="content__tabla-titulo">Hora de salida </th>
+                <th class="content__tabla-titulo">Num_Dep</th>
+            </tr>
+            <tr>
+                <td class="content__tabla-informacion">Andres david pereira puello</td>
+                <td class="content__tabla-informacion">25/8/2024</td>
+                <td class="content__tabla-informacion">4:45pm</td>
+                <td class="content__tabla-informacion">6:00pm</td>
+                <td class="content__tabla-informacion">203</td>
+            </tr>
+        </table>
+    </div>
+    <div class="content_cuerpo-bloque3">
             <div class="content_cuerpo-bloque3-contenido">
+                
                 <button class="content_cuerpo-bloque3-botones">
-                    <a href="/paginas/Admin/adminitracion.html"> Usuarios</a>
+                    <a href="<?php echo RUTA_URL;?>/HomeController/usuario">Usuarios</a>
                 </button>
                 <button class="content_cuerpo-bloque3-botones" id="NuevoUsuaro">
                     Nuevo usuario
@@ -235,9 +177,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
 
-
-<?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>
+    <?php require_once RUTA_APP . '/views/inc/footer-historial.php'; ?>

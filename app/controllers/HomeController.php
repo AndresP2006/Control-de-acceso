@@ -49,4 +49,15 @@ class HomeController extends Controlador
 
         $this->vista('pages/porter/porterView', ($this->porterController->index()));
     }
+    // menu de administracion 
+    public function usuario(){
+        $this->vista('pages/admin/adminView');
+    }
+    public function historialRe(){
+        $this->vista('pages/admin/historialReView');
+    }
+    public function histrialVi(){
+        $this->vista('pages/admin/historialViVIew');
+    }
+
 }
