@@ -25,15 +25,14 @@
             </div>
         </div>
         <div class="opciones">
-            <!-- problemas  -->
+            <!-- Buscar  -->
             <form action="http://localhost:8080/Control-de-acceso-main/paginas/Guardia/controllers/indexContrl.php"
                 method="post">
                 <input id="texto" type="text" placeholder="Buscar Persona con paquetes" name="residente" />
                 <input type="submit" value="Buscar" class="Buscar" id="Actualizar" name="Busca">
             </form>
-            <form action="http://localhost:8080/Control-de-acceso-main/paginas/Guardia/controllers/indexContrl.php"
-                method="post">
-                <input id="texto" type="text" placeholder="Salida de visitante" name="residente" />
+            <form action="<?php echo RUTA_URL; ?>/PorterController/dropGuest" method="post">
+                <input id="texto" type="text" placeholder="Salida de visitante" name="salida_visita" />
                 <input type="submit" value="Salida" class="Buscar" id="Actualizar" name="salida">
             </form>
 

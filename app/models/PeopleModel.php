@@ -30,12 +30,11 @@ class PeopleModel
         return $this->db->registro();
     }
 
-    public function getAllPeople()
+    public function getGuestById($idGuest)
     {
-    
-        $this->db->query("SELECT * FROM persona");
+        $this->db->query("delete from visitantes  where Vi_id = '$idGuest'");
 
+        return $this->db->registro();
         
-        return $this->db->registros();
     }
 }

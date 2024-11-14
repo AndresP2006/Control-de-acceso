@@ -42,6 +42,17 @@ class PorterController extends Controlador
             $this->vista('pages/porter/porterView', $datos);
         }
     }
+
+    public function dropGuest()
+    {
+        $Guest = $this->PeopleModel->getGuestById($_POST['salida_visita']);
+
+        $datos = $this->index('Salida registrada exitosamente');
+        $this->vista('pages/porter/porterView', $datos);
+
+    }
+
+
     public function enterPackage()
     {
         if (isset($_POST['paquetes'])) {
