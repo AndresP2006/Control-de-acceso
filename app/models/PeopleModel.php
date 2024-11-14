@@ -30,4 +30,12 @@ class PeopleModel
         return $this->db->registro();
     }
 
+    public function getAllPeople()
+    {
+    
+        $this->db->query("SELECT * FROM persona");
+
+        
+        return $this->db->registros();
+    }
 }
