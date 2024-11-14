@@ -18,18 +18,22 @@
             <h2>Han ingresado</h2>
             <div class="contador">
                 <?php
-                if (isset($datos)) {
+                if (isset($datos['total'])) {
                     echo $datos['total'];
                 }
                 ?>
             </div>
         </div>
         <div class="opciones">
-            <!-- problemas  -->
+            <!-- Buscar  -->
             <form action="http://localhost:8080/Control-de-acceso-main/paginas/Guardia/controllers/indexContrl.php"
                 method="post">
                 <input id="texto" type="text" placeholder="Buscar Persona con paquetes" name="residente" />
                 <input type="submit" value="Buscar" class="Buscar" id="Actualizar" name="Busca">
+            </form>
+            <form action="<?php echo RUTA_URL; ?>/PorterController/dropGuest" method="post">
+                <input id="texto" type="text" placeholder="Salida de visitante" name="salida_visita" />
+                <input type="submit" value="Salida" class="Buscar" id="Actualizar" name="salida">
             </form>
 
             <!-- fin -->
@@ -75,7 +79,8 @@
                             <h3 class="titulo-form">Registro de paquetes</h3>
                             <span class="close2" id="closeModal">&times;</span>
                         </div>
-                        <form id="packageForm" action="<?php echo RUTA_URL; ?>/PorterController/enterPackage" method="post">
+                        <form id="packageForm" action="<?php echo RUTA_URL; ?>/PorterController/enterPackage"
+                            method="post">
                             <h4>Estado: <input type="text" id="Pa_Estado" name="estado" /></h4>
                             <h4>Descripcio: <textarea id="Pa_Descripcion" name="descripcion"></textarea></h4>
                             <h4>Fecha de entrega: <input type="date" id="Pa_Fecha" name="fecha" /></h4>
