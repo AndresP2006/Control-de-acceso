@@ -4,30 +4,28 @@
 <div class="content_cuerpo">
     <div class="content_cuerpo-bloque2">
         <div class="content_cuerpo-bloque2-caja">
-            <h1 class="content_cuerpo-bloque2-caja-titulo">Lista de visitantes</h1>
+            <h1 class="content_cuerpo-bloque2-caja-titulo">Paquetes en porteria</h1>
         </div>
         <table>
             <tr>
-                <th class="content__tabla-titulo">Numero de Doc</th>
-                <th class="content__tabla-titulo">Nombre</th>
-                <th class="content__tabla-titulo">Apellido</th>
-                <th class="content__tabla-titulo">Telefono</th>
-                <th class="content__tabla-titulo">Departamento</th>
-                <th class="content__tabla-titulo">Motivo de Visita</th>
+                <th class="content__tabla-titulo">Estado</th>
+                <th class="content__tabla-titulo">Descripcion</th>
+                <th class="content__tabla-titulo">Fecha</th>
+                <th class="content__tabla-titulo">Responsable</th>
+                <th class="content__tabla-titulo">Dueño</th>
             </tr>
             <?php
             $model = new PeopleModel();
-            $registro = $model->getVisitas();
+            $registro = $model->getPackeges();
 
             if (is_array($registro)) {
                 foreach ($registro as $visitas): ?>
                     <tr>
-                        <td class="content__tabla-informacion"><?php echo $visitas["Vi_id"]; ?></td>
-                        <td class="content__tabla-informacion"><?php echo $visitas["Vi_nombres"]; ?></td>
-                        <td class="content__tabla-informacion"><?php echo $visitas["Vi_apellidos"]; ?></td>
-                        <td class="content__tabla-informacion"><?php echo $visitas["Vi_telefono"]; ?></td>
-                        <td class="content__tabla-informacion"><?php echo $visitas["Vi_departamento"]; ?></td>
-                        <td class="content__tabla-informacion"><?php echo $visitas["Vi_motivo"]; ?></td>
+                        <td class="content__tabla-informacion"><?php echo $visitas["Pa_estado"]; ?></td>
+                        <td class="content__tabla-informacion"><?php echo $visitas["Pa_descripcion"]; ?></td>
+                        <td class="content__tabla-informacion"><?php echo $visitas["Pa_fecha"]; ?></td>
+                        <td class="content__tabla-informacion"><?php echo $visitas["Pa_responsable"]; ?></td>
+                        <td class="content__tabla-informacion"><?php echo $visitas["Pe_id"]; ?></td>
                     </tr>
             <?php endforeach;
             } else {
@@ -192,6 +190,5 @@
     </div>
 </div>
 </div>
-
 
 <?php require_once RUTA_APP . '/views/inc/footer-historial.php'; ?>

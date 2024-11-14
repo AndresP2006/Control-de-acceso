@@ -165,7 +165,7 @@
                     <a href="<?php echo RUTA_URL;?>/HomeController/histrialVi">Lista de visitante</a>
                 </button>
                 <button class="content_cuerpo-bloque3-botones">
-                    <a href="/paginas/Admin/Paquetes.html">Paquetes</a>
+                    <a href="<?php echo RUTA_URL; ?>/HomeController/paquetes">Paquetes</a>
                 </button>
 
                 <button class="content_cuerpo-bloque3-botones" id="openModalBtn">

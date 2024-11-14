@@ -70,4 +70,10 @@ class PorterController extends Controlador
             $this->vista('pages/porter/porterView', $datos);
         }
     }
+    public function show(){
+        return $this->PeopleModel->getVisitas();
+    }
+    public function showPackeges(){
+        return $this->PeopleModel->getPackeges();
+    }
 }

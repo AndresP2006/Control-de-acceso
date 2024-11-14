@@ -35,11 +35,20 @@ class PeopleModel
         $this->db->query("delete from visitantes  where Vi_id = '$idGuest'");
 
         return $this->db->registro();
-        
     }
-    public function getAllpeople(){
+    public function getAllpeople()
+    {
         $this->db->query("SELECT * FROM persona");
 
         return $this->db->registros();
+    }
+    public function getVisitas()
+    {
+        $this->db->query("SELECT * FROM visitantes");
+        return $this->db->showTables(); 
+    }
+    public function getPackeges(){
+        $this->db->query("SELECT * FROM paquete");
+        return $this->db->showTables();
     }
 }

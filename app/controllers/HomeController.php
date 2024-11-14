@@ -59,5 +59,8 @@ class HomeController extends Controlador
     public function histrialVi(){
         $this->vista('pages/admin/historialViVIew');
     }
+    public function paquetes(){
+        $this->vista('pages/admin/paquetesView');
+    }
 
 }
