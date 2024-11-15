@@ -35,25 +35,10 @@ window.onclick = function (event) {
   }
 };
 
-// mostrar datos
-const botonMostrar = document.getElementById("Actualizar");
-const overlay = document.getElementById("overlay");
-const botonCerrar = document.getElementById("cerrar");
+document.getElementById("abrirMiModal").addEventListener("click", function() {
+  document.getElementById("miModal").classList.add("miModal--activo");
+});
 
-// botonMostrar.onclick = function () {
-//   overlay.style.display = "block";
-// };
-function motrar(){
-  overlay.style.display = "block";
-}
-botonCerrar.onclick = function () {
-  overlay.style.display = "none";
-  window.location.href="http://localhost/andres/Control-de-acceso-main/paginas/Guardia/index.php";
-};
-
-overlay.onclick = function (event) {
-  if (event.target === overlay) {
-    overlay.style.display = "none";
-    window.location.href="http://localhost/andres/Control-de-acceso-main/paginas/Guardia/index.php";
-  }
-};
+document.getElementById("cerrarMiModal").addEventListener("click", function() {
+  document.getElementById("miModal").classList.remove("miModal--activo");
+});
