@@ -1,37 +1,17 @@
 <?php require_once RUTA_APP . '/views/inc/header-admin.php'; ?>
 
-<script>
-    // Función para enviar el formulario al seleccionar un usuario
-    function enviarFormulario() {
-        var select = document.getElementById('miSelect');
-        var valorSeleccionado = select.value;
-
-        // Crear un formulario temporal
-        var form = document.createElement('form');
-        form.method = 'POST';
-        form.action = ''; // Acción del formulario
-
-        // Crear un campo oculto para enviar el valor
-        var input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = 'id_usuario';
-        input.value = valorSeleccionado;
-        form.appendChild(input);
-
-        // Enviar el formulario
-        document.body.appendChild(form);
-        form.submit();
-    }
-</script>
 
 <div class="content">
 
     <div class="content_cuerpo">
         <div class="content_cuerpo-bloque1">
             <div class="content_cuerpo-bloque1-texto">
-                <input id="texto" type="text"> <button class="content_cuerpo-bloque1-boton">Buscar</button>
+            <form action="<?php echo RUTA_URL; ?>/UserController/mostrarFormulario" method="POST">
+                <input id="id" type="text" name="id_usuario"> <button class="content_cuerpo-bloque1-boton" type="submit" name="buscar">Buscar</button>
+            </form>
             </div>
-            <select name="Select" id="miSelect">
+            <form action="<?php echo RUTA_URL; ?>/UserController/mostrarFormulario" method="POST">
+            <select name="id_usuario" id="miSelect" onchange="this.form.submit()">
                 <option value="">Seleccionar</option>
                 <?php
                 $peopleModel = new PeopleModel();
@@ -46,6 +26,7 @@
                 }
                 ?>
             </select>
+            </form>
         </div>
         <div class="content_cuerpo-bloque2">
             <div class="content_cuerpo-bloque2-caja">
@@ -66,17 +47,33 @@
                     <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo">Rol: </p>
                 </div>
                 <div class="content_cuerpo-bloque2-caja-titulo-contenido-bloque2">
-                    <input type="text" value="">
-                    <input type="text" value="">
-                    <input type="text" value="">
-                    <input type="text" value="">
-                    <input type="text" value="">
-                    <input type="text" value="">
-                    <select name="" id="select" class="Rol">
-                        <option value="1">Administrador</option>
-                        <option value="2">Guardia</option>
-                        <option value="3">Residente</option>
-                    </select>
+                    
+                    
+        <!-- Campos para mostrar los datos de la persona -->
+        <?php
+            // Verificamos si hay datos disponibles; de lo contrario, mostramos vacío
+            $id = !empty($persona) ? htmlspecialchars($persona->Pe_id) : '';
+            $nombre = !empty($persona) ? htmlspecialchars($persona->Pe_nombre) : '';
+            $apellido = !empty($persona) ? htmlspecialchars($persona->Pe_apellidos) : '';
+            $telefono = !empty($persona) ? htmlspecialchars($persona->Pe_telefono) : '';
+            $gmail = !empty($persona) ? htmlspecialchars($persona->Us_correo) : '';
+            $departemento = !empty($persona) ? htmlspecialchars($persona->Ap_id) : '';
+        ?>
+
+        <input type="text" name="id" value="<?php echo $id; ?>" placeholder="Cedula" readonly>
+        <input type="text" name="nombre" value="<?php echo $nombre; ?>" placeholder="Nombre" readonly>
+        <input type="text" name="apellido" value="<?php echo $apellido; ?>" placeholder="Apellido" readonly>
+        <input type="text" name="Telefono" value="<?php echo $telefono; ?>" placeholder="Telefono" readonly>
+        <input type="text" name="Gmail" value="<?php echo $gmail; ?>" placeholder="Gmail" readonly>
+        <input type="text" name="Apartamento" value="<?php echo $departemento; ?>" placeholder="Apartamento" readonly>
+        <!-- Añade más campos según las columnas de tu tabla -->
+
+        <select name="rol" id="select" class="Rol" disabled>
+            <option value="1" <?php echo (!empty($persona) && $persona->Ro_id == 1) ? 'selected' : ''; ?>>Seleccionar</option>
+            <option value="1" <?php echo (!empty($persona) && $persona->Ro_id == 1) ? 'selected' : ''; ?>>Administrador</option>
+            <option value="2" <?php echo (!empty($persona) && $persona->Ro_id == 2) ? 'selected' : ''; ?>>Guardia</option>
+            <option value="3" <?php echo (!empty($persona) && $persona->Ro_id == 3) ? 'selected' : ''; ?>>Residente</option>
+        </select>
                 </div>
             </div>
 

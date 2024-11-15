@@ -36,5 +36,13 @@ class UserController extends Controlador
         }
     }
 
-    
+    public function mostrarFormulario() {
+        // Verificar si se recibió el ID del usuario en POST (por input o select)
+        if (isset($_POST['id_usuario']) || isset($_POST['buscar']) ) {
+            $id = $_POST['id_usuario'];
+            $persona = $this->PeopleModel->getPersonaById($id);
+        }
+
+        require_once RUTA_APP . '/views/pages/admin/adminView.php';
+    }
 }

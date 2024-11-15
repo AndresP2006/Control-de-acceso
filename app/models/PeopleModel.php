@@ -51,4 +51,21 @@ class PeopleModel
         $this->db->query("SELECT * FROM paquete");
         return $this->db->showTables();
     }
+
+    public function getPersonaById($id)
+    {
+        // Query que trae los datos de la persona junto con el rol desde la tabla usuario
+        $this->db->query("
+            SELECT persona.*, usuario.Ro_id, usuario.Us_correo 
+            FROM persona 
+            LEFT JOIN usuario ON persona.Pe_id = usuario.Us_id 
+            WHERE persona.Pe_id = :id
+        ");
+
+        // Vinculamos el parámetro
+        $this->db->bind(':id', $id);
+
+        // Ejecutamos la consulta y obtenemos el resultado
+        return $this->db->registro();
+    }
 }
