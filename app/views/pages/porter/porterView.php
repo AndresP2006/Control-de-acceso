@@ -39,7 +39,7 @@
             <div class="miModal" id="miModal">
                 <form class="miModal__contenido">
                     <button class="miModal__cerrar" id="cerrarMiModal">&times;</button>
-                    <h2 class="miModal__titulo">Información del Usuario</h2>
+                    <h2 class="miModal__titulo">Información del Residente</h2>
 
 
                     <div class="miModal__grupo">
