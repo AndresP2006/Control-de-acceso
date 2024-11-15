@@ -26,17 +26,57 @@
         </div>
         <div class="opciones">
             <!-- Buscar  -->
-            <form action=""
-                method="post">
-                <input id="texto" type="text" placeholder="Buscar Persona con paquetes" name="residente" />
-                <center>
-                <input type="submit" value="Buscar" class="Buscar" id="Actualizar" name="Busca">
-                </center>
+            <div>
+            <form>
+                <input id="texto" type="text" name="residente" placeholder="Buscar Persona con paquetes" />
             </form>
+            <center>
+                <button class="Buscar" id="abrirMiModal" name="Busca" onclick="buscarPersona()">Buscar</button>
+            </center>
+            </div>
+            <!-- Modal -->
+            <!-- Modal con formulario -->
+            <div class="miModal" id="miModal">
+                <form class="miModal__contenido">
+                    <button class="miModal__cerrar" id="cerrarMiModal">&times;</button>
+                    <h2 class="miModal__titulo">Información del Usuario</h2>
+
+
+                    <div class="miModal__grupo">
+                        <label class="miModal__label" for="nombres">Nombres:</label>
+                        <input class="miModal__input" type="text" id="nombres" name="nombres">
+                    </div>
+
+                    <div class="miModal__grupo">
+                        <label class="miModal__label" for="apellidos">Apellidos:</label>
+                        <input class="miModal__input" type="text" id="apellidos" name="apellidos">
+                    </div>
+
+                    <div class="miModal__grupo">
+                        <label class="miModal__label" for="telefono">Teléfono:</label>
+                        <input class="miModal__input" type="text" id="telefono" name="telefono">
+                    </div>
+
+                    <div class="miModal__grupo">
+                        <label class="miModal__label" for="departamento">Número de Departamento:</label>
+                        <input class="miModal__input" type="text" id="departamento" name="departamento">
+                    </div>
+
+                    <div class="miModal__grupo">
+                        <label class="miModal__label" for="Paquete">Paquete:</label>
+                        <input class="miModal__input" type="text" id="Paquete" name="Paquete">
+                    </div>
+
+
+                    <button type="submit" class="miModal__submit">Actualizar</button>
+                </form>
+            </div>
+
+
             <form action="<?php echo RUTA_URL; ?>/PorterController/dropGuest" method="post">
                 <input id="texto" type="text" placeholder="Salida de visitante" name="salida_visita" />
                 <center>
-                <input type="submit" value="Salida" class="Buscar" id="Actualizar" name="salida">
+                    <input type="submit" value="Salida" class="Buscar" id="Actualizar" name="salida">
                 </center>
             </form>
 
@@ -143,5 +183,4 @@ $_SESSION;
     <?php if (isset($datos['messageInfo'])) { ?>
         realizado("<?php echo $datos['messageInfo']; ?>")
     <?php } ?>
-
 </script>
