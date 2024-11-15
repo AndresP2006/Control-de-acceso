@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="cerrar-sescion">
-            <a href="../../index.html"><button class="boton">Cerrar Sesion</button></a>
+            <a href="../homeView.php"><button class="boton">Cerrar Sesion</button></a>
         </div>
     </div>
     <div class="cuerpo">
