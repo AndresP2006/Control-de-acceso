@@ -13,7 +13,7 @@ class UserController extends Controlador
 
     public function createUser()
     {
-        if(isset($_POST["Enviar"])){
+        if (isset($_POST["Enviar"])) {
             $datos = [
                 'Cedula' => trim($_POST['U_id']),
                 'Nombre' => trim($_POST['U_Nombre']),
@@ -31,18 +31,19 @@ class UserController extends Controlador
                 'messageInfo' => $message,
             ];
             $this->vista('pages/admin/AdminView', $datos);
-        }else{
+        } else {
             echo "error";
         }
     }
 
-    public function mostrarFormulario() {
+    public function mostrarFormulario()
+    {
         // Verificar si se recibió el ID del usuario en POST (por input o select)
-        if (isset($_POST['id_usuario']) || isset($_POST['buscar']) ) {
+        if (isset($_POST['id_usuario']) || isset($_POST['buscar'])) {
             $id = $_POST['id_usuario'];
-            $persona = $this->PeopleModel->getPersonaById($id);
+            $this->PeopleModel->getPersonaById($id);
         }
 
-        require_once RUTA_APP . '/views/pages/admin/adminView.php';
+        $this->vista('pages/admin/adminView', null);
     }
 }
