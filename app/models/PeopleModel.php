@@ -45,9 +45,10 @@ class PeopleModel
     public function getVisitas()
     {
         $this->db->query("SELECT * FROM visitantes");
-        return $this->db->showTables(); 
+        return $this->db->showTables();
     }
-    public function getPackeges(){
+    public function getPackeges()
+    {
         $this->db->query("SELECT * FROM paquete");
         return $this->db->showTables();
     }
@@ -66,6 +67,14 @@ class PeopleModel
         $this->db->bind(':id', $id);
 
         // Ejecutamos la consulta y obtenemos el resultado
+        return $this->db->registro();
+    }
+
+    public function PeopleID($id)
+    {
+        $this->db->query(
+            "SELECT p.*, COUNT(a.Pa_Id) AS Total_paquetes FROM persona p LEFT JOIN paquete a ON p.Pe_id = a.Pe_id WHERE p.Pe_id = $id GROUP BY p.Pe_id;"
+        );
         return $this->db->registro();
     }
 }
