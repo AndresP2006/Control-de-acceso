@@ -35,10 +35,5 @@ window.onclick = function (event) {
   }
 };
 
-document.getElementById("abrirMiModal").addEventListener("click", function() {
-  document.getElementById("miModal").classList.add("miModal--activo");
-});
 
-document.getElementById("cerrarMiModal").addEventListener("click", function() {
-  document.getElementById("miModal").classList.remove("miModal--activo");
-});
+

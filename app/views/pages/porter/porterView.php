@@ -27,12 +27,12 @@
         <div class="opciones">
             <!-- Buscar  -->
             <div>
-            <form>
-                <input id="texto" type="text" name="residente" placeholder="Buscar Persona con paquetes" />
-            </form>
-            <center>
-                <button class="Buscar" id="abrirMiModal" name="Busca" onclick="buscarPersona()">Buscar</button>
-            </center>
+                <form action="<?php RUTA_URL; ?>/PorterController/getPeopleBypa" method="post">
+                    <input id="texto" class="PeopleId" type="text" name="residente" placeholder="Buscar Persona con paquetes" />
+                    <center>
+                        <button class="Buscar" id="abrirMiModal" name="Busca" type="button">Buscar</button>
+                    </center>
+                </form>
             </div>
             <!-- Modal -->
             <!-- Modal con formulario -->
@@ -43,12 +43,12 @@
 
 
                     <div class="miModal__grupo">
-                        <label class="miModal__label" for="nombres">Nombres:</label>
+                        <label class="miModal__label" for="nombres">Nombre:</label>
                         <input class="miModal__input" type="text" id="nombres" name="nombres">
                     </div>
 
                     <div class="miModal__grupo">
-                        <label class="miModal__label" for="apellidos">Apellidos:</label>
+                        <label class="miModal__label" for="apellidos">Apellido:</label>
                         <input class="miModal__input" type="text" id="apellidos" name="apellidos">
                     </div>
 
@@ -63,7 +63,7 @@
                     </div>
 
                     <div class="miModal__grupo">
-                        <label class="miModal__label" for="Paquete">Paquete:</label>
+                        <label class="miModal__label" for="Paquete">Total de paquetes:</label>
                         <input class="miModal__input" type="text" id="Paquete" name="Paquete">
                     </div>
 
@@ -183,4 +183,29 @@ $_SESSION;
     <?php if (isset($datos['messageInfo'])) { ?>
         realizado("<?php echo $datos['messageInfo']; ?>")
     <?php } ?>
+
+    $(document).ready(function() {
+
+        $('#abrirMiModal').click(function() {
+            let PeopleID = $('#texto').val();
+            $.ajax({
+                url: '<?php echo RUTA_URL; ?>/PorterController/getPeopleBypa?residente=' + PeopleID, //de donde recibe la informacion
+                type: 'GET', //de que manera lo recibe
+                success: function(respuesta) {
+                    let resp = JSON.parse(respuesta);
+                    
+                    $('#miModal').addClass('miModal--activo');
+                    $('#nombres').val(resp.Pe_nombre);
+                    $('#apellidos').val(resp.Pe_apellidos);
+                    $('#telefono').val(resp.Pe_telefono);
+                    $('#departamento').val(resp.Ap_id);
+                    $('#Paquete').val(resp.Total_paquetes);
+                },
+                error: function() {
+                    $('#respuesta').html('Error al procesar la solicitud.'); //informacion incorrecta
+                }
+            });
+        })
+
+    })
 </script>
