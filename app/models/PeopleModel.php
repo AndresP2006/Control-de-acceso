@@ -63,21 +63,20 @@ class PeopleModel
         return $this->db->registro(); // Devuelve un solo registro
     }
 
-    public function getAllpeople()
-{
-    // Realizar la consulta para obtener todos los registros de la tabla 'persona'
-    $this->db->query("SELECT * FROM persona");
+    // public function getAllpeople()
+    // {
+    //     // Realizar la consulta para obtener todos los registros de la tabla 'persona'
+    //     $this->db->query("SELECT * FROM persona");
 
-    // Comprobar si la consulta devuelve datos
-    if ($this->db->totalRegistros() > 0) {
-        return $this->db->registros(); // Esto debería devolver un array de datos
-    } else {
-        return []; // Si no hay registros, devolver un array vacío
-    }
+    //     // Comprobar si la consulta devuelve datos
+    //     if ($this->db->totalRegistros() > 0) {
+    //         return $this->db->registros(); // Esto debería devolver un array de datos
+    //     } else {
+    //         return []; // Si no hay registros, devolver un array vacío
+    //     }
+    // }
 
-    
-}
-public function PeopleID($id)
+    public function PeopleID($id)
     {
         $this->db->query(
             "SELECT p.*, COUNT(a.Pa_Id) AS Total_paquetes FROM persona p LEFT JOIN paquete a ON p.Pe_id = a.Pe_id WHERE p.Pe_id = $id GROUP BY p.Pe_id;"
@@ -85,4 +84,9 @@ public function PeopleID($id)
         return $this->db->registro();
     }
 
+    public function  showRegistro()
+    {
+        $this->db->query("SELECT v.Vi_nombres,r.*,v.Vi_departamento from visitantes v , registro r where v.Vi_id=r.Vi_id");
+        return $this->db->showTables();
+    }
 }
