@@ -77,4 +77,9 @@ class PeopleModel
         );
         return $this->db->registro();
     }
+    public function  showRegistro()
+    {
+        $this->db->query("SELECT v.Vi_nombres,r.*,v.Vi_departamento from visitantes v , registro r where v.Vi_id=r.Vi_id");
+        return $this->db->showTables();
+    }
 }

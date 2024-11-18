@@ -76,6 +76,9 @@ class PorterController extends Controlador
     {
         return $this->PeopleModel->getPackeges();
     }
+    public function showRegistro(){
+        return $this->PeopleModel->showRegistro();
+    }
 
     public function getPeopleBypa()
     {

@@ -11,8 +11,9 @@ class PorterModel
 
     public function addGuest($datos)
     {
-        $this->db->query('INSERT INTO visitantes (Vi_id, Vi_nombres, Vi_apellidos, Vi_telefono, Vi_departamento, Vi_motivo, Pe_id) VALUES(
-        :Cedula, :Nombre, :Apellido, :Telefono, :Departamento, :Motivo, :PeopleId)');
+        $this->db->query('INSERT INTO visitantes (Vi_id, Vi_nombres, Vi_apellidos, Vi_telefono, Vi_departamento, Vi_motivo, Pe_id) 
+        VALUES (:Cedula, :Nombre, :Apellido, :Telefono, :Departamento, :Motivo, :PeopleId)');
+
         $this->db->bind(':Cedula', $datos['Cedula']);
         $this->db->bind(':Nombre', $datos['Nombre']);
         $this->db->bind(':Apellido', $datos['Apellido']);
@@ -20,7 +21,19 @@ class PorterModel
         $this->db->bind(':Departamento', $datos['Departamento']);
         $this->db->bind(':Motivo', $datos['Motivo']);
         $this->db->bind(':PeopleId', $datos['PeopleId']);
-        ($this->db->execute()) ? true : false;
+
+        if ($this->db->execute()) {
+            $this->db->query('INSERT INTO registro (Re_fecha_entrada, Re_hora_entrada, Vi_id)
+                          VALUES (CURRENT_DATE, CURRENT_TIME, :Cedula)');
+            $this->db->bind(':Cedula', $datos['Cedula']);
+            if ($this->db->execute()) {
+                return true; 
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
     public function enterPackage($paquete)
     {
@@ -34,9 +47,5 @@ class PorterModel
         ($this->db->execute()) ? true : false;
     }
 
-    public function leavePackage($paquete){
-        
-    }
-
-
+    public function leavePackage($paquete) {}
 }
