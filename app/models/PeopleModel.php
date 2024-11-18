@@ -75,14 +75,14 @@ class PeopleModel
         return []; // Si no hay registros, devolver un array vacío
     }
 
-    public function PeopleID($id)
+    
+}
+public function PeopleID($id)
     {
         $this->db->query(
             "SELECT p.*, COUNT(a.Pa_Id) AS Total_paquetes FROM persona p LEFT JOIN paquete a ON p.Pe_id = a.Pe_id WHERE p.Pe_id = $id GROUP BY p.Pe_id;"
         );
         return $this->db->registro();
     }
-}
-
 
 }
