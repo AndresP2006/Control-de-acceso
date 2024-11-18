@@ -6,9 +6,9 @@ class UserController extends Controlador
 
     public function __construct()
     {
+        // Inicialización de los modelos
         $this->AdminModel = $this->modelo('AdminModel');
         $this->PeopleModel = $this->modelo('PeopleModel');
-        //echo 'Controlador paginas cargado';
     }
 
     public function createUser()
@@ -36,14 +36,24 @@ class UserController extends Controlador
         }
     }
 
-    public function mostrarFormulario()
-    {
-        // Verificar si se recibió el ID del usuario en POST (por input o select)
-        if (isset($_POST['id_usuario']) || isset($_POST['buscar'])) {
-            $id = $_POST['id_usuario'];
-            $this->PeopleModel->getPersonaById($id);
-        }
+    public function DeleteUser()
+{
+    // Verificar si el ID ha sido enviado
+    if (isset($_POST['deletebtn']) && isset($_POST['delete_id'])) {
+        // Obtener el ID del registro a eliminar
+        $delete_id = $_POST['delete_id'];
+        $message = 'Usuario borrado correctamente';
+        echo $delete_id;
+        // Eliminar el registro en el modelo
+        $this->AdminModel->eliminarRegistro($delete_id);
 
-        $this->vista('pages/admin/adminView', null);
-    }
+        
+        // Redirigir a la lista de registros después de la eliminación
+        $datos = [
+            'messageInfo' => $message,
+        ];
+        $this->vista('pages/admin/AdminView', $datos);
+    } 
+}
+
 }
