@@ -36,7 +36,7 @@ $conn->close();
 
 <div class="controls">
     <div class="control-group">
-        <button class="add-btn">➕ Agregar Nuevo Registro</button>
+        <button class="add-btn" id="nuevo_registro">➕ Agregar Nuevo Registro</button>
         <form action="" method="POST">
             <select name="select_id" class="filter-select" onchange="this.form.submit()">
                 <option value="">Filtrar por Tipo</option>
@@ -79,8 +79,11 @@ $conn->close();
                         echo "<td>" . htmlspecialchars($registro['Ap_id']) . "</td>";
                         echo "<td>" . htmlspecialchars($registro['Ro_id']) . "</td>";
                         echo "<td>
-                                <button class='edit-btn'>✏️</button>
-                                <button class='delete-btn'>🗑️</button>
+                                <button class='edit-btn' id='nuevo_registro'>✏️</button>
+                                <form action='" . RUTA_URL . "/UserController/DeleteUser' method='POST' style='display:inline;'>
+                        <input type='hidden' name='delete_id' value='" . htmlspecialchars($registro['Pe_id']) . "'>
+                        <button type='submit' name='deletebtn' class='delete-btn'>🗑️</button>
+                    </form>
                                 </td>";
                         echo "</tr>";
                     }
@@ -95,6 +98,25 @@ $conn->close();
         <button class="action-btn">Botón 1</button>
         <button class="action-btn">Botón 2</button>
         <button class="action-btn">Botón 3</button>
+    </div>
+</div>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <div class="cerrado">
+            <h3 class="titulo-form">Nuevo registro</h3>
+            <span class="close" id="close">&times;</span>
+        </div>
+        <form id="myForm" action="<?php echo RUTA_URL; ?>/PorterController/createGuest" method="post">
+            <h4>Cedula: <input type="text" id="u_id" name="u_id" /></h4>
+            <h4>Nombre: <input type="text" id="U_Nombre" name="U_Nombre" /></h4>
+            <h4>Apellido: <input type="text" id="U_Apellido" name="U_Apellido" /></h4>
+            <h4>Telefono: <input type="text" id="U_Telefono" name="U_Telefono" /></h4>
+            <h4>Motivo de visita: <input type="text" id="U_Motivo" name="U_Motivo" /></h4>
+            <h4>Numero de apartameto: <input type="text" id="U_Departamento" name="U_Departamento" /></h4>
+            <center>
+                <input type="submit" value="Enviar" class="Enviar" name="Visitantes" />
+            </center>
+        </form>
     </div>
 </div>
 

@@ -6,9 +6,9 @@ class UserController extends Controlador
 
     public function __construct()
     {
+        // Inicialización de los modelos
         $this->AdminModel = $this->modelo('AdminModel');
         $this->PeopleModel = $this->modelo('PeopleModel');
-        //echo 'Controlador paginas cargado';
     }
 
     public function createUser()
@@ -36,32 +36,24 @@ class UserController extends Controlador
         }
     }
 
-    public function mostrarFormulario()
-    {
-        // Obtener los datos del modelo
-        $registros = $this->$PeopleModel->getAllPeople();
-
-        // Pasar los datos a la vista
-        $datos = ['registros' => $registros];
-        $this->vista('pages/admin/adminView', $datos);
-    }
-    public function mostrarDatos()
+    public function DeleteUser()
 {
-    if (isset($_POST['select_id'])) {
-        $id = $_POST['select_id'];
-        $registro = $this->PeopleModel->getPersonaById($id);
+    // Verificar si el ID ha sido enviado
+    if (isset($_POST['deletebtn']) && isset($_POST['delete_id'])) {
+        // Obtener el ID del registro a eliminar
+        $delete_id = $_POST['delete_id'];
+        $message = 'Usuario borrado correctamente';
+        echo $delete_id;
+        // Eliminar el registro en el modelo
+        $this->AdminModel->eliminarRegistro($delete_id);
 
-        // Si el registro no es un array, lo convertimos a uno
-        $registros = is_array($registro) ? [$registro] : [$registro];
-
-        // Pasar los datos a la vista
-        $datos = ['registros' => $registros];
-        require_once RUTA_APP . '/views/pages/admin/adminView.php';
-    } else {
-        // Si no hay datos, pasamos un array vacío
-        $datos = ['registros' => []];
-        require_once RUTA_APP . '/views/pages/admin/adminView.php';
-    }
+        
+        // Redirigir a la lista de registros después de la eliminación
+        $datos = [
+            'messageInfo' => $message,
+        ];
+        $this->vista('pages/admin/AdminView', $datos);
+    } 
 }
 
 }

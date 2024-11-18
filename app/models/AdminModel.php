@@ -56,4 +56,36 @@ class AdminModel{
     }
 }
 
+public function eliminarRegistro($id) {
+    try {
+        // Iniciar una transacción
+        $this->db->beginTransaction();
+
+        // Eliminar el registro de la tabla 'persona' primero
+        $sql2 = "DELETE FROM persona WHERE Us_id = :id";
+        $this->db->query($sql2);
+        $this->db->bind(':id', $id);
+        $this->db->execute();
+
+        // Luego eliminar el registro de la tabla 'usuario'
+        $sql1 = "DELETE FROM usuario WHERE Us_id = :id";
+        $this->db->query($sql1);
+        $this->db->bind(':id', $id);
+        $this->db->execute();
+
+        // Confirmar la transacción si ambas consultas fueron exitosas
+        $this->db->commit();
+
+        return true; // Indica que la eliminación fue exitosa
+    } catch (Exception $e) {
+        // Si hay un error, revertir la transacción
+        $this->db->rollBack();
+        echo "Error: " . $e->getMessage(); // Esto mostrará el error exacto
+        return false; // Indica que ocurrió un error
+    }
+}
+
+
+
+
 }
