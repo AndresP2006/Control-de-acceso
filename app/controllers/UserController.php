@@ -13,7 +13,7 @@ class UserController extends Controlador
 
     public function createUser()
     {
-        if(isset($_POST["Enviar"])){
+        if (isset($_POST["Enviar"])) {
             $datos = [
                 'Cedula' => trim($_POST['U_id']),
                 'Nombre' => trim($_POST['U_Nombre']),
@@ -31,7 +31,7 @@ class UserController extends Controlador
                 'messageInfo' => $message,
             ];
             $this->vista('pages/admin/AdminView', $datos);
-        }else{
+        } else {
             echo "error";
         }
     }

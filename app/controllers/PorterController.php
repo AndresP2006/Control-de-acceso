@@ -49,9 +49,7 @@ class PorterController extends Controlador
 
         $datos = $this->index('Salida registrada exitosamente');
         $this->vista('pages/porter/porterView', $datos);
-
     }
-
 
     public function enterPackage()
     {
@@ -70,10 +68,19 @@ class PorterController extends Controlador
             $this->vista('pages/porter/porterView', $datos);
         }
     }
-    public function show(){
+    public function show()
+    {
         return $this->PeopleModel->getVisitas();
     }
-    public function showPackeges(){
+    public function showPackeges()
+    {
         return $this->PeopleModel->getPackeges();
+    }
+
+    public function getPeopleBypa()
+    {
+        $id = $_GET['residente'];
+        $mostrar = $this->PeopleModel->PeopleID($id);
+        echo json_encode($mostrar);
     }
 }
