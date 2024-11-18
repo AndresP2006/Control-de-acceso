@@ -36,13 +36,32 @@ class UserController extends Controlador
         }
     }
 
-    public function mostrarFormulario() {
-        // Verificar si se recibió el ID del usuario en POST (por input o select)
-        if (isset($_POST['id_usuario']) || isset($_POST['buscar']) ) {
-            $id = $_POST['id_usuario'];
-            $persona = $this->PeopleModel->getPersonaById($id);
-        }
+    public function mostrarFormulario()
+    {
+        // Obtener los datos del modelo
+        $registros = $this->$PeopleModel->getAllPeople();
 
+        // Pasar los datos a la vista
+        $datos = ['registros' => $registros];
+        $this->vista('pages/admin/adminView', $datos);
+    }
+    public function mostrarDatos()
+{
+    if (isset($_POST['select_id'])) {
+        $id = $_POST['select_id'];
+        $registro = $this->PeopleModel->getPersonaById($id);
+
+        // Si el registro no es un array, lo convertimos a uno
+        $registros = is_array($registro) ? [$registro] : [$registro];
+
+        // Pasar los datos a la vista
+        $datos = ['registros' => $registros];
+        require_once RUTA_APP . '/views/pages/admin/adminView.php';
+    } else {
+        // Si no hay datos, pasamos un array vacío
+        $datos = ['registros' => []];
         require_once RUTA_APP . '/views/pages/admin/adminView.php';
     }
+}
+
 }

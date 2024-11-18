@@ -7,6 +7,8 @@
     <title>administracion</title>
     <link rel="icon" href="<?php echo RUTA_URL ?>/img/logo.png">
     <link rel="stylesheet" href="<?php echo RUTA_URL ?>/css/administracion.css">
+    <link rel="stylesheet" href="<?php echo RUTA_URL ?>/css/adminStyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <header>
     <div class="content_Encabezado">
