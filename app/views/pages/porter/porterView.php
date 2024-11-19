@@ -193,7 +193,7 @@ $_SESSION;
                 type: 'GET', //de que manera lo recibe
                 success: function(respuesta) {
                     let resp = JSON.parse(respuesta);
-                    
+
                     $('#miModal').addClass('miModal--activo');
                     $('#nombres').val(resp.Pe_nombre);
                     $('#apellidos').val(resp.Pe_apellidos);

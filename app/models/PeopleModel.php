@@ -32,7 +32,7 @@ class PeopleModel
 
     public function getGuestById($idGuest)
     {
-        $this->db->query("delete from visitantes  where Vi_id = '$idGuest'");
+        $this->db->query("UPDATE registro SET Re_hora_salida = CURRENT_TIME() WHERE Vi_id ='$idGuest'");
 
         return $this->db->registro();
     }
