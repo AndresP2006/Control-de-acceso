@@ -89,4 +89,28 @@ class PeopleModel
         $this->db->query("SELECT v.Vi_nombres,r.*,v.Vi_departamento from visitantes v , registro r where v.Vi_id=r.Vi_id");
         return $this->db->showTables();
     }
+
+    //No tocar este metodo
+    public function getAllUsuario($roleId = null)
+{
+    if ($roleId) {
+        // Consulta con filtro por Rol
+        $this->db->query('
+            SELECT persona.*, usuario.Ro_id, usuario.Us_correo 
+            FROM persona 
+            LEFT JOIN usuario ON persona.Pe_id = usuario.Us_id 
+            WHERE usuario.Ro_id = :roleId
+        ');
+        $this->db->bind(':roleId', $roleId);
+    } else {
+        // Consulta sin filtro
+        $this->db->query('
+            SELECT persona.*, usuario.Ro_id, usuario.Us_correo 
+            FROM persona 
+            LEFT JOIN usuario ON persona.Pe_id = usuario.Us_id
+        ');
+    }
+
+    return $this->db->registros(); // Devuelve todos los registros
+}
 }
