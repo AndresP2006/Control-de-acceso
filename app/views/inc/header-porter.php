@@ -19,6 +19,7 @@
             justify-content: space-between;
             align-items: center;
             background-color: #6c7471;
+            margin-bottom: 90px;
         }
 
         .titulo {

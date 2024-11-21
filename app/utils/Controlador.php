@@ -14,6 +14,14 @@ class Controlador
         //instanciamos el modelo 
         return new $modelo();
     }
+    
+    public function controller($controller)
+    {
+        //cargar modelo 
+        require_once '../app/controllers/' . $controller . '.php';
+        //instanciamos el modelo 
+        return new $controller();
+    }
 
     //cargamos la vista
     public function vista($vista, $datos = [])

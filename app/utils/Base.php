@@ -32,7 +32,7 @@ class Base
             echo $this->error;
         }
     }
-    
+
     public function query($sql)
     {
         $this->stmt = $this->dbh->prepare($sql);
@@ -73,6 +73,11 @@ class Base
         $this->execute();
         return $this->stmt->fetchAll(PDO::FETCH_OBJ);
     }
+    //OBTENER REGISTRO PARA LAS TABLAS
+    public function showTables(){
+        $this->execute();
+        return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     //OBTENER UN SOLO REGISTRO 
     public function registro()
@@ -85,5 +90,21 @@ class Base
     public function rowCount()
     {
         return $this->stmt->rowCount();
+    }
+
+
+    public function beginTransaction()
+    {
+        $this->dbh->beginTransaction();
+    }
+
+    public function commit()
+    {
+        $this->dbh->commit();
+    }
+
+    public function rollBack()
+    {
+        $this->dbh->rollBack();
     }
 }

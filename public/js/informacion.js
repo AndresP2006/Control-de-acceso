@@ -1,9 +1,9 @@
 let rivera = document.querySelector("img.contenido__imagenes-1");
 
 let fotosArray = [
-  "../imagenes_logos/rivera1.jpg",
-  "../imagenes_logos/rivera2.jpg",
-  "../imagenes_logos/rivera3.jpg",
+  "../img/rivera1.jpg",
+  "../img/rivera2.jpg",
+  "../img/rivera3.jpg",
 ];
 
 let fotosPos = 0;
