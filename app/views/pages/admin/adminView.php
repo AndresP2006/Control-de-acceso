@@ -106,15 +106,23 @@ $conn->close();
             <h3 class="titulo-form">Nuevo registro</h3>
             <span class="close" id="close">&times;</span>
         </div>
-        <form id="myForm" action="<?php echo RUTA_URL; ?>/PorterController/createGuest" method="post">
-            <h4>Cedula: <input type="text" id="u_id" name="u_id" /></h4>
-            <h4>Nombre: <input type="text" id="U_Nombre" name="U_Nombre" /></h4>
-            <h4>Apellido: <input type="text" id="U_Apellido" name="U_Apellido" /></h4>
-            <h4>Telefono: <input type="text" id="U_Telefono" name="U_Telefono" /></h4>
-            <h4>Motivo de visita: <input type="text" id="U_Motivo" name="U_Motivo" /></h4>
-            <h4>Numero de apartameto: <input type="text" id="U_Departamento" name="U_Departamento" /></h4>
+        <form id="myForm" action="<?php echo RUTA_URL; ?>/UserController/createUser" method="post">
+        <input type="text" id="u_id" name="U_id" />
+            <input type="text" id="U_Nombre" name="U_Nombre" />
+            <input type="text" id="U_Apellido" name="U_Apellido" />
+            <input type="text" id="U_Telefono" name="U_Telefono" />
+            <input type="text" id="U_Gmail" name="U_Gmail" />
+            <input type="text" id="U_Departamento" name="U_Departamento" />
+            <input type="text" id="U_torre" name="U_torre" />
+            <input type="text" id="U_contrasena" name="U_contrasena" />
+            <select name="R_id" class="Rol">
+                <option value="">Seleccionar</option>
+                <option value=1>Administrador</option>
+                <option value=2>Guardia</option>
+                <option value=3>Residente</option>
+            </select>
             <center>
-                <input type="submit" value="Enviar" class="Enviar" name="Visitantes" />
+                <input type="submit" value="Enviar" class="Enviar" name="registro" />
             </center>
         </form>
     </div>
