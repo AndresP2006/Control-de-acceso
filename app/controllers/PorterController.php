@@ -45,7 +45,8 @@ class PorterController extends Controlador
 
     public function dropGuest()
     {
-        $Guest = $this->PeopleModel->getGuestById($_POST['salida_visita']);
+
+        $this->PeopleModel->getGuestById($_POST['salida_visita']);
 
         $datos = $this->index('Salida registrada exitosamente');
         $this->vista('pages/porter/porterView', $datos);
@@ -76,7 +77,8 @@ class PorterController extends Controlador
     {
         return $this->PeopleModel->getPackeges();
     }
-    public function showRegistro(){
+    public function showRegistro()
+    {
         return $this->PeopleModel->showRegistro();
     }
 
@@ -85,5 +87,6 @@ class PorterController extends Controlador
         $id = $_GET['residente'];
         $mostrar = $this->PeopleModel->PeopleID($id);
         echo json_encode($mostrar);
+        
     }
 }

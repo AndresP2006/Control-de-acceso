@@ -1,6 +1,7 @@
 <?php
 class AdminModel{
     private $db;
+    private $id;
 
     public function __construct()
     {
@@ -62,7 +63,7 @@ public function eliminarRegistro($id) {
         $this->db->beginTransaction();
 
         // Eliminar el registro de la tabla 'persona' primero
-        $sql2 = "DELETE FROM persona WHERE Us_id = :id";
+        $sql2 = "DELETE FROM persona WHERE Pe_id = :id";
         $this->db->query($sql2);
         $this->db->bind(':id', $id);
         $this->db->execute();
@@ -84,8 +85,6 @@ public function eliminarRegistro($id) {
         return false; // Indica que ocurrió un error
     }
 }
-
-
 
 
 }
