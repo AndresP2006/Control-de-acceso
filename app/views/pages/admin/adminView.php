@@ -6,12 +6,13 @@
     <div class="control-group">
         <button class="add-btn" id="nuevo_registro">➕ Agregar Nuevo Registro</button>
         <form action="<?php echo RUTA_URL; ?>/AdminController/admin" method="POST">
-            <select name="select_id" class="filter-select" onchange="this.submit()">
-                <option value="">Filtrar por Tipo</option>
-                <option value="1" <?php echo $datos['filter'] == 1 ? 'selected' : ''; ?>>Administrador</option>
-                <option value="2" <?php echo $datos['filter'] == 2 ? 'selected' : ''; ?>>Guardia</option>
-                <option value="3" <?php echo $datos['filter'] == 3 ? 'selected' : ''; ?>>Residente</option>
-            </select>
+            <select name="select_id" class="filter-select" onchange="this.form.submit()">
+    <option value="">Filtrar por Tipo</option>
+    <option value="1" <?php echo isset($datos['filter']) && $datos['filter'] == 1 ? 'selected' : ''; ?>>Administrador</option>
+    <option value="2" <?php echo isset($datos['filter']) && $datos['filter'] == 2 ? 'selected' : ''; ?>>Guardia</option>
+    <option value="3" <?php echo isset($datos['filter']) && $datos['filter'] == 3 ? 'selected' : ''; ?>>Residente</option>
+</select>
+
         </form>
 
 

@@ -47,30 +47,22 @@ class UserController extends Controlador
 
     public function DeleteUser()
 {
-    // Verificar si el ID ha sido enviado
+    // Verificar si se han enviado los datos necesarios
     if (isset($_POST['deletebtn']) && isset($_POST['delete_id'])) {
-        // Obtener el ID del registro a eliminar
         $delete_id = $_POST['delete_id'];
-        $message = 'Usuario borrado correctamente';
-        
-        // Eliminar el registro en el modelo
+
+        // Llamar al modelo para eliminar el registro
         $this->AdminModel->eliminarRegistro($delete_id);
 
-        // Obtener el filtro actual (en caso de que se haya seleccionado uno)
-        $roleId = isset($_POST['select_id']) ? intval($_POST['select_id']) : null;
-
-        // Redirigir a la lista de registros después de la eliminación y mantener el filtro
-        return [
-            'filter' => $roleId, // Mantener el filtro actual
-        ];
-        
-        exit;
+        // Opcionalmente, puedes configurar una variable de sesión o un mensaje flash para mostrar en la misma página
+        $_SESSION['message'] = 'Usuario borrado correctamente';
     } else {
-        // echo "Error: No se envió el ID del registro";
-        return [
-            'filter' => $roleId, // Mantener el filtro actual
-        ];
+        $_SESSION['error'] = 'Error: No se pudo procesar la solicitud';
     }
+
+    // Redirigir a la misma página para evitar redireccionamientos extraños
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    exit;
 }
 
 
