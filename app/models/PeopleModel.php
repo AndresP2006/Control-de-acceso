@@ -24,10 +24,10 @@ class PeopleModel
 
     public function getNumberGuest()
     {
-        
+
         $this->db->query("SELECT count(*) as total FROM registro WHERE Re_hora_salida = '00:00:00';");
 
-        return $this->db->registro();        
+        return $this->db->registro();
     }
     public function getGuestById($idGuest)
     {
@@ -44,12 +44,12 @@ class PeopleModel
     // }
     public function getVisitas()
     {
-        $this->db->query("SELECT * FROM visitantes");
+        $this->db->query("SELECT v.*,h.Re_fecha_entrada,h.Re_hora_entrada,h.Re_hora_salida FROM visitantes v , registro h where v.Vi_id=h.Vi_id");
         return $this->db->showTables();
     }
     public function getPackeges()
     {
-        $this->db->query("SELECT * FROM paquete");
+        $this->db->query("SELECT p.Pe_id,p.Pe_nombre,a.* from paquete a, persona p where a.Pe_id=p.Pe_id;");
         return $this->db->showTables();
     }
 
@@ -90,23 +90,24 @@ class PeopleModel
 
     //No tocar este metodo
     public function getAllUsuario($roleId = null)
-{
-    if ($roleId) {
-        // Consulta con filtro por Rol
-        $this->db->query('
+    {
+        if ($roleId) {
+            // Consulta con filtro por Rol
+            $this->db->query('
             SELECT persona.*, usuario.Ro_id, usuario.Us_correo,r.Ro_tipo 
             FROM persona JOIN usuario ON persona.Pe_id = usuario.Us_id JOIN rol r ON usuario.Ro_id = r.Ro_id 
             WHERE usuario.Ro_id = :roleId
         ');
-        $this->db->bind(':roleId', $roleId);
-    } else {
-        // Consulta sin filtro
-        $this->db->query('
+            $this->db->bind(':roleId', $roleId);
+        } else {
+            // Consulta sin filtro
+            $this->db->query('
             SELECT persona.*, usuario.Ro_id, usuario.Us_correo,r.Ro_tipo 
             FROM persona JOIN usuario ON persona.Pe_id = usuario.Us_id JOIN rol r ON usuario.Ro_id = r.Ro_id 
         ');
-    }
+        }
 
-    return $this->db->registros(); // Devuelve todos los registros
-}
+        return $this->db->registros(); // Devuelve todos los registros
+    }
+   
 }
