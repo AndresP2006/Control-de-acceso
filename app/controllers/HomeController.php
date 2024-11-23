@@ -60,14 +60,5 @@ class HomeController extends Controlador
     public function usuario(){
         $this->vista('pages/admin/adminView');
     }
-    public function historialRe(){
-        $this->vista('pages/admin/historialReView');
-    }
-    public function histrialVi(){
-        $this->vista('pages/admin/historialViVIew');
-    }
-    public function paquetes(){
-        $this->vista('pages/admin/paquetesView');
-    }
 
 }
