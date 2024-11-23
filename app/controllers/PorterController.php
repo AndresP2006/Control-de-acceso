@@ -15,11 +15,10 @@ class PorterController extends Controlador
     public function index($message = null)
     {
         $countGuest = $this->PeopleModel->getNumberGuest();
-        $total = $countGuest->countGuest;
 
         return [
             'messageInfo' => $message,
-            'total' => $total,
+            'total' => $countGuest->total,
         ];
     }
 

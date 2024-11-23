@@ -24,12 +24,11 @@ class PeopleModel
 
     public function getNumberGuest()
     {
+        
+        $this->db->query("SELECT count(*) as total FROM registro WHERE Re_hora_salida = '00:00:00';");
 
-        $this->db->query("SELECT count(*)as countGuest from visitantes");
-
-        return $this->db->registro();
+        return $this->db->registro();        
     }
-
     public function getGuestById($idGuest)
     {
         $this->db->query("UPDATE registro SET Re_hora_salida = CURRENT_TIME() WHERE Vi_id ='$idGuest'");
@@ -84,7 +83,7 @@ class PeopleModel
         return $this->db->registro();
     }
 
-    public function  showRegistro()
+    public function showRegistro()
     {
         $this->db->query("SELECT v.Vi_nombres,r.*,v.Vi_departamento from visitantes v , registro r where v.Vi_id=r.Vi_id");
         return $this->db->showTables();
