@@ -1,3 +1,83 @@
+
+//Modal nuevo registro
+var visitorModal = document.getElementById("myModal");
+var newVisitorBtn = document.getElementById("nuevo_registro");
+var visitorCloseBtn = document.getElementsByClassName("close")[0];
+var categoriaInput = document.getElementById("R_id");
+var passwordInput = document.getElementById("U_password");
+var passwordLabel = document.getElementById("passwordLabel");
+
+newVisitorBtn.onclick = function () {
+    visitorModal.style.display = "block";
+    passwordInput.style.display = "none";
+    passwordLabel.style.display = "none";
+};
+
+visitorCloseBtn.onclick = function () {
+    visitorModal.style.display = "none";
+
+};
+
+window.onclick = function (event) {
+    if (event.target == visitorModal) {
+        visitorModal.style.display = "none";
+    }
+};
+
+// Mostrar el campo de contraseña según el valor de categoría
+categoriaInput.addEventListener("input", function () {
+  if (categoriaInput.value === "1" || categoriaInput.value === "2") {
+      passwordLabel.style.display = "block";
+      passwordInput.style.display = "block";
+  } else {
+      passwordLabel.style.display = "none";
+      passwordInput.style.display = "none";
+  }
+});
+
+//------------Fin modal registro--------------
+
+
+
+//Modal nuevo editar
+var visitorModal = document.getElementById("myModal");
+var newVisitorBtn = document.getElementById("nuevo_registro");
+var visitorCloseBtn = document.getElementsByClassName("close")[0];
+var categoriaInput = document.getElementById("R_id");
+var passwordInput = document.getElementById("U_password");
+var passwordLabel = document.getElementById("passwordLabel");
+
+newVisitorBtn.onclick = function () {
+    visitorModal.style.display = "block";
+    passwordInput.style.display = "none";
+    passwordLabel.style.display = "none";
+};
+
+visitorCloseBtn.onclick = function () {
+    visitorModal.style.display = "none";
+
+};
+
+window.onclick = function (event) {
+    if (event.target == visitorModal) {
+        visitorModal.style.display = "none";
+    }
+};
+
+// Mostrar el campo de contraseña según el valor de categoría
+categoriaInput.addEventListener("input", function () {
+  if (categoriaInput.value === "1" || categoriaInput.value === "2") {
+      passwordLabel.style.display = "block";
+      passwordInput.style.display = "block";
+  } else {
+      passwordLabel.style.display = "none";
+      passwordInput.style.display = "none";
+  }
+});
+
+//Fin modal registro
+
+
 var modal = document.getElementById("modalOverlay");
 var span = document.getElementsByClassName("modal-close")[0];
 
@@ -14,6 +94,8 @@ window.onclick = function(event) {
         modal.style.display = 'none';
     }
 };
+
+
 
 var model = document.getElementById("myModal");
 var boton = document.getElementById("openModalBtn");

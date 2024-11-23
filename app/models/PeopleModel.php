@@ -56,9 +56,8 @@ class PeopleModel
 
     public function getPersonaById($id)
     {
-        $this->db->query('SELECT persona.*, usuario.Ro_id, usuario.Us_correo 
-            FROM persona 
-            LEFT JOIN usuario ON persona.Pe_id = usuario.Us_id  WHERE Pe_id = :id');
+        $this->db->query('SELECT persona.*, usuario.Ro_id, usuario.Us_correo,r.Ro_tipo 
+            FROM persona JOIN usuario ON persona.Pe_id = usuario.Us_id JOIN rol r ON usuario.Ro_id = r.Ro_id  WHERE Pe_id = :id');
         $this->db->bind(':id', $id);
         return $this->db->registro(); // Devuelve un solo registro
     }
@@ -96,18 +95,16 @@ class PeopleModel
     if ($roleId) {
         // Consulta con filtro por Rol
         $this->db->query('
-            SELECT persona.*, usuario.Ro_id, usuario.Us_correo 
-            FROM persona 
-            LEFT JOIN usuario ON persona.Pe_id = usuario.Us_id 
+            SELECT persona.*, usuario.Ro_id, usuario.Us_correo,r.Ro_tipo 
+            FROM persona JOIN usuario ON persona.Pe_id = usuario.Us_id JOIN rol r ON usuario.Ro_id = r.Ro_id 
             WHERE usuario.Ro_id = :roleId
         ');
         $this->db->bind(':roleId', $roleId);
     } else {
         // Consulta sin filtro
         $this->db->query('
-            SELECT persona.*, usuario.Ro_id, usuario.Us_correo 
-            FROM persona 
-            LEFT JOIN usuario ON persona.Pe_id = usuario.Us_id
+            SELECT persona.*, usuario.Ro_id, usuario.Us_correo,r.Ro_tipo 
+            FROM persona JOIN usuario ON persona.Pe_id = usuario.Us_id JOIN rol r ON usuario.Ro_id = r.Ro_id 
         ');
     }
 

@@ -160,6 +160,17 @@ form input[type="text"] {
   background-color: #ededed;
   transition: border-color 0.3s, box-shadow 0.3s;
 }
+.Rol,option{
+  width: 94%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  font-size: 1em;
+  color: #333;
+  background-color: #ededed;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
 
 /* Efecto de foco en el campo */
 form input[type="text"]:focus {
