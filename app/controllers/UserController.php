@@ -21,7 +21,8 @@ class UserController extends Controlador
 
     public function createUser()
     {
-        if (isset($_POST["registro"])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registro'])) {
+            // Recoger los datos del nuevo usuario
             $datos = [
                 'Cedula' => trim($_POST['U_id']),
                 'Nombre' => trim($_POST['U_Nombre']),
@@ -31,24 +32,52 @@ class UserController extends Controlador
                 'Departamento' => trim($_POST['U_Departamento']),
                 'Rol' => trim($_POST['R_id']),
                 'Contrasena' => trim($_POST['U_contrasena']),
-                // 'Torre' => trim($_POST['U_torre']),
             ];
+    
+            // Mensaje de éxito
             $message = 'Usuario guardado correctamente';
+    
+            // Agregar el nuevo usuario
             $this->AdminModel->addUser($datos);
-
-            $datos = [
+    
+            // Obtener todos los usuarios después de agregar el nuevo
+            $registros = $this->PeopleModel->getAllUsuario(); // Asegúrate de que este método devuelva todos los usuarios
+    
+            // Formatear los datos de los usuarios como lo mencionas
+            $usuarios = [];
+            foreach ($registros as $registro) {
+                $usuarios[] = [
+                    'Cedula' => $registro->Pe_id,
+                    'Pe_nombre' => $registro->Pe_nombre,
+                    'Pe_apellidos' => $registro->Pe_apellidos,
+                    'Pe_telefono' => $registro->Pe_telefono,
+                    'Us_correo' => $registro->Us_correo,
+                    'Ap_id' => $registro->Ap_id,
+                    'Ro_tipo' => $registro->Ro_tipo,
+                ];
+            }
+    
+            // Pasar los usuarios y el mensaje a la vista
+            $datosVista = [
                 'messageInfo' => $message,
+                'usuarios' => $usuarios,  // Asegúrate de pasar los usuarios a la vista
             ];
-            $this->vista('pages/admin/AdminView', $datos);
+    
+            // Cargar la vista con los datos
+            $this->vista('pages/admin/AdminView', $datosVista);
+            exit;  // Evita que se siga ejecutando el script o redirigiendo a otra página
         } else {
             echo "error";
         }
+        
     }
+    
+
 
     public function DeleteUser()
 {
     // Verificar si se han enviado los datos necesarios
-    if (isset($_POST['deletebtn']) && isset($_POST['delete_id'])) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deletebtn']) && isset($_POST['delete_id'])) {
         $delete_id = $_POST['delete_id'];
 
         // Llamar al modelo para eliminar el registro

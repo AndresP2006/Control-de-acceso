@@ -80,7 +80,7 @@
         <button class="action-btn">Botón 3</button>
     </div>
 </div>
-<?php require_once RUTA_APP . '/views/pages/admin/modalRegistro.php'; ?>
+<?php include RUTA_APP . '/views/pages/admin/modalRegistro.php'; ?>
 
 <?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>
 <script>
