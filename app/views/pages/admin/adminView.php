@@ -1,53 +1,25 @@
-<?php
-$conn = new mysqli('localhost', 'root', '', 'cda');
 
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
-
-// Consulta base (para mostrar todos los datos inicialmente)
-$sql = "SELECT persona.*, usuario.Ro_id, usuario.Us_correo 
-        FROM persona 
-        LEFT JOIN usuario ON persona.Pe_id = usuario.Us_id";
-
-// Verificar si se ha enviado un filtro
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['select_id']) && $_POST['select_id'] !== "") {
-    $tipo = intval($_POST['select_id']); 
-
-    // Si el filtro es distinto de 0 (que indica "Todos"), aplicamos el filtro
-    if ($tipo !== 0) {
-        $sql .= " WHERE usuario.Ro_id = $tipo";
-    }
-}
-
-$result = $conn->query($sql);
-
-$registros = [];
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $registros[] = $row;
-    }
-}
-
-$conn->close();
-?>
 
 <?php require_once RUTA_APP . '/views/inc/header-admin.php'; ?>
 
 <div class="controls">
     <div class="control-group">
         <button class="add-btn" id="nuevo_registro">➕ Agregar Nuevo Registro</button>
-        <form action="" method="POST">
-            <select name="select_id" class="filter-select" onchange="this.form.submit()">
-                <option value="">Filtrar por Tipo</option>
-                <option value="1" <?php echo isset($_POST['select_id']) && $_POST['select_id'] == 1 ? 'selected' : ''; ?>>Administrador</option>
-                <option value="2" <?php echo isset($_POST['select_id']) && $_POST['select_id'] == 2 ? 'selected' : ''; ?>>Guardia</option>
-                <option value="3" <?php echo isset($_POST['select_id']) && $_POST['select_id'] == 3 ? 'selected' : ''; ?>>Residente</option>
-            </select>
-        </form>
+        <form action="<?php echo RUTA_URL; ?>/AdminController/admin" method="POST">
+    <select name="select_id" class="filter-select" onchange="this.form.submit()">
+        <option value="">Filtrar por Tipo</option>
+        <option value="1" <?php echo isset($datos['filter']) && $datos['filter'] == 1 ? 'selected' : ''; ?>>Administrador</option>
+        <option value="2" <?php echo isset($datos['filter']) && $datos['filter'] == 2 ? 'selected' : ''; ?>>Guardia</option>
+        <option value="3" <?php echo isset($datos['filter']) && $datos['filter'] == 3 ? 'selected' : ''; ?>>Residente</option>
+    </select>
+</form>
+
     </div>
     <div class="control-group">
-        <input type="text" class="search-bar" placeholder="🔍 Buscar registros...">
+    <form class="search-container" action="<?php echo RUTA_URL; ?>/UserController/BuscarUsuario" method="POST">
+                    <input id="id" type="text" name="id_usuario" placeholder="Buscar...">
+                    <button type="submit" name="buscar"><img style="width:20px; height:20px;" src="<?php echo RUTA_URL; ?>/img/lupa.png" alt="Icono Editar"></button>
+            </form>
     </div>
 </div>
 
@@ -67,30 +39,36 @@ $conn->close();
                 </tr>
             </thead>
             <tbody>
-                <?php
-                if (!empty($registros)) {
-                    foreach ($registros as $registro) {
-                        echo "<tr>";
-                        echo "<td>" . htmlspecialchars($registro['Pe_id']) . "</td>";
-                        echo "<td>" . htmlspecialchars($registro['Pe_nombre']) . " " . htmlspecialchars($registro['Pe_apellidos']) . "</td>";
-                        echo "<td>*****</td>"; // Campo oculto para la contraseña
-                        echo "<td>" . htmlspecialchars($registro['Pe_telefono']) . "</td>";
-                        echo "<td>" . htmlspecialchars($registro['Us_correo']) . "</td>";
-                        echo "<td>" . htmlspecialchars($registro['Ap_id']) . "</td>";
-                        echo "<td>" . htmlspecialchars($registro['Ro_id']) . "</td>";
-                        echo "<td>
-                                <button class='edit-btn' id='nuevo_registro'>✏️</button>
-                                <form action='" . RUTA_URL . "/UserController/DeleteUser' method='POST' style='display:inline;'>
-                        <input type='hidden' name='delete_id' value='" . htmlspecialchars($registro['Pe_id']) . "'>
-                        <button type='submit' name='deletebtn' class='delete-btn'>🗑️</button>
-                    </form>
-                                </td>";
-                        echo "</tr>";
+            <?php
+                // Verificar si la variable 'usuarios' tiene registros
+                if (!empty($datos['usuarios'])) {
+                    // Si 'usuarios' es un array de un solo elemento
+                    foreach ($datos['usuarios'] as $registro) {
+                        if (is_array($registro) || is_object($registro)) {
+                            echo "<tr>";
+                            echo "<td>" . htmlspecialchars($registro['Cedula'] ?? '') . "</td>";
+                            echo "<td>" . htmlspecialchars($registro['Pe_nombre'] ?? '') . " " . htmlspecialchars($registro['Pe_apellidos'] ?? '') . "</td>";
+                            echo "<td>*****</td>"; // Campo oculto para la contraseña
+                            echo "<td>" . htmlspecialchars($registro['Pe_telefono'] ?? '') . "</td>";
+                            echo "<td>" . htmlspecialchars($registro['Us_correo'] ?? '') . "</td>";
+                            echo "<td>" . htmlspecialchars($registro['Ap_id'] ?? '') . "</td>";
+                            echo "<td>" . htmlspecialchars($registro['Ro_id'] ?? '') . "</td>";
+                            echo "<td>
+                                    <button class='edit-btn' id='nuevo_registro'>✏️</button>
+                                    <form action='" . RUTA_URL . "/UserController/DeleteUser' method='POST' style='display:inline;'>
+                                        <input type='hidden' name='delete_id' value='" . htmlspecialchars($registro['Cedula'] ?? '') . "'>
+                                        <button type='submit' name='deletebtn' class='delete-btn'>🗑️</button>
+                                    </form>
+                                    </td>";
+                            echo "</tr>";
+                        } else {
+                            echo "<tr><td colspan='8'>Datos incorrectos para este usuario</td></tr>";
+                        }
                     }
                 } else {
-                    echo "<tr><td colspan='6'>No hay registros disponibles</td></tr>";
+                    echo "<tr><td colspan='8'>No hay registros disponibles</td></tr>";
                 }
-                ?>
+            ?>
             </tbody>
         </table>
     </div>
