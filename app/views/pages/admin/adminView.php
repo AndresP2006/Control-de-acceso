@@ -6,13 +6,15 @@
     <div class="control-group">
         <button class="add-btn" id="nuevo_registro">➕ Agregar Nuevo Registro</button>
         <form action="<?php echo RUTA_URL; ?>/AdminController/admin" method="POST">
-    <select name="select_id" class="filter-select" onchange="this.form.submit()">
-        <option value="">Filtrar por Tipo</option>
-        <option value="1" <?php echo isset($datos['filter']) && $datos['filter'] == 1 ? 'selected' : ''; ?>>Administrador</option>
-        <option value="2" <?php echo isset($datos['filter']) && $datos['filter'] == 2 ? 'selected' : ''; ?>>Guardia</option>
-        <option value="3" <?php echo isset($datos['filter']) && $datos['filter'] == 3 ? 'selected' : ''; ?>>Residente</option>
-    </select>
-</form>
+            <select name="select_id" class="filter-select" onchange="this.form.submit()">
+    <option value="">Filtrar por Tipo</option>
+    <option value="1" <?php echo isset($datos['filter']) && $datos['filter'] == 1 ? 'selected' : ''; ?>>Administrador</option>
+    <option value="2" <?php echo isset($datos['filter']) && $datos['filter'] == 2 ? 'selected' : ''; ?>>Guardia</option>
+    <option value="3" <?php echo isset($datos['filter']) && $datos['filter'] == 3 ? 'selected' : ''; ?>>Residente</option>
+</select>
+
+        </form>
+
 
     </div>
     <div class="control-group">
@@ -52,7 +54,7 @@
                             echo "<td>" . htmlspecialchars($registro['Pe_telefono'] ?? '') . "</td>";
                             echo "<td>" . htmlspecialchars($registro['Us_correo'] ?? '') . "</td>";
                             echo "<td>" . htmlspecialchars($registro['Ap_id'] ?? '') . "</td>";
-                            echo "<td>" . htmlspecialchars($registro['Ro_id'] ?? '') . "</td>";
+                            echo "<td>" . htmlspecialchars($registro['Ro_tipo'] ?? '') . "</td>";
                             echo "<td>
                                     <button class='edit-btn' id='nuevo_registro'>✏️</button>
                                     <form action='" . RUTA_URL . "/UserController/DeleteUser' method='POST' style='display:inline;'>
@@ -78,24 +80,13 @@
         <button class="action-btn">Botón 3</button>
     </div>
 </div>
-<div id="myModal" class="modal">
-    <div class="modal-content">
-        <div class="cerrado">
-            <h3 class="titulo-form">Nuevo registro</h3>
-            <span class="close" id="close">&times;</span>
-        </div>
-        <form id="myForm" action="<?php echo RUTA_URL; ?>/PorterController/createGuest" method="post">
-            <h4>Cedula: <input type="text" id="u_id" name="u_id" /></h4>
-            <h4>Nombre: <input type="text" id="U_Nombre" name="U_Nombre" /></h4>
-            <h4>Apellido: <input type="text" id="U_Apellido" name="U_Apellido" /></h4>
-            <h4>Telefono: <input type="text" id="U_Telefono" name="U_Telefono" /></h4>
-            <h4>Motivo de visita: <input type="text" id="U_Motivo" name="U_Motivo" /></h4>
-            <h4>Numero de apartameto: <input type="text" id="U_Departamento" name="U_Departamento" /></h4>
-            <center>
-                <input type="submit" value="Enviar" class="Enviar" name="Visitantes" />
-            </center>
-        </form>
-    </div>
-</div>
+<?php include RUTA_APP . '/views/pages/admin/modalRegistro.php'; ?>
 
 <?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>
+<script>
+
+    <?php if (isset($datos['messageError'])) { ?>
+        error("<?php echo $datos['messageError']; ?>")
+    <?php } ?>
+
+</script>
