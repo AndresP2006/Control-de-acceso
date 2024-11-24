@@ -47,7 +47,7 @@ class PeopleModel
         $this->db->query("SELECT v.*,h.Re_fecha_entrada,h.Re_hora_entrada,h.Re_hora_salida FROM visitantes v , registro h where v.Vi_id=h.Vi_id");
         return $this->db->showTables();
     }
-        
+
 
     public function getPersonaById($id)
     {
@@ -69,6 +69,8 @@ class PeopleModel
     //         return []; // Si no hay registros, devolver un array vacío
     //     }
     // }
+
+
 
     public function PeopleID($id)
     {
@@ -104,5 +106,5 @@ class PeopleModel
 
         return $this->db->registros(); // Devuelve todos los registros
     }
-   
+
 }
