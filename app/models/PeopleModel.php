@@ -55,7 +55,7 @@ class PeopleModel
 
     public function getPersonaById($id)
     {
-        $this->db->query('SELECT persona.*, usuario.Ro_id, usuario.Us_correo,r.Ro_tipo 
+        $this->db->query('SELECT persona.*, usuario.Ro_id, usuario.Us_correo,r.Ro_tipo,usuario.Us_contrasena  
             FROM persona JOIN usuario ON persona.Pe_id = usuario.Us_id JOIN rol r ON usuario.Ro_id = r.Ro_id  WHERE Pe_id = :id');
         $this->db->bind(':id', $id);
         return $this->db->registro(); // Devuelve un solo registro

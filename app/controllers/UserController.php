@@ -190,6 +190,7 @@ public function BuscarUsuario()
                 'Us_correo' => $registro->Us_correo,
                 'Ap_id' => $registro->Ap_id,
                 'Ro_id' => $registro->Ro_id,
+                'Us_contrasena' => $registro->Us_contrasena,
                 'Ro_tipo' => $registro->Ro_tipo,
             ];
             
