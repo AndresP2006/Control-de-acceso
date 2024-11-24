@@ -1,7 +1,7 @@
 <?php
 
 
-//CLASE PARA CPNECTAR A LA BASE DE DATOS y ejecutar CONSULTAS
+//CLASE PARA CONECTAR A LA BASE DE DATOS y ejecutar CONSULTAS
 class Base
 {
     private $host = DB_HOST;

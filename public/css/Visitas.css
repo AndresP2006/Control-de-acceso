@@ -181,6 +181,21 @@ option {
   justify-content: space-between;
 }
 
+/* Select de las torres */
+
+.titulo_torre {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ap {
+  width: auto;
+  margin-right: 50px;
+}
+
+
 .filter-select {
   width: 45%;
   height: 50px;
