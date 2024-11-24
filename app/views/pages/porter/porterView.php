@@ -27,7 +27,7 @@
         <div class="opciones">
             <!-- Buscar  -->
             <div>
-                <form action="<?php RUTA_URL; ?>/PorterController/getPeopleBypa" method="post">
+                <form>
                     <input id="texto" class="PeopleId" type="text" name="residente"
                         placeholder="Buscar Persona con paquetes" />
                     <center>
@@ -77,14 +77,14 @@
                                 <thead>
                                     <tr>
                                         <th>Fecha</th>
-                                        <th>Descripcio</th>
-                                        <th>Entregar</th>
+                                        <th>Descripcion</th>
+                                        <th>Estado</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr id="paquetesTable">
-                                        <td></td>
-                                    </tr>
+                                <tbody id="paquetesTable">
+
+
+
                                 </tbody>
                             </table>
 
@@ -192,40 +192,63 @@ $_SESSION;
 
         $('#abrirMiModal').click(function () {
             let PeopleID = $('#texto').val();
-            let tabla = $('#paquetesTable').val();
-            $.ajax({
-                url: '<?php echo RUTA_URL; ?>/PorterController/getPeopleBypa?residente=' + PeopleID, //de donde recibe la informacion
-                type: 'GET', //de que manera lo recibe
-                data: {
-                    TowerId: tabla
-                },
-                success: function (respuesta) {
-                    let resp = JSON.parse(respuesta);
+            if (PeopleID) {
+                let tabla = $('#paquetesTable').val();
+                $.ajax({
+                    url: '<?php echo RUTA_URL; ?>/PorterController/getPeopleBypa', //de donde recibe la informacion
+                    type: 'POST', //de que manera lo recibe
+                    data: {
+                        residente: PeopleID
+                    },
+                    success: function (respuesta) {
+                        let resp = JSON.parse(respuesta);
 
-                    $('#miModal').addClass('miModal--activo');
-                    $('#nombres').val(resp.Pe_nombre);
-                    $('#apellidos').val(resp.Pe_apellidos);
-                    $('#telefono').val(resp.Pe_telefono);
-                    $('#departamento').val(resp.Ap_id);
-                    $('#Paquete').val(resp.Total_paquetes);
+                        $('#miModal').addClass('miModal--activo');
+                        $('#nombres').val(resp.Pe_nombre);
+                        $('#apellidos').val(resp.Pe_apellidos);
+                        $('#telefono').val(resp.Pe_telefono);
+                        $('#departamento').val(resp.Ap_id);
+                        $('#Paquete').val(resp.Total_paquetes);
 
-                    let td = '<td>  </td>';
-                    if (Array.isArray(resp)) {
-                        for (let item of resp) {
-                            td += '<td>' + item.Pa_estado + '</td>';
-                            td += '<td>' + item.Pa_fecha + '</td>';
-                            td += '<td>' + item.Pa_descripcion + '</td>';
-                        }
+
+                        $('#abrirTablaFlotante').click(function () {
+                            $.ajax({
+                                url: '<?php echo RUTA_URL; ?>/PorterController/getPaquetById',
+                                type: 'POST',
+                                data: {
+                                    residente: PeopleID
+                                },
+
+                                success: function (paquetes) {
+
+                                    let paq = JSON.parse(paquetes);
+
+                                    let td;
+
+                                    if (Array.isArray(paq)) {
+
+                                        for (let item of paq) {
+                                            td += '<tr>';
+                                            td += '<td>' + item.Pa_fecha + '</td>';
+                                            td += '<td>' + item.Pa_descripcion + '</td>';
+                                            td += '<td>' + item.Pa_estado + '</td>';
+                                            td += '</tr>';
+                                        }
+                                        $('#paquetesTable').html(td);
+                                    }
+                                }
+                            })
+
+                        })
+
+
+
+                    },
+                    error: function () {
+                        $('#respuesta').html('Error al procesar la solicitud.');
                     }
-
-
-                    $('#paquetesTable').html(td);
-
-                },
-                error: function () {
-                    $('#respuesta').html('Error al procesar la solicitud.');
-                }
-            });
+                });
+            }
         });
 
         // selector de torre
