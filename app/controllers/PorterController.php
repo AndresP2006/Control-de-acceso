@@ -5,33 +5,37 @@ class PorterController extends Controlador
 
     private $PorterModel;
     private $PeopleModel;
+    private $TorreModel;
 
     public function __construct()
     {
         $this->PorterModel = $this->modelo('PorterModel');
         $this->PeopleModel = $this->modelo('PeopleModel');
+        $this->TorreModel = $this->modelo('TorreModel');
     }
 
     public function index($message = null)
     {
         $countGuest = $this->PeopleModel->getNumberGuest();
+        $Torres = $this->TorreModel->setTorres();
 
         return [
             'messageInfo' => $message,
             'total' => $countGuest->total,
+            'torre' => $Torres,
         ];
     }
 
     public function createGuest()
     {
         if (isset($_POST['Visitantes'])) {
-            $people = $this->PeopleModel->getPeopleByApart($_POST['U_Departamento']);
+            $people = $this->PeopleModel->getPeopleByApart($_POST['select_id']);
             $datos = [
                 'Cedula' => trim($_POST['u_id']),
                 'Nombre' => trim($_POST['U_Nombre']),
                 'Apellido' => trim($_POST['U_Apellido']),
                 'Telefono' => trim($_POST['U_Telefono']),
-                'Departamento' => trim($_POST['U_Departamento']),
+                'Departamento' => trim($_POST['select_id']),
                 'Motivo' => trim($_POST['U_Motivo']),
                 'PeopleId' => trim($people->Pe_id),
             ];
@@ -86,6 +90,6 @@ class PorterController extends Controlador
         $id = $_GET['residente'];
         $mostrar = $this->PeopleModel->PeopleID($id);
         echo json_encode($mostrar);
-        
+
     }
 }
