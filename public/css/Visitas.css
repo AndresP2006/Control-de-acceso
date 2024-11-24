@@ -27,7 +27,7 @@ h2 {
   border-radius: 10px;
   font-size: 190px;
   text-align: center;
-  margin-left:40px ;
+  margin-left: 40px;
 }
 
 .opciones {
@@ -160,7 +160,9 @@ form input[type="text"] {
   background-color: #ededed;
   transition: border-color 0.3s, box-shadow 0.3s;
 }
-.Rol,option{
+
+.Rol,
+option {
   width: 94%;
   padding: 12px;
   margin-bottom: 15px;
@@ -170,6 +172,25 @@ form input[type="text"] {
   color: #333;
   background-color: #ededed;
   transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Select de las torres */
+.select_torre {
+  width: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter-select {
+  width: 45%;
+  height: 50px;
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 14px;
+  color: #495057;
 }
 
 /* Efecto de foco en el campo */
@@ -187,7 +208,7 @@ form input[type="text"] {
 }
 
 /* Espaciado entre campos */
-form h4 + input[type="text"] {
+form h4+input[type="text"] {
   margin-top: 5px;
 }
 
@@ -340,7 +361,8 @@ h4 {
   margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  height: 100px; /* Ajusta la altura según lo necesites */
+  height: 100px;
+  /* Ajusta la altura según lo necesites */
 }
 
 #Pa_Fecha {
@@ -360,6 +382,7 @@ h4 {
 .boton_usuario a:hover {
   color: white;
 }
+
 .ventana-emergente {
   display: none;
   position: fixed;
@@ -422,6 +445,7 @@ h4 {
   font-size: 20px;
   margin: 20px;
 }
+
 #cambiar-usuario {
   width: 200px;
   padding: 10px;
@@ -435,6 +459,7 @@ h4 {
   font-size: 20px;
   margin-left: 40%;
 }
+
 .pop {
   display: flex;
   flex-direction: row;
@@ -514,6 +539,7 @@ h4 {
 .formulario-general__boton:hover {
   background-color: #2980b9;
 }
+
 .miModal {
   display: none;
   justify-content: center;

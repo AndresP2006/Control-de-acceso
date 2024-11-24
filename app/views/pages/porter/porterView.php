@@ -28,7 +28,8 @@
             <!-- Buscar  -->
             <div>
                 <form action="<?php RUTA_URL; ?>/PorterController/getPeopleBypa" method="post">
-                    <input id="texto" class="PeopleId" type="text" name="residente" placeholder="Buscar Persona con paquetes" />
+                    <input id="texto" class="PeopleId" type="text" name="residente"
+                        placeholder="Buscar Persona con paquetes" />
                     <center>
                         <button class="Buscar" id="abrirMiModal" name="Busca" type="button">Buscar</button>
                     </center>
@@ -101,77 +102,87 @@
                             <h4>Apellido: <input type="text" id="U_Apellido" name="U_Apellido" /></h4>
                             <h4>Telefono: <input type="text" id="U_Telefono" name="U_Telefono" /></h4>
                             <h4>Motivo de visita: <input type="text" id="U_Motivo" name="U_Motivo" /></h4>
-                            <h4>Numero de apartameto: <input type="text" id="U_Departamento" name="U_Departamento" />
-                            </h4>
-                            <center>
-                                <input type="submit" value="Enviar" class="Enviar" name="Visitantes" />
-                            </center>
+                            <h4>Torre</h4>
+                            <div class="select_torre">
+                                <select  id="select_torre" class="filter-select">
+                                    <option value="">Torre</option>
+                                    <?php foreach ($datos['torre'] as $torre) {
+                                        echo "<option value='{$torre->To_id}'>{$torre->To_letra}</option>";
+                                    } ?>
+                                </select>
+                                <select name="select_id" id="select_apartamento" class="filter-select">
+                                    <option value="0">Apartamento</option>
+                                </select>
+                                        </div>
+                                <center>
+                                    <input type="submit" value="Enviar" class="Enviar" name="Visitantes" />
+                                </center>
                         </form>
                     </div>
                 </div>
-                <!-- Fin del formulario -->
-                <br />
-                <br />
-                <br />
-                <!-- formulario del Paquete -->
-                <button class="paquetes" id="openModalBtn">Nuevo Paquete</button>
-
-                <!-- Formulario modal de paquetes -->
-                <div id="packageModal" class="modal">
-                    <div class="modal-content2">
-                        <div class="cerrado">
-                            <h3 class="titulo-form">Registro de paquetes</h3>
-                            <span class="close2" id="closeModal">&times;</span>
-                        </div>
-                        <form id="packageForm" action="<?php echo RUTA_URL; ?>/PorterController/enterPackage"
-                            method="post">
-                            <h4>Estado: <input type="text" id="Pa_Estado" name="estado" /></h4>
-                            <h4>Descripcio: <textarea id="Pa_Descripcion" name="descripcion"></textarea></h4>
-                            <h4>Fecha de entrega: <input type="date" id="Pa_Fecha" name="fecha" /></h4>
-                            <h4>Recibidor: <input type="text" id="Pa_Firma" name="recibidor" /></h4>
-                            <h4>Documento del Residente: <input type="text" id="U_Id" name="documento" /></h4>
-                            <center>
-                                <input type="submit" value="Enviar" name="paquetes" class="Enviar" />
-                            </center>
-                        </form>
-                    </div>
-                </div>
-                <!-- Fin del formulario del Paquete -->
             </div>
+            <!-- Fin del formulario -->
+            <br />
+            <br />
+            <br />
+            <!-- formulario del Paquete -->
+            <button class="paquetes" id="openModalBtn">Nuevo Paquete</button>
+
+            <!-- Formulario modal de paquetes -->
+            <div id="packageModal" class="modal">
+                <div class="modal-content2">
+                    <div class="cerrado">
+                        <h3 class="titulo-form">Registro de paquetes</h3>
+                        <span class="close2" id="closeModal">&times;</span>
+                    </div>
+                    <form id="packageForm" action="<?php echo RUTA_URL; ?>/PorterController/enterPackage" method="post">
+                        <h4>Estado: <input type="text" id="Pa_Estado" name="estado" /></h4>
+                        <h4>Descripcio: <textarea id="Pa_Descripcion" name="descripcion"></textarea></h4>
+                        <h4>Fecha de entrega: <input type="date" id="Pa_Fecha" name="fecha" /></h4>
+                        <h4>Recibidor: <input type="text" id="Pa_Firma" name="recibidor" /></h4>
+                        <h4>Documento del Residente: <input type="text" id="U_Id" name="documento" /></h4>
+                        <center>
+                            <input type="submit" value="Enviar" name="paquetes" class="Enviar" />
+                        </center>
+                    </form>
+                </div>
+            </div>
+            <!-- Fin del formulario del Paquete -->
         </div>
     </div>
-    <!-- Formulario para mostrar los datos -->
+</div>
+<!-- Formulario para mostrar los datos -->
 
-    <!-- mostrar datos de los formularios -->
-    <div id="overlay">
-        <form class="formulario">
-            <div class="cerradi">
-                <span class="x" id="cerrar">&times;</span>
-                <h2>Residente</h2>
-            </div>
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" value="<?php echo $Nombre ?>">
+<!-- mostrar datos de los formularios -->
+<div id="overlay">
+    <form class="formulario">
+        <div class="cerradi">
+            <span class="x" id="cerrar">&times;</span>
+            <h2>Residente</h2>
+        </div>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" value="<?php echo $Nombre ?>">
 
-            <label for="Apellido">Apellido:</label>
-            <input type="text" id="Apellido" name="Apellido" value="<?php echo $Apellido ?>">
+        <label for="Apellido">Apellido:</label>
+        <input type="text" id="Apellido" name="Apellido" value="<?php echo $Apellido ?>">
 
-            <label for="Telefono">Telefono:</label>
-            <input type="text" id="Telefono" name="Telefono" value="<?php echo $Telefono ?>">
+        <label for="Telefono">Telefono:</label>
+        <input type="text" id="Telefono" name="Telefono" value="<?php echo $Telefono ?>">
 
-            <label for="Motivo">Motivo de visita:</label>
-            <input type="text" id="Motivo" name="Motivo" value="<?php echo $Motivo ?>">
+        <label for="Motivo">Motivo de visita:</label>
+        <input type="text" id="Motivo" name="Motivo" value="<?php echo $Motivo ?>">
 
-            <label for="departameto">Numero de departameto:</label>
-            <input type="text" id="departameto" name="departameto" value="<?php echo $Departamento ?>">
+        <label for="departameto">Numero de departameto:</label>
+        <input type="text" id="departameto" name="departameto" value="<?php echo $Departamento ?>">
 
-            <label for="Paquete">Paquete:</label>
-            <input type="text" id="Paquete" name="Paquete" value="<?php echo $Descripcion ?>">
+        <label for="Paquete">Paquete:</label>
+        <input type="text" id="Paquete" name="Paquete" value="<?php echo $Descripcion ?>">
 
 
-            <!-- <input type="submit" value="Actualizar" name="Actualizar"> -->
+        <!-- <input type="submit" value="Actualizar" name="Actualizar"> -->
 
-        </form>
-    </div>
+    </form>
+</div>
 </div>
 
 <?php
@@ -184,14 +195,15 @@ $_SESSION;
         realizado("<?php echo $datos['messageInfo']; ?>")
     <?php } ?>
 
-    $(document).ready(function() {
+    $(document).ready(function () {
 
-        $('#abrirMiModal').click(function() {
+
+        $('#abrirMiModal').click(function () {
             let PeopleID = $('#texto').val();
             $.ajax({
                 url: '<?php echo RUTA_URL; ?>/PorterController/getPeopleBypa?residente=' + PeopleID, //de donde recibe la informacion
                 type: 'GET', //de que manera lo recibe
-                success: function(respuesta) {
+                success: function (respuesta) {
                     let resp = JSON.parse(respuesta);
 
                     $('#miModal').addClass('miModal--activo');
@@ -201,11 +213,36 @@ $_SESSION;
                     $('#departamento').val(resp.Ap_id);
                     $('#Paquete').val(resp.Total_paquetes);
                 },
-                error: function() {
+                error: function () {
                     $('#respuesta').html('Error al procesar la solicitud.'); //informacion incorrecta
                 }
             });
         })
 
-    })
+        // selector de torre
+        $('#select_torre').change(function () {
+
+            let ValueTower = $('#select_torre').val();
+
+            $.ajax({
+                url: '<?php echo RUTA_URL ?>/ApartamentController/getApartamentByTower',
+                type: 'POST',
+                data: {
+                    TowerId: ValueTower
+                },
+                success: function (respuesta) {
+                    const res = JSON.parse(respuesta)
+                    
+                    let optionSelect = '<option value="0">Apartamento</option>'
+
+                    for (let item of res)
+                        optionSelect += '<option value="' + item.Ap_id + '">' + item.Ap_numero + '</option>'
+
+                    $('#select_apartamento').html(optionSelect)
+                }
+            })
+        })
+    }
+    );
+
 </script>
