@@ -25,9 +25,9 @@ newPackageBtn.onclick = function () {
   packageModal.style.display = "block";
 };
 
-packageCloseBtn.onclick = function () {
-  packageModal.style.display = "none";
-};
+  packageCloseBtn.onclick = function () {
+    packageModal.style.display = "none";
+  };
 
 window.onclick = function (event) {
   if (event.target == packageModal) {
@@ -35,5 +35,16 @@ window.onclick = function (event) {
   }
 };
 
+const abrirTablaFlotante = document.getElementById('abrirTablaFlotante');
+        const tablaFlotante = document.getElementById('tablaFlotante');
+
+        abrirTablaFlotante.addEventListener('click', () => {
+            tablaFlotante.style.display = 'flex';
+        });
+        window.addEventListener('click', (e) => {
+            if (e.target === tablaFlotante) {
+                tablaFlotante.style.display = 'none';
+            }
+        });
 
 
