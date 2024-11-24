@@ -122,7 +122,10 @@
                             <h4>Apellido: <input type="text" id="U_Apellido" name="U_Apellido" /></h4>
                             <h4>Telefono: <input type="text" id="U_Telefono" name="U_Telefono" /></h4>
                             <h4>Motivo de visita: <input type="text" id="U_Motivo" name="U_Motivo" /></h4>
-                            <h4>Torre</h4>
+                            <div class="titulo_torre">
+                                <h4>Torre</h4>
+                                <h4 class="ap">Apartamento</h4>
+                            </div>
                             <div class="select_torre">
                                 <select id="select_torre" class="filter-select">
                                     <option value="">Torre</option>
@@ -184,10 +187,10 @@ $_SESSION;
         realizado("<?php echo $datos['messageInfo']; ?>")
     <?php } ?>
 
-    $(document).ready(function() {
+    $(document).ready(function () {
 
 
-        $('#abrirMiModal').click(function() {
+        $('#abrirMiModal').click(function () {
             let PeopleID = $('#texto').val();
             let tabla = $('#paquetesTable').val();
             $.ajax({
@@ -196,7 +199,7 @@ $_SESSION;
                 data: {
                     TowerId: tabla
                 },
-                success: function(respuesta) {
+                success: function (respuesta) {
                     let resp = JSON.parse(respuesta);
 
                     $('#miModal').addClass('miModal--activo');
@@ -206,49 +209,52 @@ $_SESSION;
                     $('#departamento').val(resp.Ap_id);
                     $('#Paquete').val(resp.Total_paquetes);
 
-                    let td = '<td>  </td>'; 
+                    let td = '<td>  </td>';
                     if (Array.isArray(resp)) {
-                        for (let item of resp) { 
+                        for (let item of resp) {
                             td += '<td>' + item.Pa_estado + '</td>';
                             td += '<td>' + item.Pa_fecha + '</td>';
                             td += '<td>' + item.Pa_descripcion + '</td>';
                         }
                     }
 
-                    
-                    $('#paquetesTable').html(td); 
+
+                    $('#paquetesTable').html(td);
 
                 },
-                error: function() {
+                error: function () {
                     $('#respuesta').html('Error al procesar la solicitud.');
                 }
             });
         });
-    
 
-    // selector de torre
-    $('#select_torre').change(function() {
+        // selector de torre
+        $('#select_torre').change(function () {
+            let ValueTower = $('#select_torre').val();
+            if (ValueTower) {
 
-        let ValueTower = $('#select_torre').val();
+                $.ajax({
+                    url: '<?php echo RUTA_URL ?>/ApartamentController/getApartamentByTower',
+                    type: 'POST',
+                    data: {
+                        TowerId: ValueTower
+                    },
+                    success: function (respuesta) {
 
-        $.ajax({
-            url: '<?php echo RUTA_URL ?>/ApartamentController/getApartamentByTower',
-            type: 'POST',
-            data: {
-                TowerId: ValueTower
-            },
-            success: function(respuesta) {
-                const res = JSON.parse(respuesta)
+                        const res = JSON.parse(respuesta)
 
-                let optionSelect = '<option value="0">Apartamento</option>'
+                        let optionSelect = '<option value="0">Apartamento</option>'
 
-                for (let item of res)
-                    optionSelect += '<option value="' + item.Ap_id + '">' + item.Ap_numero + '</option>'
+                        for (let item of res)
+                            optionSelect += '<option value="' + item.Ap_id + '">' + item.Ap_numero + '</option>'
 
+                        $('#select_apartamento').html(optionSelect)
+                    }
+                })
+            } else {
+                optionSelect = '<option value="0">Apartamento</option>'
                 $('#select_apartamento').html(optionSelect)
             }
         })
-    })
-
     });
 </script>
