@@ -33,16 +33,16 @@ class UserController extends Controlador
                 'Rol' => trim($_POST['U_id']),
                 'Contrasena' => trim($_POST['U_contrasena']),
             ];
-    
+
             // Mensaje de éxito
             $message = 'Usuario guardado correctamente';
-    
+
             // Agregar el nuevo usuario
             $this->AdminModel->addUser($datos);
-    
+
             // Obtener todos los usuarios después de agregar el nuevo
             $registros = $this->PeopleModel->getAllUsuario(); // Asegúrate de que este método devuelva todos los usuarios
-    
+
             // Formatear los datos de los usuarios como lo mencionas
             $usuarios = [];
             foreach ($registros as $registro) {
@@ -56,22 +56,21 @@ class UserController extends Controlador
                     'Ro_tipo' => $registro->Ro_tipo,
                 ];
             }
-    
+
             // Pasar los usuarios y el mensaje a la vista
             $datosVista = [
                 'messageInfo' => $message,
                 'usuarios' => $usuarios,  // Asegúrate de pasar los usuarios a la vista
             ];
-    
+
             // Cargar la vista con los datos
             $this->vista('pages/admin/AdminView', $datosVista);
             exit;  // Evita que se siga ejecutando el script o redirigiendo a otra página
         } else {
             echo "error";
         }
-        
     }
-    
+
 
 
     public function UdateUser(){
@@ -91,27 +90,28 @@ class UserController extends Controlador
     }
 
     public function DeleteUser()
-{
-    // Verificar si se han enviado los datos necesarios
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deletebtn']) && isset($_POST['delete_id'])) {
-        $delete_id = $_POST['delete_id'];
+    {
+        // Verificar si se han enviado los datos necesarios
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deletebtn']) && isset($_POST['delete_id'])) {
+            $delete_id = $_POST['delete_id'];
 
-        // Llamar al modelo para eliminar el registro
-        $this->AdminModel->eliminarRegistro($delete_id);
+            // Llamar al modelo para eliminar el registro
+            $this->AdminModel->eliminarRegistro($delete_id);
 
-        // Opcionalmente, puedes configurar una variable de sesión o un mensaje flash para mostrar en la misma página
-        $_SESSION['message'] = 'Usuario borrado correctamente';
-    } else {
-        $_SESSION['error'] = 'Error: No se pudo procesar la solicitud';
+            // Opcionalmente, puedes configurar una variable de sesión o un mensaje flash para mostrar en la misma página
+            $_SESSION['message'] = 'Usuario borrado correctamente';
+        } else {
+            $_SESSION['error'] = 'Error: No se pudo procesar la solicitud';
+        }
+
+        // Redirigir a la misma página para evitar redireccionamientos extraños
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit;
     }
-
-    // Redirigir a la misma página para evitar redireccionamientos extraños
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
-    exit;
-}
+    public function DeleteVisitas() {}
 
 
-public function MostrarDatos()
+    public function MostrarDatos()
 {
     // Captura el filtro desde el formulario POST o retiene el valor previo si existe
     $roleId = isset($_POST['select_id']) && $_POST['select_id'] !== '' ? intval($_POST['select_id']) : null;
@@ -152,20 +152,20 @@ public function MostrarDatos()
 
 
 
-public function admin()
-{
-    // Verifica la sesión antes de mostrar la vista
-    if (!isset($_SESSION['sesion_activa'])) {
-        header('location:' . RUTA_URL . '/pages/homeView');
-        exit;
+    public function admin()
+    {
+        // Verifica la sesión antes de mostrar la vista
+        if (!isset($_SESSION['sesion_activa'])) {
+            header('location:' . RUTA_URL . '/pages/homeView');
+            exit;
+        }
+
+        // Obtiene los datos para la vista
+        $datos = $this->MostrarDatos();
+
+        // Llama a la vista pasando los datos
+        $this->vista('pages/admin/adminView', $datos);
     }
-
-    // Obtiene los datos para la vista
-    $datos = $this->MostrarDatos();
-
-    // Llama a la vista pasando los datos
-    $this->vista('pages/admin/adminView', $datos);
-}
 
 
 

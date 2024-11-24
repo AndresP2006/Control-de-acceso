@@ -142,3 +142,34 @@
     color: #00509E;
     font-size: 18px;
   }
+/* Estilos específicos para la nueva tabla */
+.tabla-nueva {
+    margin: 0 auto;
+    border-collapse: collapse;
+    width: 80%;
+    background-color: #f9f9f9;
+}
+
+.tabla-nueva__encabezado {
+    background-color: #4CAF50;
+}
+
+.tabla-nueva__fila {
+    border-bottom: 1px solid #ddd;
+}
+
+.tabla-nueva__celda {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+    color: #333;
+}
+
+.tabla-nueva__celda:first-child {
+    font-weight: bold;
+}
+
+.tabla-nueva__encabezado .tabla-nueva__celda {
+    color: rgb(20, 19, 19);
+    font-weight: bold;
+}

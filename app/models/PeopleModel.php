@@ -24,10 +24,10 @@ class PeopleModel
 
     public function getNumberGuest()
     {
-        
+
         $this->db->query("SELECT count(*) as total FROM registro WHERE Re_hora_salida = '00:00:00';");
 
-        return $this->db->registro();        
+        return $this->db->registro();
     }
     public function getGuestById($idGuest)
     {
@@ -44,12 +44,12 @@ class PeopleModel
     // }
     public function getVisitas()
     {
-        $this->db->query("SELECT * FROM visitantes");
+        $this->db->query("SELECT v.*,h.Re_fecha_entrada,h.Re_hora_entrada,h.Re_hora_salida FROM visitantes v , registro h where v.Vi_id=h.Vi_id");
         return $this->db->showTables();
     }
     public function getPackeges()
     {
-        $this->db->query("SELECT * FROM paquete");
+        $this->db->query("SELECT p.Pe_id,p.Pe_nombre,a.* from paquete a, persona p where a.Pe_id=p.Pe_id;");
         return $this->db->showTables();
     }
 
