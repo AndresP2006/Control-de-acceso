@@ -27,7 +27,7 @@
         <div class="opciones">
             <!-- Buscar  -->
             <div>
-                <form action="<?php RUTA_URL; ?>/PorterController/getPeopleBypa" method="post">
+                <form>
                     <input id="texto" class="PeopleId" type="text" name="residente" placeholder="Buscar Persona con paquetes" />
                     <center>
                         <button class="Buscar" id="abrirMiModal" name="Busca" type="button">Buscar</button>
@@ -174,11 +174,8 @@
     </div>
 </div>
 
-<?php
-
-$_SESSION;
-?>
 <?php require_once RUTA_APP . '/views/inc/footer-porter.php'; ?>
+
 <script>
     <?php if (isset($datos['messageInfo'])) { ?>
         realizado("<?php echo $datos['messageInfo']; ?>")
@@ -189,9 +186,18 @@ $_SESSION;
         $('#abrirMiModal').click(function() {
             let PeopleID = $('#texto').val();
             $.ajax({
-                url: '<?php echo RUTA_URL; ?>/PorterController/getPeopleBypa?residente=' + PeopleID, //de donde recibe la informacion
-                type: 'GET', //de que manera lo recibe
+                url: '<?php echo RUTA_URL; ?>/PorterController/getPeopleBypa', 
+                type: 'POST', //de que manera lo recibe
+                data: {
+                    residente: PeopleID
+                },
                 success: function(respuesta) {
+
+                    if(!respuesta || respuesta == "false") {
+                        error("La persona no existe!")
+                        return;
+                    }
+
                     let resp = JSON.parse(respuesta);
 
                     $('#miModal').addClass('miModal--activo');

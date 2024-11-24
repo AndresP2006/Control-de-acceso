@@ -83,7 +83,7 @@ class PorterController extends Controlador
 
     public function getPeopleBypa()
     {
-        $id = $_GET['residente'];
+        $id = $_POST['residente'];
         $mostrar = $this->PeopleModel->PeopleID($id);
         echo json_encode($mostrar);
         

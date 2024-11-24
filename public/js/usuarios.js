@@ -1,23 +1,25 @@
 
-//Modal nuevo registro
+// Modal nuevo registro
 var visitorModal = document.getElementById("myModal");
 var newVisitorBtn = document.getElementById("nuevo_registro");
 var visitorCloseBtn = document.getElementsByClassName("close")[0];
-var categoriaInput = document.getElementById("R_id");
+var categoriaInput = document.getElementById("U_id");
 var passwordInput = document.getElementById("U_password");
 var passwordLabel = document.getElementById("passwordLabel");
 
+// Abrir el modal
 newVisitorBtn.onclick = function () {
     visitorModal.style.display = "block";
     passwordInput.style.display = "none";
     passwordLabel.style.display = "none";
 };
 
+// Cerrar el modal
 visitorCloseBtn.onclick = function () {
     visitorModal.style.display = "none";
-
 };
 
+// Cerrar el modal si se hace clic fuera de él
 window.onclick = function (event) {
     if (event.target == visitorModal) {
         visitorModal.style.display = "none";
@@ -34,160 +36,81 @@ categoriaInput.addEventListener("input", function () {
       passwordInput.style.display = "none";
   }
 });
+
+// Mantener o cambiar el filtro después de un registro
+document.getElementById("myForm").onsubmit = function () {
+    var selectedRole = categoriaInput.value;
+    
+    // Si es guardia (R_id = 2) y estás en la categoría de residente (R_id = 3), cambiar el filtro
+    if (selectedRole === "2" && document.getElementById("R_id").value == "3") {
+        // Actualizar el filtro a "Guardia" automáticamente
+        document.querySelector('input[name="filter"]').value = "2";
+    } else if (selectedRole === "3" && document.getElementById("R_id").value != "3") {
+        // Mantener el filtro si es Residente
+        document.querySelector('input[name="filter"]').value = "3";
+    }
+};
 
 //------------Fin modal registro--------------
 
 
+// Obtener el modal de edición y el botón de cerrar
+// Modal de edición - solo afecta al modal 'myModal-Udate'
+// Modal de edición - solo afecta al modal 'myModal-Udate'
+var visitorModalEdit = document.getElementById("myModal-Udate");
+var visitorCloseBtnEdit = document.getElementsByClassName("close")[1]; // Asegúrate de que esta clase es única para el modal de edición
 
-//Modal nuevo editar
-var visitorModal = document.getElementById("myModal");
-var newVisitorBtn = document.getElementById("nuevo_registro");
-var visitorCloseBtn = document.getElementsByClassName("close")[0];
-var categoriaInput = document.getElementById("R_id");
-var passwordInput = document.getElementById("U_password");
-var passwordLabel = document.getElementById("passwordLabel");
-
-newVisitorBtn.onclick = function () {
-    visitorModal.style.display = "block";
-    passwordInput.style.display = "none";
-    passwordLabel.style.display = "none";
-};
-
-visitorCloseBtn.onclick = function () {
-    visitorModal.style.display = "none";
-
-};
-
-window.onclick = function (event) {
-    if (event.target == visitorModal) {
-        visitorModal.style.display = "none";
-    }
-};
-
-// Mostrar el campo de contraseña según el valor de categoría
-categoriaInput.addEventListener("input", function () {
-  if (categoriaInput.value === "1" || categoriaInput.value === "2") {
-      passwordLabel.style.display = "block";
-      passwordInput.style.display = "block";
-  } else {
-      passwordLabel.style.display = "none";
-      passwordInput.style.display = "none";
-  }
+// Escuchar clics en los botones de editar solo para 'myModal-Udate'
+document.querySelectorAll('.edit-btn').forEach(function(button) {
+    button.onclick = function() {
+        // Obtenemos los datos del botón usando getAttribute
+        var id = this.getAttribute('data-id');
+        var nombre = this.getAttribute('data-nombre');
+        var apellidos = this.getAttribute('data-apellidos');
+        var telefono = this.getAttribute('data-telefono');
+        var correo = this.getAttribute('data-correo');
+        var departamento = this.getAttribute('data-departamento');
+        var rol = this.getAttribute('data-rol'); // Obtener el valor del rol (por ejemplo, "1" para Administrador)
+        var pass = this.getAttribute('data-contrasena');
+        // Asignamos esos valores a los campos del formulario de edición
+        document.getElementById('E_id').value = id;
+        document.getElementById('E_Nombre').value = nombre;
+        document.getElementById('E_Apellido').value = apellidos;
+        document.getElementById('E_Telefono').value = telefono;
+        document.getElementById('E_Gmail').value = correo;
+        document.getElementById('E_Departamento').value = departamento;
+        var tipo_rol;
+      if(rol == 'Administrador'){
+        tipo_rol=1;
+      } else if(rol == 'Guardia'){
+        tipo_rol=2;
+      }else{
+        tipo_rol=3;
+      }
+        // Asignamos el valor seleccionado del 'select' para el rol
+        var rolSelect = document.getElementById('R_id');
+        for (var i = 0; i < rolSelect.options.length; i++) {
+            if (rolSelect.options[i].value == tipo_rol) {
+                rolSelect.selectedIndex = i;
+                break;
+            }
+        }
+        document.getElementById('E_password').value = pass;
+        // Mostrar el modal de edición
+        visitorModalEdit.style.display = "block";
+    };
 });
 
-//Fin modal registro
+// Cerrar el modal cuando el usuario haga clic en la "X" o fuera del modal de edición
+visitorCloseBtnEdit.onclick = function() {
+    visitorModalEdit.style.display = "none";
+};
 
-
-var modal = document.getElementById("modalOverlay");
-var span = document.getElementsByClassName("modal-close")[0];
-
-document.getElementById('showFormButton').addEventListener('click', function() {
-    modal.style.display = 'block';
-});
-
-span.onclick = function() {
-    modal.style.display = 'none';
-}
-
+// Cerrar el modal si el usuario hace clic fuera del modal de edición
 window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = 'none';
+    if (event.target == visitorModalEdit) {
+        visitorModalEdit.style.display = "none";
     }
 };
 
-
-
-var model = document.getElementById("myModal");
-var boton = document.getElementById("openModalBtn");
-var cerrar = document.getElementsByClassName("close")[0];
-
-
-boton.onclick = function() {
-    model.style.display = "block";
-}
-
-
-cerrar.onclick = function() {
-    model.style.display = "none";
-}
-
-
-window.onclick = function(event) {
-    if (event.target == model) {
-        model.style.display = "none";
-    }
-};
-var visitorModal = document.getElementById("Modal");
-var newVisitorBtn = document.getElementById("NuevoUsuaro");
-var visitorCloseBtn = document.getElementsByClassName("closes")[0];
-
-newVisitorBtn.onclick = function () {
-  visitorModal.style.display = "block";
-};
-
-visitorCloseBtn.onclick = function () {
-  visitorModal.style.display = "none";
-};
-
-window.onclick = function (event) {
-  if (event.target == visitorModal) {
-    visitorModal.style.display = "none";
-  }
-};
- // Administrador
- var popupAdmin = document.getElementById("popup-administracion");
- var btnAdmin = document.getElementById("boton-administracion");
- var cerrarAdmin = document.getElementById("cerrar-administracion");
-
- btnAdmin.onclick = function () {
-   popupAdmin.style.display = "block";
- };
-
- cerrarAdmin.onclick = function () {
-   popupAdmin.style.display = "none";
- };
-
- window.onclick = function (event) {
-   if (event.target == popupAdmin) {
-     popupAdmin.style.display = "none";
-   }
- };
-
- // Guardia
- var popupSeguridad = document.getElementById("popup-seguridad");
- var btnSeguridad = document.getElementById("boton-seguridad");
- var cerrarSeguridad = document.getElementById("cerrar-seguridad");
-
- btnSeguridad.onclick = function () {
-   popupSeguridad.style.display = "block";
- };
-
- cerrarSeguridad.onclick = function () {
-   popupSeguridad.style.display = "none";
- };
-
- window.onclick = function (event) {
-   if (event.target == popupSeguridad) {
-     popupSeguridad.style.display = "none";
-   }
- };
-
- // Cambiar usuario
- var popupCambiar = document.getElementById("popup-cambiar");
- var btnCambiarUsuario = document.getElementById("cambiar-usuario");
- var cerrarPopup = document.getElementById("cerrar-popup");
-
- btnCambiarUsuario.onclick = function () {
-   popupCambiar.style.display = "block";
- };
-
- cerrarPopup.onclick = function () {
-   popupCambiar.style.display = "none";
- };
-
- window.onclick = function (event) {
-   if (event.target == popupCambiar) {
-     popupCambiar.style.display = "none";
-   }
- };
 

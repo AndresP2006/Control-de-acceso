@@ -94,7 +94,7 @@ class PeopleModel
     if ($roleId) {
         // Consulta con filtro por Rol
         $this->db->query('
-            SELECT persona.*, usuario.Ro_id, usuario.Us_correo,r.Ro_tipo 
+            SELECT persona.*, usuario.Ro_id, usuario.Us_correo,r.Ro_tipo,usuario.Us_contrasena 
             FROM persona JOIN usuario ON persona.Pe_id = usuario.Us_id JOIN rol r ON usuario.Ro_id = r.Ro_id 
             WHERE usuario.Ro_id = :roleId
         ');
@@ -102,11 +102,16 @@ class PeopleModel
     } else {
         // Consulta sin filtro
         $this->db->query('
-            SELECT persona.*, usuario.Ro_id, usuario.Us_correo,r.Ro_tipo 
+            SELECT persona.*, usuario.Ro_id, usuario.Us_correo,r.Ro_tipo,usuario.Us_contrasena 
             FROM persona JOIN usuario ON persona.Pe_id = usuario.Us_id JOIN rol r ON usuario.Ro_id = r.Ro_id 
         ');
     }
 
     return $this->db->registros(); // Devuelve todos los registros
+}
+
+
+public function udateRegistro($id){
+
 }
 }
