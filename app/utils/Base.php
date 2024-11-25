@@ -71,7 +71,13 @@ class Base
     public function registros()
     {
         $this->execute();
-        return $this->stmt->fetchAll(PDO::FETCH_OBJ);
+        try{
+            return $this->stmt->fetchAll(PDO::FETCH_OBJ);
+        }
+        catch(Exception $e){
+            return;
+        }
+       
     }
     //OBTENER REGISTRO PARA LAS TABLAS
     public function showTables(){

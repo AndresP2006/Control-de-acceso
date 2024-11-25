@@ -30,8 +30,8 @@
                         echo "<td>". $historial['Pa_responsable'] . "</td>";
                        
                         echo "<td>
-                            <form action='" . RUTA_URL . "/UserController/....' method='POST' style='display:inline;'>
-                                <input type='hidden' name='delete_pid' value='" . htmlspecialchars($historial['Pe_id'] ?? '') . "'>
+                            <form action='" . RUTA_URL . "/UserController/DeletePaquete' method='POST' style='display:inline;'>
+                                <input type='hidden' name='delete_pid' value='" . htmlspecialchars($historial['Pa_id'] ?? '') . "'>
                                 <button type='submit' name='deletePaquetes' class='delete-btn'>🗑️</button>
                             </form>
                             </td>";

@@ -103,5 +103,10 @@ class PeopleModel
 
         return $this->db->registros(); // Devuelve todos los registros
     }
+    public function getPackeges()
+    {
+        $this->db->query("select a.Pe_id,a.Pe_nombre,p.* from paquete p , persona a where a.Pe_id=p.Pe_id;");
+        return $this->db->showTables();
+    }
    
 }

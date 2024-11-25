@@ -3,12 +3,14 @@ class UserController extends Controlador
 {
     private $AdminModel;
     private $PeopleModel;
+    private $PaquetModel;
 
     public function __construct()
     {
         // Inicialización de los modelos
         $this->AdminModel = $this->modelo('AdminModel');
         $this->PeopleModel = $this->modelo('PeopleModel');
+        $this->PaquetModel = $this->modelo('PaquetModel');
     }
 
 
@@ -130,10 +132,9 @@ class UserController extends Controlador
         // Eliminar el registro del modelo
         $this->AdminModel->eliminarRegistro($delete_id);
 
-        // Mensaje de éxito
-        $_SESSION['message'] = 'Usuario borrado correctamente';
+        
     } else {
-        $_SESSION['error'] = 'Error: No se pudo procesar la solicitud';
+       
     }
 
     // Recuperar el filtro actual desde el POST (si existe), de lo contrario usar un valor predeterminado
@@ -179,6 +180,17 @@ class UserController extends Controlador
 
 
     public function DeleteVisitas() {}
+
+    public function DeletePaquete() {
+
+        if(isset($_POST['deletePaquetes']) && isset($_POST['delete_pid'])){
+            $id = $_POST['delete_pid'];
+
+            $this->PaquetModel->deletePaquetById($id);
+
+            $this->vista('pages/admin/paquetesView', null);
+        }
+    }
 
 
     public function MostrarDatos()
