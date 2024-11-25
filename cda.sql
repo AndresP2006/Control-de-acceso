@@ -29,7 +29,7 @@ CREATE TABLE `apartamento` (
   PRIMARY KEY (`Ap_id`),
   KEY `To_id` (`To_id`),
   CONSTRAINT `apartamento_ibfk_1` FOREIGN KEY (`To_id`) REFERENCES `torre` (`To_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,6 +38,7 @@ CREATE TABLE `apartamento` (
 
 LOCK TABLES `apartamento` WRITE;
 /*!40000 ALTER TABLE `apartamento` DISABLE KEYS */;
+INSERT INTO `apartamento` VALUES (106,1,302),(107,2,212),(108,1,212),(109,1,302);
 /*!40000 ALTER TABLE `apartamento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -59,7 +60,7 @@ CREATE TABLE `paquete` (
   KEY `Pe_id` (`Pe_id`),
   CONSTRAINT `paquete_ibfk_1` FOREIGN KEY (`Pe_id`) REFERENCES `persona` (`Pe_id`),
   CONSTRAINT `paquete_ibfk_2` FOREIGN KEY (`Pe_id`) REFERENCES `persona` (`Pe_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,7 +69,7 @@ CREATE TABLE `paquete` (
 
 LOCK TABLES `paquete` WRITE;
 /*!40000 ALTER TABLE `paquete` DISABLE KEYS */;
-INSERT INTO `paquete` VALUES (1,'activo','Pc gamer','2024-11-07 05:00:00','Stiven',NULL),(2,'activo','PC gamer','2024-11-07 05:00:00','Juan',NULL),(3,'activo','PortÃ¡til','2024-11-08 05:00:00','Juan',NULL),(4,'Estado','asddfgdgf','2024-11-12 05:00:00','Guardia_2',123),(5,'Estado','asddfgdgf','2024-11-12 05:00:00','Guardia_2',123),(6,'Estado','asdddddddddddd','2024-11-12 05:00:00','Guardia_5',123),(7,'bueno','en caja','2024-11-07 05:00:00','portero',12345),(8,'bueno','en caja','2024-11-07 05:00:00','portero',12345),(9,'Fragil','esd','2024-11-20 05:00:00','Guardia_2',123);
+INSERT INTO `paquete` VALUES (1,'activo','Pc gamer','2024-11-07 05:00:00','Stiven',NULL),(2,'activo','PC gamer','2024-11-07 05:00:00','Juan',NULL),(3,'activo','PortÃ¡til','2024-11-08 05:00:00','Juan',NULL),(4,'Estado','asddfgdgf','2024-11-12 05:00:00','Guardia_2',123),(5,'Estado','asddfgdgf','2024-11-12 05:00:00','Guardia_2',123),(6,'Estado','asdddddddddddd','2024-11-12 05:00:00','Guardia_5',123),(7,'bueno','en caja','2024-11-07 05:00:00','portero',12345),(8,'bueno','en caja','2024-11-07 05:00:00','portero',12345),(9,'Fragil','esd','2024-11-20 05:00:00','Guardia_2',123),(10,'Fragil','asdfsd','2024-11-24 05:00:00','Guardia_2',123);
 /*!40000 ALTER TABLE `paquete` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -100,7 +101,7 @@ CREATE TABLE `persona` (
 
 LOCK TABLES `persona` WRITE;
 /*!40000 ALTER TABLE `persona` DISABLE KEYS */;
-INSERT INTO `persona` VALUES (123,'JD','RP','30000000',NULL,NULL),(2006,'josimar','suñoga','12121312313',2006,NULL),(12345,'David','Rua','30000000',NULL,NULL),(123456,'Andres','Pereira','300000',NULL,NULL),(1234567,'Luis','Padilla','30000000',NULL,NULL),(12345678,'Luis','Padilla','30000000',NULL,NULL),(1043870680,'Juan David','Rua Porta','30000000',NULL,NULL);
+INSERT INTO `persona` VALUES (123,'JD','RP','30000000',NULL,106),(2006,'josimar','suñoga','12121312313',2006,NULL),(12345,'David','Rua','30000000',NULL,108),(123456,'Andres','Pereira','300000',NULL,NULL),(1234567,'Luis','Padilla','30000000',NULL,NULL);
 /*!40000 ALTER TABLE `persona` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -116,11 +117,12 @@ CREATE TABLE `registro` (
   `Re_fecha_entrada` date NOT NULL,
   `Re_hora_entrada` time NOT NULL,
   `Re_hora_salida` time NOT NULL,
+  `Re_motivo` varchar(50) NOT NULL,
   `Vi_id` int(10) NOT NULL,
   PRIMARY KEY (`Re_id`),
   KEY `Vi_id` (`Vi_id`),
   CONSTRAINT `registro_ibfk_1` FOREIGN KEY (`Vi_id`) REFERENCES `visitantes` (`Vi_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -129,7 +131,7 @@ CREATE TABLE `registro` (
 
 LOCK TABLES `registro` WRITE;
 /*!40000 ALTER TABLE `registro` DISABLE KEYS */;
-INSERT INTO `registro` VALUES (2,'2024-11-18','14:27:42','22:42:06',1042851729),(3,'2024-11-20','20:30:30','22:40:39',123),(4,'2024-11-21','22:42:50','22:44:18',1),(5,'2024-11-21','22:44:42','22:52:34',2),(6,'2024-11-21','22:46:23','22:47:34',3),(7,'2024-11-21','22:48:30','22:49:42',4),(8,'2024-11-22','20:03:11','20:07:17',345),(9,'2024-11-22','20:08:18','20:23:55',321),(10,'2024-11-22','20:09:24','00:00:00',21),(11,'2024-11-22','20:10:25','21:01:44',11),(12,'2024-11-22','20:10:48','00:00:00',22),(13,'2024-11-22','20:12:05','00:00:00',44),(14,'2024-11-22','20:15:54','00:00:00',222),(15,'2024-11-22','21:02:22','21:54:29',4321);
+INSERT INTO `registro` VALUES (2,'2024-11-18','14:27:42','22:42:06','',1042851729),(3,'2024-11-20','20:30:30','22:23:46','',123),(4,'2024-11-21','22:42:50','22:44:18','',1),(5,'2024-11-21','22:44:42','22:52:34','',2),(6,'2024-11-21','22:46:23','22:47:34','',3),(7,'2024-11-21','22:48:30','22:49:42','',4),(8,'2024-11-22','20:03:11','20:17:03','',345),(9,'2024-11-22','20:08:18','20:23:55','',321),(10,'2024-11-22','20:09:24','00:00:00','',21),(11,'2024-11-22','20:10:25','21:01:44','',11),(12,'2024-11-22','20:10:48','00:00:00','',22),(13,'2024-11-22','20:12:05','00:00:00','',44),(14,'2024-11-22','20:15:54','00:00:00','',222),(15,'2024-11-22','21:02:22','21:54:29','',4321),(16,'2024-11-24','12:53:01','00:00:00','',1111),(17,'2024-11-24','12:53:57','00:00:00','',1212121),(18,'2024-11-24','20:15:46','20:17:14','',777),(19,'2024-11-25','16:51:23','00:00:00','',1104413144),(20,'2024-11-25','17:10:24','00:00:00','',0);
 /*!40000 ALTER TABLE `registro` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -206,7 +208,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (123,'David','d12345','jrua1043@gmail.com',2),(2006,'josimar','1234','J@gmail.com',2),(12345678,'Luis','luis12345','andriano@gmail.com',1),(1043870680,'Juan David','Juan12345','jrua1043@gmail.com',1);
+INSERT INTO `usuario` VALUES (123,'David','d12345','jrua1043@gmail.com',2),(2006,'Juan','12345','charry@gmail.com',1);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -223,7 +225,6 @@ CREATE TABLE `visitantes` (
   `Vi_apellidos` varchar(50) NOT NULL,
   `Vi_telefono` varchar(50) NOT NULL,
   `Vi_departamento` varchar(50) NOT NULL,
-  `Vi_motivo` varchar(250) NOT NULL,
   `Pe_id` int(10) NOT NULL,
   PRIMARY KEY (`Vi_id`),
   KEY `Pe_id` (`Pe_id`),
@@ -237,7 +238,7 @@ CREATE TABLE `visitantes` (
 
 LOCK TABLES `visitantes` WRITE;
 /*!40000 ALTER TABLE `visitantes` DISABLE KEYS */;
-INSERT INTO `visitantes` VALUES (1,'Lucas','Perez','234','102','No se 23',123),(2,'Juan','Charry','312','102','No se',123),(3,'Juan','Charry','312','102','No se',123),(4,'Juan','Charry','312','102','No se',123),(11,'Pedro','Charry','312','102','No se',123),(21,'Lucas','Perez','312','102','No se',123),(22,'Lucas','Charry','312','102','No se',123),(44,'Juan','Charry','312','102','No se',123),(123,'Juan','Charry','312','102','No se',123),(222,'Lucas','Charry','234','102','No se',123),(321,'Pedro','Peres','312','102','No se 23',123),(345,'Juan','Charry','312','102','No se',123),(4321,'Kendo','Kapony','32123213','102','aaasdf n',123),(1042851729,'andres','pereira','3003489600','100','Visitar a un amigo',2006);
+INSERT INTO `visitantes` VALUES (0,'','','','108',12345),(1,'Lucas','Perez','234','102',123),(2,'Juan','Charry','312','102',123),(3,'Juan','Charry','312','102',123),(4,'Juan','Charry','312','102',123),(11,'Pedro','Charry','312','102',123),(21,'Lucas','Perez','312','102',123),(22,'Lucas','Charry','312','102',123),(44,'Juan','Charry','312','102',123),(123,'Juan','Charry','312','102',123),(222,'Lucas','Charry','234','102',123),(321,'Pedro','Peres','312','102',123),(345,'Juan','Charry','312','102',123),(777,'Kendo','Kapony','312','106',123),(1111,'sd','asd','122','106',123),(4321,'Kendo','Kapony','32123213','102',123),(1212121,'sdasdgkf','jhj','24244','106',123),(1042851729,'andres','pereira','3003489600','100',2006),(1104413144,'KAPONY','Kapony','2323','106',123);
 /*!40000 ALTER TABLE `visitantes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -254,4 +255,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-23 12:19:59
+-- Dump completed on 2024-11-25 17:47:48
