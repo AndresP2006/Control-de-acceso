@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="cerrar-sescion">
-            <a href="../homeView.php"><button class="boton">Cerrar Sesion</button></a>
+            <a href="<?php echo RUTA_URL; ?>/HomeController/index"><button class="boton">Cerrar Sesion</button></a>
         </div>
     </div>
     <div class="cuerpo">
@@ -39,7 +39,7 @@
             <!-- Modal con formulario -->
             <div class="miModal" id="miModal">
                 <form class="miModal__contenido">
-                    <button class="miModal__cerrar" id="cerrarMiModal">&times;</button>
+                    <button class="miModal__cerrar close" id="cerrarMiModal" type="button">&times;</button>
                     <h2 class="miModal__titulo">Información del Residente</h2>
 
 
@@ -275,6 +275,10 @@
                 optionSelect = '<option value="0">Apartamento</option>'
                 $('#select_apartamento').html(optionSelect)
             }
+        })
+
+        $('#cerrarMiModal').click(() => {
+            $('#miModal').removeClass('miModal--activo');
         })
     });
 </script>
