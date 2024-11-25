@@ -15,4 +15,10 @@ class PaquetModel
         $this->db->query("SELECT * FROM paquete WHERE pe_id = $id");
         return $this->db->registros();
     }
+    public function deletePaquetById($id)
+    {
+        $this->db->query("DELETE FROM paquete WHERE Pa_id = :Id");
+        $this->db->bind(':Id', $id);
+        return $this->db->registros();
+    }
 }

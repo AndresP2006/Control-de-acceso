@@ -48,7 +48,7 @@
             <input type="text" id="E_password" name="E_contrasena" />
 
             <center>
-                <input type="submit" value="Enviar" class="Enviar" name="udate" />
+                <input type="submit" value="Actualizar" class="Enviar" name="udate" />
             </center>
         </form>
 
