@@ -6,12 +6,14 @@ class PorterController extends Controlador
     private $PorterModel;
     private $PeopleModel;
     private $TorreModel;
+    private $PaquetModel;
 
     public function __construct()
     {
         $this->PorterModel = $this->modelo('PorterModel');
         $this->PeopleModel = $this->modelo('PeopleModel');
         $this->TorreModel = $this->modelo('TorreModel');
+        $this->PaquetModel = $this->modelo('PaquetModel');
     }
 
     public function index($message = null)
@@ -92,4 +94,12 @@ class PorterController extends Controlador
         echo json_encode($mostrar);
 
     }
+
+    public function getPaquetById()
+    {
+        $id = $_POST['residente'];
+        $paquetes = $this->PaquetModel->getPaquetById($id);
+        echo json_encode($paquetes);
+    }
+
 }

@@ -47,11 +47,7 @@ class PeopleModel
         $this->db->query("SELECT v.*,h.Re_fecha_entrada,h.Re_hora_entrada,h.Re_hora_salida FROM visitantes v , registro h where v.Vi_id=h.Vi_id");
         return $this->db->showTables();
     }
-    public function getPackeges()
-    {
-        $this->db->query("SELECT p.Pe_id,p.Pe_nombre,a.* from paquete a, persona p where a.Pe_id=p.Pe_id;");
-        return $this->db->showTables();
-    }
+
 
     public function getPersonaById($id)
     {
@@ -74,14 +70,15 @@ class PeopleModel
     //     }
     // }
 
+
+
     public function PeopleID($id)
     {
         $this->db->query(
-            "SELECT p.*, COUNT(a.Pa_Id) AS Total_paquetes FROM persona p LEFT JOIN paquete a ON p.Pe_id = a.Pe_id WHERE p.Pe_id = $id GROUP BY p.Pe_id;"
+            "SELECT p.*, COUNT(a.Pa_Id)AS Total_paquetes ,a.Pa_estado,a.Pa_fecha,a.Pa_descripcion  FROM persona p LEFT JOIN paquete a ON p.Pe_id = a.Pe_id WHERE p.Pe_id = $id GROUP BY p.Pe_id;"
         );
         return $this->db->registro();
     }
-
     public function showRegistro()
     {
         $this->db->query("SELECT v.Vi_nombres,r.*,v.Vi_departamento from visitantes v , registro r where v.Vi_id=r.Vi_id");
@@ -105,11 +102,7 @@ class PeopleModel
         ');
     }
 
-    return $this->db->registros(); // Devuelve todos los registros
-}
-
-
-public function udateRegistro($id){
-
-}
+        return $this->db->registros(); // Devuelve todos los registros
+    }
+   
 }

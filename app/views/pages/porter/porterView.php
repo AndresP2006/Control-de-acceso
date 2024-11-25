@@ -27,7 +27,7 @@
         <div class="opciones">
             <!-- Buscar  -->
             <div>
-            <form action="<?php RUTA_URL; ?>/PorterController/getPeopleBypa" method="post">
+                <form>
                     <input id="texto" class="PeopleId" type="text" name="residente"
                         placeholder="Buscar Persona con paquetes" />
                     <center>
@@ -68,8 +68,28 @@
                         <input class="miModal__input" type="text" id="Paquete" name="Paquete">
                     </div>
 
+                    <button class="boton-flotante" id="abrirTablaFlotante" type="button">Abrir Tabla</button>
 
-                    <button type="submit" class="miModal__submit">Actualizar</button>
+                    <div class="tabla-flotante" id="tablaFlotante">
+                        <div class="tabla-flotante__contenido">
+                            <h2>Tabla de datos</h2>
+                            <table class="tabla-flotante__tabla">
+                                <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Descripcion</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="paquetesTable">
+
+
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
                 </form>
             </div>
 
@@ -102,9 +122,12 @@
                             <h4>Apellido: <input type="text" id="U_Apellido" name="U_Apellido" /></h4>
                             <h4>Telefono: <input type="text" id="U_Telefono" name="U_Telefono" /></h4>
                             <h4>Motivo de visita: <input type="text" id="U_Motivo" name="U_Motivo" /></h4>
-                            <h4>Torre</h4>
+                            <div class="titulo_torre">
+                                <h4>Torre</h4>
+                                <h4 class="ap">Apartamento</h4>
+                            </div>
                             <div class="select_torre">
-                                <select  id="select_torre" class="filter-select">
+                                <select id="select_torre" class="filter-select">
                                     <option value="">Torre</option>
                                     <?php foreach ($datos['torre'] as $torre) {
                                         echo "<option value='{$torre->To_id}'>{$torre->To_letra}</option>";
@@ -113,10 +136,10 @@
                                 <select name="select_id" id="select_apartamento" class="filter-select">
                                     <option value="0">Apartamento</option>
                                 </select>
-                                        </div>
-                                <center>
-                                    <input type="submit" value="Enviar" class="Enviar" name="Visitantes" />
-                                </center>
+                            </div>
+                            <center>
+                                <input type="submit" value="Enviar" class="Enviar" name="Visitantes" />
+                            </center>
                         </form>
                     </div>
                 </div>
@@ -152,37 +175,6 @@
     </div>
 </div>
 <!-- Formulario para mostrar los datos -->
-
-<!-- mostrar datos de los formularios -->
-<div id="overlay">
-    <form class="formulario">
-        <div class="cerradi">
-            <span class="x" id="cerrar">&times;</span>
-            <h2>Residente</h2>
-        </div>
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" value="<?php echo $Nombre ?>">
-
-        <label for="Apellido">Apellido:</label>
-        <input type="text" id="Apellido" name="Apellido" value="<?php echo $Apellido ?>">
-
-        <label for="Telefono">Telefono:</label>
-        <input type="text" id="Telefono" name="Telefono" value="<?php echo $Telefono ?>">
-
-        <label for="Motivo">Motivo de visita:</label>
-        <input type="text" id="Motivo" name="Motivo" value="<?php echo $Motivo ?>">
-
-        <label for="departameto">Numero de departameto:</label>
-        <input type="text" id="departameto" name="departameto" value="<?php echo $Departamento ?>">
-
-        <label for="Paquete">Paquete:</label>
-        <input type="text" id="Paquete" name="Paquete" value="<?php echo $Descripcion ?>">
-
-
-        <!-- <input type="submit" value="Actualizar" name="Actualizar"> -->
-
-    </form>
-</div>
 </div>
 
 <?php require_once RUTA_APP . '/views/inc/footer-porter.php'; ?>
@@ -197,49 +189,92 @@
 
         $('#abrirMiModal').click(function () {
             let PeopleID = $('#texto').val();
-            $.ajax({
-                url: '<?php echo RUTA_URL; ?>/PorterController/getPeopleBypa?residente=' + PeopleID, //de donde recibe la informacion
-                type: 'GET', //de que manera lo recibe
-                success: function(respuesta) {
-                    let resp = JSON.parse(respuesta);
+            if (PeopleID) {
+                let tabla = $('#paquetesTable').val();
+                $.ajax({
+                    url: '<?php echo RUTA_URL; ?>/PorterController/getPeopleBypa', //de donde recibe la informacion
+                    type: 'POST', //de que manera lo recibe
+                    data: {
+                        residente: PeopleID
+                    },
+                    success: function (respuesta) {
+                        let resp = JSON.parse(respuesta);
 
-                    $('#miModal').addClass('miModal--activo');
-                    $('#nombres').val(resp.Pe_nombre);
-                    $('#apellidos').val(resp.Pe_apellidos);
-                    $('#telefono').val(resp.Pe_telefono);
-                    $('#departamento').val(resp.Ap_id);
-                    $('#Paquete').val(resp.Total_paquetes);
-                },
-                error: function () {
-                    $('#respuesta').html('Error al procesar la solicitud.'); //informacion incorrecta
-                }
-            });
-        })
+                        $('#miModal').addClass('miModal--activo');
+                        $('#nombres').val(resp.Pe_nombre);
+                        $('#apellidos').val(resp.Pe_apellidos);
+                        $('#telefono').val(resp.Pe_telefono);
+                        $('#departamento').val(resp.Ap_id);
+                        $('#Paquete').val(resp.Total_paquetes);
+
+
+                        $('#abrirTablaFlotante').click(function () {
+                            $.ajax({
+                                url: '<?php echo RUTA_URL; ?>/PorterController/getPaquetById',
+                                type: 'POST',
+                                data: {
+                                    residente: PeopleID
+                                },
+
+                                success: function (paquetes) {
+
+                                    let paq = JSON.parse(paquetes);
+
+                                    let td;
+
+                                    if (Array.isArray(paq)) {
+
+                                        for (let item of paq) {
+                                            td += '<tr>';
+                                            td += '<td>' + item.Pa_fecha + '</td>';
+                                            td += '<td>' + item.Pa_descripcion + '</td>';
+                                            td += '<td>' + item.Pa_estado + '</td>';
+                                            td += '</tr>';
+                                        }
+                                        $('#paquetesTable').html(td);
+                                    }
+                                }
+                            })
+
+                        })
+
+
+
+                    },
+                    error: function () {
+                        $('#respuesta').html('Error al procesar la solicitud.');
+                    }
+                });
+            }
+        });
 
         // selector de torre
         $('#select_torre').change(function () {
-
             let ValueTower = $('#select_torre').val();
+            if (ValueTower) {
 
-            $.ajax({
-                url: '<?php echo RUTA_URL ?>/ApartamentController/getApartamentByTower',
-                type: 'POST',
-                data: {
-                    TowerId: ValueTower
-                },
-                success: function (respuesta) {
-                    const res = JSON.parse(respuesta)
-                    
-                    let optionSelect = '<option value="0">Apartamento</option>'
+                $.ajax({
+                    url: '<?php echo RUTA_URL ?>/ApartamentController/getApartamentByTower',
+                    type: 'POST',
+                    data: {
+                        TowerId: ValueTower
+                    },
+                    success: function (respuesta) {
 
-                    for (let item of res)
-                        optionSelect += '<option value="' + item.Ap_id + '">' + item.Ap_numero + '</option>'
+                        const res = JSON.parse(respuesta)
 
-                    $('#select_apartamento').html(optionSelect)
-                }
-            })
+                        let optionSelect = '<option value="0">Apartamento</option>'
+
+                        for (let item of res)
+                            optionSelect += '<option value="' + item.Ap_id + '">' + item.Ap_numero + '</option>'
+
+                        $('#select_apartamento').html(optionSelect)
+                    }
+                })
+            } else {
+                optionSelect = '<option value="0">Apartamento</option>'
+                $('#select_apartamento').html(optionSelect)
+            }
         })
-    }
-    );
-
+    });
 </script>
