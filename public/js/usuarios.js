@@ -79,6 +79,7 @@ document.querySelectorAll('.edit-btn').forEach(function(button) {
         document.getElementById('E_Telefono').value = telefono;
         document.getElementById('E_Gmail').value = correo;
         document.getElementById('E_Departamento').value = departamento;
+        document.getElementById('E_Departamento2').value = departamento;
         var tipo_rol;
       if(rol == 'Administrador'){
         tipo_rol=1;
@@ -113,3 +114,11 @@ window.onclick = function(event) {
     }
 };
 
+function toggleTabla(id) {
+  const tabla = document.getElementById(id); // Seleccionar la tabla específica por su ID único
+  if (tabla.style.display === 'none' || tabla.style.display === '') {
+      tabla.style.display = 'block'; // Muestra la tabla
+  } else {
+      tabla.style.display = 'none'; // Oculta la tabla
+  }
+}

@@ -6,12 +6,14 @@ class HomeController extends Controlador
     private $articleModel;
     private $porterController;
     private $userController;
+    private $TorreModel;
 
     public function __construct()
     {
         $this->articleModel = $this->modelo('ArticleModel');
         $this->porterController = $this->controller('PorterController');
         $this->userController = $this->controller('UserController');
+        $this->TorreModel = $this->modelo('TorreModel');
     }
 
     public function index()
@@ -41,7 +43,9 @@ class HomeController extends Controlador
         }
     
         $datos = $this->userController->MostrarDatos();
-    
+        $Torres = $this->TorreModel->setTorres();
+
+        $_SESSION['torre'] = $Torres;    
         // Pasamos los datos correctamente a la vista
         $this->vista('pages/admin/adminView', $datos);
     }

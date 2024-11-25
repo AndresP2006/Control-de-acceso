@@ -71,9 +71,9 @@
         <a href="<?php echo RUTA_URL; ?>/HomeController/HistoryPackages"><button class="action-btn">Paquetes</button></a>
     </div>
 </div>
-<?php include RUTA_APP . '/views/pages/admin/modalRegistro.php'; ?>
 
 <?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>
+
 <script>
     <?php if (isset($datos['messageError'])) { ?>
         error("<?php echo $datos['messageError']; ?>")

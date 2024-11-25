@@ -21,7 +21,8 @@ class AdminModel
 
             // Si la Cedula ya existe, lanzar un error
             if ($this->db->rowCount() > 0) {
-                throw new Exception("El usuario con la cédula {$datos['Cedula']} ya existe.");
+                return false;
+                
             }
 
             // 2. Insertar en la tabla 'usuario' usando Cedula como Us_id
@@ -87,4 +88,70 @@ class AdminModel
             return false; // Indica que ocurrió un error
         }
     }
+
+    public function updateUser($datos)
+{
+    try {
+        // Iniciar una transacción
+        $this->db->beginTransaction();
+
+
+        // 1. Actualizar los datos en la tabla 'usuario'
+        $sql = '
+            UPDATE usuario 
+            SET 
+                Us_usuario = :Usuario, 
+                Us_correo = :Correo 
+        ';
+
+        // Solo agregar la contraseña si es proporcionada
+        if (!empty($datos['Contrasena'])) {
+            $sql .= ', Us_contrasena = :Contrasena';
+        }
+
+        $sql .= ' WHERE Us_id = :Cedula';
+
+        $this->db->query($sql);
+        
+        // Verificar los datos vinculados
+        $this->db->bind(':Cedula', $datos['Cedula']);
+        $this->db->bind(':Usuario', $datos['Nombre']);
+        $this->db->bind(':Correo', $datos['Gmail']);
+
+        // Si se ha proporcionado una nueva contraseña, la vinculamos
+        if (!empty($datos['Contrasena'])) {
+            $this->db->bind(':Contrasena', $datos['Contrasena']);
+        }
+
+        $this->db->execute();
+
+        // 2. Actualizar los datos en la tabla 'persona'
+        $this->db->query('
+            UPDATE persona 
+            SET 
+                Pe_nombre = :Nombre, 
+                Pe_apellidos = :Apellidos, 
+                Pe_telefono = :Telefono 
+            WHERE Pe_id = :Cedula
+        ');
+        $this->db->bind(':Cedula', $datos['Cedula']);
+        $this->db->bind(':Nombre', $datos['Nombre']);
+        $this->db->bind(':Apellidos', $datos['Apellidos']);
+        $this->db->bind(':Telefono', $datos['Telefono']);
+        $this->db->execute();
+
+        // Confirmar la transacción si todo fue exitoso
+        $this->db->commit();
+        return true;
+
+    } catch (Exception $e) {
+        // Deshacer la transacción en caso de error
+        $this->db->rollBack();
+        echo "Error: " . $e->getMessage();
+        return false;
+    }
+}
+
+
+
 }
