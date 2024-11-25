@@ -208,6 +208,15 @@ option {
   color: #495057;
 }
 
+.filter{
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 14px;
+  color: #495057;
+}
+
 /* Efecto de foco en el campo */
 form input[type="text"]:focus {
   border-color: #6a5acd;

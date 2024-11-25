@@ -6,7 +6,7 @@
         </div>
         <form id="myForm" action="<?php echo RUTA_URL; ?>/UserController/createUser" method="post">
             <label for="">Cedula</label><br>
-            <input type="text" id="u_id" name="U_id" />
+            <input type="text" id="u_id" name="Pe_id" />
             <label for="">Nombre</label><br>
             <input type="text" id="U_Nombre" name="U_Nombre" />
             <label for="">Apellidos</label><br>
@@ -19,7 +19,7 @@
             <input type="text" id="U_Departamento" name="U_Departamento" />
             <label for="">Torre</label><br>
             <input type="text" id="U_torre" name="U_torre" />
-            <select name="R_id" class="Rol" id="R_id">
+            <select name="U_id" class="Rol" id="U_id">
                 <option value="">Seleccionar</option>
                 <option value=1>Administrador</option>
                 <option value=2>Guardia</option>

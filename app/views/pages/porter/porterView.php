@@ -177,11 +177,8 @@
 <!-- Formulario para mostrar los datos -->
 </div>
 
-<?php
-
-$_SESSION;
-?>
 <?php require_once RUTA_APP . '/views/inc/footer-porter.php'; ?>
+
 <script>
     <?php if (isset($datos['messageInfo'])) { ?>
         realizado("<?php echo $datos['messageInfo']; ?>")

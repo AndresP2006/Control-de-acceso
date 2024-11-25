@@ -57,6 +57,7 @@
 }
 
 .filter-select {
+    width: 340px;
     padding: 10px;
     border: 1px solid #ced4da;
     border-radius: 5px;
@@ -178,6 +179,7 @@ button:hover {
 .action-btn:hover {
     background-color: #0056b3;
 }
+
 
 
 

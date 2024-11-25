@@ -24,7 +24,7 @@ class PorterModel
 
         if ($this->db->execute()) {
             $this->db->query('INSERT INTO registro (Re_fecha_entrada, Re_hora_entrada, Vi_id)
-                          VALUES (CURRENT_DATE, CURRENT_TIME, :Cedula)');
+                        VALUES (CURRENT_DATE, CURRENT_TIME, :Cedula)');
             $this->db->bind(':Cedula', $datos['Cedula']);
             if ($this->db->execute()) {
                 return true; 
