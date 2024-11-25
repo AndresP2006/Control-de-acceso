@@ -15,4 +15,9 @@ class ApartamentController extends Controlador
         echo json_encode($respuesta);
     
     }
+
+    public function getPeopleByApartament(){
+        $personas = $this->ApartamentModel->getPeopleByApartament($_POST['apartamento_id']);
+        echo json_encode($personas);
+    }
 }

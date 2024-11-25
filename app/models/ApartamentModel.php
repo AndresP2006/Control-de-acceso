@@ -16,6 +16,14 @@ class ApartamentModel
         return $this->db->registros();
 
     }
+
+    public function getPeopleByApartament($apartamento_id)
+    {
+        $this->db->query("SELECT * FROM persona p WHERE p.Ap_id = $apartamento_id");
+
+        return $this->db->registros();
+
+    }
 }
 
 
