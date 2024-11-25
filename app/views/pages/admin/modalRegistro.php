@@ -15,10 +15,18 @@
             <input type="text" id="U_Telefono" name="U_Telefono" />
             <label for="">Correo</label><br>
             <input type="text" id="U_Gmail" name="U_Gmail" />
-            <label for="">Departamento</label><br>
-            <input type="text" id="U_Departamento" name="U_Departamento" />
-            <label for="">Torre</label><br>
-            <input type="text" id="U_torre" name="U_torre" />
+            <div class="select_torre2">
+                <select id="select_torre2" class="filter-select">
+                    <option value="">Torre</option>
+                    <?php foreach ($_SESSION['torre'] as $torre) {
+                        echo "<option value='{$torre->To_id}'>{$torre->To_letra}</option>";
+                    } ?>
+                </select>
+                <select name="U_Departamento" id="U_Departamento" class="filter-select">
+                    <option value="">Apartamento</option>
+                </select>
+                <input type="text" style="display: none;" name="U_Departamento2" id="U_Departamento2">
+            </div>
             <select name="U_id" class="Rol" id="U_id">
                 <option value="">Seleccionar</option>
                 <option value=1>Administrador</option>
@@ -27,7 +35,7 @@
             </select>
             <label for="" id="passwordLabel">Contraseña</label><br>
             <input type="text" id="U_password" name="U_contrasena" />
-            
+
             <center>
                 <input type="submit" value="Enviar" class="Enviar" name="registro" />
             </center>

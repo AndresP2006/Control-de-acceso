@@ -65,7 +65,15 @@
     font-size: 14px;
     color: #495057;
 }
-
+.filter-rol{
+    width: 170px;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    background-color: #fff;
+    font-size: 14px;
+    color: #495057;
+}
 .search-bar {
     padding: 10px;
     border: 1px solid #ced4da;
@@ -78,7 +86,7 @@
 /* Tabla */
 .table-container {
     width: 98%;
-    max-width: 1400px;
+    max-width: 1500px;
     margin: 20px auto;
     background: #fff;
     border-radius: 8px;
@@ -125,7 +133,37 @@ th {
 }
 
 td {
+    word-wrap: break-word; /* Permite que el texto se divida */
+    overflow-wrap: break-word; /* Compatibilidad adicional */
+    white-space: normal; /* Permite el salto de línea automático */
     color: #212529;
+}
+.tabla-especifica th:nth-child(1), .tabla-especifica td:nth-child(1) {
+    width: 100px;
+}
+.tabla-especifica th:nth-child(2), .tabla-especifica td:nth-child(2) {
+    padding: 0px;
+}
+.tabla-especifica th:nth-child(3), .tabla-especifica td:nth-child(3) {
+    width: 100px;
+}
+.tabla-especifica th:nth-child(4), .tabla-especifica td:nth-child(4) {
+    width: 110px; /* La segunda columna será más ancha */
+}
+.tabla-especifica th:nth-child(5), .tabla-especifica td:nth-child(5) {
+    padding: 0px;
+}
+.tabla-especifica th:nth-child(6), .tabla-especifica td:nth-child(6) {
+    width: 100px;
+}
+.tabla-especifica th:nth-child(7), .tabla-especifica td:nth-child(7) {
+    width: 100px;
+}
+.tabla-especifica th:nth-child(8), .tabla-especifica td:nth-child(8) {
+    width: 130px; 
+}
+.tabla-especifica th:nth-child(9), .tabla-especifica td:nth-child(9) {
+    width: 100px; 
 }
 
 /* Aseguramos que todas las celdas se alineen correctamente */

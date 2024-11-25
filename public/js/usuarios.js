@@ -96,7 +96,20 @@ document.querySelectorAll('.edit-btn').forEach(function(button) {
                 break;
             }
         }
-        document.getElementById('E_password').value = pass;
+        // Mostrar u ocultar el campo de contraseña basado en `data-contrasena`
+        var passwordLabel = document.getElementById('E_passwordl');
+        var passwordInput = document.getElementById('E_password');
+
+        if (pass) {
+            passwordLabel.style.display = "block"; // Mostrar si hay contraseña
+            passwordInput.style.display = "block";
+            passwordInput.value = pass;
+        } else {
+            passwordLabel.style.display = "none"; // Ocultar si no hay contraseña
+            passwordInput.style.display = "none";
+            passwordInput.value = ""; // Asegurarse de limpiar el valor del campo
+        }
+
         // Mostrar el modal de edición
         visitorModalEdit.style.display = "block";
     };
