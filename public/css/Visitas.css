@@ -227,6 +227,18 @@ option {
   color: #495057;
 }
 
+.filter-select_personas {
+  width: 100%;
+  height: 50px;
+  margin-bottom: 25px;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 14px;
+  color: #495057;
+}
+
 .filter {
   padding: 10px;
   border: 1px solid #ced4da;

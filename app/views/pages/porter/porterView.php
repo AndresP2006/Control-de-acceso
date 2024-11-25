@@ -139,6 +139,9 @@
                                     <option value="0">Apartamento</option>
                                 </select>
                             </div>
+                            <select name="select_personas" id="select_personas" class="filter-select_personas">
+                                <option value="0">Residentes</option>
+                            </select>
                             <center>
                                 <input type="submit" value="Enviar" class="Enviar" name="Visitantes" />
                             </center>
@@ -273,11 +276,53 @@
                         $('#select_apartamento').html(optionSelect)
                     }
                 })
+
+                $('#select_apartamento').change(function () {
+                    let valueApartament = $('#select_apartamento').val();
+                    if (valueApartament) {
+
+                        $.ajax({
+                            url: '<?php echo RUTA_URL ?>/ApartamentController/getPeopleByApartament',
+                            type: 'POST',
+                            data: {
+                                apartamento_id: valueApartament
+                            },
+                            success: function (personas) {
+
+                                const pers = JSON.parse(personas)
+
+                                let optionSelect_pe = '<option value="0">Residentes</option>'
+
+                                for (let item of pers)
+                                    optionSelect_pe += '<option value="' + item.Pe_id + '">' + item.Pe_nombre + ' ' + item.Pe_apellidos + '</option>'
+
+                                $('#select_personas').html(optionSelect_pe)
+                            }
+                        })
+                    } else {
+                        optionSelect = '<option value="0">Apartamento</option>'
+                        $('#select_apartamento').html(optionSelect)
+
+                        optionSelect = '<option value="0">Residentes</option>'
+                        $('#select_personas').html(optionSelect_pe)
+                    }
+                })
+
+
+
             } else {
                 optionSelect = '<option value="0">Apartamento</option>'
                 $('#select_apartamento').html(optionSelect)
+
+                optionSelect = '<option value="0">Residentes</option>'
+                $('#select_personas').html(optionSelect)
             }
         })
+
+        // Select Personas
+
+
+        //Modal
 
         $('#cerrarMiModal').click(() => {
             $('#miModal').removeClass('miModal--activo');
