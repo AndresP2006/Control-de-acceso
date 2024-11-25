@@ -19,7 +19,7 @@ class HomeController extends Controlador
     public function index()
     {
         // $articles = $this->articleModel->getArticles();
-        // session_destroy();
+        session_destroy();
         $datos = [
             'titulo' => 'Bienvenido a MVC render2web',
             // 'articles' => $articles
