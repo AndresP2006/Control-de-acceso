@@ -23,14 +23,15 @@ class UserController extends Controlador
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registro'])) {
             // Recoger los datos del nuevo usuario
+
+            $departamento = isset($_POST['U_Departamento']) && $_POST['U_Departamento'] != ''   ? $_POST['U_Departamento'] : $_POST['U_Departamento2'];
             $datos = [
                 'Cedula' => trim($_POST['Pe_id']),
                 'Nombre' => trim($_POST['U_Nombre']),
                 'Apellidos' => trim($_POST['U_Apellido']),
                 'Telefono' => trim($_POST['U_Telefono']),
                 'Gmail' => trim($_POST['U_Gmail']),
-                'Departamento' => trim($_POST['U_Departamento']),
-                'Torre' => trim($_POST['U_torre']),
+                'Departamento' => trim($departamento),
                 'Rol' => trim($_POST['U_id']),
                 'Contrasena' => trim($_POST['U_contrasena']),
             ];
@@ -54,6 +55,9 @@ class UserController extends Controlador
                     'Pe_telefono' => $registro->Pe_telefono,
                     'Us_correo' => $registro->Us_correo,
                     'Ap_id' => $registro->Ap_id,
+                    'Ap_numero' => $registro->Ap_numero,
+                    'To_letra' => $registro->To_letra,
+                    'To_id' => $registro->To_id,
                     'Ro_tipo' => $registro->Ro_tipo,
                 ];
             }
@@ -118,27 +122,62 @@ class UserController extends Controlador
 
 
     public function DeleteUser()
-    {
-        // Verificar si se han enviado los datos necesarios
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deletebtn']) && isset($_POST['delete_id'])) {
-            $delete_id = $_POST['delete_id'];
+{
+    // Verificar si se han enviado los datos necesarios
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deletebtn']) && isset($_POST['delete_id'])) {
+        $delete_id = $_POST['delete_id'];
 
+        // Eliminar el registro del modelo
+        $this->AdminModel->eliminarRegistro($delete_id);
 
-            // Llamar al modelo para eliminar el registro
-            $this->AdminModel->eliminarRegistro($delete_id);
-
-            // Opcionalmente, puedes configurar una variable de sesión o un mensaje flash para mostrar en la misma página
-            $_SESSION['message'] = 'Usuario borrado correctamente';
-        } else {
-            $_SESSION['error'] = 'Error: No se pudo procesar la solicitud';
-        }
-        // Conservar el filtro seleccionado
-
-
-        // Redirigir a la misma página para evitar redireccionamientos extraños
-        $this->vista('pages/admin/adminView', null);
-        exit;
+        // Mensaje de éxito
+        $_SESSION['message'] = 'Usuario borrado correctamente';
+    } else {
+        $_SESSION['error'] = 'Error: No se pudo procesar la solicitud';
     }
+
+    // Recuperar el filtro actual desde el POST (si existe), de lo contrario usar un valor predeterminado
+    // Asegúrate de que el filtro se reciba desde el formulario POST correctamente
+    $filter = isset($_POST['select_rol']) ? $_POST['select_rol'] : 'Todos';
+
+    // Si el filtro es 'Todos', obtenemos todos los registros
+    // Sino, obtenemos los usuarios filtrados por rol
+    if ($filter == 'Todos') {
+        $registros = $this->PeopleModel->getAllUsuario();
+    } else {
+        $registros = $this->PeopleModel->getAllUsuario($filter);
+    }
+
+    // Verificar si no hay registros después de la eliminación
+    if (empty($registros)) {
+        $_SESSION['error'] = 'No hay usuarios que coincidan con el filtro seleccionado.';
+    }
+
+    // Preparar los datos de los usuarios para pasar a la vista
+    $usuarios = [];
+    foreach ($registros as $registro) {
+        $usuarios[] = [
+            'Cedula' => $registro->Pe_id,
+            'Pe_nombre' => $registro->Pe_nombre,
+            'Pe_apellidos' => $registro->Pe_apellidos,
+            'Pe_telefono' => $registro->Pe_telefono,
+            'Us_correo' => $registro->Us_correo,
+            'Ap_id' => $registro->Ap_id,
+            'Ro_tipo' => $registro->Ro_tipo,
+        ];
+    }
+
+    // Pasar los datos a la vista con el filtro actual
+    $datos = [
+        'usuarios' => $usuarios,
+        'filter' => $filter,  // Aseguramos que el filtro se mantenga
+    ];
+
+    // Redirigir a la misma página con el filtro aplicado
+    $this->vista('pages/admin/adminView', $datos);
+}
+
+
     public function DeleteVisitas() {}
 
 
@@ -171,6 +210,8 @@ class UserController extends Controlador
                 'Us_contrasena' => $registro->Us_contrasena,
                 'Ap_id' => $registro->Ap_id,
                 'Ap_numero' => $registro->Ap_numero,
+                'To_letra' => $registro->To_letra,
+                'To_id' => $registro->To_id,
                 'Ro_tipo' => $registro->Ro_tipo,
             ];
         }
@@ -204,46 +245,67 @@ class UserController extends Controlador
 
     //Este metodo de la barra de búsqueda
     public function BuscarUsuario()
-    {
-        // Verifica si se ha enviado un término de búsqueda
-        if (isset($_POST['id_usuario']) && !empty($_POST['id_usuario'])) {
-            $id = $_POST['id_usuario'];
+{
+    $datos = []; // Inicializamos los datos
+    $usuarios = [];
+    $filter = 'Todos'; // Valor predeterminado del filtro
+    $error = '';
 
-            // Realiza la búsqueda en la base de datos
-            $registro = $this->PeopleModel->getPersonaById($id);
+    // Verifica la acción de búsqueda o filtrado
+    if (isset($_POST['action'])) {
+        if ($_POST['action'] === 'filter') {
+            $rolId = $_POST['select_rol'] ?? null;
+            $usuarios = $rolId ? $this->PeopleModel->getAllUsuario($rolId) : $this->PeopleModel->getAllUsuario();
+            $filter = $rolId ?: 'Todos';
+        } elseif ($_POST['action'] === 'search' && !empty($_POST['id_usuario'])) {
+            $usuario = $this->PeopleModel->getPersonaById($_POST['id_usuario']);
 
-            if ($registro) { // Si se encuentra el registro
-                // Mapea los registros para la vista
-                $usuarios = [
-                    'Cedula' => $registro->Pe_id,
-                    'Pe_nombre' => $registro->Pe_nombre,
-                    'Pe_apellidos' => $registro->Pe_apellidos,
-                    'Pe_telefono' => $registro->Pe_telefono,
-                    'Us_correo' => $registro->Us_correo,
-                    'Ap_id' => $registro->Ap_id,
-                    'Ro_id' => $registro->Ro_id,
-                    'Us_contrasena' => $registro->Us_contrasena,
-                    'Ro_tipo' => $registro->Ro_tipo,
-                ];
-
-                $datos = [
-                    'usuarios' => [$usuarios], // Usar un array dentro de 'usuarios'
-                    'filter' => $registro->Ro_id, // Pasar el rol encontrado al filtro
-                ];
+            if ($usuario) {
+                $usuarios = [$usuario];
+                $filter = $usuario->Ro_id; // Cambia el filtro automáticamente según el rol del usuario encontrado
             } else {
-                // Si no se encuentra el usuario, enviar un mensaje de error
-                $datos = [
-                    'error' => "No se encontró el usuario con ID: $id"
-                ];
+                $error = 'Usuario no encontrado.';
+                $filter = 'Todos';
             }
-        } else {
-            // Si no se ha enviado un término de búsqueda
-            $datos = [
-                'error' => 'No se ha enviado un término de búsqueda válido.'
-            ];
         }
 
-        // Renderiza la vista con los datos obtenidos
-        $this->vista('pages/admin/adminView', $datos);
+        // Convertir los usuarios a formato array
+        if (!empty($usuarios)) {
+            $usuariosArray = array_map(function ($usuario) {
+                return [
+                    'Cedula' => $usuario->Pe_id,
+                    'Pe_nombre' => $usuario->Pe_nombre,
+                    'Pe_apellidos' => $usuario->Pe_apellidos,
+                    'Pe_telefono' => $usuario->Pe_telefono,
+                    'Us_correo' => $usuario->Us_correo,
+                    'Ap_id' => $usuario->Ap_id,
+                    'Ro_id' => $usuario->Ro_id,
+                    'Ap_numero' => $usuario->Ap_numero,
+                    'To_letra' => $usuario->To_letra,
+                    'Us_contrasena' => $usuario->Us_contrasena,
+                    'Ro_tipo' => $usuario->Ro_tipo,
+                ];
+            }, $usuarios);
+
+            $datos['usuarios'] = $usuariosArray;
+        } else {
+            $error = $rolId ? "No se encontraron usuarios con el rol seleccionado." : 'No se encontraron usuarios.';
+            $datos['usuarios'] = [];
+        }
+    } else {
+        $error = 'Acción no válida.';
     }
+
+    // Asignar el error y el filtro
+    $datos['filter'] = $filter; // Asegura que el filtro correcto se pase a la vista
+    $datos['error'] = $error;
+
+    // Renderiza la vista con los datos
+    $this->vista('pages/admin/adminView', $datos);
+}
+
+    
+
+
+
 }
