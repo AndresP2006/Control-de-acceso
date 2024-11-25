@@ -95,6 +95,20 @@ h2 {
   background-color: rgba(86, 89, 91, 0.4);
 }
 
+.modal_v{
+  display: none;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(86, 89, 91, 0.4);
+
+}
+
+
 .cerrado {
   display: flex;
   flex-direction: row;
@@ -208,7 +222,7 @@ option {
   color: #495057;
 }
 
-.filter{
+.filter {
   padding: 10px;
   border: 1px solid #ced4da;
   border-radius: 5px;
@@ -232,7 +246,7 @@ form input[type="text"] {
 }
 
 /* Espaciado entre campos */
-form h4 + input[type="text"] {
+form h4+input[type="text"] {
   margin-top: 5px;
 }
 
@@ -328,8 +342,10 @@ form input[type="text"]::placeholder {
   bottom: 0;
   z-index: -10;
 }
+
 .tabla-flotante {
-  display: none; /* Oculto por defecto */
+  display: none;
+  /* Oculto por defecto */
   position: fixed;
   top: 0;
   left: 0;
@@ -645,19 +661,27 @@ h4 {
   font-weight: bold;
   margin: 0 0 20px;
   color: #333;
-  text-align: center;
   border-bottom: 2px solid #007bff;
   padding-bottom: 10px;
 }
 
+
 .miModal__cerrar {
   position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 1.5em;
+  top: 17px;
+  right: 24px;
   background: none;
   border: none;
   color: #666;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.miModal__cerrar_v {
+  display: flex;
+  right: 15px;
+  background: none;
+  border: none;
   cursor: pointer;
   transition: color 0.3s;
 }

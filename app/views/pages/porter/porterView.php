@@ -110,11 +110,13 @@
                 </button>
 
                 <!-- Formulario modal de visitantes -->
-                <div id="myModal" class="modal">
+                <div id="VisitasModal" class="modal_v">
                     <div class="modal-content">
                         <div class="cerrado">
                             <h3 class="titulo-form">Nuevo registro</h3>
-                            <span class="close" id="close">&times;</span>
+                            <button class="miModal__cerrar_v close" id="close" type="button">&times;</button>
+
+                            <!-- <span class="close" id="close">&times;</span> -->
                         </div>
                         <form id="myForm" action="<?php echo RUTA_URL; ?>/PorterController/createGuest" method="post">
                             <h4>Cedula: <input type="text" id="u_id" name="u_id" /></h4>
