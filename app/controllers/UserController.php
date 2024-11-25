@@ -72,6 +72,7 @@ class UserController extends Controlador
 
             // Redirigir a la vista
             $this->vista('pages/admin/AdminView', $datosVista);
+            
             exit; // Finaliza la ejecución para evitar redirecciones adicionales
         } else {
             // Manejar el caso donde no se cumple la condición POST o 'registro'
@@ -107,6 +108,29 @@ class UserController extends Controlador
             ];
 
             $resultado = $this->AdminModel->updateUser($datos);
+            $registros = $this->PeopleModel->getAllUsuario();
+
+            // Formatear los datos de los usuarios como lo mencionas
+            $usuarios = [];
+            foreach ($registros as $registro) {
+                $usuarios[] = [
+                    'Cedula' => $registro->Pe_id,
+                    'Pe_nombre' => $registro->Pe_nombre,
+                    'Pe_apellidos' => $registro->Pe_apellidos,
+                    'Pe_telefono' => $registro->Pe_telefono,
+                    'Us_correo' => $registro->Us_correo,
+                    'Ap_id' => $registro->Ap_id,
+                    'Ap_numero' => $registro->Ap_numero,
+                    'To_letra' => $registro->To_letra,
+                    'To_id' => $registro->To_id,
+                    'Ro_tipo' => $registro->Ro_tipo,
+                ];
+            }
+
+            // Pasar los usuarios y el mensaje a la vista
+            $datos= [
+                'usuarios' => $usuarios,
+            ];
 
             if ($resultado) {
                 $_SESSION['message'] = 'Usuario actualizado correctamente';
@@ -117,7 +141,7 @@ class UserController extends Controlador
             $_SESSION['error'] = 'Error: No se pudo procesar la solicitud';
         }
 
-        $this->vista('pages/admin/adminView', null);
+        $this->vista('pages/admin/adminView',$datos);
         exit;
     }
 

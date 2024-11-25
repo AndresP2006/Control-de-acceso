@@ -8,7 +8,7 @@
         </div>
         <table>
             <tr>
-                <th class="content__tabla-titulo">Numero de Doc</th>
+                <th class="content__tabla-titulo">Documento</th>
                 <th class="content__tabla-titulo">Nombre</th>
                 <th class="content__tabla-titulo">Apellido</th>
                 <th class="content__tabla-titulo">Telefono</th>

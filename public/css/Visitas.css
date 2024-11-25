@@ -95,7 +95,7 @@ h2 {
   background-color: rgba(86, 89, 91, 0.4);
 }
 
-.modal_v{
+.modal_v {
   display: none;
   position: fixed;
   z-index: 100;
@@ -177,7 +177,7 @@ form input[type="text"] {
 
 .Rol,
 option {
-  width: 94%;
+  width: 100%;
   padding: 12px;
   margin-bottom: 15px;
   border: 2px solid transparent;
@@ -209,6 +209,11 @@ option {
   margin-right: 50px;
 }
 
+.select_torre2 {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
 
 .filter-select {
   width: 45%;
@@ -631,6 +636,7 @@ h4 {
 }
 
 .miModal {
+  z-index: 100;
   display: none;
   justify-content: center;
   align-items: center;
