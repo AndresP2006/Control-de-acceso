@@ -62,7 +62,7 @@ class PorterController extends Controlador
         if (isset($_POST['paquetes'])) {
             $people = $this->PeopleModel->documentPers($_POST['documento']);
             $paquete = [
-                'estado' => trim($_POST['estado']),
+                'estado' => 'Bodega',
                 'descripcion' => trim(($_POST['descripcion'])),
                 'fecha' => trim($_POST['fecha']),
                 'responsable' => trim($_POST['recibidor']),
