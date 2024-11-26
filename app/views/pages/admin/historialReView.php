@@ -12,8 +12,7 @@
                     <th>Documento</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
-                    <th>Departamento</th>
-                    <th>Motivo de visita</th>
+                    <th>Telefono</th>
                     <th>Registro</th>
                 </tr>
             </thead>
@@ -28,8 +27,7 @@
                         echo "<td>" . $historial['Vi_id'] . "</td>";
                         echo "<td>" . $historial['Vi_nombres'] . "</td>";
                         echo "<td>" . $historial['Vi_apellidos'] . "</td>";
-                        echo "<td>" . $historial['Vi_departamento'] . "</td>";
-                        echo "<td>" . $historial['Re_motivo'] . "</td>";
+                        echo "<td>" . $historial['Vi_telefono'] . "</td>";
                         include RUTA_APP . '/views/pages/admin/modalVisitas.php';
                     endforeach;
                 }

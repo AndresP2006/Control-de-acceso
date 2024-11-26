@@ -36,16 +36,14 @@ class PorterModel
     } else {
         // Si no existe el visitante, se inserta en la tabla "visitantes"
         $this->db->query('
-            INSERT INTO visitantes (Vi_id, Vi_nombres, Vi_apellidos, Vi_telefono, Vi_departamento, Pe_id) 
-            VALUES (:Cedula, :Nombre, :Apellido, :Telefono, :Departamento, :PeopleId)
+            INSERT INTO visitantes (Vi_id, Vi_nombres, Vi_apellidos, Vi_telefono) 
+            VALUES (:Cedula, :Nombre, :Apellido, :Telefono)
         ');
 
         $this->db->bind(':Cedula', $datos['Cedula']);
         $this->db->bind(':Nombre', $datos['Nombre']);
         $this->db->bind(':Apellido', $datos['Apellido']);
         $this->db->bind(':Telefono', $datos['Telefono']);
-        $this->db->bind(':Departamento', $datos['Departamento']);
-        $this->db->bind(':PeopleId', $datos['PeopleId']);
 
         if (!$this->db->execute()) {
             // Si falla la inserción en la tabla "visitantes", terminar
@@ -55,11 +53,13 @@ class PorterModel
 
     // Crear un nuevo registro en la tabla "registro" para el visitante
     $this->db->query('
-        INSERT INTO registro (Re_fecha_entrada, Re_hora_entrada, Re_motivo, Vi_id) 
-        VALUES (CURRENT_DATE, CURRENT_TIME, :Motivo, :Cedula)
+        INSERT INTO registro (Re_fecha_entrada, Re_hora_entrada, Re_motivo,Vi_departamento,Pe_id, Vi_id) 
+        VALUES (CURRENT_DATE, CURRENT_TIME, :Motivo,:Departamento,:PeopleId, :Cedula)
     ');
     $this->db->bind(':Cedula', $datos['Cedula']);
     $this->db->bind(':Motivo', $datos['Motivo']);
+    $this->db->bind(':Departamento', $datos['Departamento']);
+    $this->db->bind(':PeopleId', $datos['PeopleId']);
 
     return $this->db->execute();
 }

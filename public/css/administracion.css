@@ -101,8 +101,15 @@
 
 .table-wrapper {
     width: 85%;
-    max-height: 390px; /* Altura máxima para la tabla */
+    max-height: 400px; /* Altura máxima para la tabla */
     overflow-y: auto; /* Desplazamiento solo vertical para la tabla */
+    border: 1px solid #ccc; /* Opcional, para que sea visible el borde del contenedor */
+}
+.table-titulo{
+    position: relative;
+    margin-top: 30px;
+    left: 20px;
+
 }
 
 table {
@@ -260,4 +267,57 @@ button:hover {
         margin-top: 20px;
         width: 100%;
     }
+}
+
+
+/* Estilos para el modal */
+.modal {
+    display: none; /* Ocultarlo por defecto */
+    position: fixed;
+    z-index: 1; /* Asegurarse de que esté por encima del contenido principal */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4); /* Fondo oscuro */
+    padding-top: 60px;
+}
+
+/* Contenido del modal */
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+}
+
+/* Botón de cerrar */
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Estilo de la tabla dentro del modal */
+#registroDetailsTable {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+#registroDetailsTable th, #registroDetailsTable td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
 }

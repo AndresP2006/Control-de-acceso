@@ -70,7 +70,7 @@ class HomeController extends Controlador
     }
     public function HistoryRecords()
     {
-        $this->vista('pages/admin/historialReView');
+        $this->vista('pages/admin/historialViView');
     }
     public function HistoryPackages()
     {

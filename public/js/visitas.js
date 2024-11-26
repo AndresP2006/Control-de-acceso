@@ -49,3 +49,29 @@ window.addEventListener("click", (e) => {
     tablaFlotante.style.display = "none";
   }
 });
+
+
+
+function buscarVisitante() {
+  const cedula = document.getElementById('u_id').value;
+
+  fetch('<?php echo RUTA_URL; ?>/PorterController/searchGuest', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `u_id=${cedula}`
+  })
+  .then(response => response.json())
+  .then(data => {
+      if (data.success) {
+          document.getElementById('U_Nombre').value = data.visitante.Vi_nombre;
+          document.getElementById('U_Apellido').value = data.visitante.Vi_apellido;
+          document.getElementById('U_Telefono').value = data.visitante.Vi_telefono;
+          document.getElementById('U_Motivo').value = data.visitante.Vi_motivo;
+      } else {
+          alert('No se encontró el visitante.');
+      }
+  })
+  .catch(error => console.error('Error:', error));
+}

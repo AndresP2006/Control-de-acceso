@@ -31,7 +31,6 @@ class PorterController extends Controlador
     public function createGuest()
     {
         if (isset($_POST['Visitantes'])) {
-            $people = $this->PeopleModel->getPeopleByApart($_POST['select_id']);
             $datos = [
                 'Cedula' => trim($_POST['u_id']),
                 'Nombre' => trim($_POST['U_Nombre']),
@@ -39,7 +38,7 @@ class PorterController extends Controlador
                 'Telefono' => trim($_POST['U_Telefono']),
                 'Departamento' => trim($_POST['select_id']),
                 'Motivo' => trim($_POST['U_Motivo']),
-                'PeopleId' => trim($people->Pe_id),
+                'PeopleId' => trim($_POST['select_personas']),
             ];
             $this->PorterModel->addGuest($datos);
 
@@ -47,6 +46,7 @@ class PorterController extends Controlador
             $this->vista('pages/porter/porterView', $datos);
         }
     }
+
 
     public function dropGuest()
     {
@@ -60,13 +60,12 @@ class PorterController extends Controlador
     public function enterPackage()
     {
         if (isset($_POST['paquetes'])) {
-            $people = $this->PeopleModel->documentPers($_POST['documento']);
             $paquete = [
-                'estado' => trim($_POST['estado']),
+                'estado' => 'Bodega',
                 'descripcion' => trim(($_POST['descripcion'])),
                 'fecha' => trim($_POST['fecha']),
                 'responsable' => trim($_POST['recibidor']),
-                'peoplePaq' => trim($people->Pe_id),
+                'peoplePaq' => trim($_POST['select_personas']),
             ];
             $this->PorterModel->enterPackage($paquete);
 
