@@ -166,23 +166,23 @@
                         <h4>Descripcion: <textarea id="Pa_Descripcion" name="descripcion"></textarea></h4>
                         <h4>Fecha de entrega: <input type="date" id="Pa_Fecha" name="fecha" /></h4>
                         <h4>Recibidor: <input type="text" id="Pa_Firma" name="recibidor" /></h4>
-                        
+
                         <div class="titulo_torre">
                             <h4>Torre</h4>
                             <h4 class="ap">Apartamento</h4>
                         </div>
                         <div class="select_torre">
-                            <select id="select_torre" class="filter-select">
+                            <select id="select_torre_p" class="filter-select">
                                 <option value="">Torre</option>
                                 <?php foreach ($datos['torre'] as $torre) {
                                     echo "<option value='{$torre->To_id}'>{$torre->To_letra}</option>";
                                 } ?>
                             </select>
-                            <select name="select_id" id="select_apartamento" class="filter-select">
+                            <select name="select_id" id="select_apartamento_p" class="filter-select">
                                 <option value="0">Apartamento</option>
                             </select>
                         </div>
-                        <select name="select_personas" id="select_personas" class="filter-select_personas">
+                        <select name="select_personas" id="select_personas_p" class="filter-select_personas">
                             <option value="0">Residentes</option>
                         </select>
                         <center>
@@ -272,10 +272,10 @@ $(document).ready(function() {
         }
     });
 
-    // selector de torre
-    $('#select_torre').change(function() {
-        let ValueTower = $('#select_torre').val();
-        if (ValueTower) {
+        // selector de torre visitas
+        $('#select_torre').change(function () {
+            let ValueTower = $('#select_torre').val();
+            if (ValueTower) {
 
             $.ajax({
                 url: '<?php echo RUTA_URL ?>/ApartamentController/getApartamentByTower',
@@ -337,10 +337,77 @@ $(document).ready(function() {
             optionSelect = '<option value="0">Apartamento</option>'
             $('#select_apartamento').html(optionSelect)
 
-            optionSelect = '<option value="0">Residentes</option>'
-            $('#select_personas').html(optionSelect)
-        }
-    })
+                optionSelect = '<option value="0">Residentes</option>'
+                $('#select_personas').html(optionSelect)
+            }
+        })
+
+        // selector de torre paquetes
+
+        $('#select_torre_p').change(function () {
+            let ValueTower = $('#select_torre_p').val();
+            if (ValueTower) {
+
+                $.ajax({
+                    url: '<?php echo RUTA_URL ?>/ApartamentController/getApartamentByTower',
+                    type: 'POST',
+                    data: {
+                        TowerId: ValueTower
+                    },
+                    success: function (respuesta) {
+
+                        const res_p = JSON.parse(respuesta)
+
+                        let optionSelect_p = '<option value="0">Apartamento</option>'
+
+                        for (let item of res_p)
+                            optionSelect_p += '<option value="' + item.Ap_id + '">' + item.Ap_numero + '</option>'
+
+                        $('#select_apartamento_p').html(optionSelect_p)
+                    }
+                })
+
+                $('#select_apartamento_p').change(function () {
+                    let valueApartament = $('#select_apartamento_p').val();
+                    if (valueApartament) {
+
+                        $.ajax({
+                            url: '<?php echo RUTA_URL ?>/ApartamentController/getPeopleByApartament',
+                            type: 'POST',
+                            data: {
+                                apartamento_id: valueApartament
+                            },
+                            success: function (personas) {
+
+                                const pers_p = JSON.parse(personas)
+
+                                let optionSelect_pe_p = '<option value="0">Residentes</option>'
+
+                                for (let item of pers_p)
+                                    optionSelect_pe_p += '<option value="' + item.Pe_id + '">' + item.Pe_nombre + ' ' + item.Pe_apellidos + '</option>'
+
+                                $('#select_personas_p').html(optionSelect_pe_p)
+                            }
+                        })
+                    } else {
+                        optionSelect = '<option value="0">Apartamento</option>'
+                        $('#select_apartamento').html(optionSelect)
+
+                        optionSelect = '<option value="0">Residentes</option>'
+                        $('#select_personas_p').html(optionSelect_pe)
+                    }
+                })
+
+
+
+            } else {
+                optionSelect = '<option value="0">Apartamento</option>'
+                $('#select_apartamento_p').html(optionSelect)
+
+                optionSelect = '<option value="0">Residentes</option>'
+                $('#select_personas_p').html(optionSelect)
+            }
+        })
 
     // Select Personas
 
