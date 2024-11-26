@@ -3,19 +3,19 @@
 <div class="content">
     <div class="encabezado">
         <div class="titulo">
-            <h1 class="titulo_1">Control de registro de <b>entrada y salida</b></h1>
+            <h1 class="titulo_1">Control De Registro  <b>Entrada y Salida</b></h1>
         </div>
         <div id="popup-cambiar" class="ventana-emergente">
             <div class="ventana-emergente__caja ventana-emergente__caja--opciones">
             </div>
         </div>
         <div class="cerrar-sescion">
-            <a href="<?php echo RUTA_URL; ?>/HomeController/index"><button class="boton">Cerrar Sesion</button></a>
+            <a href="<?php echo RUTA_URL; ?>/HomeController/index"><button class="boton">Cerrar Sesión</button></a>
         </div>
     </div>
     <div class="cuerpo">
         <div class="contador_ingresos">
-            <h2>Han ingresado</h2>
+            <h2>Han Ingresado</h2>
             <div class="contador">
                 <?php
                 if (isset($datos['total'])) {
