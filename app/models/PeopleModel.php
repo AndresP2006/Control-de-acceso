@@ -44,7 +44,8 @@ class PeopleModel
     // }
     public function getVisitas()
     {
-        $this->db->query("SELECT v.*,h.Re_motivo,h.Re_fecha_entrada,h.Re_hora_entrada,h.Re_hora_salida FROM visitantes v , registro h where v.Vi_id=h.Vi_id");
+        // $this->db->query("SELECT v.*,h.Re_motivo,h.Re_fecha_entrada,h.Re_hora_entrada,h.Re_hora_salida FROM visitantes v , registro h ");
+        $this->db->query("SELECT DISTINCT *  FROM visitantes");
         return $this->db->showTables();
     }
 
@@ -108,11 +109,11 @@ class PeopleModel
         $this->db->query("select a.Pe_id,a.Pe_nombre,p.* from paquete p , persona a where a.Pe_id=p.Pe_id;");
         return $this->db->showTables();
     }
-    public function searchVisitor($cedula)
-    {
-        $this->db->query('SELECT * FROM visitantes WHERE Vi_id = :Cedula');
-        $this->db->bind(':Cedula', $cedula);
-        return $this->db->registros(); 
-    }
+    // public function searchVisitor($cedula)
+    // {
+    //     $this->db->query('SELECT * FROM visitantes WHERE Vi_id = :Cedula');
+    //     $this->db->bind(':Cedula', $cedula);
+    //     return $this->db->registros(); 
+    // }
     
 }

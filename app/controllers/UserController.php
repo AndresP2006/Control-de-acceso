@@ -286,14 +286,18 @@ class UserController extends Controlador
     $usuarios = [];
     $filter = 'Todos'; // Valor predeterminado del filtro
     $error = '';
+    $rolId = null; // Inicializa la variable $rolId
 
     // Verifica la acción de búsqueda o filtrado
     if (isset($_POST['action'])) {
+        // Filtrado por rol
         if ($_POST['action'] === 'filter') {
-            $rolId = $_POST['select_rol'] ?? null;
+            $rolId = $_POST['select_rol'] ?? null;  // Asignamos el valor de select_rol o null si no está definido
             $usuarios = $rolId ? $this->PeopleModel->getAllUsuario($rolId) : $this->PeopleModel->getAllUsuario();
             $filter = $rolId ?: 'Todos';
-        } elseif ($_POST['action'] === 'search' && !empty($_POST['id_usuario'])) {
+        } 
+        // Búsqueda por id_usuario
+        elseif ($_POST['action'] === 'search' && !empty($_POST['id_usuario'])) {
             $usuario = $this->PeopleModel->getPersonaById($_POST['id_usuario']);
 
             if ($usuario) {
@@ -301,7 +305,7 @@ class UserController extends Controlador
                 $filter = $usuario->Ro_id; // Cambia el filtro automáticamente según el rol del usuario encontrado
             } else {
                 $error = 'Usuario no encontrado.';
-                $filter = 'Todos';
+                $filter = 'Todos'; // Cambiar el filtro a 'Todos' si no se encuentra el usuario
             }
         }
 
@@ -339,6 +343,7 @@ class UserController extends Controlador
     // Renderiza la vista con los datos
     $this->vista('pages/admin/adminView', $datos);
 }
+
 
     
 

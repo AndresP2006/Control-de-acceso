@@ -142,20 +142,9 @@
                                 <option value="0">Residentes</option>
                             </select>
                             <center>
-                                <input type="submit" value="Enviar" class="Enviar" name="Visitantes"
-                                    onclick="submitForm('<?php echo RUTA_URL; ?>/PorterController/createGuest')" />
-                                <input type="submit" value="Buscar" class="Buscar" name="Buscar"
-                                    onclick="submitForm('<?php echo RUTA_URL; ?>/PorterController/searchGuest')" />
+                                <input type="submit" value="Enviar" class="Enviar" name="Visitantes"/>
                             </center>
                         </form>
-
-                        <script>
-                        function submitForm(action) {
-                            const form = document.getElementById('myForm');
-                            form.action = action; // Cambia dinámicamente la acción del formulario
-                        }
-                        </script>
-
                     </div>
                 </div>
             </div>

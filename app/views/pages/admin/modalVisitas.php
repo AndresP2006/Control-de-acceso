@@ -3,7 +3,7 @@ echo "<td>
         <button class='boton-abrir' onclick='abrirModal(\"$uniqueId\")'>
             <span>➕</span> 
         </button>
-      </td>";
+        </td>";
 echo "</tr>";
 echo "<tr>
         <td colspan='6'>
@@ -20,21 +20,21 @@ echo "<tr>
                         </thead>
                         <tbody class='tabla-nueva__cuerpo'>
                             <tr class='tabla-nueva__fila'>
-                               <td class='tabla-nueva__celda'>" . $historial['Re_fecha_entrada'] . "</td>
-                               <td class='tabla-nueva__celda'>" . $historial['Re_hora_entrada'] . "</td>
-                               <td class='tabla-nueva__celda'>" . $historial['Re_hora_salida'] . "</td>
+                                <td class='tabla-nueva__celda'>" . $historial['Re_fecha_entrada'] . "</td>
+                                <td class='tabla-nueva__celda'>" . $historial['Re_hora_entrada'] . "</td>
+                                <td class='tabla-nueva__celda'>" . $historial['Re_hora_salida'] . "</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </td>
-      </tr>";
+        </tr>";
 ?>
 
 
 <style>
-    .modal {
+.modal {
     display: none;
     position: fixed;
     z-index: 1000;
@@ -43,7 +43,8 @@ echo "<tr>
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4); /* Fondo semi-transparente */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Fondo semi-transparente */
 }
 
 .modal__contenido {
@@ -52,7 +53,8 @@ echo "<tr>
     padding: 20px;
     border: 1px solid #888;
     border-radius: 20px;
-    width: 80%; /* Ancho del modal */
+    width: 80%;
+    /* Ancho del modal */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -70,5 +72,4 @@ echo "<tr>
     text-decoration: none;
     cursor: pointer;
 }
-
 </style>
