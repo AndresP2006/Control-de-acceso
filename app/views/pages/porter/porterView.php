@@ -164,7 +164,6 @@
                         <span class="close2" id="closeModal">&times;</span>
                     </div>
                     <form id="packageForm" action="<?php echo RUTA_URL; ?>/PorterController/enterPackage" method="post">
-                        <h4>Estado: <input type="text" id="Pa_Estado" name="estado" /></h4>
                         <h4>Descripcion: <textarea id="Pa_Descripcion" name="descripcion"></textarea></h4>
                         <h4>Fecha de entrega: <input type="date" id="Pa_Fecha" name="fecha" /></h4>
                         <h4>Recibidor: <input type="text" id="Pa_Firma" name="recibidor" /></h4>
