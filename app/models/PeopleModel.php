@@ -44,7 +44,7 @@ class PeopleModel
     // }
     public function getVisitas()
     {
-        $this->db->query("SELECT v.*,h.Re_fecha_entrada,h.Re_hora_entrada,h.Re_hora_salida FROM visitantes v , registro h where v.Vi_id=h.Vi_id");
+        $this->db->query("SELECT v.*,h.Re_motivo,h.Re_fecha_entrada,h.Re_hora_entrada,h.Re_hora_salida FROM visitantes v , registro h where v.Vi_id=h.Vi_id");
         return $this->db->showTables();
     }
 

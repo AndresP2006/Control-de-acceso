@@ -29,36 +29,8 @@
                         echo "<td>" . $historial['Vi_nombres'] . "</td>";
                         echo "<td>" . $historial['Vi_apellidos'] . "</td>";
                         echo "<td>" . $historial['Vi_departamento'] . "</td>";
-                        echo "<td>" . $historial['Vi_motivo'] . "</td>";
-                        echo "<td>
-                                <button class='boton-abrir' onclick='toggleTabla(\"$uniqueId\")'>
-                                    <span>➕</span> 
-                                </button>
-                              </td>";
-                        echo "</tr>";
-                        echo "
-                            <tr>
-                                <td colspan='6'>
-                                    <div class='tabla-contenedor' id='$uniqueId' style='display: none;'>
-                                        <table class='tabla-nueva'>
-                                            <thead class='tabla-nueva__encabezado'>
-                                                <tr class='tabla-nueva__fila'>
-                                                    <th class='tabla-nueva__celda'>Fecha</th>
-                                                    <th class='tabla-nueva__celda'>Hora de entrada</th>
-                                                    <th class='tabla-nueva__celda'>Hora de salida</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class='tabla-nueva__cuerpo'>
-                                                <tr class='tabla-nueva__fila'>
-                                                   <td class='tabla-nueva__celda'>" . $historial['Re_fecha_entrada'] . "</td>
-                                                   <td class='tabla-nueva__celda'>" . $historial['Re_hora_entrada'] . "</td>
-                                                   <td class='tabla-nueva__celda'>" . $historial['Re_hora_salida'] . "</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </td>
-                            </tr>";
+                        echo "<td>" . $historial['Re_motivo'] . "</td>";
+                        include RUTA_APP . '/views/pages/admin/modalVisitas.php';
                     endforeach;
                 }
                 ?>
