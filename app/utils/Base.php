@@ -119,4 +119,10 @@ class Base
     {
         $this->dbh->rollBack();
     }
+
+    public function single()
+{
+    return $this->stmt->fetch(PDO::FETCH_ASSOC);
+}
+
 }
