@@ -167,7 +167,25 @@
                         <h4>Descripcion: <textarea id="Pa_Descripcion" name="descripcion"></textarea></h4>
                         <h4>Fecha de entrega: <input type="date" id="Pa_Fecha" name="fecha" /></h4>
                         <h4>Recibidor: <input type="text" id="Pa_Firma" name="recibidor" /></h4>
-                        <h4>Documento del Residente: <input type="text" id="U_Id" name="documento" /></h4>
+                        
+                        <div class="titulo_torre">
+                            <h4>Torre</h4>
+                            <h4 class="ap">Apartamento</h4>
+                        </div>
+                        <div class="select_torre">
+                            <select id="select_torre" class="filter-select">
+                                <option value="">Torre</option>
+                                <?php foreach ($datos['torre'] as $torre) {
+                                    echo "<option value='{$torre->To_id}'>{$torre->To_letra}</option>";
+                                } ?>
+                            </select>
+                            <select name="select_id" id="select_apartamento" class="filter-select">
+                                <option value="0">Apartamento</option>
+                            </select>
+                        </div>
+                        <select name="select_personas" id="select_personas" class="filter-select_personas">
+                            <option value="0">Residentes</option>
+                        </select>
                         <center>
                             <input type="submit" value="Enviar" name="paquetes" class="Enviar" />
                         </center>
