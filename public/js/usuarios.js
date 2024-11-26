@@ -127,11 +127,10 @@ window.onclick = function(event) {
     }
 };
 
-function toggleTabla(id) {
-  const tabla = document.getElementById(id); // Seleccionar la tabla específica por su ID único
-  if (tabla.style.display === 'none' || tabla.style.display === '') {
-      tabla.style.display = 'block'; // Muestra la tabla
-  } else {
-      tabla.style.display = 'none'; // Oculta la tabla
-  }
+function abrirModal(id) {
+    document.getElementById(id).style.display = "block";
+}
+
+function cerrarModal(id) {
+    document.getElementById(id).style.display = "none";
 }
