@@ -31,7 +31,6 @@ class PorterController extends Controlador
     public function createGuest()
     {
         if (isset($_POST['Visitantes'])) {
-            $people = $this->PeopleModel->getPeopleByApart($_POST['select_personas']);
             $datos = [
                 'Cedula' => trim($_POST['u_id']),
                 'Nombre' => trim($_POST['U_Nombre']),
@@ -39,7 +38,7 @@ class PorterController extends Controlador
                 'Telefono' => trim($_POST['U_Telefono']),
                 'Departamento' => trim($_POST['select_id']),
                 'Motivo' => trim($_POST['U_Motivo']),
-                'PeopleId' => trim($people->Pe_id),
+                'PeopleId' => trim($_POST['select_personas']),
             ];
             $this->PorterModel->addGuest($datos);
 
@@ -48,15 +47,15 @@ class PorterController extends Controlador
         }
     }
 
-//     public function searchGuest()
+    //     public function searchGuest()
 // {
 //     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 //         $cedula = $_POST['u_id'];
 
-//         // Busca al visitante en la base de datos
+    //         // Busca al visitante en la base de datos
 //         $visitante = $this->PorterModel->searchVisitor($cedula);
 
-//         if ($visitante) {
+    //         if ($visitante) {
 //             echo json_encode(['success' => true, 'visitante' => $visitante]);
 //         } else {
 //             echo json_encode(['success' => false, 'message' => 'No se encontró el visitante.']);
