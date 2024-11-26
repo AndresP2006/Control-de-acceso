@@ -56,4 +56,8 @@
     <?php if (isset($datos['messageError'])) { ?>
         error("<?php echo $datos['messageError']; ?>")
     <?php } ?>
+
+    <?php if (isset($datos['messageInfo'])) { ?>
+        realizado("<?php echo $datos['messageInfo']; ?>")
+    <?php } ?>
 </script>
