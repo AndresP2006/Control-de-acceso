@@ -6,7 +6,7 @@
         <!-- Formulario de Filtro por Rol -->
         <form action="<?php echo RUTA_URL; ?>/UserController/BuscarUsuario" method="POST">
             <select name="select_rol" class="filter-rol" onchange="this.form.submit()">
-                <option value="">Filtrar por Tipo</option>
+                <option value="">Todos</option>
                 <option value="1" <?php echo isset($datos['filter']) && $datos['filter'] == 1 ? 'selected' : ''; ?>>
                     Administrador
                 </option>
@@ -40,7 +40,7 @@
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Documento</th>
                     <th>Nombre</th>
                     <th>Contraseña</th>
                     <th>Telefono</th>
@@ -80,7 +80,7 @@
                                 >✏️</button>
                                 <form action='" . RUTA_URL . "/UserController/DeleteUser' method='POST' style='display:inline;'>
                                     <input type='hidden' name='delete_id' value='" . htmlspecialchars($registro['Cedula'] ?? '') . "'>
-                                    <button type='submit' name='deletebtn' class='delete-btn'>🗑️</button>
+                                    <button type='submit' name='deletebtn' class='delete-btn'>🗑️</button>   
                                 </form>
                             </td>";
                             echo "</tr>";

@@ -5,7 +5,7 @@
             <span class="close" id="close">&times;</span>
         </div>
         <form id="myForm" action="<?php echo RUTA_URL; ?>/UserController/createUser" method="post">
-            <label for="">Cedula</label><br>
+            <label for="">Documento</label><br>
             <input type="text" id="u_id" name="Pe_id" />
             <label for="">Nombre</label><br>
             <input type="text" id="U_Nombre" name="U_Nombre" />
@@ -15,18 +15,25 @@
             <input type="text" id="U_Telefono" name="U_Telefono" />
             <label for="">Correo</label><br>
             <input type="text" id="U_Gmail" name="U_Gmail" />
-            <div class="select_torre2">
-                <select id="select_torre2" class="filter-select">
-                    <option value="">Torre</option>
-                    <?php foreach ($_SESSION['torre'] as $torre) {
-                        echo "<option value='{$torre->To_id}'>{$torre->To_letra}</option>";
-                    } ?>
-                </select>
-                <select name="U_Departamento" id="U_Departamento" class="filter-select">
-                    <option value="">Apartamento</option>
-                </select>
-                <input type="text" style="display: none;" name="U_Departamento2" id="U_Departamento2">
+            <div class="titulo_torre">
+                <h4>Torre</h4>
+                <h4 class="ap">Apartamento</h4>
             </div>
+            <div class="select_torre">
+                <div class="select_torre2">
+                    <select id="select_torre2" class="filter-select">
+                        <option value="">Torre</option>
+                        <?php foreach ($_SESSION['torre'] as $torre) {
+                            echo "<option value='{$torre->To_id}'>{$torre->To_letra}</option>";
+                        } ?>
+                    </select>
+                    <select name="U_Departamento" id="U_Departamento" class="filter-select">
+                        <option value="">Apartamento</option>
+                    </select>
+                    <input type="text" style="display: none;" name="U_Departamento2" id="U_Departamento2">
+                </div>
+            </div>
+
             <select name="U_id" class="Rol" id="U_id">
                 <option value="">Seleccionar</option>
                 <option value=1>Administrador</option>

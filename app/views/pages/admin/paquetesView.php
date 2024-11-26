@@ -6,7 +6,7 @@
         <table>
             <thead>
                 <tr>
-                    <th>Numero de Doc</th>
+                    <th>Documento</th>
                     <th>Destinatario</th>
                     <th>Estado</th>
                     <th>Fecha</th>

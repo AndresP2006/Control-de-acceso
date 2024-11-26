@@ -89,8 +89,14 @@ class Base
     public function registro()
     {
         $this->execute();
+        try{
         return $this->stmt->fetch(PDO::FETCH_OBJ);
+        }
+        catch(Exception $e){
+            return;
+        }
     }
+    
 
     //OBTENER CANTIDAD DE FILAS CON EL MOTODO rowCOUNT
     public function rowCount()
@@ -113,4 +119,10 @@ class Base
     {
         $this->dbh->rollBack();
     }
+
+    public function single()
+{
+    return $this->stmt->fetch(PDO::FETCH_ASSOC);
+}
+
 }

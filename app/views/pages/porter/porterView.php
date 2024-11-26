@@ -119,7 +119,7 @@
                             <!-- <span class="close" id="close">&times;</span> -->
                         </div>
                         <form id="myForm" action="<?php echo RUTA_URL; ?>/PorterController/createGuest" method="post">
-                            <h4>Cedula: <input type="text" id="u_id" name="u_id" /></h4>
+                            <h4>Documento: <input type="text" id="u_id" name="u_id" /></h4>
                             <h4>Nombre: <input type="text" id="U_Nombre" name="U_Nombre" /></h4>
                             <h4>Apellido: <input type="text" id="U_Apellido" name="U_Apellido" /></h4>
                             <h4>Telefono: <input type="text" id="U_Telefono" name="U_Telefono" /></h4>
@@ -165,7 +165,7 @@
                     </div>
                     <form id="packageForm" action="<?php echo RUTA_URL; ?>/PorterController/enterPackage" method="post">
                         <h4>Estado: <input type="text" id="Pa_Estado" name="estado" /></h4>
-                        <h4>Descripcio: <textarea id="Pa_Descripcion" name="descripcion"></textarea></h4>
+                        <h4>Descripcion: <textarea id="Pa_Descripcion" name="descripcion"></textarea></h4>
                         <h4>Fecha de entrega: <input type="date" id="Pa_Fecha" name="fecha" /></h4>
                         <h4>Recibidor: <input type="text" id="Pa_Firma" name="recibidor" /></h4>
                         <h4>Documento del Residente: <input type="text" id="U_Id" name="documento" /></h4>
