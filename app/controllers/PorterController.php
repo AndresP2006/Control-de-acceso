@@ -31,7 +31,7 @@ class PorterController extends Controlador
     public function createGuest()
     {
         if (isset($_POST['Visitantes'])) {
-            $people = $this->PeopleModel->getPeopleByApart($_POST['select_id']);
+            $people = $this->PeopleModel->getPeopleByApart($_POST['select_personas']);
             $datos = [
                 'Cedula' => trim($_POST['u_id']),
                 'Nombre' => trim($_POST['U_Nombre']),
@@ -82,7 +82,7 @@ class PorterController extends Controlador
         if (isset($_POST['paquetes'])) {
             $people = $this->PeopleModel->documentPers($_POST['documento']);
             $paquete = [
-                'estado' => trim($_POST['estado']),
+                'estado' => 'Bodega',
                 'descripcion' => trim(($_POST['descripcion'])),
                 'fecha' => trim($_POST['fecha']),
                 'responsable' => trim($_POST['recibidor']),
