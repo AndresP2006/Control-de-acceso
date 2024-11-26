@@ -132,8 +132,7 @@
                                 <select id="select_torre" class="filter-select">
                                     <option value="">Torre</option>
                                     <?php foreach ($datos['torre'] as $torre) {
-                                        echo "<option value='{$torre->To_id}'>{$torre->To_letra}</option>";
-                                    } ?>
+                                    echo "<option value='{$torre->To_id}'>{$torre->To_letra}</option>";} ?>
                                 </select>
                                 <select name="select_id" id="select_apartamento" class="filter-select">
                                     <option value="0">Apartamento</option>
@@ -143,9 +142,20 @@
                                 <option value="0">Residentes</option>
                             </select>
                             <center>
-                                <input type="submit" value="Enviar" class="Enviar" name="Visitantes" />
+                                <input type="submit" value="Enviar" class="Enviar" name="Visitantes"
+                                    onclick="submitForm('<?php echo RUTA_URL; ?>/PorterController/createGuest')" />
+                                <input type="submit" value="Buscar" class="Buscar" name="Buscar"
+                                    onclick="submitForm('<?php echo RUTA_URL; ?>/PorterController/searchGuest')" />
                             </center>
                         </form>
+
+                        <script>
+                        function submitForm(action) {
+                            const form = document.getElementById('myForm');
+                            form.action = action; // Cambia dinámicamente la acción del formulario
+                        }
+                        </script>
+
                     </div>
                 </div>
             </div>
@@ -185,147 +195,154 @@
 <?php require_once RUTA_APP . '/views/inc/footer-porter.php'; ?>
 
 <script>
-    <?php if (isset($datos['messageInfo'])) { ?>
-        realizado("<?php echo $datos['messageInfo']; ?>")
-    <?php } ?>
+<?php if (isset($datos['messageInfo'])) { ?>
+realizado("<?php echo $datos['messageInfo']; ?>")
+<?php } ?>
 
-    $(document).ready(function () {
-
-
-        $('#abrirMiModal').click(function () {
-            let PeopleID = $('#texto').val();
-            if (PeopleID) {
-                let tabla = $('#paquetesTable').val();
-                $.ajax({
-                    url: '<?php echo RUTA_URL; ?>/PorterController/getPeopleBypa', //de donde recibe la informacion
-                    type: 'POST', //de que manera lo recibe
-                    data: {
-                        residente: PeopleID
-                    },
-                    success: function (respuesta) {
-                        let resp = JSON.parse(respuesta);
-
-                        $('#miModal').addClass('miModal--activo');
-                        $('#nombres').val(resp.Pe_nombre);
-                        $('#apellidos').val(resp.Pe_apellidos);
-                        $('#telefono').val(resp.Pe_telefono);
-                        $('#departamento').val(resp.Ap_id);
-                        $('#Paquete').val(resp.Total_paquetes);
+$(document).ready(function() {
 
 
-                        $('#abrirTablaFlotante').click(function () {
-                            $.ajax({
-                                url: '<?php echo RUTA_URL; ?>/PorterController/getPaquetById',
-                                type: 'POST',
-                                data: {
-                                    residente: PeopleID
-                                },
+    $('#abrirMiModal').click(function() {
+        let PeopleID = $('#texto').val();
+        if (PeopleID) {
+            let tabla = $('#paquetesTable').val();
+            $.ajax({
+                url: '<?php echo RUTA_URL; ?>/PorterController/getPeopleBypa', //de donde recibe la informacion
+                type: 'POST', //de que manera lo recibe
+                data: {
+                    residente: PeopleID
+                },
+                success: function(respuesta) {
+                    let resp = JSON.parse(respuesta);
 
-                                success: function (paquetes) {
-
-                                    let paq = JSON.parse(paquetes);
-
-                                    let td;
-
-                                    if (Array.isArray(paq)) {
-
-                                        for (let item of paq) {
-                                            td += '<tr>';
-                                            td += '<td>' + item.Pa_fecha + '</td>';
-                                            td += '<td>' + item.Pa_descripcion + '</td>';
-                                            td += '<td>' + item.Pa_estado + '</td>';
-                                            td += '</tr>';
-                                        }
-                                        $('#paquetesTable').html(td);
-                                    }
-                                }
-                            })
-
-                        })
+                    $('#miModal').addClass('miModal--activo');
+                    $('#nombres').val(resp.Pe_nombre);
+                    $('#apellidos').val(resp.Pe_apellidos);
+                    $('#telefono').val(resp.Pe_telefono);
+                    $('#departamento').val(resp.Ap_id);
+                    $('#Paquete').val(resp.Total_paquetes);
 
 
-
-                    },
-                    error: function () {
-                        $('#respuesta').html('Error al procesar la solicitud.');
-                    }
-                });
-            }
-        });
-
-        // selector de torre
-        $('#select_torre').change(function () {
-            let ValueTower = $('#select_torre').val();
-            if (ValueTower) {
-
-                $.ajax({
-                    url: '<?php echo RUTA_URL ?>/ApartamentController/getApartamentByTower',
-                    type: 'POST',
-                    data: {
-                        TowerId: ValueTower
-                    },
-                    success: function (respuesta) {
-
-                        const res = JSON.parse(respuesta)
-
-                        let optionSelect = '<option value="0">Apartamento</option>'
-
-                        for (let item of res)
-                            optionSelect += '<option value="' + item.Ap_id + '">' + item.Ap_numero + '</option>'
-
-                        $('#select_apartamento').html(optionSelect)
-                    }
-                })
-
-                $('#select_apartamento').change(function () {
-                    let valueApartament = $('#select_apartamento').val();
-                    if (valueApartament) {
-
+                    $('#abrirTablaFlotante').click(function() {
                         $.ajax({
-                            url: '<?php echo RUTA_URL ?>/ApartamentController/getPeopleByApartament',
+                            url: '<?php echo RUTA_URL; ?>/PorterController/getPaquetById',
                             type: 'POST',
                             data: {
-                                apartamento_id: valueApartament
+                                residente: PeopleID
                             },
-                            success: function (personas) {
 
-                                const pers = JSON.parse(personas)
+                            success: function(paquetes) {
 
-                                let optionSelect_pe = '<option value="0">Residentes</option>'
+                                let paq = JSON.parse(paquetes);
 
-                                for (let item of pers)
-                                    optionSelect_pe += '<option value="' + item.Pe_id + '">' + item.Pe_nombre + ' ' + item.Pe_apellidos + '</option>'
+                                let td;
 
-                                $('#select_personas').html(optionSelect_pe)
+                                if (Array.isArray(paq)) {
+
+                                    for (let item of paq) {
+                                        td += '<tr>';
+                                        td += '<td>' + item.Pa_fecha +
+                                            '</td>';
+                                        td += '<td>' + item
+                                            .Pa_descripcion + '</td>';
+                                        td += '<td>' + item.Pa_estado +
+                                            '</td>';
+                                        td += '</tr>';
+                                    }
+                                    $('#paquetesTable').html(td);
+                                }
                             }
                         })
-                    } else {
-                        optionSelect = '<option value="0">Apartamento</option>'
-                        $('#select_apartamento').html(optionSelect)
 
-                        optionSelect = '<option value="0">Residentes</option>'
-                        $('#select_personas').html(optionSelect_pe)
-                    }
-                })
+                    })
 
 
 
-            } else {
-                optionSelect = '<option value="0">Apartamento</option>'
-                $('#select_apartamento').html(optionSelect)
-
-                optionSelect = '<option value="0">Residentes</option>'
-                $('#select_personas').html(optionSelect)
-            }
-        })
-
-        // Select Personas
-
-
-        //Modal
-
-        $('#cerrarMiModal').click(() => {
-            $('#miModal').removeClass('miModal--activo');
-        })
+                },
+                error: function() {
+                    $('#respuesta').html('Error al procesar la solicitud.');
+                }
+            });
+        }
     });
+
+    // selector de torre
+    $('#select_torre').change(function() {
+        let ValueTower = $('#select_torre').val();
+        if (ValueTower) {
+
+            $.ajax({
+                url: '<?php echo RUTA_URL ?>/ApartamentController/getApartamentByTower',
+                type: 'POST',
+                data: {
+                    TowerId: ValueTower
+                },
+                success: function(respuesta) {
+
+                    const res = JSON.parse(respuesta)
+
+                    let optionSelect = '<option value="0">Apartamento</option>'
+
+                    for (let item of res)
+                        optionSelect += '<option value="' + item.Ap_id + '">' + item
+                        .Ap_numero + '</option>'
+
+                    $('#select_apartamento').html(optionSelect)
+                }
+            })
+
+            $('#select_apartamento').change(function() {
+                let valueApartament = $('#select_apartamento').val();
+                if (valueApartament) {
+
+                    $.ajax({
+                        url: '<?php echo RUTA_URL ?>/ApartamentController/getPeopleByApartament',
+                        type: 'POST',
+                        data: {
+                            apartamento_id: valueApartament
+                        },
+                        success: function(personas) {
+
+                            const pers = JSON.parse(personas)
+
+                            let optionSelect_pe =
+                                '<option value="0">Residentes</option>'
+
+                            for (let item of pers)
+                                optionSelect_pe += '<option value="' + item.Pe_id +
+                                '">' + item.Pe_nombre + ' ' + item.Pe_apellidos +
+                                '</option>'
+
+                            $('#select_personas').html(optionSelect_pe)
+                        }
+                    })
+                } else {
+                    optionSelect = '<option value="0">Apartamento</option>'
+                    $('#select_apartamento').html(optionSelect)
+
+                    optionSelect = '<option value="0">Residentes</option>'
+                    $('#select_personas').html(optionSelect_pe)
+                }
+            })
+
+
+
+        } else {
+            optionSelect = '<option value="0">Apartamento</option>'
+            $('#select_apartamento').html(optionSelect)
+
+            optionSelect = '<option value="0">Residentes</option>'
+            $('#select_personas').html(optionSelect)
+        }
+    })
+
+    // Select Personas
+
+
+    //Modal
+
+    $('#cerrarMiModal').click(() => {
+        $('#miModal').removeClass('miModal--activo');
+    })
+});
 </script>

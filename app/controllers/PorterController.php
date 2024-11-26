@@ -48,6 +48,26 @@ class PorterController extends Controlador
         }
     }
 
+    public function searchGuest()
+{
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $cedula = $_POST['u_id'];
+
+        // Busca al visitante en la base de datos
+        $visitante = $this->PorterModel->searchVisitor($cedula);
+
+        if ($visitante) {
+            echo json_encode(['success' => true, 'visitante' => $visitante]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'No se encontró el visitante.']);
+        }
+    } else {
+        // Redirigir si no es una solicitud POST
+        $this->vista('pages/porter/porterView', null);
+    }
+}
+
+
     public function dropGuest()
     {
 

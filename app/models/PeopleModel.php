@@ -108,5 +108,11 @@ class PeopleModel
         $this->db->query("select a.Pe_id,a.Pe_nombre,p.* from paquete p , persona a where a.Pe_id=p.Pe_id;");
         return $this->db->showTables();
     }
-   
+    public function searchVisitor($cedula)
+    {
+        $this->db->query('SELECT * FROM visitantes WHERE Vi_id = :Cedula');
+        $this->db->bind(':Cedula', $cedula);
+        return $this->db->registros(); 
+    }
+    
 }
