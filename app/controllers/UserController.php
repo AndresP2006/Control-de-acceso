@@ -349,13 +349,15 @@ class UserController extends Controlador
 }
 
 
-public function MostrarHistorial(){
-
-    if(isset($_POST['historial-btn'])){
+public function MostrarHistorial() {
+    if (isset($_POST['historial-btn'])) {
         $id = $_POST['historial_id'];
 
         $registros = $this->PeopleModel->getAllRegistro($id);
-        $usuarios = [];
+
+        // Verificamos si $registros es un arreglo o un objeto
+        if ($registros && is_array($registros)) {
+            $usuarios = [];
             foreach ($registros as $registro) {
                 $usuarios[] = [
                     'Re_fecha_entrada' => $registro->Re_fecha_entrada,
@@ -369,9 +371,13 @@ public function MostrarHistorial(){
             $datos = [
                 'historial' => $usuarios
             ];
+        } else {
+            $datos = ['historial' => []]; // Si no hay registros, aseguramos que la variable no cause errores
+        }
+
         $this->vista('pages/admin/historialViView', $datos);
 
-    }else{
+    } else {
         $this->vista('pages/admin/historialViView', null);
     }
 }

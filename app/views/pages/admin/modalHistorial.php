@@ -1,7 +1,8 @@
+<!-- Asegúrate de que este modal esté correctamente en la vista -->
 <div id="myModalHistorial" class="modal">
-    <div style=" width: 800px; margin: auto; position: relative; top: 25%; background: #fff; max-height: 500px; overflow-y: auto;">
+    <div style="width: 800px; margin: auto; position: relative; top: 25%; background: #fff; max-height: 500px; overflow-y: auto;">
         <span class="close" id="closeHistorial">&times;</span>
-        <table >
+        <table>
             <thead>
                 <tr>
                     <th>Fecha de Entrada</th>
@@ -13,20 +14,22 @@
                 </tr>
             </thead>
             <tbody>
-                <?php
-                if (!empty($datos['historial'])) {
-                    foreach ($datos['historial'] as $historial) {
-                        echo "<tr>";
-                        echo "<td>" . $historial['Re_fecha_entrada'] . "</td>";
-                        echo "<td>" . $historial['Re_hora_entrada'] . "</td>";
-                        echo "<td>" . $historial['Re_hora_salida'] . "</td>";
-                        echo "<td>" . $historial['Re_motivo'] . "</td>";
-                        echo "<td>" . $historial['Vi_departamento'] . "</td>";
-                        echo "<td>" . $historial['Pe_id'] . "</td>";   
-                        echo "</tr>";
-                    }
-                }
-                ?>
+                <?php if (!empty($datos['historial'])): ?>
+                    <?php foreach ($datos['historial'] as $historial): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($historial['Re_fecha_entrada']); ?></td>
+                            <td><?php echo htmlspecialchars($historial['Re_hora_entrada']); ?></td>
+                            <td><?php echo htmlspecialchars($historial['Re_hora_salida']); ?></td>
+                            <td><?php echo htmlspecialchars($historial['Re_motivo']); ?></td>
+                            <td><?php echo htmlspecialchars($historial['Vi_departamento']); ?></td>
+                            <td><?php echo htmlspecialchars($historial['Pe_id']); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="6">No hay registros disponibles.</td>
+                    </tr>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>

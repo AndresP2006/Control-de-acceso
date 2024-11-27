@@ -52,12 +52,15 @@ class PeopleModel
     }
 
     public function getAllRegistro($id)
-    {
-            $this->db->query("SELECT * FROM registro WHERE Vi_id = '$id'");
-            return $this->db->registro();
-        
+{
+    $this->db->query("SELECT * FROM registro WHERE Vi_id = :id");
+    $this->db->bind(':id', $id); // Usa parámetros para evitar inyección SQL
+    $result = $this->db->registros(); // Asegúrate de usar 'registros()' para obtener múltiples resultados
 
-    }
+    return $result ?: false; // Devuelve false si no hay resultados
+}
+
+
 
 
 
@@ -76,20 +79,20 @@ class PeopleModel
 
     //No tocar este metodo
     public function getAllUsuario($roleId = null)
-{
-    if ($roleId) {
-        // Consulta con filtro por Rol
-        $this->db->query('
+    {
+        if ($roleId) {
+            // Consulta con filtro por Rol
+            $this->db->query('
             SELECT persona.*, usuario.Ro_id, usuario.Us_correo, r.Ro_tipo, usuario.Us_contrasena, a.Ap_numero, t.To_letra,t.To_id FROM persona LEFT JOIN usuario ON persona.Pe_id = usuario.Us_id LEFT JOIN rol r ON usuario.Ro_id = r.Ro_id LEFT JOIN apartamento a ON persona.Ap_id = a.Ap_id LEFT JOIN torre t ON a.To_id = t.To_id 
             WHERE usuario.Ro_id = :roleId
         ');
-        $this->db->bind(':roleId', $roleId);
-    } else {
-        // Consulta sin filtro
-        $this->db->query('
+            $this->db->bind(':roleId', $roleId);
+        } else {
+            // Consulta sin filtro
+            $this->db->query('
             SELECT persona.*, usuario.Ro_id, usuario.Us_correo, r.Ro_tipo, usuario.Us_contrasena, a.Ap_numero, t.To_letra,t.To_id FROM persona LEFT JOIN usuario ON persona.Pe_id = usuario.Us_id LEFT JOIN rol r ON usuario.Ro_id = r.Ro_id LEFT JOIN apartamento a ON persona.Ap_id = a.Ap_id LEFT JOIN torre t ON a.To_id = t.To_id 
         ');
-    }
+        }
 
         return $this->db->registros(); // Devuelve todos los registros
     }
@@ -104,5 +107,5 @@ class PeopleModel
     //     $this->db->bind(':Cedula', $cedula);
     //     return $this->db->registros(); 
     // }
-    
+
 }

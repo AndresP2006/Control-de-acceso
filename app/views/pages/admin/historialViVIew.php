@@ -20,20 +20,20 @@
                 if (is_array($paquetes)) {
                     foreach ($paquetes as $historial) {
                         echo "<tr>";
-                        echo "<td>" . $historial['Vi_id'] . "</td>";
-                        echo "<td>" . $historial['Vi_nombres'] . "</td>";
-                        echo "<td>" . $historial['Vi_apellidos'] . "</td>";
-                        echo "<td>" . $historial['Vi_telefono'] . "</td>";
-                        // Botón para mostrar detalles
+                        echo "<td>" . (empty($historial['Vi_id']) ? '-' : $historial['Vi_id']) . "</td>";
+                        echo "<td>" . (empty($historial['Vi_nombres']) ? '-' : $historial['Vi_nombres']) . "</td>";
+                        echo "<td>" . (empty($historial['Vi_apellidos']) ? '-' : $historial['Vi_apellidos']) . "</td>";
+                        echo "<td>" . (empty($historial['Vi_telefono']) ? '-' : $historial['Vi_telefono']) . "</td>";
 
+                        // Botón para mostrar detalles
                         echo "
                         <td>
-                            <form action='" . RUTA_URL . "/UserController/MostrarHistorial' method='POST'>
-                                <input type='hidden' name='historial_id' value='" . htmlspecialchars($historial['Vi_id'] ?? ''). "'>
+                            <form id='historial-form' action='" . RUTA_URL . "/UserController/MostrarHistorial' method='POST'>
+                                <input type='hidden' name='historial_id' value='" . htmlspecialchars($historial['Vi_id'] ?? '') . "'>
                                 <button class='historial-btn' name='historial-btn'>✏️</button>
                             </form>
-                        </td>
-                       ";
+                        </td>";
+
                         echo "</tr>";
                     }
                 }
@@ -57,3 +57,6 @@
 <?php include RUTA_APP . '/views/pages/admin/modalHistorial.php'; ?>
 
 <?php include RUTA_APP . '/views/inc/footer-visitante.php'; ?>
+<script>
+    
+</script>
