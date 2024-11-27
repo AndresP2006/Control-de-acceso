@@ -219,6 +219,29 @@ class UserController extends Controlador
             $this->vista('pages/admin/paquetesView', $datos);
         }
     }
+    public function DeleteTorre(){
+        if(isset($_POST['borrar']) && isset($_POST['id'])){
+            $id=$_POST['id'];
+
+            $this->PaquetModel->DeleteTorre($id);
+
+            $datos = $this->index('Torre borrada correctament');
+            $this->vista('pages/admin/edificiosView', $datos);
+
+        }
+    }
+
+    public function DeleteApartamento(){
+        if(isset($_POST['borrar']) && isset($_POST['torre'])){
+            $id=$_POST['torre'];
+
+            $this->PaquetModel->DeleteApartamento($id);
+
+            $datos = $this->index('Apartamento borrada correctament');
+            $this->vista('pages/admin/edificiosView', $datos);
+
+        }
+    }
 
 
     public function MostrarDatos()
@@ -380,6 +403,10 @@ public function MostrarHistorial() {
     } else {
         $this->vista('pages/admin/historialViView', null);
     }
+}
+
+public function enterTower(){
+
 }
 
 
