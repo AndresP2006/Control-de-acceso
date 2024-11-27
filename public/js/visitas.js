@@ -75,3 +75,15 @@ function buscarVisitante() {
   })
   .catch(error => console.error('Error:', error));
 }
+
+// control de fechas de paquetes
+document.getElementById('Pa_Fecha').addEventListener('change', function() {
+  const inputDate = new Date(this.value); 
+  const today = new Date(); 
+  today.setHours(0, 0, 0, 0); 
+
+  if (inputDate > today) {
+      alert('No puedes seleccionar una fecha posterior al día de hoy.');
+      this.value = ''; 
+  }
+});

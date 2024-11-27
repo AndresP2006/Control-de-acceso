@@ -3,19 +3,19 @@
 <div class="content">
     <div class="encabezado">
         <div class="titulo">
-            <h1 class="titulo_1">Control de registro de <b>entrada y salida</b></h1>
+            <h1 class="titulo_1">Control De Registro  <b>Entrada y Salida</b></h1>
         </div>
         <div id="popup-cambiar" class="ventana-emergente">
             <div class="ventana-emergente__caja ventana-emergente__caja--opciones">
             </div>
         </div>
         <div class="cerrar-sescion">
-            <a href="<?php echo RUTA_URL; ?>/HomeController/index"><button class="boton">Cerrar Sesion</button></a>
+            <a href="<?php echo RUTA_URL; ?>/HomeController/index"><button class="boton">Cerrar Sesión</button></a>
         </div>
     </div>
     <div class="cuerpo">
         <div class="contador_ingresos">
-            <h2>Han ingresado</h2>
+            <h2>Han Ingresado</h2>
             <div class="contador">
                 <?php
                 if (isset($datos['total'])) {
@@ -164,7 +164,11 @@
                     </div>
                     <form id="packageForm" action="<?php echo RUTA_URL; ?>/PorterController/enterPackage" method="post">
                         <h4>Descripcion: <textarea id="Pa_Descripcion" name="descripcion"></textarea></h4>
-                        <h4>Fecha de entrega: <input type="date" id="Pa_Fecha" name="fecha" /></h4>
+                        <?php 
+                        date_default_timezone_set('UTC'); 
+                        $hoy = date("Y-m-d"); 
+                        ?>
+                        <h4>Fecha de entrega: <input type="date" id="Pa_Fecha" name="fecha" max="<?php echo $hoy;?>"/></h4>
                         <h4>Recibidor: <input type="text" id="Pa_Firma" name="recibidor" /></h4>
 
                         <div class="titulo_torre">
