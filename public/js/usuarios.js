@@ -54,9 +54,6 @@ document.getElementById("myForm").onsubmit = function () {
 //------------Fin modal registro--------------
 
 
-// Obtener el modal de edición y el botón de cerrar
-// Modal de edición - solo afecta al modal 'myModal-Udate'
-// Modal de edición - solo afecta al modal 'myModal-Udate'
 var visitorModalEdit = document.getElementById("myModal-Udate");
 var visitorCloseBtnEdit = document.getElementsByClassName("close")[1]; // Asegúrate de que esta clase es única para el modal de edición
 
@@ -134,3 +131,10 @@ function abrirModal(id) {
 function cerrarModal(id) {
     document.getElementById(id).style.display = "none";
 }
+
+
+
+
+
+// -------- Modal historial de visitantes-------
+

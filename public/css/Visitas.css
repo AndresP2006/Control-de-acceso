@@ -135,7 +135,15 @@ h2 {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
   font-family: "Poppins", sans-serif;
 }
-
+.modal-contentHistorial{
+  width: 700px;
+  margin: 0 auto;
+  padding: 20px 30px;
+  background: linear-gradient(135deg, #eaeaea, #606060);
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  font-family: "Poppins", sans-serif;
+}
 .close {
   color: #f3f3f3;
   float: right;
