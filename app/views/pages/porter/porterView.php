@@ -164,7 +164,11 @@
                     </div>
                     <form id="packageForm" action="<?php echo RUTA_URL; ?>/PorterController/enterPackage" method="post">
                         <h4>Descripcion: <textarea id="Pa_Descripcion" name="descripcion"></textarea></h4>
-                        <h4>Fecha de entrega: <input type="date" id="Pa_Fecha" name="fecha" /></h4>
+                        <?php 
+                        date_default_timezone_set('UTC'); 
+                        $hoy = date("Y-m-d"); 
+                        ?>
+                        <h4>Fecha de entrega: <input type="date" id="Pa_Fecha" name="fecha" max="<?php echo $hoy;?>"/></h4>
                         <h4>Recibidor: <input type="text" id="Pa_Firma" name="recibidor" /></h4>
 
                         <div class="titulo_torre">
