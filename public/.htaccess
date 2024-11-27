@@ -1,7 +1,11 @@
 <IfModule mod_rewrite.c>
 Options -Multiviews
 RewriteEngine On 
+<<<<<<< HEAD
 RewriteBase /control-de-acceso/public/
+=======
+RewriteBase /MVC/Control-de-acceso/
+>>>>>>> 442548e27567fa1792efbcd119a99c5d8c05f288
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.+)$ index.php?url=$1  [QSA,L]

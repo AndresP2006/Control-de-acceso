@@ -13,11 +13,11 @@
 </head>
 <header>
     <div class="content_Encabezado">
-        <h1 class="content_Encabezado-titulo">Control de registro de <br><samp
+        <h1 class="content_Encabezado-titulo">Control De Registro  <br><samp
                 style="color: red; margin-left: 30px;">Entrada y
                 Salida</samp></h1>
         <div class="cerrar-sescion">
-            <a href="<?php echo RUTA_URL;?>/HomeController/index"><button class="boton">Cerrar Sesion</button></a>
+            <a href="<?php echo RUTA_URL;?>/HomeController/index"><button class="boton">Cerrar Sesión</button></a>
         </div>
     </div>
 </header>
