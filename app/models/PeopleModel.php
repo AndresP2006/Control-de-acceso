@@ -36,12 +36,6 @@ class PeopleModel
         return $this->db->registro();
     }
 
-    // public function getAllpeople()
-    // {
-    //     $this->db->query("SELECT * FROM persona");
-
-    //     return $this->db->registros();
-    // }
     public function getVisitas()
     {
         // $this->db->query("SELECT v.*,h.Re_motivo,h.Re_fecha_entrada,h.Re_hora_entrada,h.Re_hora_salida FROM visitantes v , registro h ");
@@ -57,18 +51,13 @@ class PeopleModel
         return $this->db->registro(); // Devuelve un solo registro
     }
 
-    // public function getAllpeople()
-    // {
-    //     // Realizar la consulta para obtener todos los registros de la tabla 'persona'
-    //     $this->db->query("SELECT * FROM persona");
+    public function getAllRegistro($id)
+    {
+            $this->db->query("SELECT * FROM registro WHERE Vi_id = '$id'");
+            return $this->db->registro();
+        
 
-    //     // Comprobar si la consulta devuelve datos
-    //     if ($this->db->totalRegistros() > 0) {
-    //         return $this->db->registros(); // Esto debería devolver un array de datos
-    //     } else {
-    //         return []; // Si no hay registros, devolver un array vacío
-    //     }
-    // }
+    }
 
 
 
