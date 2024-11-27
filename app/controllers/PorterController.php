@@ -111,5 +111,8 @@ class PorterController extends Controlador
             echo json_encode(['success' => $resultado]);
         }
     }
+    public function getTorres(){
+        $this->PeopleModel->torres();
+    }
 
 }

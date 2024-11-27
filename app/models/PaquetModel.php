@@ -21,4 +21,15 @@ class PaquetModel
         $this->db->bind(':Id', $id);
         return $this->db->registros();
     }
+
+    public function DeleteTorre($id){
+        $this->db->query("DELETE FROM torre WHERE To_id= :Id");
+        $this->db->bind(':Id', $id);
+        return $this->db->registro();
+    }
+    public function DeleteApartamento($id){
+        $this->db->query("DELETE FROM apartamento WHERE To_id= :Id");
+        $this->db->bind(':Id', $id);
+        return $this->db->registro();
+    }
 }

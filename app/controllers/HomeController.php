@@ -76,5 +76,8 @@ class HomeController extends Controlador
     {
         $this->vista('pages/admin/paquetesView');
     }
+    public function Edificios(){
+        $this->vista('pages/admin/edificiosView');
+    }
 
 }

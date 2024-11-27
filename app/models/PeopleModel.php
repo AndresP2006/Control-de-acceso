@@ -129,4 +129,13 @@ class PeopleModel
 
         return $this->db->execute();
     }
+    public function torres(){
+
+        $this->db->query("SELECT * FROM torre");
+        return $this->db->showTables();
+    }
+    public function apartamentos(){
+        $this->db->query("SELECT t.* , a.Ap_numero from torre t,apartamento a where a.To_id=t.To_id;"); 
+        return $this->db->showTables();
+    }
 }

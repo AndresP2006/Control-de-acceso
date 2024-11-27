@@ -102,6 +102,7 @@
                 class="action-btn">Registros</button></a>
         <a href="<?php echo RUTA_URL; ?>/HomeController/HistoryPackages"><button
                 class="action-btn">Paquetes</button></a>
+        <a href="<?php echo RUTA_URL; ?>/HomeController/Edificios"><button class="action-btn">Edificio</button></a>
     </div>
 </div>
 <?php include RUTA_APP . '/views/pages/admin/modalRegistro.php'; ?>
@@ -109,60 +110,60 @@
 
 <?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>
 <script>
-<?php if (isset($datos['messageError'])) { ?>
-error("<?php echo $datos['messageError']; ?>")
-<?php } ?>
-<?php if (isset($datos['messageInfo'])) { ?>
-realizado("<?php echo $datos['messageInfo']; ?>")
-<?php } ?>
+    <?php if (isset($datos['messageError'])) { ?>
+        error("<?php echo $datos['messageError']; ?>")
+    <?php } ?>
+    <?php if (isset($datos['messageInfo'])) { ?>
+        realizado("<?php echo $datos['messageInfo']; ?>")
+    <?php } ?>
 
-$(document).ready(function() {
+    $(document).ready(function() {
 
 
-    $('#select_torre').change(function() {
-        let ValueTower = $('#select_torre').val();
-        $.ajax({
-            url: '<?php echo RUTA_URL ?>/ApartamentController/getApartamentByTower',
-            type: 'POST',
-            data: {
-                TowerId: ValueTower
-            },
-            success: function(respuesta) {
-                const res = JSON.parse(respuesta)
+        $('#select_torre').change(function() {
+            let ValueTower = $('#select_torre').val();
+            $.ajax({
+                url: '<?php echo RUTA_URL ?>/ApartamentController/getApartamentByTower',
+                type: 'POST',
+                data: {
+                    TowerId: ValueTower
+                },
+                success: function(respuesta) {
+                    const res = JSON.parse(respuesta)
 
-                let optionSelect = '<option value="0">Apartamento</option>'
+                    let optionSelect = '<option value="0">Apartamento</option>'
 
-                for (let item of res)
-                    optionSelect += '<option value="' + item.Ap_id + '">' + item.Ap_numero +
-                    '</option>'
+                    for (let item of res)
+                        optionSelect += '<option value="' + item.Ap_id + '">' + item.Ap_numero +
+                        '</option>'
 
-                $('#E_Departamento').html(optionSelect)
+                    $('#E_Departamento').html(optionSelect)
 
-            }
+                }
+            })
         })
-    })
 
-    $('#select_torre2').change(function() {
-        let ValueTower = $('#select_torre2').val();
-        $.ajax({
-            url: '<?php echo RUTA_URL ?>/ApartamentController/getApartamentByTower',
-            type: 'POST',
-            data: {
-                TowerId: ValueTower
-            },
-            success: function(respuesta) {
-                const res = JSON.parse(respuesta)
+        $('#select_torre2').change(function() {
+            let ValueTower = $('#select_torre2').val();
+            $.ajax({
+                url: '<?php echo RUTA_URL ?>/ApartamentController/getApartamentByTower',
+                type: 'POST',
+                data: {
+                    TowerId: ValueTower
+                },
+                success: function(respuesta) {
+                    const res = JSON.parse(respuesta)
 
-                let optionSelect = '<option value="0">Apartamento</option>'
+                    let optionSelect = '<option value="0">Apartamento</option>'
 
-                for (let item of res)
-                    optionSelect += '<option value="' + item.Ap_id + '">' + item.Ap_numero +
-                    '</option>'
+                    for (let item of res)
+                        optionSelect += '<option value="' + item.Ap_id + '">' + item.Ap_numero +
+                        '</option>'
 
-                $('#U_Departamento').html(optionSelect)
+                    $('#U_Departamento').html(optionSelect)
 
-            }
+                }
+            })
         })
-    })
-});
+    });
 </script>
