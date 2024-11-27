@@ -101,4 +101,15 @@ class PorterController extends Controlador
         echo json_encode($paquetes);
     }
 
+    public function updatePaquete(){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $paqueteId = $_POST['paquete_id'];
+            $nuevoEstado = $_POST['nuevo_estado'];
+    
+            $resultado = $this->PeopleModel->actualizarPaquete($paqueteId, $nuevoEstado);
+    
+            echo json_encode(['success' => $resultado]);
+        }
+    }
+
 }

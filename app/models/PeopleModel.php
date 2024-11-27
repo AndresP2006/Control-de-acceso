@@ -75,7 +75,8 @@ class PeopleModel
     public function PeopleID($id)
     {
         $this->db->query(
-            "SELECT p.*, COUNT(a.Pa_Id)AS Total_paquetes ,a.Pa_estado,a.Pa_fecha,a.Pa_descripcion  FROM persona p LEFT JOIN paquete a ON p.Pe_id = a.Pe_id WHERE p.Pe_id = $id GROUP BY p.Pe_id;"
+            "SELECT p.*, COUNT(a.Pa_Id) AS Total_paquetes, a.Pa_estado, a.Pa_fecha, a.Pa_descripcion FROM persona p LEFT JOIN paquete a ON p.Pe_id = a.Pe_id WHERE p.Pe_id = $id AND a.Pa_estado != 'Entregado' GROUP BY p.Pe_id;
+"
         );
         return $this->db->registro();
     }
@@ -87,20 +88,20 @@ class PeopleModel
 
     //No tocar este metodo
     public function getAllUsuario($roleId = null)
-{
-    if ($roleId) {
-        // Consulta con filtro por Rol
-        $this->db->query('
+    {
+        if ($roleId) {
+            // Consulta con filtro por Rol
+            $this->db->query('
             SELECT persona.*, usuario.Ro_id, usuario.Us_correo, r.Ro_tipo, usuario.Us_contrasena, a.Ap_numero, t.To_letra,t.To_id FROM persona LEFT JOIN usuario ON persona.Pe_id = usuario.Us_id LEFT JOIN rol r ON usuario.Ro_id = r.Ro_id LEFT JOIN apartamento a ON persona.Ap_id = a.Ap_id LEFT JOIN torre t ON a.To_id = t.To_id 
             WHERE usuario.Ro_id = :roleId
         ');
-        $this->db->bind(':roleId', $roleId);
-    } else {
-        // Consulta sin filtro
-        $this->db->query('
+            $this->db->bind(':roleId', $roleId);
+        } else {
+            // Consulta sin filtro
+            $this->db->query('
             SELECT persona.*, usuario.Ro_id, usuario.Us_correo, r.Ro_tipo, usuario.Us_contrasena, a.Ap_numero, t.To_letra,t.To_id FROM persona LEFT JOIN usuario ON persona.Pe_id = usuario.Us_id LEFT JOIN rol r ON usuario.Ro_id = r.Ro_id LEFT JOIN apartamento a ON persona.Ap_id = a.Ap_id LEFT JOIN torre t ON a.To_id = t.To_id 
         ');
-    }
+        }
 
         return $this->db->registros(); // Devuelve todos los registros
     }
@@ -115,5 +116,14 @@ class PeopleModel
     //     $this->db->bind(':Cedula', $cedula);
     //     return $this->db->registros(); 
     // }
-    
+
+    public function actualizarPaquete($paqueteId, $nuevoEstado)
+    {
+        $sql = "UPDATE paquete SET Pa_estado = :estado WHERE Pa_id = :id";
+        $this->db->query($sql);
+        $this->db->bind(':estado', $nuevoEstado);
+        $this->db->bind(':id', $paqueteId);
+
+        return $this->db->execute();
+    }
 }
