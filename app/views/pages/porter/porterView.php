@@ -170,7 +170,8 @@
                         date_default_timezone_set('UTC');
                         $hoy = date("Y-m-d");
                         ?>
-                        <h4>Fecha de entrega: <input type="date" id="Pa_Fecha" name="fecha" max="<?php echo $hoy; ?>" /></h4>
+                        <h4>Fecha de entrega: <input type="date" id="Pa_Fecha" name="fecha" max="<?php echo $hoy; ?>" />
+                        </h4>
                         <h4>Recibidor: <input type="text" id="Pa_Firma" name="recibidor" /></h4>
 
                         <div class="titulo_torre">
@@ -211,10 +212,10 @@
         realizado("<?php echo $datos['messageInfo']; ?>")
     <?php } ?>
 
-    $(document).ready(function() {
+    $(document).ready(function () {
 
 
-        $('#abrirMiModal').click(function() {
+        $('#abrirMiModal').click(function () {
             let PeopleID = $('#texto').val();
             if (PeopleID) {
                 let tabla = $('#paquetesTable').val();
@@ -224,7 +225,7 @@
                     data: {
                         residente: PeopleID
                     },
-                    success: function(respuesta) {
+                    success: function (respuesta) {
                         let resp = JSON.parse(respuesta);
 
                         $('#miModal').addClass('miModal--activo');
@@ -234,8 +235,7 @@
                         $('#departamento').val(resp.Ap_id);
                         $('#Paquete').val(resp.Total_paquetes);
 
-
-                        $('#abrirTablaFlotante').click(function() {
+                        $('#abrirTablaFlotante').click(function () {
                             $.ajax({
                                 url: '<?php echo RUTA_URL; ?>/PorterController/getPaquetById',
                                 type: 'POST',
@@ -243,7 +243,7 @@
                                     residente: PeopleID
                                 },
 
-                                success: function(paquetes) {
+                                success: function (paquetes) {
 
                                     let paq = JSON.parse(paquetes);
 
@@ -253,59 +253,51 @@
 
                                         for (let item of paq) {
                                             td += '<tr>';
-                                            td += '<td>' + item.Pa_fecha +
-                                                '</td>';
-                                            td += '<td>' + item
-                                                .Pa_descripcion + '</td>';
-                                            td += '<td>' + item.Pa_estado +
-                                                '</td>';
+                                            td += '<td>' + item.Pa_fecha + '</td>';
+                                            td += '<td>' + item.Pa_descripcion + '</td>';
+                                            td += '<td>' + item.Pa_estado + '</td>';
                                             td += '<td><center><button type="button" class="btnEditarPaquete" data-id="' + item.Pa_id + '">📬</button></center></td>';
-
                                             td += '</tr>';
                                         }
                                         $('#paquetesTable').html(td);
                                     }
                                 }
                             })
-
                         })
-
-
-
                     },
-                    error: function() {
+                    error: function () {
                         $('#respuesta').html('Error al procesar la solicitud.');
                     }
                 });
             }
         });
-        $(document).on('click', '.btnEditarPaquete', function() {
+        $(document).on('click', '.btnEditarPaquete', function () {
             let paqueteId = $(this).data('id');
             $.ajax({
-                url: '<?php echo RUTA_URL; ?>/PorterController/updatePaquete', 
+                url: '<?php echo RUTA_URL; ?>/PorterController/updatePaquete',
                 type: 'POST',
                 data: {
                     paquete_id: paqueteId,
-                    nuevo_estado: 'Entregado' 
+                    nuevo_estado: 'Entregado'
                 },
-                success: function(response) {
+                success: function (response) {
                     let resp = JSON.parse(response);
                     if (resp.success) {
-                        alert('Paquete entregado.');
+                        realizado('Paquete entregado.')
                         $('#abrirTablaFlotante').trigger('click');
                     } else {
-                        alert('Error al entregar el paquete.');
+                        error('Error al entregar el paquete.');
                     }
                 },
-                error: function() {
-                    alert('Hubo un problema con la solicitud.');
+                error: function () {
+                    advertencia('Hubo un problema con la solicitud.');
                 }
             });
         });
 
 
         // selector de torre visitas
-        $('#select_torre').change(function() {
+        $('#select_torre').change(function () {
             let ValueTower = $('#select_torre').val();
             if (ValueTower) {
 
@@ -315,7 +307,7 @@
                     data: {
                         TowerId: ValueTower
                     },
-                    success: function(respuesta) {
+                    success: function (respuesta) {
 
                         const res = JSON.parse(respuesta)
 
@@ -323,13 +315,13 @@
 
                         for (let item of res)
                             optionSelect += '<option value="' + item.Ap_id + '">' + item
-                            .Ap_numero + '</option>'
+                                .Ap_numero + '</option>'
 
                         $('#select_apartamento').html(optionSelect)
                     }
                 })
 
-                $('#select_apartamento').change(function() {
+                $('#select_apartamento').change(function () {
                     let valueApartament = $('#select_apartamento').val();
                     if (valueApartament) {
 
@@ -339,7 +331,7 @@
                             data: {
                                 apartamento_id: valueApartament
                             },
-                            success: function(personas) {
+                            success: function (personas) {
 
                                 const pers = JSON.parse(personas)
 
@@ -348,8 +340,8 @@
 
                                 for (let item of pers)
                                     optionSelect_pe += '<option value="' + item.Pe_id +
-                                    '">' + item.Pe_nombre + ' ' + item.Pe_apellidos +
-                                    '</option>'
+                                        '">' + item.Pe_nombre + ' ' + item.Pe_apellidos +
+                                        '</option>'
 
                                 $('#select_personas').html(optionSelect_pe)
                             }
@@ -376,7 +368,7 @@
 
         // selector de torre paquetes
 
-        $('#select_torre_p').change(function() {
+        $('#select_torre_p').change(function () {
             let ValueTower = $('#select_torre_p').val();
             if (ValueTower) {
 
@@ -386,7 +378,7 @@
                     data: {
                         TowerId: ValueTower
                     },
-                    success: function(respuesta) {
+                    success: function (respuesta) {
 
                         const res_p = JSON.parse(respuesta)
 
@@ -399,7 +391,7 @@
                     }
                 })
 
-                $('#select_apartamento_p').change(function() {
+                $('#select_apartamento_p').change(function () {
                     let valueApartament = $('#select_apartamento_p').val();
                     if (valueApartament) {
 
@@ -409,7 +401,7 @@
                             data: {
                                 apartamento_id: valueApartament
                             },
-                            success: function(personas) {
+                            success: function (personas) {
 
                                 const pers_p = JSON.parse(personas)
 
@@ -440,9 +432,6 @@
                 $('#select_personas_p').html(optionSelect)
             }
         })
-
-        // Select Personas
-
 
         //Modal
 

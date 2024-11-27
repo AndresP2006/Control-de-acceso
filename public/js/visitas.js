@@ -83,7 +83,7 @@ document.getElementById('Pa_Fecha').addEventListener('change', function() {
   today.setHours(0, 0, 0, 0); 
 
   if (inputDate > today) {
-      alert('No puedes seleccionar una fecha posterior al día de hoy.');
+      error('No puedes seleccionar una fecha posterior al día de hoy');
       this.value = ''; 
   }
 });
