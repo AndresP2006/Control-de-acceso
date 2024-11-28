@@ -80,7 +80,7 @@
                                 >✏️</button>
                                 <form action='" . RUTA_URL . "/UserController/DeleteUser' method='POST' style='display:inline;'>
                                     <input type='hidden' name='delete_id' value='" . htmlspecialchars($registro['Cedula'] ?? '') . "'>
-                                    <button type='submit' name='deletebtn' class='delete-btn'>🗑️</button>   
+                                    <button type='button' class='delete-btn' data-id='" . $registro['Cedula'] . "'>🗑️</button>
                                 </form>
                             </td>";
                             echo "</tr>";
@@ -115,6 +115,9 @@ error("<?php echo $datos['messageError']; ?>")
 <?php } ?>
 <?php if (isset($datos['messageInfo'])) { ?>
 realizado("<?php echo $datos['messageInfo']; ?>")
+<?php } ?>
+<?php if (isset($datos['messageDelet'])) { ?>
+realizadoDelet()
 <?php } ?>
 
     $(document).ready(function() {

@@ -32,7 +32,7 @@
                         echo "<td>
                             <form action='" . RUTA_URL . "/UserController/DeletePaquete' method='POST' style='display:inline;'>
                                 <input type='hidden' name='delete_pid' value='" . htmlspecialchars($historial['Pa_id'] ?? '') . "'>
-                                <button type='submit' name='deletePaquetes' class='delete-btn'>🗑️</button>
+                                <button type='submit' name='deletePaquetes' class='delete-btn-pq'>🗑️</button>
                             </form>
                             </td>";
                         echo "</tr>";
@@ -56,11 +56,10 @@
 
 <?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>
 <script>
-    <?php if (isset($datos['messageError'])) { ?>
-        error("<?php echo $datos['messageError']; ?>")
-    <?php } ?>
-
-    <?php if (isset($datos['messageInfo'])) { ?>
-        realizado("<?php echo $datos['messageInfo']; ?>")
-    <?php } ?>
+        <?php if (isset($datos['messageError'])) { ?>
+error("<?php echo $datos['messageError']; ?>")
+<?php } ?>
+<?php if (isset($datos['messageInfo'])) { ?>
+realizado("<?php echo $datos['messageInfo']; ?>")
+<?php } ?>
 </script>
