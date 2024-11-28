@@ -214,32 +214,39 @@ class UserController extends Controlador
             $this->vista('pages/admin/paquetesView', $datos);
         }
     }
-    public function Torre()
-    {
+    public function Torre() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['borrar']) && isset($_POST['id'])) {
                 $id = $_POST['id'];
-                $this->PeopleModel->DeleteTorre($id);
-                $mensaje = 'Torre borrada correctamente.';
+                $mensaje = $this->PeopleModel->DeleteTorre($id); 
+    
+               
+                $datos['filter'] = 'borrar'; 
+                $datos['error'] = $mensaje;  
             } elseif (isset($_POST['guardar']) && isset($_POST['id']) && isset($_POST['torre'])) {
                 $id = $_POST['id'];
                 $torre = $_POST['torre'];
-
+    
+                // Lógica para guardar la torre
                 $mensaje = $this->PeopleModel->IngresarTorre($id, $torre);
+    
+               
+                $datos['filter'] = 'guardar'; 
+                $datos['error'] = $mensaje;   
             } else {
-                $mensaje = 'Datos incompletos.';
+                // Si no se envían datos válidos
+                $datos['error'] = 'Datos incompletos.';
             }
-
-            $datos = $this->index($mensaje);
+    
+           
             $this->vista('pages/admin/edificiosView', $datos);
         } else {
+            
             $this->vista('pages/admin/edificiosView');
         }
     }
-
-
-
-
+    
+    
     public function Apartamento()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
