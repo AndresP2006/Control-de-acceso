@@ -73,8 +73,16 @@ class PeopleModel
     public function PeopleID($id)
     {
         $this->db->query(
-            "SELECT p.*, COUNT(a.Pa_Id) AS Total_paquetes, a.Pa_estado, a.Pa_fecha, a.Pa_descripcion FROM persona p LEFT JOIN paquete a ON p.Pe_id = a.Pe_id WHERE p.Pe_id = $id AND a.Pa_estado != 'Entregado' GROUP BY p.Pe_id;
-"
+            "SELECT p.*,COUNT(a.Pa_Id) AS Total_paquetes,
+                            MAX(a.Pa_estado) AS Pa_estado,
+                            MAX(a.Pa_fecha) AS Pa_fecha,
+                            MAX(a.Pa_descripcion) AS Pa_descripcion,
+                            ap.Ap_numero AS Apartamento,
+                            t.To_letra AS Torre FROM persona p LEFT JOIN paquete a ON p.Pe_id = a.Pe_id LEFT JOIN 
+                            apartamento ap ON p.Ap_id = ap.Ap_id LEFT JOIN torre t ON ap.To_id = t.To_id WHERE 
+                            p.Pe_id = $id 
+                            AND (a.Pa_estado IS NULL OR a.Pa_estado != 'Entregado')
+                            GROUP BY p.Pe_id, ap.Ap_numero, t.To_letra;"
         );
         return $this->db->registro();
     }
@@ -145,26 +153,29 @@ class PeopleModel
     }
 
     // funciones de torre 
-    public function IngresarTorre($id, $letra) {
+    public function IngresarTorre($id, $letra)
+    {
         if ($this->existTorre($id, $letra)) {
             return "El ID o la letra de la torre ya existe. No se puede guardar.";
         }
-    
+
         $this->db->query('INSERT INTO torre (To_id, To_letra) VALUES (:id, :letra)');
         $this->db->bind(':id', $id);
         $this->db->bind(':letra', $letra);
         return $this->db->execute() ? "Torre guardada correctamente." : "Error al guardar la torre.";
     }
-    
-    public function existTorre($id, $letra = null) {
+
+    public function existTorre($id, $letra = null)
+    {
         $this->db->query('SELECT COUNT(*) as count FROM torre WHERE To_id = :id OR To_letra = :letra');
         $this->db->bind(':id', $id);
         $this->db->bind(':letra', $letra);
         $row = $this->db->registro();
         return $row->count > 0;
     }
-    
-    public function isTorreInUse($id) {
+
+    public function isTorreInUse($id)
+    {
         // Verificar si existen apartamentos asociados a esta torre
         $this->db->query('SELECT COUNT(*) as count FROM apartamento WHERE To_id = :id');
         $this->db->bind(':id', $id);
@@ -172,27 +183,28 @@ class PeopleModel
         return $row->count > 0; // Verificar si hay apartamentos asociados
     }
 
-    public function DeleteTorre($id) {
+    public function DeleteTorre($id)
+    {
         // Primero verificamos si la torre está en uso
         if ($this->isTorreInUse($id)) {
             return "No se puede eliminar la torre, ya que tiene departamentos asociados.";
         }
-    
+
         // Si no está en uso, procedemos a eliminarla
         // Iniciar una transacción
         $this->db->beginTransaction();
-    
+
         try {
             // Eliminar primero los apartamentos relacionados con la torre
             $this->db->query('DELETE FROM apartamento WHERE To_id = :id');
             $this->db->bind(':id', $id);
             $this->db->execute();
-    
+
             // Luego eliminar la torre
             $this->db->query('DELETE FROM torre WHERE To_id = :id');
             $this->db->bind(':id', $id);
             $this->db->execute();
-    
+
             // Hacer commit si todo sale bien
             $this->db->commit();
             return "Torre y apartamentos eliminados correctamente.";
@@ -202,54 +214,58 @@ class PeopleModel
             return "Error al eliminar la torre y los apartamentos: " . $e->getMessage();
         }
     }
-    
 
-    
+
+
     // funciones de apartamento
 
 
-    public function IngresarApartamento($torreInput, $apartamento) {
+    public function IngresarApartamento($torreInput, $apartamento)
+    {
         $torreId = $this->getTorreByIdOrLetra($torreInput);
-    
+
         if (!$torreId) {
             return "Torre no encontrada. Verifique el número o letra de la torre.";
         }
-    
+
         if ($this->existsApartamento($torreId, $apartamento)) {
             return "El apartamento ya existe en la torre indicada.";
         }
-    
+
         $this->db->query('INSERT INTO apartamento (To_id, Ap_numero) VALUES (:torreId, :apartamento)');
         $this->db->bind(':torreId', $torreId);
         $this->db->bind(':apartamento', $apartamento);
         return $this->db->execute() ? "Apartamento guardado correctamente." : "Error al guardar el apartamento.";
     }
-    
-    
 
-    public function existsApartamento($torreId, $apartamento) {
+
+
+    public function existsApartamento($torreId, $apartamento)
+    {
         $this->db->query('SELECT COUNT(*) as count FROM apartamento WHERE To_id = :torreId AND Ap_numero = :apartamento');
         $this->db->bind(':torreId', $torreId);
         $this->db->bind(':apartamento', $apartamento);
         $row = $this->db->registro();
         return $row->count > 0;
     }
-    
-    
 
-    public function DeleteApartamento($torre, $apartamento) {
+
+
+    public function DeleteApartamento($torre, $apartamento)
+    {
         $this->db->query('DELETE FROM apartamento WHERE To_id = :torre AND Ap_numero = :apartamento');
         $this->db->bind(':torre', $torre);
         $this->db->bind(':apartamento', $apartamento);
         return $this->db->registro();
     }
 
-    public function getTorreByIdOrLetra($torre) {
+    public function getTorreByIdOrLetra($torre)
+    {
         $this->db->query('SELECT To_id FROM torre WHERE To_id = :torre OR To_letra = :torre');
         $this->db->bind(':torre', $torre);
         $row = $this->db->registro();
-        return $row ? $row->To_id : null; 
+        return $row ? $row->To_id : null;
     }
-    
-    
+
+
 }
