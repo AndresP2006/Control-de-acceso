@@ -140,6 +140,7 @@ class UserController extends Controlador
                     'Ro_tipo' => $registro->Ro_tipo,
                 ];
             }
+
             
             $datos = [
                 'usuarios' => $usuarios,
@@ -163,24 +164,25 @@ class UserController extends Controlador
 
     public function DeleteUser()
     {
-        $mensaageError = '';
-        $mensaageInfo = '';
+        $messageDelet = null;
+        $mensaageError = null;
+
         // Verificar si se han enviado los datos necesarios
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deletebtn']) && isset($_POST['delete_id'])) {
             $delete_id = $_POST['delete_id'];
 
+            // Verificar si el usuario existe
             $result = $this->peopleModel->getAllpersonas($delete_id);
             if ($result) {
-                $this->adminModel->eliminarRegistro($delete_id);
-                $mensaageInfo = 'Registro eliminado con exito';
+
+                if($this->adminModel->eliminarRegistro($delete_id)){
+                    $messageDelet = 'Registro eliminado con éxito';
+                };
+                
             } else {
-                $mensaageError = 'Por favor, verifica si el registro está vinculado a otras tablas.';
+                $mensaageError = 'Por favor, verifica que el registro no esté asociado a otra entidad';
             }
-            // Eliminar el registro del modelo
-
-        } else {
         }
-
         // Recuperar el filtro actual desde el POST (si existe), de lo contrario usar un valor predeterminado
         // Asegúrate de que el filtro se reciba desde el formulario POST correctamente
         $filter = isset($_POST['select_rol']) ? $_POST['select_rol'] : 'Todos';
@@ -217,7 +219,7 @@ class UserController extends Controlador
             'usuarios' => $usuarios,
             'filter' => $filter,
             'messageError' => $mensaageError,
-            'messageInfo' => $mensaageInfo,
+            'messageDelet' => $messageDelet,
         ];
 
         // Redirigir a la misma página con el filtro aplicado
@@ -229,7 +231,7 @@ class UserController extends Controlador
 
     public function DeletePaquete()
     {
-
+        
         if (isset($_POST['deletePaquetes']) && isset($_POST['delete_pid'])) {
             $id = $_POST['delete_pid'];
 
@@ -239,6 +241,7 @@ class UserController extends Controlador
             $this->vista('pages/admin/paquetesView', $datos);
         }
     }
+
     public function Torre()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -275,6 +278,8 @@ class UserController extends Controlador
     public function Apartamento()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $mensaje = null;
+            $mensaje2 = null;
             if (isset($_POST['borrar']) && isset($_POST['torre']) && isset($_POST['apartamento'])) {
                 $torre = $_POST['torre'];
                 $apartamento = $_POST['apartamento'];
@@ -284,11 +289,12 @@ class UserController extends Controlador
                 $torre = $_POST['torre'];
                 $apartamento = $_POST['apartamento'];
 
-                $mensaje2 = $this->apartamentModel->IngresarApartamento($torre, $apartamento);
+                $mensaje1 = $this->apartamentModel->IngresarApartamento($torre, $apartamento);
             } else {
-                $mensaje3 = 'Datos incompletos.';
+                $mensaje2 = 'Datos incompletos.';
             }
-
+            $datos['messageError'] = $mensaje2;
+            $datos['messageInfo'] = $mensaje;
             $datos = $this->index($mensaje);
         }
 
@@ -310,7 +316,6 @@ class UserController extends Controlador
         if (empty($registros)) {
             return [
                 'usuarios' => [],
-                'messageInfo' => 'No se encontraron registros.',
                 'filter' => $roleId, // Mantener el filtro actual
             ];
         }
@@ -335,7 +340,6 @@ class UserController extends Controlador
 
         return [
             'usuarios' => $usuarios,
-            'messageInfo' => null,
             'filter' => $roleId,
         ];
     }
@@ -359,14 +363,12 @@ class UserController extends Controlador
 
 
 
-
-    //Este metodo de la barra de búsqueda
     public function BuscarUsuario()
     {
         $datos = []; // Inicializamos los datos
         $usuarios = [];
         $filter = 'Todos'; // Valor predeterminado del filtro
-        $messageError = ''; // Usamos 'messageError' para los mensajes de error
+        $messageError = null; // Usamos 'messageError' para los mensajes de error
         $rolId = null; // Inicializa la variable $rolId
 
         // Cargar todos los usuarios inicialmente
@@ -379,6 +381,9 @@ class UserController extends Controlador
                 $rolId = $_POST['select_rol'] ?? null; // Asignamos el valor de select_rol o null si no está definido
                 $usuarios = $rolId ? $this->peopleModel->getAllUsuario($rolId) : $this->peopleModel->getAllUsuario();
                 $filter = $rolId ?: 'Todos';
+                // No hay necesidad de mostrar error si no se encuentra ningún resultado en el filtro
+                if (empty($usuarios)) {
+                }
             }
             // Búsqueda por id_usuario
             elseif ($_POST['action'] === 'search' && !empty($_POST['id_usuario'])) {
@@ -389,11 +394,8 @@ class UserController extends Controlador
                     $filter = $usuario->Ro_id; // Cambia el filtro automáticamente según el rol del usuario encontrado
                 } else {
                     $messageError = 'Usuario no encontrado con la cédula proporcionada.'; // Mensaje de error para búsqueda
-                    // No modificar $usuarios para conservar los registros previos
                 }
             }
-        } else {
-            $messageError = 'Acción no válida.'; // Mensaje de error genérico
         }
 
         // Convertir los usuarios a formato array si hay usuarios encontrados
@@ -424,8 +426,6 @@ class UserController extends Controlador
         // Renderiza la vista con los datos
         $this->vista('pages/admin/adminView', $datos);
     }
-
-
 
     public function MostrarHistorial()
     {
