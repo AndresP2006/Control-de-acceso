@@ -70,6 +70,12 @@ class PeopleModel
         return $result ?true: false; 
     }
 
+    public function getAllpersonas($id){
+        $this->db->query("SELECT * FROM persona p JOIN usuario u ON p.Us_id = u.Us_id  WHERE p.Pe_id  = $id");
+        $result = $this->db->registros();
+        return $result ?true: false;
+    }
+
     public function PeopleID($id)
     {
         $this->db->query(

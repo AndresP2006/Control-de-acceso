@@ -97,6 +97,8 @@ class UserController extends Controlador
 
     public function EditarUser()
     {
+        $messageInfo='';
+        $messageError='';
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['udate'])) {
 
             $departamento = isset($_POST['E_Departamento']) && $_POST['E_Departamento'] != '' ? $_POST['E_Departamento'] : $_POST['E_Departamento2'];
@@ -132,20 +134,23 @@ class UserController extends Controlador
                 ];
             }
 
-            // Pasar los usuarios y el mensaje a la vista
+            
             $datos = [
                 'usuarios' => $usuarios,
             ];
-
             if ($resultado) {
-                $_SESSION['message'] = 'Usuario actualizado correctamente';
+                $messageInfo = 'Usuario actualizado correctamente';
             } else {
-                $_SESSION['error'] = 'Error al actualizar el usuario';
+                $messageError = 'Error al actualizar el usuario';
             }
         } else {
-            $_SESSION['error'] = 'Error: No se pudo procesar la solicitud';
+            $messageError = 'Error: No se pudo procesar la solicitud';
         }
-
+        $datos = [
+            'usuarios' => $usuarios,
+            'messageError' => $messageError,
+            'messageInfo' => $messageInfo,
+        ];
         $this->vista('pages/admin/adminView', $datos);
         exit;
     }
@@ -154,12 +159,21 @@ class UserController extends Controlador
 
     public function DeleteUser()
     {
+        $mensaageError='';
+        $mensaageInfo='';
         // Verificar si se han enviado los datos necesarios
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deletebtn']) && isset($_POST['delete_id'])) {
             $delete_id = $_POST['delete_id'];
 
+            $result = $this->PeopleModel->getAllpersonas($delete_id);
+            if($result){
+                $this->AdminModel->eliminarRegistro($delete_id);
+                $mensaageInfo = 'Registro eliminado con exito';
+            }else{
+                $mensaageError = 'Por favor, verifica si el registro está vinculado a otras tablas.';
+            }
             // Eliminar el registro del modelo
-            $this->AdminModel->eliminarRegistro($delete_id);
+            
         } else {
         }
 
@@ -197,7 +211,9 @@ class UserController extends Controlador
         // Pasar los datos a la vista con el filtro actual
         $datos = [
             'usuarios' => $usuarios,
-            'filter' => $filter,  // Aseguramos que el filtro se mantenga
+            'filter' => $filter,
+            'messageError'=> $mensaageError,
+            'messageInfo' => $mensaageInfo,
         ];
 
         // Redirigir a la misma página con el filtro aplicado
