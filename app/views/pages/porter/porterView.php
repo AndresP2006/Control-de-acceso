@@ -45,27 +45,31 @@
 
                     <div class="miModal__grupo">
                         <label class="miModal__label" for="nombres">Nombre:</label>
-                        <input class="miModal__input" type="text" id="nombres" name="nombres">
+                        <input class="miModal__input" type="text" id="nombres" readonly name="nombres">
                     </div>
 
                     <div class="miModal__grupo">
                         <label class="miModal__label" for="apellidos">Apellido:</label>
-                        <input class="miModal__input" type="text" id="apellidos" name="apellidos">
+                        <input class="miModal__input" type="text" id="apellidos" readonly name="apellidos">
                     </div>
 
                     <div class="miModal__grupo">
                         <label class="miModal__label" for="telefono">Teléfono:</label>
-                        <input class="miModal__input" type="text" id="telefono" name="telefono">
+                        <input class="miModal__input" type="text" id="telefono" readonly name="telefono">
                     </div>
 
                     <div class="miModal__grupo">
-                        <label class="miModal__label" for="departamento">Número de Departamento:</label>
-                        <input class="miModal__input" type="text" id="departamento" name="departamento">
+                        <label class="miModal__label" for="torre">Torre:</label>
+                        <input class="miModal__input" type="text" id="torre" readonly name="torre">
+                    </div>
+                    <div class="miModal__grupo">
+                        <label class="miModal__label" for="apartamento">Número de Departamento:</label>
+                        <input class="miModal__input" type="text" id="apartamento" readonly name="apartamento">
                     </div>
 
                     <div class="miModal__grupo">
                         <label class="miModal__label" for="Paquete">Total de paquetes:</label>
-                        <input class="miModal__input" type="text" id="Paquete" name="Paquete">
+                        <input class="miModal__input" type="text" id="Paquete" readonly name="Paquete">
                     </div>
 
                     <button class="boton-flotante" id="abrirTablaFlotante" type="button">Paquetes</button>
@@ -232,8 +236,19 @@
                         $('#nombres').val(resp.Pe_nombre);
                         $('#apellidos').val(resp.Pe_apellidos);
                         $('#telefono').val(resp.Pe_telefono);
-                        $('#departamento').val(resp.Ap_id);
+                        $('#torre').val(resp.Torre);
+                        $('#apartamento').val(resp.Apartamento);
                         $('#Paquete').val(resp.Total_paquetes);
+
+
+                        if (!resp.Pe_id) {
+                            error('Digite una identificacion valida');
+                            $('#miModal').removeClass('miModal--activo');
+                        } else if (resp.Total_paquetes === 0) {
+                            $('#miModal').addClass('miModal--activo');
+                        } else {
+                            $('#miModal').addClass('miModal--activo');
+                        }
 
                         $('#abrirTablaFlotante').click(function () {
                             $.ajax({
