@@ -32,7 +32,11 @@ class PeopleModel
     public function getGuestById($idGuest)
     {
         $this->db->query("UPDATE registro SET Re_hora_salida = CURRENT_TIME() WHERE Vi_id ='$idGuest'");
-
+        return $this->db->registro();
+ 
+    }
+    public function getVisitantes($id){
+        $this->db->query("SELECT * FROM registro WHERE Vi_id ='$id' AND Re_hora_salida = '00:00:00'");
         return $this->db->registro();
     }
 
@@ -60,9 +64,11 @@ class PeopleModel
         return $result ?: false; // Devuelve false si no hay resultados
     }
 
-
-
-
+    public function getAllPeople($id){
+        $this->db->query("SELECT * FROM persona p JOIN usuario u ON p.Us_id = u.Us_id  WHERE u.Ro_id = 3 AND p.Pe_id  = $id");
+        $result = $this->db->registros();
+        return $result ?true: false; 
+    }
 
     public function PeopleID($id)
     {
@@ -72,6 +78,7 @@ class PeopleModel
         );
         return $this->db->registro();
     }
+
     public function showRegistro()
     {
         $this->db->query("SELECT v.Vi_nombres,r.*,v.Vi_departamento from visitantes v , registro r where v.Vi_id=r.Vi_id");
@@ -113,12 +120,6 @@ class PeopleModel
         $this->db->query("select a.Pe_id,a.Pe_nombre,p.* from paquete p , persona a where a.Pe_id=p.Pe_id;");
         return $this->db->showTables();
     }
-    // public function searchVisitor($cedula)
-    // {
-    //     $this->db->query('SELECT * FROM visitantes WHERE Vi_id = :Cedula');
-    //     $this->db->bind(':Cedula', $cedula);
-    //     return $this->db->registros(); 
-    // }
 
     public function actualizarPaquete($paqueteId, $nuevoEstado)
     {
