@@ -21,3 +21,34 @@ function advertencia(mensaje){
         icon: "warning",
     });
 }
+
+// function comprobar(mensaje, formId) {
+//     const swalWithBootstrapButtons = Swal.mixin({
+//         customClass: {
+//             confirmButton: "btn btn-success",
+//             cancelButton: "btn btn-danger"
+//         },
+//         buttonsStyling: false
+//     });
+
+//     swalWithBootstrapButtons.fire({
+//         title: "¿Está seguro?",
+//         text: mensaje,
+//         icon: "warning",
+//         showCancelButton: true,
+//         confirmButtonText: "Sí, eliminar",
+//         cancelButtonText: "No, cancelar",
+//         reverseButtons: true
+//     }).then((result) => {
+//         if (result.isConfirmed) {
+//             document.getElementById("deleteForm_" + formId).submit();
+//         } else if (result.dismiss === Swal.DismissReason.cancel) {
+//             swalWithBootstrapButtons.fire({
+//                 title: "Cancelado",
+//                 text: "La acción ha sido cancelada.",
+//                 icon: "error"
+//             });
+//         }
+//     });
+// }
+
