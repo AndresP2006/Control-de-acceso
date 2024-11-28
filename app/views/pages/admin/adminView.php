@@ -110,12 +110,11 @@
 
 <?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>
 <script>
-    <?php if (isset($datos['messageError'])) { ?>
-        error("<?php echo $datos['messageError']; ?>")
-    <?php } ?>
-    <?php if (isset($datos['messageInfo'])) { ?>
-        realizado("<?php echo $datos['messageInfo']; ?>")
-    <?php } ?>
+    <?php if (isset($datos['messageError']) && $datos['messageError'] != null) { ?>
+    error("<?php echo htmlspecialchars($datos['messageError']); ?>");
+<?php } elseif (isset($datos['messageInfo']) && $datos['messageInfo'] != null) { ?>
+    realizado("<?php echo htmlspecialchars($datos['messageInfo']); ?>");
+<?php } ?>
 
     $(document).ready(function() {
 
