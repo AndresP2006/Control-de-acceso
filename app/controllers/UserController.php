@@ -155,10 +155,7 @@ class UserController extends Controlador
 
             // Eliminar el registro del modelo
             $this->AdminModel->eliminarRegistro($delete_id);
-
-
         } else {
-
         }
 
         // Recuperar el filtro actual desde el POST (si existe), de lo contrario usar un valor predeterminado
@@ -203,9 +200,7 @@ class UserController extends Controlador
     }
 
 
-    public function DeleteVisitas()
-    {
-    }
+    public function DeleteVisitas() {}
 
     public function DeletePaquete()
     {
@@ -219,30 +214,55 @@ class UserController extends Controlador
             $this->vista('pages/admin/paquetesView', $datos);
         }
     }
-    public function DeleteTorre(){
-        if(isset($_POST['borrar']) && isset($_POST['id'])){
-            $id=$_POST['id'];
+    public function Torre()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['borrar']) && isset($_POST['id'])) {
+                $id = $_POST['id'];
+                $this->PeopleModel->DeleteTorre($id);
+                $mensaje = 'Torre borrada correctamente.';
+            } elseif (isset($_POST['guardar']) && isset($_POST['id']) && isset($_POST['torre'])) {
+                $id = $_POST['id'];
+                $torre = $_POST['torre'];
 
-            $this->PaquetModel->DeleteTorre($id);
+                $mensaje = $this->PeopleModel->IngresarTorre($id, $torre);
+            } else {
+                $mensaje = 'Datos incompletos.';
+            }
 
-            $datos = $this->index('Torre borrada correctament');
+            $datos = $this->index($mensaje);
             $this->vista('pages/admin/edificiosView', $datos);
-
+        } else {
+            $this->vista('pages/admin/edificiosView');
         }
     }
 
-    public function DeleteApartamento(){
-        if(isset($_POST['borrar']) && isset($_POST['torre'])){
-            $id=$_POST['torre'];
 
-            $this->PaquetModel->DeleteApartamento($id);
 
-            $datos = $this->index('Apartamento borrada correctament');
+
+    public function Apartamento()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['borrar']) && isset($_POST['torre']) && isset($_POST['apartamento'])) {
+                $torre = $_POST['torre'];
+                $apartamento = $_POST['apartamento'];
+                $this->PeopleModel->DeleteApartamento($torre, $apartamento);
+                $mensaje = 'Apartamento eliminado correctamente.';
+            } elseif (isset($_POST['guardar']) && isset($_POST['torre']) && isset($_POST['apartamento'])) {
+                $torre = $_POST['torre'];
+                $apartamento = $_POST['apartamento'];
+
+                $mensaje2 = $this->PeopleModel->IngresarApartamento($torre, $apartamento);
+            } else {
+                $mensaje3 = 'Datos incompletos.';
+            }
+            
+            $datos = $this->index($mensaje);
             $this->vista('pages/admin/edificiosView', $datos);
-
+        } else {
+            $this->vista('pages/admin/edificiosView');
         }
     }
-
 
     public function MostrarDatos()
     {
@@ -308,33 +328,33 @@ class UserController extends Controlador
 
     //Este metodo de la barra de búsqueda
     public function BuscarUsuario()
-{
-    $datos = []; // Inicializamos los datos
-    $usuarios = [];
-    $filter = 'Todos'; // Valor predeterminado del filtro
-    $error = '';
-    $rolId = null; // Inicializa la variable $rolId
+    {
+        $datos = []; // Inicializamos los datos
+        $usuarios = [];
+        $filter = 'Todos'; // Valor predeterminado del filtro
+        $error = '';
+        $rolId = null; // Inicializa la variable $rolId
 
-    // Verifica la acción de búsqueda o filtrado
-    if (isset($_POST['action'])) {
-        // Filtrado por rol
-        if ($_POST['action'] === 'filter') {
-            $rolId = $_POST['select_rol'] ?? null;  // Asignamos el valor de select_rol o null si no está definido
-            $usuarios = $rolId ? $this->PeopleModel->getAllUsuario($rolId) : $this->PeopleModel->getAllUsuario();
-            $filter = $rolId ?: 'Todos';
-        } 
-        // Búsqueda por id_usuario
-        elseif ($_POST['action'] === 'search' && !empty($_POST['id_usuario'])) {
-            $usuario = $this->PeopleModel->getPersonaById($_POST['id_usuario']);
-
-            if ($usuario) {
-                $usuarios = [$usuario];
-                $filter = $usuario->Ro_id; // Cambia el filtro automáticamente según el rol del usuario encontrado
-            } else {
-                $error = 'Usuario no encontrado.';
-                $filter = 'Todos'; // Cambiar el filtro a 'Todos' si no se encuentra el usuario
+        // Verifica la acción de búsqueda o filtrado
+        if (isset($_POST['action'])) {
+            // Filtrado por rol
+            if ($_POST['action'] === 'filter') {
+                $rolId = $_POST['select_rol'] ?? null;  // Asignamos el valor de select_rol o null si no está definido
+                $usuarios = $rolId ? $this->PeopleModel->getAllUsuario($rolId) : $this->PeopleModel->getAllUsuario();
+                $filter = $rolId ?: 'Todos';
             }
-        }
+            // Búsqueda por id_usuario
+            elseif ($_POST['action'] === 'search' && !empty($_POST['id_usuario'])) {
+                $usuario = $this->PeopleModel->getPersonaById($_POST['id_usuario']);
+
+                if ($usuario) {
+                    $usuarios = [$usuario];
+                    $filter = $usuario->Ro_id; // Cambia el filtro automáticamente según el rol del usuario encontrado
+                } else {
+                    $error = 'Usuario no encontrado.';
+                    $filter = 'Todos'; // Cambiar el filtro a 'Todos' si no se encuentra el usuario
+                }
+            }
 
             // Convertir los usuarios a formato array
             if (!empty($usuarios)) {
@@ -367,47 +387,43 @@ class UserController extends Controlador
         $datos['filter'] = $filter; // Asegura que el filtro correcto se pase a la vista
         $datos['error'] = $error;
 
-    // Renderiza la vista con los datos
-    $this->vista('pages/admin/adminView', $datos);
-}
-
-
-public function MostrarHistorial() {
-    if (isset($_POST['historial-btn'])) {
-        $id = $_POST['historial_id'];
-
-        $registros = $this->PeopleModel->getAllRegistro($id);
-
-        // Verificamos si $registros es un arreglo o un objeto
-        if ($registros && is_array($registros)) {
-            $usuarios = [];
-            foreach ($registros as $registro) {
-                $usuarios[] = [
-                    'Re_fecha_entrada' => $registro->Re_fecha_entrada,
-                    'Re_hora_entrada' => $registro->Re_hora_entrada,
-                    'Re_hora_salida' => $registro->Re_hora_salida,
-                    'Re_motivo' => $registro->Re_motivo,
-                    'Vi_departamento' => $registro->Vi_departamento,
-                    'Pe_id' => $registro->Pe_id,
-                ];
-            }
-            $datos = [
-                'historial' => $usuarios
-            ];
-        } else {
-            $datos = ['historial' => []]; // Si no hay registros, aseguramos que la variable no cause errores
-        }
-
-        $this->vista('pages/admin/historialViView', $datos);
-
-    } else {
-        $this->vista('pages/admin/historialViView', null);
+        // Renderiza la vista con los datos
+        $this->vista('pages/admin/adminView', $datos);
     }
-}
-
-public function enterTower(){
-
-}
 
 
+    public function MostrarHistorial()
+    {
+        if (isset($_POST['historial-btn'])) {
+            $id = $_POST['historial_id'];
+
+            $registros = $this->PeopleModel->getAllRegistro($id);
+
+            // Verificamos si $registros es un arreglo o un objeto
+            if ($registros && is_array($registros)) {
+                $usuarios = [];
+                foreach ($registros as $registro) {
+                    $usuarios[] = [
+                        'Re_fecha_entrada' => $registro->Re_fecha_entrada,
+                        'Re_hora_entrada' => $registro->Re_hora_entrada,
+                        'Re_hora_salida' => $registro->Re_hora_salida,
+                        'Re_motivo' => $registro->Re_motivo,
+                        'Vi_departamento' => $registro->Vi_departamento,
+                        'Pe_id' => $registro->Pe_id,
+                    ];
+                }
+                $datos = [
+                    'historial' => $usuarios
+                ];
+            } else {
+                $datos = ['historial' => []]; // Si no hay registros, aseguramos que la variable no cause errores
+            }
+
+            $this->vista('pages/admin/historialViView', $datos);
+        } else {
+            $this->vista('pages/admin/historialViView', null);
+        }
+    }
+
+    public function enterTower() {}
 }
