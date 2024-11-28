@@ -1,5 +1,14 @@
 /* contenido de la pagina  */
 
+
+.var_sesion {
+  margin-left: 30%;
+  color: #fff;
+  font-size: 35px;
+  width: auto;
+
+}
+
 .cuerpo {
   display: flex;
   flex-direction: row;
@@ -135,7 +144,8 @@ h2 {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
   font-family: "Poppins", sans-serif;
 }
-.modal-contentHistorial{
+
+.modal-contentHistorial {
   width: 700px;
   margin: 0 auto;
   padding: 20px 30px;
@@ -144,6 +154,7 @@ h2 {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
   font-family: "Poppins", sans-serif;
 }
+
 .close {
   color: #f3f3f3;
   float: right;
