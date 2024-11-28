@@ -32,7 +32,7 @@
                 <!-- Formulario de torres -->
                 <div class="form-wrapper">
                     <h3>Ingresar Torre</h3>
-                    <form class="dataForm" action="<?php echo RUTA_URL;?>/UserController/DeleteTorre" method="POST">
+                    <form class="dataForm" action="<?php echo RUTA_URL;?>/UserController/Torre" method="POST">
                         <div class="form-group">
                             <label for="departamento1">ID de Torre</label>
                             <input type="text" id="ID" name="id" placeholder="Numero de Torre" required>
@@ -81,7 +81,7 @@
                 <!-- Formulario de apartamento -->
                 <div class="form-wrapper">
                     <h3>Ingresar Apartamento</h3>
-                    <form class="dataForm" action="<?php echo RUTA_URL;?>/UserController/DeleteApartamento" method="POST">
+                    <form class="dataForm" action="<?php echo RUTA_URL;?>/UserController/Apartamento" method="POST">
                         <div class="form-group">
                             <label for="departamento2">Torre</label>
                             <input type="text" id="torre" name="torre" placeholder="Numero de Torre" required>
