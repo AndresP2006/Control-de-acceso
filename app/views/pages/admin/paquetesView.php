@@ -17,18 +17,16 @@
             </thead>
             <tbody>
                 <?php
-                $model = new PeopleModel();
-                $paquetes = $model->getPackeges();
-                if (is_array($paquetes)) {
-                    foreach ($paquetes as $historial):
+                if (is_array($datos['paquets'])) {
+                    foreach ($datos['paquets'] as $historial):
                         echo "<tr>";
-                        echo "<td>". $historial['Pe_id'] . "</td>";
-                        echo "<td>". $historial['Pe_nombre'] . "</td>";
-                        echo "<td>". $historial['Pa_estado'] . "</td>";
-                        echo "<td>". $historial['Pa_fecha'] . "</td>";
-                        echo "<td>". $historial['Pa_descripcion'] . "</td>";
-                        echo "<td>". $historial['Pa_responsable'] . "</td>";
-                       
+                        echo "<td>" . $historial['Pe_id'] . "</td>";
+                        echo "<td>" . $historial['Pe_nombre'] . "</td>";
+                        echo "<td>" . $historial['Pa_estado'] . "</td>";
+                        echo "<td>" . $historial['Pa_fecha'] . "</td>";
+                        echo "<td>" . $historial['Pa_descripcion'] . "</td>";
+                        echo "<td>" . $historial['Pa_responsable'] . "</td>";
+
                         echo "<td>
                             <form action='" . RUTA_URL . "/UserController/DeletePaquete' method='POST' style='display:inline;'>
                                 <input type='hidden' name='delete_pid' value='" . htmlspecialchars($historial['Pa_id'] ?? '') . "'>

@@ -15,10 +15,8 @@
             </thead>
             <tbody>
                 <?php
-                $model = new PeopleModel();
-                $paquetes = $model->getVisitas();
-                if (is_array($paquetes)) {
-                    foreach ($paquetes as $historial) {
+                if (is_array($datos['visitors'])) {
+                    foreach ($datos['visitors'] as $historial) {
                         echo "<tr>";
                         echo "<td>" . (empty($historial['Vi_id']) ? '-' : $historial['Vi_id']) . "</td>";
                         echo "<td>" . (empty($historial['Vi_nombres']) ? '-' : $historial['Vi_nombres']) . "</td>";
@@ -58,6 +56,3 @@
 <?php include RUTA_APP . '/views/pages/admin/modalHistorial.php'; ?>
 
 <?php include RUTA_APP . '/views/inc/footer-visitante.php'; ?>
-<script>
-    
-</script>

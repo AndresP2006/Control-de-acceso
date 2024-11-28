@@ -18,10 +18,8 @@
             </thead>
             <tbody>
                 <?php
-                $model = new PeopleModel();
-                $paquetes = $model->getVisitas();
-                if (is_array($paquetes)) {
-                    foreach ($paquetes as $historial):
+                if (is_array($datos['paquetes'])) {
+                    foreach ($datos['paquetes'] as $historial):
                         $uniqueId = "tabla_" . $historial['Vi_id']; // Generar un ID único
                         echo "<tr>";
                         echo "<td>" . $historial['Vi_id'] . "</td>";
