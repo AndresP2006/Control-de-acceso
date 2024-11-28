@@ -161,6 +161,7 @@ class UserController extends Controlador
     {
         $mensaageError='';
         $mensaageInfo='';
+        // $mensaageCom='';
         // Verificar si se han enviado los datos necesarios
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deletebtn']) && isset($_POST['delete_id'])) {
             $delete_id = $_POST['delete_id'];
@@ -168,7 +169,7 @@ class UserController extends Controlador
             $result = $this->PeopleModel->getAllpersonas($delete_id);
             if($result){
                 $this->AdminModel->eliminarRegistro($delete_id);
-                $mensaageInfo = 'Registro eliminado con exito';
+                $messageInfo = 'Registro eliminado con exito';
             }else{
                 $mensaageError = 'Por favor, verifica si el registro está vinculado a otras tablas.';
             }
@@ -213,7 +214,7 @@ class UserController extends Controlador
             'usuarios' => $usuarios,
             'filter' => $filter,
             'messageError'=> $mensaageError,
-            'messageInfo' => $mensaageInfo,
+            // 'messageCom' => $mensaageCom,
         ];
 
         // Redirigir a la misma página con el filtro aplicado
@@ -272,6 +273,8 @@ class UserController extends Controlador
     public function Apartamento()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $mensaje=null;
+            $mensaje2 =null;
             if (isset($_POST['borrar']) && isset($_POST['torre']) && isset($_POST['apartamento'])) {
                 $torre = $_POST['torre'];
                 $apartamento = $_POST['apartamento'];
@@ -281,11 +284,12 @@ class UserController extends Controlador
                 $torre = $_POST['torre'];
                 $apartamento = $_POST['apartamento'];
 
-                $mensaje2 = $this->PeopleModel->IngresarApartamento($torre, $apartamento);
+                $mensaje1 = $this->PeopleModel->IngresarApartamento($torre, $apartamento);
             } else {
-                $mensaje3 = 'Datos incompletos.';
+                $mensaje2 = 'Datos incompletos.';
             }
-
+            $datos['messageError'] = $mensaje2;
+            $datos['messageInfo'] = $mensaje;
             $datos = $this->index($mensaje);
             $this->vista('pages/admin/edificiosView', $datos);
         } else {
@@ -305,7 +309,6 @@ class UserController extends Controlador
         if (empty($registros)) {
             return [
                 'usuarios' => [],
-                'messageInfo' => 'No se encontraron registros.',
                 'filter' => $roleId, // Mantener el filtro actual
             ];
         }
@@ -330,7 +333,6 @@ class UserController extends Controlador
 
         return [
             'usuarios' => $usuarios,
-            'messageInfo' => null,
             'filter' => $roleId,
         ];
     }
@@ -354,19 +356,17 @@ class UserController extends Controlador
 
 
 
-
-    //Este metodo de la barra de búsqueda
     public function BuscarUsuario()
     {
         $datos = []; // Inicializamos los datos
         $usuarios = [];
         $filter = 'Todos'; // Valor predeterminado del filtro
-        $messageError = ''; // Usamos 'messageError' para los mensajes de error
+        $messageError = null; // Usamos 'messageError' para los mensajes de error
         $rolId = null; // Inicializa la variable $rolId
-
+    
         // Cargar todos los usuarios inicialmente
         $usuarios = $this->PeopleModel->getAllUsuario();
-
+    
         // Verifica la acción de búsqueda o filtrado
         if (isset($_POST['action'])) {
             // Filtrado por rol
@@ -374,23 +374,23 @@ class UserController extends Controlador
                 $rolId = $_POST['select_rol'] ?? null; // Asignamos el valor de select_rol o null si no está definido
                 $usuarios = $rolId ? $this->PeopleModel->getAllUsuario($rolId) : $this->PeopleModel->getAllUsuario();
                 $filter = $rolId ?: 'Todos';
+                // No hay necesidad de mostrar error si no se encuentra ningún resultado en el filtro
+                if (empty($usuarios)) {
+                }
             }
             // Búsqueda por id_usuario
             elseif ($_POST['action'] === 'search' && !empty($_POST['id_usuario'])) {
                 $usuario = $this->PeopleModel->getPersonaById($_POST['id_usuario']);
-
+    
                 if ($usuario) {
                     $usuarios = [$usuario]; // Mostrar solo el usuario encontrado
                     $filter = $usuario->Ro_id; // Cambia el filtro automáticamente según el rol del usuario encontrado
                 } else {
                     $messageError = 'Usuario no encontrado con la cédula proporcionada.'; // Mensaje de error para búsqueda
-                    // No modificar $usuarios para conservar los registros previos
                 }
             }
-        } else {
-            $messageError = 'Acción no válida.'; // Mensaje de error genérico
-        }
-
+        } 
+    
         // Convertir los usuarios a formato array si hay usuarios encontrados
         if (!empty($usuarios)) {
             $usuariosArray = array_map(function ($usuario) {
@@ -408,17 +408,18 @@ class UserController extends Controlador
                     'Ro_tipo' => $usuario->Ro_tipo,
                 ];
             }, $usuarios);
-
+    
             $datos['usuarios'] = $usuariosArray;
         }
-
+    
         // Asignar el error y el filtro
         $datos['filter'] = $filter; // Asegura que el filtro correcto se pase a la vista
         $datos['messageError'] = $messageError;
-
+    
         // Renderiza la vista con los datos
         $this->vista('pages/admin/adminView', $datos);
     }
+    
 
 
 
