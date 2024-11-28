@@ -35,11 +35,11 @@
                     <form class="dataForm" action="<?php echo RUTA_URL;?>/UserController/Torre" method="POST">
                         <div class="form-group">
                             <label for="departamento1">ID de Torre</label>
-                            <input type="text" id="ID" name="id" placeholder="Numero de Torre" required>
+                            <input type="text" id="ID" name="id" placeholder="Numero de Torre" >
                         </div>
                         <div class="form-group">
                             <label for="torre1">Torre</label>
-                            <input type="text" id="torre1" name="torre" placeholder="Ingrese la torre" required>
+                            <input type="text" id="torre1" name="torre" placeholder="Ingrese la torre" >
                         </div>
                         <div class="accion">
                             <button type="submit" name="guardar" class="submit-btn">Guardar</button>
@@ -84,11 +84,11 @@
                     <form class="dataForm" action="<?php echo RUTA_URL;?>/UserController/Apartamento" method="POST">
                         <div class="form-group">
                             <label for="departamento2">Torre</label>
-                            <input type="text" id="torre" name="torre" placeholder="Numero de Torre" required>
+                            <input type="text" id="torre" name="torre" placeholder="Numero de Torre">
                         </div>
                         <div class="form-group">
                             <label for="torre2">Apartamento</label>
-                            <input type="text" id="torre2" name="apartamento" placeholder="Ingrese el Apartamento" required>
+                            <input type="text" id="torre2" name="apartamento" placeholder="Ingrese el Apartamento">
                         </div>
                         <div class="accion">
                             <button type="submit" name="guardar" class="submit-btn">Guardar</button>
