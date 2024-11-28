@@ -2,22 +2,22 @@
 
 class ApartamentController extends Controlador
 {
-    private $ApartamentModel;
+    private $apartamentModel;
 
     public function __construct()
     {
-        $this->ApartamentModel = $this->modelo('ApartamentModel');
+        $this->apartamentModel = $this->modelo('ApartamentModel');
     }
     
     public function getApartamentByTower()
     {
-        $respuesta =  $this->ApartamentModel->getApartamentByTower($_POST['TowerId']);
+        $respuesta =  $this->apartamentModel->getApartamentByTower($_POST['TowerId']);
         echo json_encode($respuesta);
     
     }
 
     public function getPeopleByApartament(){
-        $personas = $this->ApartamentModel->getPeopleByApartament($_POST['apartamento_id']);
+        $personas = $this->apartamentModel->getPeopleByApartament($_POST['apartamento_id']);
         echo json_encode($personas);
     }
     

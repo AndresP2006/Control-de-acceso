@@ -14,11 +14,9 @@
                             </tr>
                         </thead>
                         <tbody class="table-body">
-                        <?php
-                            $model = new PeopleModel();
-                            $torre = $model->torres();
-                            if (is_array($torre)) {
-                                foreach ($torre as $historial):
+                            <?php
+                            if (is_array($datos['torres'])) {
+                                foreach ($datos['torres'] as $historial):
                                     echo "<tr>";
                                     echo "<td>" . $historial['To_id'] . "</td>";
                                     echo "<td>" . $historial['To_letra'] . "</td>";
@@ -32,14 +30,14 @@
                 <!-- Formulario de torres -->
                 <div class="form-wrapper">
                     <h3>Ingresar Torre</h3>
-                    <form class="dataForm" action="<?php echo RUTA_URL;?>/UserController/Torre" method="POST">
+                    <form class="dataForm" action="<?php echo RUTA_URL; ?>/UserController/Torre" method="POST">
                         <div class="form-group">
                             <label for="departamento1">ID de Torre</label>
-                            <input type="text" id="ID" name="id" placeholder="Numero de Torre" >
+                            <input type="text" id="ID" name="id" placeholder="Numero de Torre">
                         </div>
                         <div class="form-group">
                             <label for="torre1">Torre</label>
-                            <input type="text" id="torre1" name="torre" placeholder="Ingrese la torre" >
+                            <input type="text" id="torre1" name="torre" placeholder="Ingrese la torre">
                         </div>
                         <div class="accion">
                             <button type="submit" name="guardar" class="submit-btn">Guardar</button>
@@ -63,11 +61,9 @@
                             </tr>
                         </thead>
                         <tbody class="table-body">
-                        <?php
-                            $model = new PeopleModel();
-                            $torre = $model->apartamentos();
-                            if (is_array($torre)) {
-                                foreach ($torre as $historial):
+                            <?php
+                            if (is_array($datos['apartaments'])) {
+                                foreach ($datos['apartaments'] as $historial):
                                     echo "<tr>";
                                     echo "<td>" . $historial['To_letra'] . "</td>";
                                     echo "<td>" . $historial['Ap_numero'] . "</td>";
@@ -81,7 +77,7 @@
                 <!-- Formulario de apartamento -->
                 <div class="form-wrapper">
                     <h3>Ingresar Apartamento</h3>
-                    <form class="dataForm" action="<?php echo RUTA_URL;?>/UserController/Apartamento" method="POST">
+                    <form class="dataForm" action="<?php echo RUTA_URL; ?>/UserController/Apartamento" method="POST">
                         <div class="form-group">
                             <label for="departamento2">Torre</label>
                             <input type="text" id="torre" name="torre" placeholder="Numero de Torre">
