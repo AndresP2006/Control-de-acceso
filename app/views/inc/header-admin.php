@@ -13,12 +13,14 @@
 </head>
 <header>
     <div class="content_Encabezado">
-        <h1 class="content_Encabezado-titulo">Control De Registro  <br><samp
-                style="color: red; margin-left: 30px;">Entrada y
-                Salida</samp></h1>
+        <h1 class="content_Encabezado-titulo">Control De Registro <br><samp
+                style="color: red; margin-left: 30px;">Entrada y Salida</samp>
+        </h1>
+        <h3 class="var_sesion_admin">Bienvenido <?= $_SESSION['datos']->Us_usuario ?></h3>
         <div class="cerrar-sescion">
-            <a href="<?php echo RUTA_URL;?>/HomeController/index"><button class="boton">Cerrar Sesión</button></a>
+            <a href="<?php echo RUTA_URL; ?>/HomeController/index"><button class="boton">Cerrar Sesión</button></a>
         </div>
     </div>
 </header>
+
 <body>

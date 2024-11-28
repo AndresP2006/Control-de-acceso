@@ -9,6 +9,14 @@
 
 }
 
+.var_sesion_admin {
+  margin-left: 35%;
+  color: black;
+  font-size: 35px;
+  width: auto;
+
+}
+
 .cuerpo {
   display: flex;
   flex-direction: row;
