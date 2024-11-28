@@ -16,44 +16,64 @@ class PorterController extends Controlador
         $this->PaquetModel = $this->modelo('PaquetModel');
     }
 
-    public function index($message = null)
-    {
-        $countGuest = $this->PeopleModel->getNumberGuest();
-        $Torres = $this->TorreModel->setTorres();
+    public function index($messageError = null, $messageInfo = null)
+{
+    $countGuest = $this->PeopleModel->getNumberGuest();
+    $Torres = $this->TorreModel->setTorres();
 
-        return [
-            'messageInfo' => $message,
-            'total' => $countGuest->total,
-            'torre' => $Torres,
-        ];
-    }
+    // Retorna tanto el mensaje de error como el de éxito (si existen)
+    return [
+        'messageError' => $messageError,
+        'messageInfo' => $messageInfo,
+        'total' => $countGuest->total,
+        'torre' => $Torres,
+    ];
+}
+
 
     public function createGuest()
-    {
-        if (isset($_POST['Visitantes'])) {
-            $datos = [
-                'Cedula' => trim($_POST['u_id']),
-                'Nombre' => trim($_POST['U_Nombre']),
-                'Apellido' => trim($_POST['U_Apellido']),
-                'Telefono' => trim($_POST['U_Telefono']),
-                'Departamento' => trim($_POST['select_id']),
-                'Motivo' => trim($_POST['U_Motivo']),
-                'PeopleId' => trim($_POST['select_personas']),
-            ];
-            $this->PorterModel->addGuest($datos);
+{
+    if (isset($_POST['Visitantes'])) {
+        $datos = [
+            'Cedula' => trim($_POST['u_id']),
+            'Nombre' => trim($_POST['U_Nombre']),
+            'Apellido' => trim($_POST['U_Apellido']),
+            'Telefono' => trim($_POST['U_Telefono']),
+            'Departamento' => trim($_POST['select_id']),
+            'Motivo' => trim($_POST['U_Motivo']),
+            'PeopleId' => trim($_POST['select_personas']),
+        ];
 
-            $datos = $this->index('Visitante guardado correctamente');
-            $this->vista('pages/porter/porterView', $datos);
+        // Llamar al modelo para agregar el visitante
+        $result = $this->PorterModel->addGuest($datos);
+
+        // Verificar el resultado y pasar el mensaje adecuado
+        if ($result === false) {
+            // Si hay un error, pasar el mensaje de error
+            $datos = $this->index('El visitante '.$_POST['U_Nombre'].' '.$_POST['U_Apellido'].', no ha salido', null); // Pasar solo el mensaje de error
+        } else {
+            // Si todo es correcto, pasar el mensaje de éxito
+            $datos = $this->index(null, 'Visitante guardado correctamente'); // Pasar solo el mensaje de éxito
         }
+
+        // Llamamos a la vista con los datos (mensaje de error o éxito)
+        $this->vista('pages/porter/porterView', $datos);
     }
+}
+
 
 
     public function dropGuest()
     {
-
-        $this->PeopleModel->getGuestById($_POST['salida_visita']);
-
-        $datos = $this->index('Salida registrada exitosamente');
+        $result =$this->PeopleModel->getVisitantes($_POST['salida_visita']);
+        if($result){
+            $this->PeopleModel->getGuestById($_POST['salida_visita']);
+            $datos = $this->index(null,'Salida registrada exitosamente');
+            
+        }else{
+            $datos = $this->index("No se encontró el visitante con el id: ".$_POST['salida_visita'],null);
+        }
+        
         $this->vista('pages/porter/porterView', $datos);
     }
 
@@ -67,9 +87,15 @@ class PorterController extends Controlador
                 'responsable' => trim($_POST['recibidor']),
                 'peoplePaq' => trim($_POST['select_personas']),
             ];
-            $this->PorterModel->enterPackage($paquete);
+            $result = $this->PeopleModel->getAllPeople($_POST['select_personas']);
+             if($result ==false){
+                 
+                 $datos = $this->index('Error verifique que sea un residente',null);
+            }else{
+                $result = $this->PorterModel->enterPackage($paquete);
+                $datos = $this->index(null,'Paquete guardado correctamente');
+            }
 
-            $datos = $this->index('Paquete guardado correctamente');
             $this->vista('pages/porter/porterView', $datos);
         }
     }
