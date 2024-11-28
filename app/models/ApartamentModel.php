@@ -24,6 +24,8 @@ class ApartamentModel
         return $this->db->registros();
 
     }
+
+  
 }
 
 

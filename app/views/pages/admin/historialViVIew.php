@@ -51,6 +51,7 @@
                 class="action-btn">Registros</button></a>
         <a href="<?php echo RUTA_URL; ?>/HomeController/HistoryPackages"><button
                 class="action-btn">Paquetes</button></a>
+        <a href="<?php echo RUTA_URL; ?>/HomeController/Edificios"><button class="action-btn">Edificio</button></a>
     </div>
 </div>
 
