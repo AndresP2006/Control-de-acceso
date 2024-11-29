@@ -237,7 +237,7 @@ class UserController extends Controlador
 
             $this->paquetModel->deletePaquetById($id);
 
-            $datos = $this->index('Paquete borrado correctamente');
+            $datos = $this->index(null,'Paquete borrado correctamente');
             $this->vista('pages/admin/paquetesView', $datos);
         }
     }
