@@ -32,34 +32,41 @@ class UserController extends Controlador
 
     public function createUser()
     {
+        $messageInfo = null;
+        $messageError = nUll;
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registro'])) {
-            // Recoger los datos del formulario
-            $departamento = isset($_POST['U_Departamento']) && !empty($_POST['U_Departamento'])
-                ? trim($_POST['U_Departamento'])
-                : trim($_POST['U_Departamento2']);
+            if (!empty(trim($_POST['Pe_id'])) && !empty(trim($_POST['U_Nombre']))  && !empty(trim($_POST['U_Apellido'])) && !empty(trim($_POST['U_Telefono'])) && !empty(trim($_POST['U_Gmail'])) && !empty(trim($_POST['U_id']))) {
 
-            $datos = [
-                'Cedula' => trim($_POST['Pe_id']),
-                'Nombre' => trim($_POST['U_Nombre']),
-                'Apellidos' => trim($_POST['U_Apellido']),
-                'Telefono' => trim($_POST['U_Telefono']),
-                'Gmail' => trim($_POST['U_Gmail']),
-                'Departamento' => !empty($departamento) ? $departamento : null,
-                'Rol' => trim($_POST['U_id']),
-                'Contrasena' => trim($_POST['U_contrasena']),
-            ];
 
-            // Intentar registrar al usuario
-            $regist = $this->adminModel->addUser($datos);
+                // Recoger los datos del formulario
+                $departamento = isset($_POST['U_Departamento']) && !empty($_POST['U_Departamento'])
+                    ? trim($_POST['U_Departamento'])
+                    : trim($_POST['U_Departamento2']);
 
-            if ($regist === true) {
-                $messageInfo = 'Usuario guardado correctamente.';
-                $messageError = null;
+                $datos = [
+                    'Cedula' => trim($_POST['Pe_id']),
+                    'Nombre' => trim($_POST['U_Nombre']),
+                    'Apellidos' => trim($_POST['U_Apellido']),
+                    'Telefono' => trim($_POST['U_Telefono']),
+                    'Gmail' => trim($_POST['U_Gmail']),
+                    'Departamento' => !empty($departamento) ? $departamento : null,
+                    'Rol' => trim($_POST['U_id']),
+                    'Contrasena' => trim($_POST['U_contrasena']),
+                ];
+
+                // Intentar registrar al usuario
+                $regist = $this->adminModel->addUser($datos);
+
+                if ($regist === true) {
+                    $messageInfo = 'Usuario guardado correctamente.';
+                    $messageError = null;
+                } else {
+                    $messageInfo = null;
+                    $messageError = 'El usuario con la cedula ' . $datos['Cedula'] . ' ya existe.';
+                }
             } else {
-                $messageInfo = null;
-                $messageError = 'El usuario con la cedula ' . $datos['Cedula'] . ' ya existe.';
+                $messageError = 'Error al momento de ingresar los datos';
             }
-
             // Obtener todos los usuarios registrados
             $registros = $this->peopleModel->getAllUsuario();
             $usuarios = array_map(function ($registro) {
@@ -141,7 +148,7 @@ class UserController extends Controlador
                 ];
             }
 
-            
+
             $datos = [
                 'usuarios' => $usuarios,
             ];
@@ -175,10 +182,9 @@ class UserController extends Controlador
             $result = $this->peopleModel->getAllpersonas($delete_id);
             if ($result) {
 
-                if($this->adminModel->eliminarRegistro($delete_id)){
+                if ($this->adminModel->eliminarRegistro($delete_id)) {
                     $messageDelet = 'Registro eliminado con éxito';
                 };
-                
             } else {
                 $mensaageError = 'Por favor, verifica que el registro no esté asociado a otra entidad';
             }
@@ -231,13 +237,13 @@ class UserController extends Controlador
 
     public function DeletePaquete()
     {
-        
+
         if (isset($_POST['deletePaquetes']) && isset($_POST['delete_pid'])) {
             $id = $_POST['delete_pid'];
 
             $this->paquetModel->deletePaquetById($id);
 
-            $datos = $this->index('Paquete borrado correctamente');
+            $datos = $this->index(null, 'Paquete borrado correctamente');
             $this->vista('pages/admin/paquetesView', $datos);
         }
     }
