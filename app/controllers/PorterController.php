@@ -33,7 +33,7 @@ class PorterController extends Controlador
 
     public function createGuest()
     {
-        if (isset($_POST['Visitantes'])) {
+        if (isset($_POST['Visitantes']) && !empty(trim($_POST['u_id'])) && !empty(trim($_POST['U_Nombre'])) && !empty(trim($_POST['U_Apellido'])) && !empty(trim($_POST['U_Motivo'])) && !empty(trim($_POST['select_personas'])) && !empty(trim($_POST['select_id']))) {
             $datos = [
                 'Cedula' => trim($_POST['u_id']),
                 'Nombre' => trim($_POST['U_Nombre']),
@@ -45,6 +45,7 @@ class PorterController extends Controlador
             ];
 
             // Llamar al modelo para agregar el visitante
+            
             $result = $this->porterModel->addGuest($datos);
 
             // Verificar el resultado y pasar el mensaje adecuado
@@ -57,6 +58,9 @@ class PorterController extends Controlador
             }
 
             // Llamamos a la vista con los datos (mensaje de error o éxito)
+            $this->vista('pages/porter/porterView', $datos);
+        }else{
+            $datos = $this->index('Error al momento de ingresar un visitante', null);
             $this->vista('pages/porter/porterView', $datos);
         }
     }

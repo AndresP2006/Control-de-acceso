@@ -78,6 +78,7 @@ class PeopleModel
     {
         $this->db->query("SELECT p.Pe_id,
                             p.Pe_nombre,
+                            p.Pe_telefono,
                             p.Pe_apellidos,
                             COUNT(a.Pa_id) AS Total_paquetes,
                             MAX(a.Pa_estado) AS Pa_estado,
