@@ -76,18 +76,19 @@ class PeopleModel
 
     public function PeopleID($id)
     {
-        $this->db->query(
-            "SELECT p.*,COUNT(a.Pa_Id) AS Total_paquetes,
+        $this->db->query("SELECT p.Pe_id,
+                            p.Pe_nombre,
+                            p.Pe_apellidos,
+                            COUNT(a.Pa_id) AS Total_paquetes,
                             MAX(a.Pa_estado) AS Pa_estado,
                             MAX(a.Pa_fecha) AS Pa_fecha,
                             MAX(a.Pa_descripcion) AS Pa_descripcion,
                             ap.Ap_numero AS Apartamento,
-                            t.To_letra AS Torre FROM persona p LEFT JOIN paquete a ON p.Pe_id = a.Pe_id LEFT JOIN 
-                            apartamento ap ON p.Ap_id = ap.Ap_id LEFT JOIN torre t ON ap.To_id = t.To_id WHERE 
-                            p.Pe_id = $id 
-                            AND (a.Pa_estado IS NULL OR a.Pa_estado != 'Entregado')
-                            GROUP BY p.Pe_id, ap.Ap_numero, t.To_letra;"
-        );
+                            t.To_letra AS Torre FROM persona p  
+                            LEFT JOIN paquete a ON p.Pe_id = a.Pe_id AND a.Pa_estado != 'Entregado'
+                            LEFT JOIN apartamento ap ON p.Ap_id = ap.Ap_id 
+                            LEFT JOIN torre t ON ap.To_id = t.To_id WHERE p.Pe_id = $id GROUP BY p.Pe_id, p.Pe_nombre, p.Pe_apellidos, ap.Ap_numero, t.To_letra;");
+
         return $this->db->registro();
     }
 

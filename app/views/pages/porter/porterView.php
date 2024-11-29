@@ -214,10 +214,10 @@
 
 <script>
     <?php if (isset($datos['messageError']) && $datos['messageError'] != null) { ?>
-    error("<?php echo htmlspecialchars($datos['messageError']); ?>");
-<?php } elseif (isset($datos['messageInfo']) && $datos['messageInfo'] != null) { ?>
-    realizado("<?php echo htmlspecialchars($datos['messageInfo']); ?>");
-<?php } ?>
+        error("<?php echo htmlspecialchars($datos['messageError']); ?>");
+    <?php } elseif (isset($datos['messageInfo']) && $datos['messageInfo'] != null) { ?>
+        realizado("<?php echo htmlspecialchars($datos['messageInfo']); ?>");
+    <?php } ?>
 
 
     $(document).ready(function () {
@@ -270,16 +270,28 @@
 
                                     if (Array.isArray(paq)) {
 
-                                        for (let item of paq) {
-                                            td += '<tr>';
-                                            td += '<td>' + item.Pa_fecha + '</td>';
-                                            td += '<td>' + item.Pa_descripcion + '</td>';
-                                            td += '<td>' + item.Pa_estado + '</td>';
-                                            td += '<td><center><button type="button" class="btnEditarPaquete" data-id="' + item.Pa_id + '">📬</button></center></td>';
-                                            td += '</tr>';
+                                        let paquetesPendientes = paq.filter(item => item.Pa_estado !== 'Entregado');
+
+                                        if (paquetesPendientes.length > 0) {
+
+                                            for (let item of paquetesPendientes) {
+                                                td += '<tr>';
+                                                td += '<td>' + item.Pa_fecha + '</td>';
+                                                td += '<td>' + item.Pa_descripcion + '</td>';
+                                                td += '<td>' + item.Pa_estado + '</td>';
+                                                td += '<td><center><button type="button" class="btnEditarPaquete" data-id="' + item.Pa_id + '">📬</button></center></td>';
+                                                td += '</tr>';
+                                            }
+                                        } else {
+                                            td = '<tr><td colspan="4" style="text-align: center;">No hay paquetes pendientes.</td></tr>';
+
                                         }
-                                        $('#paquetesTable').html(td);
+                                    } else {
+
+                                        td = '<tr><td colspan="4" style="text-align: center;">No hay datos disponibles.</td></tr>';
                                     }
+
+                                    $('#paquetesTable').html(td);
                                 }
                             })
                         })
