@@ -5,6 +5,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="<?php echo RUTA_URL ?>/css/Visitas.css">
+    <link rel="stylesheet" href="<?php echo RUTA_URL ?>/css/adminStyle.css">
+    <!-- <link rel="stylesheet" href="<?php echo RUTA_URL ?>/css/administracion.css"> -->
+    
+
     <title>Guardia</title>
     <style>
         * {
@@ -19,6 +23,7 @@
             justify-content: space-between;
             align-items: center;
             background-color: #6c7471;
+            margin-bottom: 90px;
         }
 
         .titulo {
