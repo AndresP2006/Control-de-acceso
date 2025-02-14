@@ -5,17 +5,21 @@ class HomeController extends Controlador
 
     private $articleModel;
     private $porterController;
+    private $userController;
+    private $TorreModel;
 
     public function __construct()
     {
         $this->articleModel = $this->modelo('ArticleModel');
         $this->porterController = $this->controller('PorterController');
+        $this->userController = $this->controller('UserController');
+        $this->TorreModel = $this->modelo('TorreModel');
     }
 
     public function index()
     {
         // $articles = $this->articleModel->getArticles();
-
+        session_destroy();
         $datos = [
             'titulo' => 'Bienvenido a MVC render2web',
             // 'articles' => $articles
@@ -25,10 +29,12 @@ class HomeController extends Controlador
     }
 
     // desplazamiento de vistas
-    public function informacion(){
+    public function informacion()
+    {
         $this->vista('pages/home/informacionView');
     }
-    public function nosotros(){
+    public function nosotros()
+    {
         $this->vista('pages/home/nosotrosView');
     }
 
@@ -38,8 +44,16 @@ class HomeController extends Controlador
             header('location:' . RUTA_URL . '/pages/homeView');
             exit;
         }
-        $this->vista('pages/admin/adminView', null);
+
+        $datos = $this->userController->MostrarDatos();
+        $Torres = $this->TorreModel->setTorres();
+
+        $_SESSION['torre'] = $Torres;
+        // Pasamos los datos correctamente a la vista
+        $this->vista('pages/admin/adminView', $datos);
     }
+
+
     public function guard()
     {
         if (!isset($_SESSION['sesion_activa'])) {
@@ -50,17 +64,20 @@ class HomeController extends Controlador
         $this->vista('pages/porter/porterView', ($this->porterController->index()));
     }
     // menu de administracion 
-    public function usuario(){
+    public function usuario()
+    {
         $this->vista('pages/admin/adminView');
     }
-    public function historialRe(){
-        $this->vista('pages/admin/historialReView');
+    public function HistoryRecords()
+    {
+        $this->vista('pages/admin/historialViView');
     }
-    public function histrialVi(){
-        $this->vista('pages/admin/historialViVIew');
-    }
-    public function paquetes(){
+    public function HistoryPackages()
+    {
         $this->vista('pages/admin/paquetesView');
+    }
+    public function Edificios(){
+        $this->vista('pages/admin/edificiosView');
     }
 
 }
