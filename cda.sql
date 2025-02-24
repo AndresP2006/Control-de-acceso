@@ -23,12 +23,13 @@ DROP TABLE IF EXISTS `apartamento`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `apartamento` (
-  `Ap_id` int(10) NOT NULL,
+  `Ap_id` int(10) NOT NULL AUTO_INCREMENT,
   `To_id` int(10) NOT NULL,
+  `Ap_numero` int(20) NOT NULL,
   PRIMARY KEY (`Ap_id`),
-  KEY `T_id` (`To_id`),
+  KEY `To_id` (`To_id`),
   CONSTRAINT `apartamento_ibfk_1` FOREIGN KEY (`To_id`) REFERENCES `torre` (`To_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +38,7 @@ CREATE TABLE `apartamento` (
 
 LOCK TABLES `apartamento` WRITE;
 /*!40000 ALTER TABLE `apartamento` DISABLE KEYS */;
-INSERT INTO `apartamento` VALUES (100,1),(101,1),(102,1),(103,1),(104,1);
+INSERT INTO `apartamento` VALUES (106,1,302),(107,2,212),(108,1,212),(109,1,302);
 /*!40000 ALTER TABLE `apartamento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -57,9 +58,9 @@ CREATE TABLE `paquete` (
   `Pe_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`Pa_id`),
   KEY `Pe_id` (`Pe_id`),
-  CONSTRAINT `paquete_ibfk_1` FOREIGN KEY (`pe_id`) REFERENCES `persona` (`Pe_id`),
+  CONSTRAINT `paquete_ibfk_1` FOREIGN KEY (`Pe_id`) REFERENCES `persona` (`Pe_id`),
   CONSTRAINT `paquete_ibfk_2` FOREIGN KEY (`Pe_id`) REFERENCES `persona` (`Pe_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,7 +69,7 @@ CREATE TABLE `paquete` (
 
 LOCK TABLES `paquete` WRITE;
 /*!40000 ALTER TABLE `paquete` DISABLE KEYS */;
-INSERT INTO `paquete` VALUES (1,'activo','Pc gamer','2024-11-07 05:00:00','Stiven',NULL),(2,'activo','PC gamer','2024-11-07 05:00:00','Juan',NULL),(3,'activo','PortÃ¡til','2024-11-08 05:00:00','Juan',NULL),(4,'Estado','asddfgdgf','2024-11-12 05:00:00','Guardia_2',123),(5,'Estado','asddfgdgf','2024-11-12 05:00:00','Guardia_2',123),(6,'Estado','asdddddddddddd','2024-11-12 05:00:00','Guardia_5',123);
+INSERT INTO `paquete` VALUES (1,'activo','Pc gamer','2024-11-07 05:00:00','Stiven',NULL),(2,'activo','PC gamer','2024-11-07 05:00:00','Juan',NULL),(3,'activo','PortÃ¡til','2024-11-08 05:00:00','Juan',NULL),(4,'Estado','asddfgdgf','2024-11-12 05:00:00','Guardia_2',123),(5,'Estado','asddfgdgf','2024-11-12 05:00:00','Guardia_2',123),(6,'Estado','asdddddddddddd','2024-11-12 05:00:00','Guardia_5',123),(7,'bueno','en caja','2024-11-07 05:00:00','portero',12345),(8,'bueno','en caja','2024-11-07 05:00:00','portero',12345),(9,'Fragil','esd','2024-11-20 05:00:00','Guardia_2',123),(10,'Fragil','asdfsd','2024-11-24 05:00:00','Guardia_2',123);
 /*!40000 ALTER TABLE `paquete` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -84,13 +85,13 @@ CREATE TABLE `persona` (
   `Pe_nombre` varchar(50) NOT NULL,
   `Pe_apellidos` varchar(50) NOT NULL,
   `Pe_telefono` varchar(50) NOT NULL,
-  `Ap_id` int(10) NOT NULL,
   `Us_id` int(11) DEFAULT NULL,
+  `Ap_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`Pe_id`),
-  KEY `D_id` (`Ap_id`),
   KEY `U_id` (`Us_id`),
-  CONSTRAINT `persona_ibfk_2` FOREIGN KEY (`Ap_id`) REFERENCES `apartamento` (`Ap_id`),
-  CONSTRAINT `persona_ibfk_3` FOREIGN KEY (`Us_id`) REFERENCES `usuario` (`Us_id`)
+  KEY `Ap_id` (`Ap_id`),
+  CONSTRAINT `persona_ibfk_3` FOREIGN KEY (`Us_id`) REFERENCES `usuario` (`Us_id`),
+  CONSTRAINT `persona_ibfk_4` FOREIGN KEY (`Ap_id`) REFERENCES `apartamento` (`Ap_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -100,7 +101,7 @@ CREATE TABLE `persona` (
 
 LOCK TABLES `persona` WRITE;
 /*!40000 ALTER TABLE `persona` DISABLE KEYS */;
-INSERT INTO `persona` VALUES (123,'JD','RP','30000000',102,NULL),(12345,'David','Rua','30000000',101,NULL),(123456,'Andres','Pereira','300000',103,NULL),(1234567,'Luis','Padilla','30000000',104,NULL),(12345678,'Luis','Padilla','30000000',104,NULL),(1043870680,'Juan David','Rua Porta','30000000',100,NULL);
+INSERT INTO `persona` VALUES (0,'Luis','Padilla','30000000',NULL,NULL),(123,'JD','RP','30000000',NULL,106),(2006,'josimar','suñoga','12121312313',2006,NULL),(12345,'David','Rua','30000000',NULL,108),(123456,'Andres','Pereira','300000',NULL,NULL);
 /*!40000 ALTER TABLE `persona` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -113,10 +114,20 @@ DROP TABLE IF EXISTS `registro`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `registro` (
   `Re_id` int(10) NOT NULL AUTO_INCREMENT,
-  `Re_fecha_registro` timestamp NOT NULL DEFAULT current_timestamp(),
-  `Re_fecha_salida` varchar(20) NOT NULL,
-  PRIMARY KEY (`Re_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `Re_fecha_entrada` date NOT NULL,
+  `Re_hora_entrada` time NOT NULL,
+  `Re_hora_salida` time NOT NULL,
+  `Re_motivo` varchar(50) NOT NULL,
+  `Vi_departamento` varchar(50) NOT NULL,
+  `Pe_id` int(20) NOT NULL,
+  `Vi_id` int(10) NOT NULL,
+  PRIMARY KEY (`Re_id`),
+  KEY `Vi_id` (`Vi_id`),
+  KEY `Pe_id` (`Pe_id`),
+  CONSTRAINT `fk_registro_persona` FOREIGN KEY (`Pe_id`) REFERENCES `persona` (`Pe_id`),
+  CONSTRAINT `registro_ibfk_1` FOREIGN KEY (`Vi_id`) REFERENCES `visitantes` (`Vi_id`),
+  CONSTRAINT `registro_ibfk_2` FOREIGN KEY (`Pe_id`) REFERENCES `persona` (`Pe_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -125,6 +136,7 @@ CREATE TABLE `registro` (
 
 LOCK TABLES `registro` WRITE;
 /*!40000 ALTER TABLE `registro` DISABLE KEYS */;
+INSERT INTO `registro` VALUES (2,'2024-11-18','14:27:42','22:42:06','','',0,1042851729),(3,'2024-11-20','20:30:30','22:23:46','','',0,123),(4,'2024-11-21','22:42:50','22:44:18','','',0,1),(5,'2024-11-21','22:44:42','22:52:34','','',0,2),(6,'2024-11-21','22:46:23','22:47:34','','',0,3),(7,'2024-11-21','22:48:30','22:49:42','','',0,4),(8,'2024-11-22','20:03:11','20:17:03','','',0,345),(9,'2024-11-22','20:08:18','20:23:55','','',0,321),(10,'2024-11-22','20:09:24','00:00:00','','',0,21),(11,'2024-11-22','20:10:25','21:01:44','','',0,11),(12,'2024-11-22','20:10:48','00:00:00','','',0,22),(13,'2024-11-22','20:12:05','00:00:00','','',0,44),(14,'2024-11-22','20:15:54','00:00:00','','',0,222),(15,'2024-11-22','21:02:22','21:54:29','','',0,4321),(16,'2024-11-24','12:53:01','00:00:00','','',0,1111),(17,'2024-11-24','12:53:57','00:00:00','','',0,1212121),(18,'2024-11-24','20:15:46','20:17:14','','',0,777),(19,'2024-11-25','16:51:23','00:00:00','','',0,1104413144),(20,'2024-11-25','17:10:24','00:00:00','','',0,0);
 /*!40000 ALTER TABLE `registro` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -201,7 +213,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (123,'David','d12345','jrua1043@gmail.com',2),(12345678,'Luis','luis12345','andriano@gmail.com',1),(1043870680,'Juan David','Juan12345','jrua1043@gmail.com',1);
+INSERT INTO `usuario` VALUES (123,'David','d12345','jrua1043@gmail.com',2),(2006,'Juan','12345','charry@gmail.com',1);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -217,15 +229,7 @@ CREATE TABLE `visitantes` (
   `Vi_nombres` varchar(50) NOT NULL,
   `Vi_apellidos` varchar(50) NOT NULL,
   `Vi_telefono` varchar(50) NOT NULL,
-  `Vi_departamento` varchar(50) NOT NULL,
-  `Vi_motivo` varchar(250) NOT NULL,
-  `Pe_id` int(10) NOT NULL,
-  `Re_id` int(10) DEFAULT NULL,
-  PRIMARY KEY (`Vi_id`),
-  KEY `R_id` (`Re_id`),
-  KEY `U_id` (`Pe_id`),
-  CONSTRAINT `visitantes_ibfk_1` FOREIGN KEY (`Re_id`) REFERENCES `registro` (`Re_id`),
-  CONSTRAINT `visitantes_ibfk_2` FOREIGN KEY (`Pe_id`) REFERENCES `persona` (`Pe_id`)
+  PRIMARY KEY (`Vi_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -235,7 +239,7 @@ CREATE TABLE `visitantes` (
 
 LOCK TABLES `visitantes` WRITE;
 /*!40000 ALTER TABLE `visitantes` DISABLE KEYS */;
-INSERT INTO `visitantes` VALUES (111,'Juan','Charry','312','102','No se',123,NULL),(123,'Juan','Charry','312','102','No se',123,NULL),(222,'Juan','Charry','312','102','No se',123,NULL),(333,'Juan','Charry','312','102','No se',123,NULL),(444,'Juan','Charry','312','102','No se',123,NULL),(666,'Juan','Charry','312','102','No se',123,NULL),(1234,'Juan','Charry','312','102','No se',123,NULL),(3212,'Juan','Charry','312','102','No se',123,NULL),(9999,'Juan','Charry','312','102','No se',123,NULL),(12345,'Andres','Pereira','3000000','101','Ver a stiven',12345,NULL),(123456,'Juan','Charry','312','102','No se',123,NULL),(1234567,'Stiven','Catalan','30000000','104','Ver a luis',1234567,NULL),(1043870680,'Juan David','Rua Porta','30000000','100','Visitar a mi primo',1043870680,NULL);
+INSERT INTO `visitantes` VALUES (0,'','',''),(1,'Lucas','Perez','234'),(2,'Juan','Charry','312'),(3,'Juan','Charry','312'),(4,'Juan','Charry','312'),(11,'Pedro','Charry','312'),(21,'Lucas','Perez','312'),(22,'Lucas','Charry','312'),(44,'Juan','Charry','312'),(123,'Juan','Charry','312'),(222,'Lucas','Charry','234'),(321,'Pedro','Peres','312'),(345,'Juan','Charry','312'),(777,'Kendo','Kapony','312'),(1111,'sd','asd','122'),(4321,'Kendo','Kapony','32123213'),(1212121,'sdasdgkf','jhj','24244'),(1042851729,'andres','pereira','3003489600'),(1104413144,'KAPONY','Kapony','2323');
 /*!40000 ALTER TABLE `visitantes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -252,4 +256,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-12 22:09:33
+-- Dump completed on 2024-11-25 21:11:34

@@ -1,7 +1,7 @@
 <?php
 
 
-//CLASE PARA CPNECTAR A LA BASE DE DATOS y ejecutar CONSULTAS
+//CLASE PARA CONECTAR A LA BASE DE DATOS y ejecutar CONSULTAS
 class Base
 {
     private $host = DB_HOST;
@@ -32,7 +32,7 @@ class Base
             echo $this->error;
         }
     }
-    
+
     public function query($sql)
     {
         $this->stmt = $this->dbh->prepare($sql);
@@ -71,19 +71,58 @@ class Base
     public function registros()
     {
         $this->execute();
-        return $this->stmt->fetchAll(PDO::FETCH_OBJ);
+        try{
+            return $this->stmt->fetchAll(PDO::FETCH_OBJ);
+        }
+        catch(Exception $e){
+            return;
+        }
+       
+    }
+    //OBTENER REGISTRO PARA LAS TABLAS
+    public function showTables(){
+        $this->execute();
+        return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     //OBTENER UN SOLO REGISTRO 
     public function registro()
     {
         $this->execute();
+        try{
         return $this->stmt->fetch(PDO::FETCH_OBJ);
+        }
+        catch(Exception $e){
+            return;
+        }
     }
+    
 
     //OBTENER CANTIDAD DE FILAS CON EL MOTODO rowCOUNT
     public function rowCount()
     {
         return $this->stmt->rowCount();
     }
+
+
+    public function beginTransaction()
+    {
+        $this->dbh->beginTransaction();
+    }
+
+    public function commit()
+    {
+        $this->dbh->commit();
+    }
+
+    public function rollBack()
+    {
+        $this->dbh->rollBack();
+    }
+
+    public function single()
+{
+    return $this->stmt->fetch(PDO::FETCH_ASSOC);
+}
+
 }

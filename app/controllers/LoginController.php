@@ -3,17 +3,17 @@
 class LoginController extends Controlador
 {
 
-    private $UserModel;
+    private $userModel;
 
     public function __construct()
     {
-        $this->UserModel = $this->modelo('UserModel');
+        $this->userModel = $this->modelo('UserModel');
         //echo 'Controlador paginas cargado';
     }
 
     public function index()
     {
-        $result = $this->UserModel->getUserByEmailOrName($_POST['usuario']);
+        $result = $this->userModel->getUserByEmailOrName($_POST['usuario']);
 
         if ($result && isset($result)) {
             if ($result->Us_contrasena === $_POST['password']) {
