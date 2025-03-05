@@ -22,6 +22,11 @@ class PaquetModel
         return $this->db->registros();
     }
 
+    public function getPackegesBy($id){
+        $this->db->query("SELECT * FROM paquete WHERE Pe_id = :Id");
+        $this->db->bind(':Id', $id);
+        return $this->db->registros()?true:false;
+    }
     public function getPackegesByTable()
     {
         $this->db->query("select a.Pe_id,a.Pe_nombre,p.* from paquete p , persona a where a.Pe_id=p.Pe_id;");
