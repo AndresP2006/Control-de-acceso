@@ -181,10 +181,15 @@ class UserController extends Controlador
             // Verificar si el usuario existe
             $result = $this->peopleModel->getAllpersonas($delete_id);
             if ($result) {
-
-                if ($this->adminModel->eliminarRegistro($delete_id)) {
-                    $messageDelet = 'Registro eliminado con éxito';
-                };
+                $paque = $this->paquetModel->getPackegesBy($delete_id);
+                if($paque){
+                    $mensaageError = 'No se puede borrar por que tiene un paquete';
+                }else{
+                    if ($this->adminModel->eliminarRegistro($delete_id)) {
+                        $messageDelet = 'Registro eliminado con éxito';
+                    };
+                }
+                
             } else {
                 $mensaageError = 'Por favor, verifica que el registro no esté asociado a otra entidad';
             }

@@ -14,7 +14,7 @@
             <label for="">Telefono</label><br>
             <input type="text" id="U_Telefono" name="U_Telefono" />
             <label for="">Correo</label><br>
-            <input type="text" id="U_Gmail" name="U_Gmail" />
+            <input type="email" id="U_Gmail" name="U_Gmail" />
             <div class="titulo_torre">
                 <h4>Torre</h4>
                 <h4 class="ap">Apartamento</h4>
