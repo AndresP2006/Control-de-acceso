@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #253745;
+    background-color: #6c7a7d;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,7 +17,7 @@ body {
 }
 
 .card {
-    background: linear-gradient(135deg, #ccd0cf, #e0e5e4);
+    background: #fff;
     padding: 2rem;
     border-radius: 1rem;
     width: 70%;
