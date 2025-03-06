@@ -42,6 +42,14 @@ class HomeController extends Controlador
     {
         $this->vista('pages/home/nosotrosView');
     }
+    
+    public function verUser(){
+        $this->vista("pages/user/userView");
+    }
+    public function notificaciones(){
+        $this->vista("pages/user/notifiView");
+    }
+
 
     public function admin()
     {

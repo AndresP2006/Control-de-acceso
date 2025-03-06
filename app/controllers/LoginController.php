@@ -49,6 +49,6 @@ class LoginController extends Controlador
     {
         $this->vista('pages/porter/porterView', null);
     }
-
+    
 
 }
