@@ -19,6 +19,8 @@ body {
     
 }
 .titulo {
+    display: flex;
+    justify-content: space-between;
     font-weight: bold;
     font-size: 32px; /* Increased font size */
     padding: 10px;

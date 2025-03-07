@@ -75,6 +75,15 @@ class HomeController extends Controlador
 
         $this->vista('pages/porter/porterView', ($this->porterController->index()));
     }
+    public function resident()
+    {
+        if (!isset($_SESSION['sesion_activa'])) {
+            header('location:' . RUTA_URL . '/pages/homeView');
+            exit;
+        }
+
+        $this->vista('pages/user/userView', ($this->userController->index()));
+    }
     // menu de administracion 
     public function usuario()
     {

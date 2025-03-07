@@ -30,6 +30,10 @@ class LoginController extends Controlador
 
                         header('location:' . RUTA_URL . '/HomeController/guard');
                         break;
+                    case "3": // residente
+                        
+                        header('location:' . RUTA_URL . '/HomeController/resident');
+                        break;
                 }
             } else {
                 $message = "Contraseña incorrecta";

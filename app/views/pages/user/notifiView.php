@@ -1,6 +1,9 @@
 <?php require_once RUTA_APP . "/views/inc/header-notificacion.php" ?>
 <div class="contenedor">
-    <div class="titulo">NOTIFICACIONES</div>
+    <div class="titulo">NOTIFICACIONES<a href="<?php echo RUTA_URL; ?>/HomeController/verUser" class="enlaces">
+            <span class="icons  exit">↩️</span>
+        </a>
+    </div>
 
     <div class="overflo">
         <div class="notificacion">
@@ -22,7 +25,7 @@
         <div class="notificacion">
             <div class="texto">
                 <strong>Nueva visita en la entrada</strong>
-                <p>Se ha registrado una nueva visita para ti en la entrada del edificio.</p>
+                <p>Se ha registrado una nueva visita para usted en la entrada del edificio.</p>
             </div>
             <div class="icono"><a href=""><span>🗑️</span></a></div>
         </div>
@@ -41,7 +44,7 @@
             </div>
             <div class="icono"><a href=""><span>🗑️</span></a></div>
         </div>
-     
+
     </div>
 
     <div class="acciones">
