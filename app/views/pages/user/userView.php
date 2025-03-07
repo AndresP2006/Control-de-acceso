@@ -19,7 +19,7 @@
             
             
             <div class="content">
-                <h4 class="nombre">Andres Pereira</h4  >
+                <h4 class="nombre"><?= $_SESSION['datos']->Us_usuario?></h4  >
                 <hr class="Linea">
                 <br>
                 
