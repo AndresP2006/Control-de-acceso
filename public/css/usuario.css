@@ -144,7 +144,10 @@ p {
 .icons {
     font-size: 32px; 
 }
+.exit{
+    margin-left: 100%;
 
+}
 .gray-text1 {
     padding-left: 60px;
     color: gray;

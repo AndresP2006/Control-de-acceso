@@ -6,10 +6,10 @@
                 <h1>RESIDENTES</h1>
                 <hr>
                 <div class="icons" >
-                    <a href="" class="enlaces">
+                    <a href="<?php echo RUTA_URL; ?>/HomeController/notificaciones" class="enlaces">
                     <span class="icons">🔔</span>
                     </a>
-                   <a href="" class="enlaces">
+                   <a href="<?php echo RUTA_URL; ?>/HomeController/index" class="enlaces">
                    <span class="icons">↩️</span>
                    </a>
                 </div>                
