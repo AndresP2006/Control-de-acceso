@@ -88,6 +88,7 @@ h2 {
 }
 
 .boton_entrada {
+  cursor: pointer;
   width: 200px;
   height: 50px;
   font-size: 20px;
@@ -331,10 +332,13 @@ form input[type="text"]::placeholder {
 .aceptar,
 .nuevo_registro,
 .paquetes {
+  cursor: pointer;
   width: 220px;
   height: 50px;
   font-size: 20px;
 }
+
+
 
 #displayForm {
   background-color: #ffffff;
@@ -778,4 +782,8 @@ h4 {
 
 .miModal__submit:hover {
   background-color: #0056b3;
+}
+.buscar_guest{
+  cursor: pointer;
+
 }
