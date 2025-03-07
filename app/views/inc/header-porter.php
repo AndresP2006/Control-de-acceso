@@ -41,6 +41,7 @@
             font-weight: 700;
             background-color: darkgray;
             font-size: 20px;
+            cursor: pointer;
         }
 
         .titulo_1 {
