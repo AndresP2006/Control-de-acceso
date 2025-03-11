@@ -29,10 +29,11 @@
     background-color: darkgray;
     font-size: 20px;
     cursor: pointer;
+    margin-top: 15px;
 }
 
 .titulo_1 {
-    color: black
+    color: black;
     font-family: cursive;
 }
 
