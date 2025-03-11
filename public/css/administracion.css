@@ -4,11 +4,12 @@
 }
 
 .content_Encabezado {
+    margin-bottom: 50px;
+    height: 150px;
     background-color: rgb(184, 184, 184);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
 }
 
 .content_Encabezado-titulo-boton {
