@@ -15,9 +15,6 @@
                 </div>                
             </div>
             <br>
-            
-            
-            
             <div class="content">
                 <h4 class="nombre"><?= $_SESSION['datos']->Us_usuario?></h4  >
                 <hr class="Linea">
