@@ -3,7 +3,6 @@
 class HomeController extends Controlador
 {
 
-    private $articleModel;
     private $porterController;
     private $userController;
     private $torreModel;
@@ -13,7 +12,6 @@ class HomeController extends Controlador
 
     public function __construct()
     {
-        $this->articleModel = $this->modelo('ArticleModel');
         $this->porterController = $this->controller('PorterController');
         $this->userController = $this->controller('UserController');
         $this->torreModel = $this->modelo('TorreModel');
@@ -75,6 +73,8 @@ class HomeController extends Controlador
 
         $this->vista('pages/porter/porterView', ($this->porterController->index()));
     }
+
+    // Cargar datos de residente
     public function resident()
     {
         if (!isset($_SESSION['sesion_activa'])) {
@@ -83,6 +83,7 @@ class HomeController extends Controlador
         }
 
         $this->vista('pages/user/userView', ($this->userController->index()));
+
     }
     // menu de administracion 
     public function usuario()
