@@ -81,8 +81,7 @@ class HomeController extends Controlador
             header('location:' . RUTA_URL . '/pages/homeView');
             exit;
         }
-
-        $this->vista('pages/user/userView', ($this->userController->index()));
+        $this->vista('pages/user/userView', ($this->userController->index($_SESSION['datos']->Us_usuario)));
 
     }
     // menu de administracion 

@@ -32,7 +32,7 @@ class LoginController extends Controlador
                         break;
                     case "3": // residente
                         
-                        header('location:' . RUTA_URL . '/HomeController/resident');
+                        header('location:' . RUTA_URL . '/HomeController/resident', );
                         break;
                 }
             } else {
