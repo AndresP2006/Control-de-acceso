@@ -20,10 +20,11 @@ class UserController extends Controlador
     }
 
 
-    public function index($messageError = null, $messageInfo = null, $result = null)
+    public function index($messageError = null, $messageInfo = null, )
     {
         $paquets = $this->paquetModel->getPackegesByTable();
-        $resindents = $this->peopleModel->getAllResident($result->Us_usuario);
+        $resindents = $this->peopleModel->getAllResident($_SESSION['datos']->Us_usuario);
+        
         return [
             'messageError' => $messageError,
             'messageInfo' => $messageInfo,
