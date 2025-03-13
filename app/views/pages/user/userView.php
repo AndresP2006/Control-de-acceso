@@ -23,7 +23,7 @@
                 <table class="info-table">
                     <tr>
                         <td><strong>Cédula</strong></td>
-                        <td class="gray-text1">1042851729</td>
+                        <td class="gray-text1">123</td>
                     </tr>
                     <tr>
                         <td><strong>Email</strong></td>

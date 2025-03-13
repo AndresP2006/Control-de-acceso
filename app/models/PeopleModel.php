@@ -129,5 +129,21 @@ class PeopleModel
         return $this->db->registros(); // Devuelve todos los registros
     }
 
-
+    public function getAllResident($result = null)
+    {
+        $this->db->query("SELECT
+    u.Us_id,
+    p.Pe_nombre,
+    p.Pe_apellidos,
+    u.Us_correo,
+    p.Pe_telefono,
+    t.To_letra,
+    a.Ap_numero
+    FROM persona p
+    INNER JOIN usuario u ON p.Us_id = u.Us_id
+    INNER JOIN apartamento a ON p.Ap_id = a.Ap_id
+    INNER JOIN torre t ON a.To_id = t.To_id
+    WHERE u.Us_usuario = '$result'")    ;
+        return $this->db->registros();
+    }
 }
