@@ -55,9 +55,8 @@
             <div class="contenido__imagenes">
                 <div class="cuerpo__informacion-content-fotos">
                     <img src="<?php echo RUTA_URL; ?>/img/atras.png" alt="atras" class="atras">
-                    <img src="<?php echo RUTA_URL; ?>/img/rivera1.jpg" alt="foto1" class="contenido__imagenes-1">
+                    <img src="<?php echo RUTA_URL; ?>/img/rivera1.jpg" alt="foto1" class="contenido__imagenes-1" id="img2">
                     <img src="<?php echo RUTA_URL; ?>/img/adelante.png" alt="adelante" class="adelante">
-                    <script src="main/informacion.js"></script>
                 </div>
                 <img src="<?php echo RUTA_URL; ?>/img/informacion-img2.jpg" alt="imagenen2" class="contenido__imagenes-2" />
             </div>

@@ -1,7 +1,7 @@
 <?php
 
 
-//CLASE PARA CPNECTAR A LA BASE DE DATOS y ejecutar CONSULTAS
+//CLASE PARA CONECTAR A LA BASE DE DATOS y ejecutar CONSULTAS
 class Base
 {
     private $host = DB_HOST;
@@ -71,7 +71,13 @@ class Base
     public function registros()
     {
         $this->execute();
-        return $this->stmt->fetchAll(PDO::FETCH_OBJ);
+        try{
+            return $this->stmt->fetchAll(PDO::FETCH_OBJ);
+        }
+        catch(Exception $e){
+            return;
+        }
+       
     }
     //OBTENER REGISTRO PARA LAS TABLAS
     public function showTables(){
@@ -83,8 +89,14 @@ class Base
     public function registro()
     {
         $this->execute();
+        try{
         return $this->stmt->fetch(PDO::FETCH_OBJ);
+        }
+        catch(Exception $e){
+            return;
+        }
     }
+    
 
     //OBTENER CANTIDAD DE FILAS CON EL MOTODO rowCOUNT
     public function rowCount()
@@ -107,4 +119,10 @@ class Base
     {
         $this->dbh->rollBack();
     }
+
+    public function single()
+{
+    return $this->stmt->fetch(PDO::FETCH_ASSOC);
+}
+
 }
