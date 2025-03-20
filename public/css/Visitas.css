@@ -288,7 +288,13 @@ form input[type="text"]:focus {
 form h4,
 form input[type="text"] {
   display: block;
-  background: none ;
+  /* background: none ; */
+  margin-bottom: 0;
+}
+
+.buscar_id{
+  display: block;
+  background: none !important; 
   margin-bottom: 0;
 }
 

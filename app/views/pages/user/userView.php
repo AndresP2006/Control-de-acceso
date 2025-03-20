@@ -3,7 +3,7 @@
 <div class="container">
     <div class="card">
         <div class="header">
-            <h1>RESIDENTES</h1>
+            <h1>Bienvenido Residente</h1>
             <hr>
             <div class="icons">
                 <a href="<?php echo RUTA_URL; ?>/HomeController/notificaciones" class="enlaces">
