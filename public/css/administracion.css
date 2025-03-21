@@ -3,12 +3,23 @@
     font-family: Arial, Helvetica, sans-serif !important;
 }
 
+.label_new_registro{
+    font-size: 20px;
+    margin-bottom: 5px;
+    color: #141414;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+.imput_new_registro{
+    margin-bottom: 10px;
+}
 .content_Encabezado {
+    margin-bottom: 50px;
+    height: 150px;
     background-color: rgb(184, 184, 184);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
 }
 
 .content_Encabezado-titulo-boton {
@@ -363,4 +374,15 @@ button:hover {
     padding: 8px;
     text-align: left;
     border: 1px solid #ddd;
+}
+input[type="email" i] {
+    width: 95%;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background-color: #eee;
+    padding: 5px 10px;
+    font-size: 14px;
+    outline: none;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }

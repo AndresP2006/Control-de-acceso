@@ -20,13 +20,18 @@ class UserController extends Controlador
     }
 
 
-    public function index($messageError = null, $messageInfo = null)
+    public function index($messageError = null, $messageInfo = null,)
     {
         $paquets = $this->paquetModel->getPackegesByTable();
+        $resindents = $this->peopleModel->getAllResident($_SESSION['datos']->Us_usuario);
+        $people = $this->peopleModel->getAllRedident($_SESSION['datos']->Us_usuario);
+
         return [
             'messageError' => $messageError,
             'messageInfo' => $messageInfo,
-            'paquets' => $paquets
+            'paquets' => $paquets,
+            'resindents' => $resindents,
+            'people' => $people
         ];
     }
 
@@ -182,14 +187,13 @@ class UserController extends Controlador
             $result = $this->peopleModel->getAllpersonas($delete_id);
             if ($result) {
                 $paque = $this->paquetModel->getPackegesBy($delete_id);
-                if($paque){
+                if ($paque) {
                     $mensaageError = 'No se puede borrar por que tiene un paquete';
-                }else{
+                } else {
                     if ($this->adminModel->eliminarRegistro($delete_id)) {
                         $messageDelet = 'Registro eliminado con éxito';
                     };
                 }
-                
             } else {
                 $mensaageError = 'Por favor, verifica que el registro no esté asociado a otra entidad';
             }

@@ -1,0 +1,65 @@
+body {
+    background-color: #6c7a7d;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.contenedor {
+    width: 90%;
+    max-width: 1000px;
+    background: #fff;
+    margin: 20px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    
+}
+.titulo {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 32px; /* Increased font size */
+    padding: 10px;
+    border-bottom: 2px solid black;
+}
+.notificacion {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px; /* Increased padding */
+    border-bottom: 1px solid black;
+}
+.notificacion p {
+    margin: 0;
+    font-size: 20px; /* Increased font size */
+}
+.notificacion .texto {
+    flex: 1;
+}
+.acciones {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px; /* Increased padding */
+    border-top: 2px solid black;
+}
+.acciones .eliminar {
+    cursor: pointer;
+    font-size: 20px; /* Increased font size */
+}
+.acciones .control {
+    font-weight: bold;
+    color: red;
+    font-size: 20px; /* Increased font size */
+}
+a {
+    text-decoration: none;
+}
+.overflo {
+    overflow-y: auto;
+    max-height: 70vh;
+}

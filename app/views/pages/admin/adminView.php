@@ -25,7 +25,7 @@
     <div class="control-group">
         <!-- Formulario de Búsqueda por ID -->
         <form class="search-container" action="<?php echo RUTA_URL; ?>/UserController/BuscarUsuario" method="POST">
-            <input id="id" type="text" name="id_usuario" placeholder="Buscar...">
+            <input id="id" type="text" class="buscar_id" name="id_usuario" placeholder="Buscar...">
             <input type="hidden" name="action" value="search">
             <button type="submit" name="buscar">
                 <img style="width:20px; height:20px;" src="<?php echo RUTA_URL; ?>/img/lupa.png" alt="Icono Buscar">
