@@ -134,19 +134,30 @@ class PeopleModel
     {
 
         $this->db->query("SELECT
-    u.Us_id,
-    p.Pe_nombre,
-    p.Pe_apellidos,
-    u.Us_correo,
-    p.Pe_telefono,
-    t.To_letra,
-    a.Ap_numero
-    FROM persona p
-    INNER JOIN usuario u ON p.Us_id = u.Us_id
-    INNER JOIN apartamento a ON p.Ap_id = a.Ap_id
-    INNER JOIN torre t ON a.To_id = t.To_id
-    WHERE u.Us_usuario = '$result'");   
-     
-    return $this->db->registros();
+                                u.Us_id,
+                                p.Pe_nombre,
+                                p.Pe_apellidos,
+                                u.Us_correo,
+                                p.Pe_telefono,
+                                t.To_letra,
+                                a.Ap_numero
+                                FROM persona p
+                                INNER JOIN usuario u ON p.Us_id = u.Us_id
+                                INNER JOIN apartamento a ON p.Ap_id = a.Ap_id
+                                INNER JOIN torre t ON a.To_id = t.To_id
+                                WHERE u.Us_usuario = '$result'");
+
+        return $this->db->registros();
+    }
+    public function getAllRedident($result)
+    {
+
+         $this->db->query("SELECT p2.Pe_nombre, p2.Pe_apellidos 
+                           FROM persona p1 
+                           JOIN apartamento a ON p1.Ap_id = a.Ap_id 
+                           JOIN persona p2 ON a.Ap_id = p2.Ap_id 
+                           WHERE p1.Pe_nombre = '$result' AND p2.Pe_id <> p1.Pe_id", );
+
+        return $this->db->registros();
     }
 }
