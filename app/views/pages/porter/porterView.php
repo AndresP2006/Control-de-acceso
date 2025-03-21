@@ -9,6 +9,7 @@
             <div class="ventana-emergente__caja ventana-emergente__caja--opciones">
             </div>
         </div>
+        <h3 class="var_sesion">Bienvenido <?= $_SESSION['datos']->Us_usuario ?></h3>
         <div class="cerrar-sescion">
             <a href="<?php echo RUTA_URL; ?>/HomeController/index"><button class="boton">Cerrar Sesión</button></a>
         </div>
@@ -45,27 +46,31 @@
 
                     <div class="miModal__grupo">
                         <label class="miModal__label" for="nombres">Nombre:</label>
-                        <input class="miModal__input" type="text" id="nombres" name="nombres">
+                        <input class="miModal__input" type="text" id="nombres" readonly name="nombres">
                     </div>
 
                     <div class="miModal__grupo">
                         <label class="miModal__label" for="apellidos">Apellido:</label>
-                        <input class="miModal__input" type="text" id="apellidos" name="apellidos">
+                        <input class="miModal__input" type="text" id="apellidos" readonly name="apellidos">
                     </div>
 
                     <div class="miModal__grupo">
                         <label class="miModal__label" for="telefono">Teléfono:</label>
-                        <input class="miModal__input" type="text" id="telefono" name="telefono">
+                        <input class="miModal__input" type="text" id="telefono" readonly name="telefono">
                     </div>
 
                     <div class="miModal__grupo">
-                        <label class="miModal__label" for="departamento">Número de Departamento:</label>
-                        <input class="miModal__input" type="text" id="departamento" name="departamento">
+                        <label class="miModal__label" for="torre">Torre:</label>
+                        <input class="miModal__input" type="text" id="torre" readonly name="torre">
+                    </div>
+                    <div class="miModal__grupo">
+                        <label class="miModal__label" for="apartamento">Número de Departamento:</label>
+                        <input class="miModal__input" type="text" id="apartamento" readonly name="apartamento">
                     </div>
 
                     <div class="miModal__grupo">
                         <label class="miModal__label" for="Paquete">Total de paquetes:</label>
-                        <input class="miModal__input" type="text" id="Paquete" name="Paquete">
+                        <input class="miModal__input" type="text" id="Paquete" readonly name="Paquete">
                     </div>
 
                     <button class="boton-flotante" id="abrirTablaFlotante" type="button">Paquetes</button>
@@ -208,9 +213,12 @@
 <?php require_once RUTA_APP . '/views/inc/footer-porter.php'; ?>
 
 <script>
-    <?php if (isset($datos['messageInfo'])) { ?>
-        realizado("<?php echo $datos['messageInfo']; ?>")
+    <?php if (isset($datos['messageError']) && $datos['messageError'] != null) { ?>
+        error("<?php echo htmlspecialchars($datos['messageError']); ?>");
+    <?php } elseif (isset($datos['messageInfo']) && $datos['messageInfo'] != null) { ?>
+        realizado("<?php echo htmlspecialchars($datos['messageInfo']); ?>");
     <?php } ?>
+
 
     $(document).ready(function () {
 
@@ -232,8 +240,19 @@
                         $('#nombres').val(resp.Pe_nombre);
                         $('#apellidos').val(resp.Pe_apellidos);
                         $('#telefono').val(resp.Pe_telefono);
-                        $('#departamento').val(resp.Ap_id);
+                        $('#torre').val(resp.Torre);
+                        $('#apartamento').val(resp.Apartamento);
                         $('#Paquete').val(resp.Total_paquetes);
+
+
+                        if (!resp.Pe_id) {
+                            error('Digite una identificacion valida');
+                            $('#miModal').removeClass('miModal--activo');
+                        } else if (resp.Total_paquetes === 0) {
+                            $('#miModal').addClass('miModal--activo');
+                        } else {
+                            $('#miModal').addClass('miModal--activo');
+                        }
 
                         $('#abrirTablaFlotante').click(function () {
                             $.ajax({
@@ -251,16 +270,28 @@
 
                                     if (Array.isArray(paq)) {
 
-                                        for (let item of paq) {
-                                            td += '<tr>';
-                                            td += '<td>' + item.Pa_fecha + '</td>';
-                                            td += '<td>' + item.Pa_descripcion + '</td>';
-                                            td += '<td>' + item.Pa_estado + '</td>';
-                                            td += '<td><center><button type="button" class="btnEditarPaquete" data-id="' + item.Pa_id + '">📬</button></center></td>';
-                                            td += '</tr>';
+                                        let paquetesPendientes = paq.filter(item => item.Pa_estado !== 'Entregado');
+
+                                        if (paquetesPendientes.length > 0) {
+
+                                            for (let item of paquetesPendientes) {
+                                                td += '<tr>';
+                                                td += '<td>' + item.Pa_fecha + '</td>';
+                                                td += '<td>' + item.Pa_descripcion + '</td>';
+                                                td += '<td>' + item.Pa_estado + '</td>';
+                                                td += '<td><center><button type="button" class="btnEditarPaquete" data-id="' + item.Pa_id + '">📬</button></center></td>';
+                                                td += '</tr>';
+                                            }
+                                        } else {
+                                            td = '<tr><td colspan="4" style="text-align: center;">No hay paquetes pendientes.</td></tr>';
+
                                         }
-                                        $('#paquetesTable').html(td);
+                                    } else {
+
+                                        td = '<tr><td colspan="4" style="text-align: center;">No hay datos disponibles.</td></tr>';
                                     }
+
+                                    $('#paquetesTable').html(td);
                                 }
                             })
                         })

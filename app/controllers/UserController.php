@@ -1,56 +1,81 @@
 <?php
 class UserController extends Controlador
 {
-    private $AdminModel;
-    private $PeopleModel;
-    private $PaquetModel;
+    private $adminModel;
+    private $peopleModel;
+    private $paquetModel;
+    private $apartamentModel;
+    private $torreModel;
+    private $visitorModel;
 
     public function __construct()
     {
         // Inicialización de los modelos
-        $this->AdminModel = $this->modelo('AdminModel');
-        $this->PeopleModel = $this->modelo('PeopleModel');
-        $this->PaquetModel = $this->modelo('PaquetModel');
+        $this->adminModel = $this->modelo('AdminModel');
+        $this->peopleModel = $this->modelo('PeopleModel');
+        $this->paquetModel = $this->modelo('PaquetModel');
+        $this->apartamentModel = $this->modelo('ApartamentModel');
+        $this->torreModel = $this->modelo('TorreModel');
+        $this->visitorModel = $this->modelo('VisitorModel');
     }
 
 
-    public function index($message = null)
+    public function index($messageError = null, $messageInfo = null,)
     {
+        $paquets = $this->paquetModel->getPackegesByTable();
+        $resindents = $this->peopleModel->getAllResident($_SESSION['datos']->Us_usuario);
+        $people = $this->peopleModel->getAllRedident($_SESSION['datos']->Us_usuario);
+
         return [
-            'messageInfo' => $message,
+            'messageError' => $messageError,
+            'messageInfo' => $messageInfo,
+            'paquets' => $paquets,
+            'resindents' => $resindents,
+            'people' => $people
         ];
     }
 
     public function createUser()
     {
+        $messageInfo = null;
+        $messageError = nUll;
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registro'])) {
-            // Recoger los datos del nuevo usuario
+            if (!empty(trim($_POST['Pe_id'])) && !empty(trim($_POST['U_Nombre']))  && !empty(trim($_POST['U_Apellido'])) && !empty(trim($_POST['U_Telefono'])) && !empty(trim($_POST['U_Gmail'])) && !empty(trim($_POST['U_id']))) {
 
-            $departamento = isset($_POST['U_Departamento']) && $_POST['U_Departamento'] != '' ? $_POST['U_Departamento'] : $_POST['U_Departamento2'];
-            $datos = [
-                'Cedula' => trim($_POST['Pe_id']),
-                'Nombre' => trim($_POST['U_Nombre']),
-                'Apellidos' => trim($_POST['U_Apellido']),
-                'Telefono' => trim($_POST['U_Telefono']),
-                'Gmail' => trim($_POST['U_Gmail']),
-                'Departamento' => trim($departamento),
-                'Rol' => trim($_POST['U_id']),
-                'Contrasena' => trim($_POST['U_contrasena']),
-            ];
 
-            // Mensaje de éxito
-            $message = 'Usuario guardado correctamente';
+                // Recoger los datos del formulario
+                $departamento = isset($_POST['U_Departamento']) && !empty($_POST['U_Departamento'])
+                    ? trim($_POST['U_Departamento'])
+                    : trim($_POST['U_Departamento2']);
 
-            // Agregar el nuevo usuario
-            $this->AdminModel->addUser($datos);
+                $datos = [
+                    'Cedula' => trim($_POST['Pe_id']),
+                    'Nombre' => trim($_POST['U_Nombre']),
+                    'Apellidos' => trim($_POST['U_Apellido']),
+                    'Telefono' => trim($_POST['U_Telefono']),
+                    'Gmail' => trim($_POST['U_Gmail']),
+                    'Departamento' => !empty($departamento) ? $departamento : null,
+                    'Rol' => trim($_POST['U_id']),
+                    'Contrasena' => trim($_POST['U_contrasena']),
+                ];
 
-            // Obtener todos los usuarios después de agregar el nuevo
-            $registros = $this->PeopleModel->getAllUsuario();
+                // Intentar registrar al usuario
+                $regist = $this->adminModel->addUser($datos);
 
-            // Formatear los datos de los usuarios como lo mencionas
-            $usuarios = [];
-            foreach ($registros as $registro) {
-                $usuarios[] = [
+                if ($regist === true) {
+                    $messageInfo = 'Usuario guardado correctamente.';
+                    $messageError = null;
+                } else {
+                    $messageInfo = null;
+                    $messageError = 'El usuario con la cedula ' . $datos['Cedula'] . ' ya existe.';
+                }
+            } else {
+                $messageError = 'Error al momento de ingresar los datos';
+            }
+            // Obtener todos los usuarios registrados
+            $registros = $this->peopleModel->getAllUsuario();
+            $usuarios = array_map(function ($registro) {
+                return [
                     'Cedula' => $registro->Pe_id,
                     'Pe_nombre' => $registro->Pe_nombre,
                     'Pe_apellidos' => $registro->Pe_apellidos,
@@ -62,26 +87,25 @@ class UserController extends Controlador
                     'To_id' => $registro->To_id,
                     'Ro_tipo' => $registro->Ro_tipo,
                 ];
-            }
+            }, $registros);
 
-            // Pasar los usuarios y el mensaje a la vista
+            // Pasar los datos y mensajes a la vista
             $datosVista = [
-                'messageInfo' => $message,
                 'usuarios' => $usuarios,
+                'messageError' => $messageError,
+                'messageInfo' => $messageInfo,
             ];
 
-            // Redirigir a la vista
             $this->vista('pages/admin/AdminView', $datosVista);
-
-            exit; // Finaliza la ejecución para evitar redirecciones adicionales
+            exit;
         } else {
-            // Manejar el caso donde no se cumple la condición POST o 'registro'
+            // Manejo de error si no es POST o no hay registro
             $datosVista = [
-                'messageInfo' => 'Hubo un error al procesar la solicitud.',
-                'usuarios' => [], // Opcional: puedes pasar una lista vacía o los usuarios actuales
+                'messageError' => 'Hubo un error al procesar la solicitud.',
+                'messageInfo' => null,
+                'usuarios' => [],
             ];
 
-            // Redirigir a la misma vista con el mensaje de error
             $this->vista('pages/admin/AdminView', $datosVista);
             exit;
         }
@@ -92,6 +116,8 @@ class UserController extends Controlador
 
     public function EditarUser()
     {
+        $messageInfo = '';
+        $messageError = '';
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['udate'])) {
 
             $departamento = isset($_POST['E_Departamento']) && $_POST['E_Departamento'] != '' ? $_POST['E_Departamento'] : $_POST['E_Departamento2'];
@@ -107,8 +133,8 @@ class UserController extends Controlador
                 'Contrasena' => trim($_POST['E_contrasena']),
             ];
 
-            $resultado = $this->AdminModel->updateUser($datos);
-            $registros = $this->PeopleModel->getAllUsuario();
+            $resultado = $this->adminModel->updateUser($datos);
+            $registros = $this->peopleModel->getAllUsuario();
 
             // Formatear los datos de los usuarios como lo mencionas
             $usuarios = [];
@@ -127,37 +153,51 @@ class UserController extends Controlador
                 ];
             }
 
-            // Pasar los usuarios y el mensaje a la vista
+
             $datos = [
                 'usuarios' => $usuarios,
             ];
-
             if ($resultado) {
-                $_SESSION['message'] = 'Usuario actualizado correctamente';
+                $messageInfo = 'Usuario actualizado correctamente';
             } else {
-                $_SESSION['error'] = 'Error al actualizar el usuario';
+                $messageError = 'Error al actualizar el usuario';
             }
         } else {
-            $_SESSION['error'] = 'Error: No se pudo procesar la solicitud';
+            $messageError = 'Error: No se pudo procesar la solicitud';
         }
-
+        $datos = [
+            'usuarios' => $usuarios,
+            'messageError' => $messageError,
+            'messageInfo' => $messageInfo,
+        ];
         $this->vista('pages/admin/adminView', $datos);
         exit;
     }
 
-
-
     public function DeleteUser()
     {
+        $messageDelet = null;
+        $mensaageError = null;
+
         // Verificar si se han enviado los datos necesarios
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deletebtn']) && isset($_POST['delete_id'])) {
             $delete_id = $_POST['delete_id'];
 
-            // Eliminar el registro del modelo
-            $this->AdminModel->eliminarRegistro($delete_id);
-        } else {
+            // Verificar si el usuario existe
+            $result = $this->peopleModel->getAllpersonas($delete_id);
+            if ($result) {
+                $paque = $this->paquetModel->getPackegesBy($delete_id);
+                if ($paque) {
+                    $mensaageError = 'No se puede borrar por que tiene un paquete';
+                } else {
+                    if ($this->adminModel->eliminarRegistro($delete_id)) {
+                        $messageDelet = 'Registro eliminado con éxito';
+                    };
+                }
+            } else {
+                $mensaageError = 'Por favor, verifica que el registro no esté asociado a otra entidad';
+            }
         }
-
         // Recuperar el filtro actual desde el POST (si existe), de lo contrario usar un valor predeterminado
         // Asegúrate de que el filtro se reciba desde el formulario POST correctamente
         $filter = isset($_POST['select_rol']) ? $_POST['select_rol'] : 'Todos';
@@ -165,9 +205,9 @@ class UserController extends Controlador
         // Si el filtro es 'Todos', obtenemos todos los registros
         // Sino, obtenemos los usuarios filtrados por rol
         if ($filter == 'Todos') {
-            $registros = $this->PeopleModel->getAllUsuario();
+            $registros = $this->peopleModel->getAllUsuario();
         } else {
-            $registros = $this->PeopleModel->getAllUsuario($filter);
+            $registros = $this->peopleModel->getAllUsuario($filter);
         }
 
         // Verificar si no hay registros después de la eliminación
@@ -192,7 +232,9 @@ class UserController extends Controlador
         // Pasar los datos a la vista con el filtro actual
         $datos = [
             'usuarios' => $usuarios,
-            'filter' => $filter,  // Aseguramos que el filtro se mantenga
+            'filter' => $filter,
+            'messageError' => $mensaageError,
+            'messageDelet' => $messageDelet,
         ];
 
         // Redirigir a la misma página con el filtro aplicado
@@ -208,67 +250,73 @@ class UserController extends Controlador
         if (isset($_POST['deletePaquetes']) && isset($_POST['delete_pid'])) {
             $id = $_POST['delete_pid'];
 
-            $this->PaquetModel->deletePaquetById($id);
+            $this->paquetModel->deletePaquetById($id);
 
-            $datos = $this->index('Paquete borrado correctamente');
+            $datos = $this->index(null, 'Paquete borrado correctamente');
             $this->vista('pages/admin/paquetesView', $datos);
         }
     }
-    public function Torre() {
+
+    public function Torre()
+    {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['borrar']) && isset($_POST['id'])) {
                 $id = $_POST['id'];
-                $mensaje = $this->PeopleModel->DeleteTorre($id); 
-    
-               
-                $datos['filter'] = 'borrar'; 
-                $datos['error'] = $mensaje;  
+                $mensaje = $this->torreModel->DeleteTorre($id);
+
+
+                $datos['filter'] = 'borrar';
+                $datos['error'] = $mensaje;
             } elseif (isset($_POST['guardar']) && isset($_POST['id']) && isset($_POST['torre'])) {
                 $id = $_POST['id'];
                 $torre = $_POST['torre'];
-    
+
                 // Lógica para guardar la torre
-                $mensaje = $this->PeopleModel->IngresarTorre($id, $torre);
-    
-               
-                $datos['filter'] = 'guardar'; 
-                $datos['error'] = $mensaje;   
+                $mensaje = $this->torreModel->IngresarTorre($id, $torre);
+
+
+                $datos['filter'] = 'guardar';
+                $datos['error'] = $mensaje;
             } else {
                 // Si no se envían datos válidos
                 $datos['error'] = 'Datos incompletos.';
             }
-    
-           
-            $this->vista('pages/admin/edificiosView', $datos);
-        } else {
-            
-            $this->vista('pages/admin/edificiosView');
         }
+
+        $datos['torres'] = $this->torreModel->getTorreByTable();
+        $datos['apartaments'] = $this->apartamentModel->getApartamentByTable();
+
+        $this->vista('pages/admin/edificiosView', $datos);
     }
-    
-    
+
+
     public function Apartamento()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $mensaje = null;
+            $mensaje2 = null;
             if (isset($_POST['borrar']) && isset($_POST['torre']) && isset($_POST['apartamento'])) {
                 $torre = $_POST['torre'];
                 $apartamento = $_POST['apartamento'];
-                $this->PeopleModel->DeleteApartamento($torre, $apartamento);
+                $this->apartamentModel->DeleteApartamento($torre, $apartamento);
                 $mensaje = 'Apartamento eliminado correctamente.';
             } elseif (isset($_POST['guardar']) && isset($_POST['torre']) && isset($_POST['apartamento'])) {
                 $torre = $_POST['torre'];
                 $apartamento = $_POST['apartamento'];
 
-                $mensaje2 = $this->PeopleModel->IngresarApartamento($torre, $apartamento);
+                $mensaje1 = $this->apartamentModel->IngresarApartamento($torre, $apartamento);
             } else {
-                $mensaje3 = 'Datos incompletos.';
+                $mensaje2 = 'Datos incompletos.';
             }
-            
+            $datos['messageError'] = $mensaje2;
+            $datos['messageInfo'] = $mensaje;
             $datos = $this->index($mensaje);
-            $this->vista('pages/admin/edificiosView', $datos);
-        } else {
-            $this->vista('pages/admin/edificiosView');
         }
+
+        $datos['torres'] = $this->torreModel->getTorreByTable();
+        $datos['apartaments'] = $this->apartamentModel->getApartamentByTable();
+
+        $this->vista('pages/admin/edificiosView', $datos);
     }
 
     public function MostrarDatos()
@@ -277,13 +325,12 @@ class UserController extends Controlador
         $roleId = isset($_POST['select_id']) && $_POST['select_id'] !== '' ? intval($_POST['select_id']) : null;
 
         // Obtén todos los registros de usuarios con o sin filtro
-        $registros = $this->PeopleModel->getAllUsuario($roleId);
+        $registros = $this->peopleModel->getAllUsuario($roleId);
 
         // Si no hay registros, devuelve un mensaje
         if (empty($registros)) {
             return [
                 'usuarios' => [],
-                'messageInfo' => 'No se encontraron registros.',
                 'filter' => $roleId, // Mantener el filtro actual
             ];
         }
@@ -308,7 +355,6 @@ class UserController extends Controlador
 
         return [
             'usuarios' => $usuarios,
-            'messageInfo' => null,
             'filter' => $roleId,
         ];
     }
@@ -332,79 +378,76 @@ class UserController extends Controlador
 
 
 
-
-    //Este metodo de la barra de búsqueda
     public function BuscarUsuario()
     {
         $datos = []; // Inicializamos los datos
         $usuarios = [];
         $filter = 'Todos'; // Valor predeterminado del filtro
-        $error = '';
+        $messageError = null; // Usamos 'messageError' para los mensajes de error
         $rolId = null; // Inicializa la variable $rolId
+
+        // Cargar todos los usuarios inicialmente
+        $usuarios = $this->peopleModel->getAllUsuario();
 
         // Verifica la acción de búsqueda o filtrado
         if (isset($_POST['action'])) {
             // Filtrado por rol
             if ($_POST['action'] === 'filter') {
-                $rolId = $_POST['select_rol'] ?? null;  // Asignamos el valor de select_rol o null si no está definido
-                $usuarios = $rolId ? $this->PeopleModel->getAllUsuario($rolId) : $this->PeopleModel->getAllUsuario();
+                $rolId = $_POST['select_rol'] ?? null; // Asignamos el valor de select_rol o null si no está definido
+                $usuarios = $rolId ? $this->peopleModel->getAllUsuario($rolId) : $this->peopleModel->getAllUsuario();
                 $filter = $rolId ?: 'Todos';
+                // No hay necesidad de mostrar error si no se encuentra ningún resultado en el filtro
+                if (empty($usuarios)) {
+                }
             }
             // Búsqueda por id_usuario
             elseif ($_POST['action'] === 'search' && !empty($_POST['id_usuario'])) {
-                $usuario = $this->PeopleModel->getPersonaById($_POST['id_usuario']);
+                $usuario = $this->peopleModel->getPersonaById($_POST['id_usuario']);
 
                 if ($usuario) {
-                    $usuarios = [$usuario];
+                    $usuarios = [$usuario]; // Mostrar solo el usuario encontrado
                     $filter = $usuario->Ro_id; // Cambia el filtro automáticamente según el rol del usuario encontrado
                 } else {
-                    $error = 'Usuario no encontrado.';
-                    $filter = 'Todos'; // Cambiar el filtro a 'Todos' si no se encuentra el usuario
+                    $messageError = 'Usuario no encontrado con la cédula proporcionada.'; // Mensaje de error para búsqueda
                 }
             }
+        }
 
-            // Convertir los usuarios a formato array
-            if (!empty($usuarios)) {
-                $usuariosArray = array_map(function ($usuario) {
-                    return [
-                        'Cedula' => $usuario->Pe_id,
-                        'Pe_nombre' => $usuario->Pe_nombre,
-                        'Pe_apellidos' => $usuario->Pe_apellidos,
-                        'Pe_telefono' => $usuario->Pe_telefono,
-                        'Us_correo' => $usuario->Us_correo,
-                        'Ap_id' => $usuario->Ap_id,
-                        'Ro_id' => $usuario->Ro_id,
-                        'Ap_numero' => $usuario->Ap_numero,
-                        'To_letra' => $usuario->To_letra,
-                        'Us_contrasena' => $usuario->Us_contrasena,
-                        'Ro_tipo' => $usuario->Ro_tipo,
-                    ];
-                }, $usuarios);
+        // Convertir los usuarios a formato array si hay usuarios encontrados
+        if (!empty($usuarios)) {
+            $usuariosArray = array_map(function ($usuario) {
+                return [
+                    'Cedula' => $usuario->Pe_id,
+                    'Pe_nombre' => $usuario->Pe_nombre,
+                    'Pe_apellidos' => $usuario->Pe_apellidos,
+                    'Pe_telefono' => $usuario->Pe_telefono,
+                    'Us_correo' => $usuario->Us_correo,
+                    'Ap_id' => $usuario->Ap_id,
+                    'Ro_id' => $usuario->Ro_id,
+                    'Ap_numero' => $usuario->Ap_numero,
+                    'To_letra' => $usuario->To_letra,
+                    'Us_contrasena' => $usuario->Us_contrasena,
+                    'Ro_tipo' => $usuario->Ro_tipo,
+                ];
+            }, $usuarios);
 
-                $datos['usuarios'] = $usuariosArray;
-            } else {
-                $error = $rolId ? "No se encontraron usuarios con el rol seleccionado." : 'No se encontraron usuarios.';
-                $datos['usuarios'] = [];
-            }
-        } else {
-            $error = 'Acción no válida.';
+            $datos['usuarios'] = $usuariosArray;
         }
 
         // Asignar el error y el filtro
         $datos['filter'] = $filter; // Asegura que el filtro correcto se pase a la vista
-        $datos['error'] = $error;
+        $datos['messageError'] = $messageError;
 
         // Renderiza la vista con los datos
         $this->vista('pages/admin/adminView', $datos);
     }
-
 
     public function MostrarHistorial()
     {
         if (isset($_POST['historial-btn'])) {
             $id = $_POST['historial_id'];
 
-            $registros = $this->PeopleModel->getAllRegistro($id);
+            $registros = $this->peopleModel->getAllRegistro($id);
 
             // Verificamos si $registros es un arreglo o un objeto
             if ($registros && is_array($registros)) {
@@ -425,11 +468,11 @@ class UserController extends Controlador
             } else {
                 $datos = ['historial' => []]; // Si no hay registros, aseguramos que la variable no cause errores
             }
-
-            $this->vista('pages/admin/historialViView', $datos);
-        } else {
-            $this->vista('pages/admin/historialViView', null);
         }
+
+        $datos['visitors'] = $this->visitorModel->getVisitrosByTable();
+
+        $this->vista('pages/admin/historialViView', $datos);
     }
 
     public function enterTower() {}

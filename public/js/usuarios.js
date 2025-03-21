@@ -28,7 +28,7 @@ window.onclick = function (event) {
 
 // Mostrar el campo de contraseña según el valor de categoría
 categoriaInput.addEventListener("input", function () {
-  if (categoriaInput.value === "1" || categoriaInput.value === "2") {
+  if (categoriaInput.value === "1" || categoriaInput.value === "2" || categoriaInput.value === "3") {
       passwordLabel.style.display = "block";
       passwordInput.style.display = "block";
   } else {
