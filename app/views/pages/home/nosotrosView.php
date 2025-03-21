@@ -34,7 +34,7 @@
                 <div class="texto">
                     <h2 class="vision">Nuestra <b>Vision</b></h2>
                     <p>
-                        Para 2025, ser líderes en construcción y comercialización de sistemas habitacionales innovadores y de calidad, destacando en obras civiles e infraestructuras, con un equipo ético y comprometido, garantizando solidez y reconocimiento empresarial..
+                        Para 2025, ser líderes en construcción y comercialización de sistemas habitacionales innovadores y de calidad, destacando en obras civiles e infraestructuras, con un equipo ético y comprometido, garantizando solidez y reconocimiento empresarial.
                     </p>
                 </div>
                 <img src="<?php echo RUTA_URL; ?>/img/vision-img.jpg" alt="Vision-img" class="Mision-img">

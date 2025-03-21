@@ -1,5 +1,22 @@
 /* contenido de la pagina  */
 
+
+.var_sesion {
+  margin-left: 30%;
+  color: black;
+  font-size: 35px;
+  width: auto;
+
+}
+
+.var_sesion_admin {
+  margin-left: 35%;
+  color: black;
+  font-size: 35px;
+  width: auto;
+
+}
+
 .cuerpo {
   display: flex;
   flex-direction: row;
@@ -27,7 +44,7 @@ h2 {
   border-radius: 10px;
   font-size: 190px;
   text-align: center;
-  margin-left:40px ;
+  margin-left: 40px;
 }
 
 .opciones {
@@ -71,6 +88,7 @@ h2 {
 }
 
 .boton_entrada {
+  cursor: pointer;
   width: 200px;
   height: 50px;
   font-size: 20px;
@@ -95,6 +113,21 @@ h2 {
   background-color: rgba(86, 89, 91, 0.4);
 }
 
+.modal_v {
+  display: none;
+  position: fixed;
+  padding-top: 60px;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(86, 89, 91, 0.4);
+
+}
+
+
 .cerrado {
   display: flex;
   flex-direction: row;
@@ -114,6 +147,16 @@ h2 {
 
 .modal-content {
   max-width: 400px;
+  margin: 0 auto;
+  padding: 20px 30px;
+  background: linear-gradient(135deg, #eaeaea, #606060);
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  font-family: "Poppins", sans-serif;
+}
+
+.modal-contentHistorial {
+  width: 700px;
   margin: 0 auto;
   padding: 20px 30px;
   background: linear-gradient(135deg, #eaeaea, #606060);
@@ -161,6 +204,79 @@ form input[type="text"] {
   transition: border-color 0.3s, box-shadow 0.3s;
 }
 
+.Rol,
+option {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  font-size: 1em;
+  color: #333;
+  background-color: #ededed;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Select de las torres */
+.select_torre {
+  width: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Select de las torres */
+
+.titulo_torre {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ap {
+  width: auto;
+  margin-right: 50px;
+}
+
+.select_torre2 {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter-select {
+  width: 45%;
+  height: 50px;
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 14px;
+  color: #495057;
+}
+
+.filter-select_personas {
+  width: 100%;
+  height: 50px;
+  margin-bottom: 25px;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 14px;
+  color: #495057;
+}
+
+.filter {
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 14px;
+  color: #495057;
+}
+
 /* Efecto de foco en el campo */
 form input[type="text"]:focus {
   border-color: #6a5acd;
@@ -173,10 +289,22 @@ form input[type="text"]:focus {
 form h4,
 form input[type="text"] {
   display: block;
+  /* background: none ; */
+  margin-bottom: 0;
+}
+
+.imput_new_registro{
+  margin-bottom: 10px !important; ;
+}
+
+.buscar_id{
+  display: block;
+  background: none !important; 
+  margin-bottom: 0;
 }
 
 /* Espaciado entre campos */
-form h4 + input[type="text"] {
+form h4+input[type="text"] {
   margin-top: 5px;
 }
 
@@ -217,10 +345,13 @@ form input[type="text"]::placeholder {
 .aceptar,
 .nuevo_registro,
 .paquetes {
+  cursor: pointer;
   width: 220px;
   height: 50px;
   font-size: 20px;
 }
+
+
 
 #displayForm {
   background-color: #ffffff;
@@ -270,6 +401,58 @@ form input[type="text"]::placeholder {
   height: 85px;
   position: absolute;
   bottom: 0;
+  z-index: -10;
+}
+
+.tabla-flotante {
+  display: none;
+  /* Oculto por defecto */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.tabla-flotante__contenido {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 80%;
+  max-width: 600px;
+}
+
+.tabla-flotante__tabla {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-flotante__tabla th,
+.tabla-flotante__tabla td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.tabla-flotante__tabla th {
+  background-color: #f4f4f4;
+}
+
+.boton-flotante {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.boton-flotante:hover {
+  background-color: #0056b3;
 }
 
 /* Estilos para ocultar el modal */
@@ -329,7 +512,8 @@ h4 {
   margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  height: 100px; /* Ajusta la altura según lo necesites */
+  height: 100px;
+  /* Ajusta la altura según lo necesites */
 }
 
 #Pa_Fecha {
@@ -349,6 +533,7 @@ h4 {
 .boton_usuario a:hover {
   color: white;
 }
+
 .ventana-emergente {
   display: none;
   position: fixed;
@@ -398,19 +583,20 @@ h4 {
 }
 
 .boton {
-  width: 180px;
-  padding: 10px;
-  height: 40px;
-  display: inline-block;
-  cursor: pointer;
-  position: relative;
-  top: 20%;
-  font-weight: 700;
-  background-color: #888888b2;
-  border-radius: 30px;
+  padding: 5px;
+  width: 150px;
+  height: 50px;
   font-size: 20px;
-  margin: 20px;
+  margin-right: 100px;
+  margin-left: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 20px;
+  background-color: rgb(184, 184, 184);
+  box-shadow: 0px 0px 10px 0px black;
+  transition: all 1s;
 }
+
 #cambiar-usuario {
   width: 200px;
   padding: 10px;
@@ -424,6 +610,7 @@ h4 {
   font-size: 20px;
   margin-left: 40%;
 }
+
 .pop {
   display: flex;
   flex-direction: row;
@@ -503,7 +690,9 @@ h4 {
 .formulario-general__boton:hover {
   background-color: #2980b9;
 }
+
 .miModal {
+  z-index: 100;
   display: none;
   justify-content: center;
   align-items: center;
@@ -534,19 +723,27 @@ h4 {
   font-weight: bold;
   margin: 0 0 20px;
   color: #333;
-  text-align: center;
   border-bottom: 2px solid #007bff;
   padding-bottom: 10px;
 }
 
+
 .miModal__cerrar {
   position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 1.5em;
+  top: 17px;
+  right: 24px;
   background: none;
   border: none;
   color: #666;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.miModal__cerrar_v {
+  display: flex;
+  right: 15px;
+  background: none;
+  border: none;
   cursor: pointer;
   transition: color 0.3s;
 }
@@ -598,4 +795,8 @@ h4 {
 
 .miModal__submit:hover {
   background-color: #0056b3;
+}
+.buscar_guest{
+  cursor: pointer;
+
 }

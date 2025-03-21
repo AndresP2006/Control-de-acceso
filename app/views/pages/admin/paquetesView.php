@@ -1,194 +1,63 @@
-<?php require_once RUTA_APP . '/views/inc/header-registro.php'; ?>
+<?php require_once RUTA_APP . '/views/inc/header-admin.php'; ?>
 
-
-<div class="content_cuerpo">
-    <div class="content_cuerpo-bloque2">
-        <div class="content_cuerpo-bloque2-caja">
-            <h1 class="content_cuerpo-bloque2-caja-titulo">Paquetes en porteria</h1>
-        </div>
+<div class="table-container">
+    <div class="table-wrapper">
+        <h1>Historial de Paquetes</h1>
         <table>
-            <tr>
-                <th class="content__tabla-titulo">Estado</th>
-                <th class="content__tabla-titulo">Descripcion</th>
-                <th class="content__tabla-titulo">Fecha</th>
-                <th class="content__tabla-titulo">Responsable</th>
-                <th class="content__tabla-titulo">Dueño</th>
-            </tr>
-            <?php
-            $model = new PeopleModel();
-            $registro = $model->getPackeges();
+            <thead>
+                <tr>
+                    <th>Documento</th>
+                    <th>Destinatario</th>
+                    <th>Estado</th>
+                    <th>Fecha</th>
+                    <th>Descripcion</th>
+                    <th>Recibidor</th>
+                    <th>Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                if (is_array($datos['paquets'])) {
+                    foreach ($datos['paquets'] as $historial):
+                        echo "<tr>";
+                        echo "<td>" . $historial['Pe_id'] . "</td>";
+                        echo "<td>" . $historial['Pe_nombre'] . "</td>";
+                        echo "<td>" . $historial['Pa_estado'] . "</td>";
+                        echo "<td>" . $historial['Pa_fecha'] . "</td>";
+                        echo "<td>" . $historial['Pa_descripcion'] . "</td>";
+                        echo "<td>" . $historial['Pa_responsable'] . "</td>";
 
-            if (is_array($registro)) {
-                foreach ($registro as $visitas): ?>
-                    <tr>
-                        <td class="content__tabla-informacion"><?php echo $visitas["Pa_estado"]; ?></td>
-                        <td class="content__tabla-informacion"><?php echo $visitas["Pa_descripcion"]; ?></td>
-                        <td class="content__tabla-informacion"><?php echo $visitas["Pa_fecha"]; ?></td>
-                        <td class="content__tabla-informacion"><?php echo $visitas["Pa_responsable"]; ?></td>
-                        <td class="content__tabla-informacion"><?php echo $visitas["Pe_id"]; ?></td>
-                    </tr>
-            <?php endforeach;
-            } else {
-                echo "No se encontraron registros.";
-            }
-            ?>
-            </tr>
+                        echo "<td>
+                            <form action='" . RUTA_URL . "/UserController/DeletePaquete' method='POST' style='display:inline;'>
+                                <input type='hidden' name='delete_pid' value='" . htmlspecialchars($historial['Pa_id'] ?? '') . "'>
+                                <button type='submit' name='deletePaquetes' class='delete-btn-pq'>🗑️</button>
+                            </form>
+                            </td>";
+                        echo "</tr>";
+                    endforeach;
+                };
+
+                ?>
+            </tbody>
         </table>
     </div>
-    <div class="content_cuerpo-bloque3">
-        <div class="content_cuerpo-bloque3-contenido">
-            <button class="content_cuerpo-bloque3-botones">
-                <a href="<?php echo RUTA_URL; ?>/HomeController/usuario"> Usuarios</a>
-            </button>
-            <button class="content_cuerpo-bloque3-botones" id="NuevoUsuaro">
-                Nuevo usuario
-            </button>
-            <!-- Formulario modal de visitantes -->
-            <div id="Modal" class="modal">
-                <div class="modal-content">
-                    <div class="cerrado">
-                        <h3 class="titulo-form">Nuevo registro</h3>
-                        <span class="closes">&times;</span>
-                    </div>
-                    <form id="myForm" action="<?php echo RUTA_URL; ?>/UserController/createUser" method="post">
-                        <div class="content_cuerpo-bloque2-caja-titulo-contenido">
-                            <div class="content_cuerpo-bloque2-caja-titulo-contenido-bloque1">
-                                <br>
-                                <br>
-                                <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo-2">
-                                    Numero de Documento:
-                                </p>
-                                <br>
-                                <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo-2">
-                                    Nombres:
-                                </p>
-                                <br>
-                                <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo-2">
-                                    Apellidos:
-                                </p>
-                                <br>
-                                <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo-2">
-                                    Telefono:
-                                </p>
-                                <br>
-                                <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo-2">
-                                    Gmail:
-                                </p>
-                                <br>
-                                <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo-2">
-                                    Numero de Departamento:
-                                </p>
-                                <br>
-                                <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo-2">
-                                    Contraseña:
-                                </p>
-                                <br>
-                                <p class="content_cuerpo-bloque2-caja-titulo-contenido-parrafo-2">
-                                    Rol:
-                                </p>
-                                <br>
-                                <input type="submit" value="Guardar" name="Enviar" class="Enviar" />
-                            </div>
-                            <div class="content_cuerpo-bloque2-caja-titulo-contenido-bloque2">
-                                <input type="text" id="u_id" name="U_id" />
-                                <input type="text" id="U_Nombre" name="U_Nombre" />
-                                <input type="text" id="U_Apellido" name="U_Apellido" />
-                                <input type="text" id="U_Telefono" name="U_Telefono" />
-                                <input type="text" id="U_Gmail" name="U_Gmail" />
-                                <input type="text" id="U_Departamento" name="U_Departamento" />
-                                <input type="text" id="U_contrasena" name="U_contrasena" />
-                                <select name="R_id" class="Rol">
-                                    <option value="">Seleccionar</option>
-                                    <option value=1>Administrador</option>
-                                    <option value=2>Guardia</option>
-                                    <option value=3>Residente</option>
-                                </select>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <!-- Fin del formulario -->
-
-            <button class="content_cuerpo-bloque3-botones">
-                <a href="<?php echo RUTA_URL; ?>/HomeController/historialRe"> Historial de registro</a>
-            </button>
-
-            <button class="content_cuerpo-bloque3-botones">
-                <a href="<?php echo RUTA_URL; ?>/HomeController/histrialVi">Lista de visitante</a>
-            </button>
-            <button class="content_cuerpo-bloque3-botones">
-                <a href="<?php echo RUTA_URL; ?>/HomeController/paquetes">Paquetes</a>
-            </button>
-
-            <button class="content_cuerpo-bloque3-botones" id="openModalBtn">
-                Editar usuario
-            </button>
-            <div id="myModal" class="modal">
-                <div class="modal-content2">
-                    <span class="close">&times;</span>
-                    <h2>Usuarios y Contraseñas</h2>
-                    <table>
-                        <caption>
-                            Usuarios y Contraseñas
-                        </caption>
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Usuario</th>
-                                <th>Contraseña</th>
-                                <th>Admin</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Andres</td>
-                                <td>Andres2020</td>
-                                <td>****</td>
-                                <td><input type="checkbox"></td </tr>
-                            <tr>
-                                <td>Stiven</td>
-                                <td>Stiven023</td>
-                                <td>***</td>
-                                <td><input type="checkbox"></td </tr>
-                        </tbody>
-                    </table>
-                    <button class="Nboto">Nuevo usuario</button>
-                </div>
-            </div>
-
-            <button class="content_cuerpo-bloque3-botones">
-                <a href=""> Eliminar registro</a>
-            </button>
-
-            <button class="content_cuerpo-bloque3-botones" id="showFormButton">
-                Eliminar historial
-            </button>
-            <div id="modalOverlay" class="modal-overlay">
-                <div class="modal-content3">
-                    <span class="modal-close">&times;</span>
-                    <div class="form-area">
-                        <h1>Formulario de Control</h1>
-                        <form id="controlForm">
-                            <div class="btn-wrapper">
-                                <button type="button" class="btn-remove" id="removeBtn">
-                                    Eliminar
-                                </button>
-                            </div>
-                            <div class="form-group">
-                                <label for="months">Conservar los últimos (Meses):</label>
-                                <input type="text" id="months" name="months" />
-                            </div>
-                            <div class="form-group">
-                                <label for="deleteHistory">Ingresa 0 para eliminar todo el historial:</label>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="action-buttons">
+        <a href="<?php echo RUTA_URL; ?>/HomeController/admin"><button class="action-btn">Usuarios</button></a>
+        <a href="<?php echo RUTA_URL; ?>/HomeController/HistoryRecords"><button
+                class="action-btn">Registros</button></a>
+        <a href="<?php echo RUTA_URL; ?>/HomeController/HistoryPackages"><button
+                class="action-btn">Paquetes</button></a>
+        <a href="<?php echo RUTA_URL; ?>/HomeController/Edificios"><button class="action-btn">Edificio</button></a>
     </div>
 </div>
-</div>
+<?php include RUTA_APP . '/views/pages/admin/modalRegistro.php'; ?>
 
-<?php require_once RUTA_APP . '/views/inc/footer-historial.php'; ?>
+<?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>
+<script>
+        <?php if (isset($datos['messageError'])) { ?>
+error("<?php echo $datos['messageError']; ?>")
+<?php } ?>
+<?php if (isset($datos['messageInfo'])) { ?>
+realizado("<?php echo $datos['messageInfo']; ?>")
+<?php } ?>
+</script>
