@@ -62,7 +62,7 @@
                 </div>
                 <div class="habitantes">
                     <p class="habitantes"><strong>Habitantes</strong></p>
-                    <p class="gray-text">Juan David Rua Porta</p>
+                    <p class="gray-text"><?php echo $datos['people'][0]->Pe_nombre ." ".  $datos['people'][0]->Pe_apellidos?></p>
                     <p class="gray-text">Luis Adriano Padilla Cardales</p>
                     <p class="gray-text">Stiven Dario Catalan Silgado</p>
                 </div>
