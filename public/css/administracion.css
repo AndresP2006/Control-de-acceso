@@ -3,6 +3,16 @@
     font-family: Arial, Helvetica, sans-serif !important;
 }
 
+.label_new_registro{
+    font-size: 20px;
+    margin-bottom: 5px;
+    color: #141414;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+.imput_new_registro{
+    margin-bottom: 10px;
+}
 .content_Encabezado {
     margin-bottom: 50px;
     height: 150px;
