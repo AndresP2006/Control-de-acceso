@@ -21,6 +21,9 @@
     justify-content: space-between;
     align-items: center;
 }
+.content_Encabezado-titulo{
+    margin-left: 60px;
+}
 
 .content_Encabezado-titulo-boton {
     width: 180px;
