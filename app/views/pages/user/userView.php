@@ -62,9 +62,16 @@
                 </div>
                 <div class="habitantes">
                     <p class="habitantes"><strong>Habitantes</strong></p>
-                    <?php foreach ($datos['people'] as $persona): ?>
-                        <p class="gray-text"><?php echo $persona->Pe_nombre . " " . $persona->Pe_apellidos; ?></p>
-                    <?php endforeach; ?>
+
+                    <?php if (!empty($datos['people'])): ?>
+                        <?php foreach ($datos['people'] as $persona): ?>
+                            <p class="gray-text">
+                                <?php echo $persona->Pe_nombre . " " . $persona->Pe_apellidos; ?>
+                            </p>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p class="gray-text">No mani porque tan solo.</p>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
