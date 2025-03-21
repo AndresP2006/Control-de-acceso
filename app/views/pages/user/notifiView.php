@@ -1,6 +1,6 @@
 <?php require_once RUTA_APP . "/views/inc/header-notificacion.php" ?>
 <div class="contenedor">
-    <div class="titulo">NOTIFICACIONES<a href="<?php echo RUTA_URL; ?>/HomeController/verUser" class="enlaces">
+    <div class="titulo">NOTIFICACIONES<a href="<?php echo RUTA_URL; ?>/HomeController/resident" class="enlaces">
             <span class="icons  exit">↩️</span>
         </a>
     </div>
