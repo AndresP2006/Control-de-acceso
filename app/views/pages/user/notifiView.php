@@ -25,7 +25,9 @@
         <div class="notificacion">
             <div class="texto">
                 <strong>Nueva visita en la entrada</strong>
-                <p>Se ha registrado una nueva visita para usted en la entrada del edificio.</p>
+                <p>Se ha registrado una nueva visita para usted en la entrada del edificio. que es 
+                    <!-- <?php echo $dato['visitas'][0].Vi_nombres ?></p>
+                      -->
             </div>
             <div class="icono"><a href=""><span>🗑️</span></a></div>
         </div>

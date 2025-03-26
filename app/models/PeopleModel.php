@@ -152,12 +152,25 @@ class PeopleModel
     public function getAllRedident($result)
     {
 
-         $this->db->query("SELECT p2.Pe_nombre, p2.Pe_apellidos 
+        $this->db->query("SELECT p2.Pe_nombre, p2.Pe_apellidos 
                            FROM persona p1 
                            JOIN apartamento a ON p1.Ap_id = a.Ap_id 
                            JOIN persona p2 ON a.Ap_id = p2.Ap_id 
-                           WHERE p1.Pe_nombre = '$result' AND p2.Pe_id <> p1.Pe_id", );
+                           WHERE p1.Pe_nombre = '$result' AND p2.Pe_id <> p1.Pe_id",);
 
         return $this->db->registros();
+    }
+    public function getAllNotifivisit($result)
+    {
+        $this->db->query("SELECT v.Vi_nombres, v.Vi_apellidos, r.Re_fecha_entrada, r.Re_hora_entrada, r.Re_motivo  
+                FROM registro r  
+                JOIN visitantes v ON r.Vi_id = v.Vi_id  
+                JOIN persona p ON r.Pe_id = p.Pe_id  
+                WHERE p.Pe_nombre = '$result' 
+                AND (r.Re_hora_salida = '00:00:00' OR r.Re_hora_salida IS NULL)  
+                ORDER BY r.Re_fecha_entrada DESC, r.Re_hora_entrada DESC  
+                LIMIT 1;
+                ");
+        return $this->db->registro();
     }
 }
