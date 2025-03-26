@@ -70,7 +70,7 @@
                             </p>
                         <?php endforeach; ?>
                     <?php else: ?>
-                        <p class="gray-text">No mani porque tan solo.</p>
+                        <p class="gray-text">Actualmente no cuenta con mas habitantes</p>
                     <?php endif; ?>
                 </div>
             </div>
