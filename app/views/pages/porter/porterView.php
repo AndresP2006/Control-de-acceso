@@ -1,6 +1,6 @@
 <?php require_once RUTA_APP . '/views/inc/header-porter.php'; ?>
 
-    </div>
+   
     <div class="cuerpo">
         <div class="contador_ingresos">
             <h2>Han Ingresado</h2>
