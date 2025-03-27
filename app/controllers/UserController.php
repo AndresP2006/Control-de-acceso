@@ -25,13 +25,15 @@ class UserController extends Controlador
         $paquets = $this->paquetModel->getPackegesByTable();
         $resindents = $this->peopleModel->getAllResident($_SESSION['datos']->Us_usuario);
         $people = $this->peopleModel->getAllRedident($_SESSION['datos']->Us_usuario);
+        // $notificacion = $this->peopleModel->getNotificacion($_SESSION['datos']->Us_usuario);
 
         return [
             'messageError' => $messageError,
             'messageInfo' => $messageInfo,
             'paquets' => $paquets,
             'resindents' => $resindents,
-            'people' => $people
+            'people' => $people,
+            // 'notificacion' => $notificacion
         ];
     }
 

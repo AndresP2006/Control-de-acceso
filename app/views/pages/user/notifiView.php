@@ -21,14 +21,15 @@
             </div>
             <div class="icono"><a href=""><span>🗑️</span></a></div>
         </div>
-
-        <div class="notificacion">
-            <div class="texto">
-                <strong>Nueva visita en la entrada</strong>
-                <p>Se ha registrado una nueva visita para usted en la entrada del edificio.</p>
-            </div>
-            <div class="icono"><a href=""><span>🗑️</span></a></div>
-        </div>
+        <?php if (!empty($datos['notificacion'])): ?>
+            <p>Nombre: <?php echo $datos['notificacion']->Vi_nombres; ?></p>
+            <p>Apellido: <?php echo $datos['notificacion']->Vi_apellidos; ?></p>
+            <p>Fecha de entrada: <?php echo $datos['notificacion']->Re_fecha_entrada; ?></p>
+            <p>Hora de entrada: <?php echo $datos['notificacion']->Re_hora_entrada; ?></p>
+            <p>Motivo: <?php echo $datos['notificacion']->Re_motivo; ?></p>
+        <?php else: ?>
+            <p>No hay notificaciones disponibles.</p>
+        <?php endif; ?>
 
         <div class="notificacion">
             <div class="texto">
@@ -45,10 +46,13 @@
             <div class="icono"><a href=""><span>🗑️</span></a></div>
         </div>
 
+        <?php var_dump($datos) ?>
     </div>
 
     <div class="acciones">
         <div class="eliminar">Eliminar todo 🗑️</div>
         <div class="control">Control de <span style="color: black;">Acceso</span></div>
     </div>
+
+    <?php echo "<script>console.log(" . json_encode($datos) . ");</script>"; ?>
 </div>
