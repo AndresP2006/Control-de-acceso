@@ -481,24 +481,33 @@ class UserController extends Controlador
 
     public function ActualizarUsuario()
     {
-        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            
-            if (!isset($_POST['E_id']) || empty(trim($_POST['E_id']))) {
-                echo json_encode(['success' => false, 'error' => 'Cédula no proporcionada']);
-                exit;
+            // Obtener datos JSON desde la solicitud
+            $inputJSON = file_get_contents("php://input");
+            $datos = json_decode($inputJSON, true); // Convertir JSON en array PHP
+
+            // Validación: Comprobar si existen los datos requeridos
+            $requiredFields = ['E_id', 'E_Gmail', 'E_Telefono', 'To_id', 'Ap_numero'];
+            foreach ($requiredFields as $field) {
+                if (!isset($datos[$field]) || empty(trim($datos[$field]))) {
+                    echo json_encode(['success' => false, 'error' => "Falta el campo: " . $field]);
+                    exit;
+                }
             }
 
-            $datos = [
-                'Cedula' => trim($_POST['E_id']),
-                'Gmail' => trim($_POST['E_Gmail']),
-                'Telefono' => trim($_POST['E_Telefono']),
-                'Torre' => trim($_POST['To_id']),
-                'Apartamento' => trim($_POST['Ap_numero']),
+            // Preparar datos para actualizar
+            $usuarioActualizado = [
+                'Cedula'      => trim($datos['E_id']),
+                'Gmail'       => trim($datos['E_Gmail']),
+                'Telefono'    => trim($datos['E_Telefono']),
+                'Torre'       => trim($datos['To_id']),
+                'Apartamento' => trim($datos['Ap_numero']),
             ];
 
-            $resultado = $this->adminModel->updateUserPartial($datos);
+            // Llamar al modelo para actualizar
+            $resultado = $this->adminModel->updateUserPartial($usuarioActualizado);
 
+            // Devolver respuesta JSON
             echo json_encode(['success' => $resultado]);
             exit;
         }

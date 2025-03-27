@@ -144,73 +144,56 @@ class AdminModel
 
 public function updateUserPartial($datos)
 {
-
     try {
-        // Verificar que todas las claves requeridas están definidas y no vacías
-        $requiredKeys = ['E_id', 'E_Gmail', 'E_Telefono', 'To_id', 'Ap_numero'];
+        // Validar que todos los datos existen
+        $requiredKeys = ['Cedula', 'Gmail', 'Telefono', 'Torre', 'Apartamento'];
         foreach ($requiredKeys as $key) {
             if (!isset($datos[$key]) || empty(trim($datos[$key]))) {
                 throw new Exception("Falta el campo: " . $key);
             }
         }
-        echo "<script>alert('yes')</script>";
 
-        // Asignar variables locales para mayor claridad
-        $cedula      = trim($datos['E_id']);
-        $correo      = trim($datos['E_Gmail']);
-        $telefono    = trim($datos['E_Telefono']);
-        $torre       = trim($datos['To_id']);
-        $apartamento = trim($datos['Ap_numero']);
+        // Variables locales
+        $cedula = trim($datos['Cedula']);
+        $correo = trim($datos['Gmail']);
+        $telefono = trim($datos['Telefono']);
+        $torre = trim($datos['Torre']);
+        $apartamento = trim($datos['Apartamento']);
 
-        // Iniciar una transacción
+        // Iniciar transacción
         $this->db->beginTransaction();
 
         // Actualizar el correo en la tabla 'usuario'
-        $this->db->query('
-            UPDATE usuario 
-            SET Us_correo = :Correo 
-            WHERE Us_id = :Cedula
-        ');
+        $this->db->query("UPDATE usuario SET Us_correo = :Correo WHERE Us_id = :Cedula");
         $this->db->bind(':Cedula', $cedula);
         $this->db->bind(':Correo', $correo);
         $this->db->execute();
 
         // Actualizar el teléfono en la tabla 'persona'
-        $this->db->query('
-            UPDATE persona 
-            SET Pe_telefono = :Telefono 
-            WHERE Pe_id = :Cedula
-        ');
+        $this->db->query("UPDATE persona SET Pe_telefono = :Telefono WHERE Pe_id = :Cedula");
         $this->db->bind(':Cedula', $cedula);
         $this->db->bind(':Telefono', $telefono);
         $this->db->execute();
 
-        // // Actualizar Torre y Apartamento en la tabla 'apartamento'
-        // $this->db->query('
-        //     UPDATE apartamento 
-        //     SET To_id = (
-        //         SELECT t.To_id FROM torre t WHERE t.To_letra = :Torre
-        //     ), Ap_numero = :Apartamento 
-        //     WHERE Pe_id = :Cedula
-        // ');
-        // $this->db->bind(':Cedula', $cedula);
-        // $this->db->bind(':Torre', $torre);
-        // $this->db->bind(':Apartamento', $apartamento);
-        // $this->db->execute();
+        // Actualizar torre y apartamento en la tabla 'apartamento'
+        $this->db->query("UPDATE apartamento SET To_id = :Torre, Ap_numero = :Apartamento WHERE Ap_id = (SELECT Ap_id FROM persona WHERE Pe_id = :Cedula)");
+        $this->db->bind(':Cedula', $cedula);
+        $this->db->bind(':Torre', $torre);
+        $this->db->bind(':Apartamento', $apartamento);
+        $this->db->execute();
 
-        // Confirmar la transacción
+        // Confirmar transacción
         $this->db->commit();
+        
         return true;
-
     } catch (Exception $e) {
-        // Verificar si hay una transacción activa antes de hacer rollBack
-        if ($this->db->inTransaction()) {
-            $this->db->rollBack();
-        }
+        // En caso de error, revertir cambios
+        $this->db->rollBack();
         error_log("Error en updateUserPartial: " . $e->getMessage());
         return false;
     }
 }
+
 
 
 
