@@ -6,9 +6,18 @@
             <h1>Bienvenido Residente</h1>
             <hr>
             <div class="icons">
-                <a href="<?php echo RUTA_URL; ?>/HomeController/notificaciones" class="enlaces">
+                <!-- <a href="<?php echo RUTA_URL; ?>/HomeController/notificaciones" class="enlaces">
                     <span class="icons">🔔</span>
-                </a>
+                </a> -->
+                <form action="<?php echo RUTA_URL; ?>/HomeController/notificaciones" method="POST" style="display: inline;">
+                    <input type="hidden" name="Us_usuario" value="<?php echo $datos['resindents'][0]->Pe_nombre; ?>">
+                    <button type="submit" class="enlaces" style="background: none; border: none; cursor: pointer;">
+                        <span class="icons">🔔</span>
+                    </button>
+                </form>
+                <!-- <a href="<?php echo RUTA_URL; ?>/HomeController/notificaciones , '$datos'" class="enlaces">
+                    <span class="icons">🔔</span>
+                </a> -->
                 <a href="<?php echo RUTA_URL; ?>/HomeController/index" class="enlaces">
                     <span class="icons">↩️</span>
                 </a>

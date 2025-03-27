@@ -32,6 +32,7 @@ class LoginController extends Controlador
                         break;
                     case "3": // residente
                         
+                        // header('location:' . RUTA_URL . '/HomeController/notificaciones', );
                         header('location:' . RUTA_URL . '/HomeController/resident', );
                         break;
                 }

@@ -21,16 +21,15 @@
             </div>
             <div class="icono"><a href=""><span>🗑️</span></a></div>
         </div>
-        <?php if (isset($datos['notificacion']) && !empty($datos['notificacion'])) { ?>
-            <div class="notificacion">
-                <div class="texto">
-                    <strong>Nueva visita en la entrada</strong>
-                    <p>Se ha registrado la persona <?php echo $datos['notificacion'][0]->Vi_nombres; ?> para usted en la entrada del edificio.</p>
-
-                </div>
-                <div class="icono"><a href=""><span>🗑️</span></a></div>
-            </div>
-        <?php } ?>
+        <?php if (!empty($datos['notificacion'])): ?>
+            <p>Nombre: <?php echo $datos['notificacion']->Vi_nombres; ?></p>
+            <p>Apellido: <?php echo $datos['notificacion']->Vi_apellidos; ?></p>
+            <p>Fecha de entrada: <?php echo $datos['notificacion']->Re_fecha_entrada; ?></p>
+            <p>Hora de entrada: <?php echo $datos['notificacion']->Re_hora_entrada; ?></p>
+            <p>Motivo: <?php echo $datos['notificacion']->Re_motivo; ?></p>
+        <?php else: ?>
+            <p>No hay notificaciones disponibles.</p>
+        <?php endif; ?>
 
         <div class="notificacion">
             <div class="texto">
@@ -47,6 +46,7 @@
             <div class="icono"><a href=""><span>🗑️</span></a></div>
         </div>
 
+        <?php var_dump($datos) ?>
     </div>
 
     <div class="acciones">
