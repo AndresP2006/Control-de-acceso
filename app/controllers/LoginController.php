@@ -17,7 +17,7 @@ class LoginController extends Controlador
 
         if ($result && isset($result)) {
             if ($result->Us_contrasena === $_POST['password']) {
-
+                
                 $_SESSION['sesion_activa'] = true;
                 $_SESSION['datos'] = $result;
 

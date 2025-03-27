@@ -71,16 +71,15 @@ class Base
     public function registros()
     {
         $this->execute();
-        try{
+        try {
             return $this->stmt->fetchAll(PDO::FETCH_OBJ);
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             return;
         }
-       
     }
     //OBTENER REGISTRO PARA LAS TABLAS
-    public function showTables(){
+    public function showTables()
+    {
         $this->execute();
         return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -89,14 +88,17 @@ class Base
     public function registro()
     {
         $this->execute();
-        try{
-        return $this->stmt->fetch(PDO::FETCH_OBJ);
-        }
-        catch(Exception $e){
+        try {
+            return $this->stmt->fetch(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
             return;
         }
     }
-    
+    public function inTransaction()
+    {
+        return $this->dbh->inTransaction();
+    }
+
 
     //OBTENER CANTIDAD DE FILAS CON EL MOTODO rowCOUNT
     public function rowCount()
@@ -121,8 +123,7 @@ class Base
     }
 
     public function single()
-{
-    return $this->stmt->fetch(PDO::FETCH_ASSOC);
-}
-
+    {
+        return $this->stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
