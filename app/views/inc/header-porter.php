@@ -22,5 +22,6 @@
         <div class="cerrar-sescion">
             <a href="<?php echo RUTA_URL; ?>/HomeController/index"><button class="boton">Cerrar Sesión</button></a>
         </div>
+    </div>
 
-<body>
+    <body>
