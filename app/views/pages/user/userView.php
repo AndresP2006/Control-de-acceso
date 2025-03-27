@@ -16,7 +16,7 @@
         </div>
         <br>
         <div class="content">
-            <h4 class="nombre"><?= $datos['resindents'][0]->Pe_nombre ." ". $datos['resindents'][0]->Pe_apellidos ?></h4>
+            <h4 class="nombre"><?= $datos['resindents'][0]->Pe_nombre . " " . $datos['resindents'][0]->Pe_apellidos ?></h4>
 
             <hr class="Linea">
             <br>
@@ -55,16 +55,23 @@
                         <tr>
                             <td><strong>Departamento</strong></td>
                             <td class="gray-text1">
-                            <?php echo $datos['resindents'][0]->Ap_numero; ?>
+                                <?php echo $datos['resindents'][0]->Ap_numero; ?>
                             </td>
                         </tr>
                     </table>
                 </div>
                 <div class="habitantes">
                     <p class="habitantes"><strong>Habitantes</strong></p>
-                    <p class="gray-text"><?php echo $datos['people'][0]->Pe_nombre ." ".  $datos['people'][0]->Pe_apellidos?></p>
-                    <p class="gray-text">Luis Adriano Padilla Cardales</p>
-                    <p class="gray-text">Stiven Dario Catalan Silgado</p>
+
+                    <?php if (!empty($datos['people'])): ?>
+                        <?php foreach ($datos['people'] as $persona): ?>
+                            <p class="gray-text">
+                                <?php echo $persona->Pe_nombre . " " . $persona->Pe_apellidos; ?>
+                            </p>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p class="gray-text">Actualmente no cuenta con mas habitantes</p>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

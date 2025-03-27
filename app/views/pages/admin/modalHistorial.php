@@ -1,8 +1,12 @@
 <!-- Asegúrate de que este modal esté correctamente en la vista -->
-<div id="myModalHistorial" class="modal">
-    <div style="width: 800px; margin: auto; position: relative; top: 25%; background: #fff; max-height: 500px; overflow-y: auto;">
-        <span class="close" id="closeHistorial">&times;</span>
-        <table>
+<center>
+<div id="myModalHistorial" class="modal"  >
+    <div style="width: 800px; margin: auto; position: relative; top: 25%; background: #fff; max-height: 500px; overflow-y: auto; padding: 10px; border-radius: 5px; ">
+         <div class="boton-cerrar_modal_registro" > 
+            <h2 class="historia_visitantes_titulo" >Historial de Visitas</h2>
+            <span class=" close_historial " id="closeHistorial" style="color: black;" >&times;</span>
+        </div>       
+            <table class="tabla_registro_modal" >
             <thead>
                 <tr>
                     <th>Fecha de Entrada</th>
@@ -34,3 +38,4 @@
         </table>
     </div>
 </div>
+</center>

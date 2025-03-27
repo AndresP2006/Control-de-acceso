@@ -21,6 +21,9 @@
     justify-content: space-between;
     align-items: center;
 }
+.content_Encabezado-titulo{
+    margin-left: 60px;
+}
 
 .content_Encabezado-titulo-boton {
     width: 180px;
@@ -337,6 +340,7 @@ button:hover {
     padding-top: 60px;
 }
 
+
 /* Contenido del modal */
 .modal-content {
     background-color: #fefefe;
@@ -386,3 +390,23 @@ input[type="email" i] {
     outline: none;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }
+
+
+.boton-cerrar_modal_registro{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.close_historial{
+    border: none;
+    padding: 0px 0px 20px 10px; 
+    cursor: pointer;
+    float: right;
+    font-size: 40px;
+    position: relative;
+}
+
+

@@ -1,6 +1,6 @@
 <?php require_once RUTA_APP . "/views/inc/header-notificacion.php" ?>
 <div class="contenedor">
-    <div class="titulo">NOTIFICACIONES<a href="<?php echo RUTA_URL; ?>/HomeController/verUser" class="enlaces">
+    <div class="titulo">NOTIFICACIONES<a href="<?php echo RUTA_URL; ?>/HomeController/resident" class="enlaces">
             <span class="icons  exit">↩️</span>
         </a>
     </div>
@@ -21,14 +21,16 @@
             </div>
             <div class="icono"><a href=""><span>🗑️</span></a></div>
         </div>
+        <?php if (isset($datos['notificacion']) && !empty($datos['notificacion'])) { ?>
+            <div class="notificacion">
+                <div class="texto">
+                    <strong>Nueva visita en la entrada</strong>
+                    <p>Se ha registrado la persona <?php echo $datos['notificacion'][0]->Vi_nombres; ?> para usted en la entrada del edificio.</p>
 
-        <div class="notificacion">
-            <div class="texto">
-                <strong>Nueva visita en la entrada</strong>
-                <p>Se ha registrado una nueva visita para usted en la entrada del edificio.</p>
+                </div>
+                <div class="icono"><a href=""><span>🗑️</span></a></div>
             </div>
-            <div class="icono"><a href=""><span>🗑️</span></a></div>
-        </div>
+        <?php } ?>
 
         <div class="notificacion">
             <div class="texto">
@@ -51,4 +53,6 @@
         <div class="eliminar">Eliminar todo 🗑️</div>
         <div class="control">Control de <span style="color: black;">Acceso</span></div>
     </div>
+
+    <?php echo "<script>console.log(" . json_encode($datos) . ");</script>"; ?>
 </div>
