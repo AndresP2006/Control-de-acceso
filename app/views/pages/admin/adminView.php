@@ -25,7 +25,7 @@
     <div class="control-group">
         <!-- Formulario de Búsqueda por ID -->
         <form class="search-container" action="<?php echo RUTA_URL; ?>/UserController/BuscarUsuario" method="POST">
-            <input id="id" type="text" name="id_usuario" placeholder="Buscar...">
+            <input id="id" type="text" class="buscar_id" name="id_usuario" placeholder="Buscar...">
             <input type="hidden" name="action" value="search">
             <button type="submit" name="buscar">
                 <img style="width:20px; height:20px;" src="<?php echo RUTA_URL; ?>/img/lupa.png" alt="Icono Buscar">
@@ -80,7 +80,7 @@
                                 >✏️</button>
                                 <form action='" . RUTA_URL . "/UserController/DeleteUser' method='POST' style='display:inline;'>
                                     <input type='hidden' name='delete_id' value='" . htmlspecialchars($registro['Cedula'] ?? '') . "'>
-                                    <button type='submit' name='deletebtn' class='delete-btn'>🗑️</button>   
+                                    <button type='button' class='delete-btn' data-id='" . $registro['Cedula'] . "'>🗑️</button>
                                 </form>
                             </td>";
                             echo "</tr>";
@@ -111,11 +111,14 @@
 <?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>
 <script>
     <?php if (isset($datos['messageError'])) { ?>
-        error("<?php echo $datos['messageError']; ?>")
-    <?php } ?>
-    <?php if (isset($datos['messageInfo'])) { ?>
-        realizado("<?php echo $datos['messageInfo']; ?>")
-    <?php } ?>
+error("<?php echo $datos['messageError']; ?>")
+<?php } ?>
+<?php if (isset($datos['messageInfo'])) { ?>
+realizado("<?php echo $datos['messageInfo']; ?>")
+<?php } ?>
+<?php if (isset($datos['messageDelet'])) { ?>
+realizadoDelet()
+<?php } ?>
 
     $(document).ready(function() {
 

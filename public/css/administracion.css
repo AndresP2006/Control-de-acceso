@@ -3,11 +3,26 @@
     font-family: Arial, Helvetica, sans-serif !important;
 }
 
+.label_new_registro{
+    font-size: 20px;
+    margin-bottom: 5px;
+    color: #141414;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+.imput_new_registro{
+    margin-bottom: 10px;
+}
 .content_Encabezado {
+    margin-bottom: 50px;
+    height: 150px;
     background-color: rgb(184, 184, 184);
     display: flex;
     justify-content: space-between;
-    padding: 20px;
+    align-items: center;
+}
+.content_Encabezado-titulo{
+    margin-left: 60px;
 }
 
 .content_Encabezado-titulo-boton {
@@ -38,11 +53,13 @@
     margin: 0 auto;
     gap: 10px;
 }
-.control-group{
+
+.control-group {
     width: 350px;
     display: flex;
     gap: 10px;
 }
+
 .add-btn {
     background-color: #28a745;
     color: #fff;
@@ -65,7 +82,8 @@
     font-size: 14px;
     color: #495057;
 }
-.filter-rol{
+
+.filter-rol {
     width: 170px;
     padding: 10px;
     border: 1px solid #ced4da;
@@ -74,6 +92,7 @@
     font-size: 14px;
     color: #495057;
 }
+
 .search-bar {
     padding: 10px;
     border: 1px solid #ced4da;
@@ -100,11 +119,15 @@
 
 .table-wrapper {
     width: 85%;
-    max-height: 400px; /* Altura máxima para la tabla */
-    overflow-y: auto; /* Desplazamiento solo vertical para la tabla */
-    border: 1px solid #ccc; /* Opcional, para que sea visible el borde del contenedor */
+    max-height: 400px;
+    /* Altura máxima para la tabla */
+    overflow-y: auto;
+    /* Desplazamiento solo vertical para la tabla */
+    border: 1px solid #ccc;
+    /* Opcional, para que sea visible el borde del contenedor */
 }
-.table-titulo{
+
+.table-titulo {
     position: relative;
     margin-top: 30px;
     left: 20px;
@@ -116,22 +139,28 @@ table {
     margin: 0;
     border-collapse: collapse;
     text-align: left;
-    table-layout: fixed; /* Esto asegura que las celdas tengan un tamaño fijo y no cambien */
+    table-layout: fixed;
+    /* Esto asegura que las celdas tengan un tamaño fijo y no cambien */
 }
 
 thead {
     background-color: #f8f9fa;
     position: sticky;
-    top: 0; /* Mantiene la cabecera fija al hacer scroll */
-    z-index: 10; /* Asegura que la cabecera esté por encima del contenido */
-    background-color: #f8f9fa; /* Fondo sólido para la cabecera */
+    top: 0;
+    /* Mantiene la cabecera fija al hacer scroll */
+    z-index: 10;
+    /* Asegura que la cabecera esté por encima del contenido */
+    background-color: #f8f9fa;
+    /* Fondo sólido para la cabecera */
     margin: 0;
 }
 
-th, td {
+th,
+td {
     padding: 10px;
     border: 1px solid #dee2e6;
-    text-align: center; /* Alineación central */
+    text-align: center;
+    /* Alineación central */
 }
 
 th {
@@ -141,37 +170,59 @@ th {
 }
 
 td {
-    word-wrap: break-word; /* Permite que el texto se divida */
-    overflow-wrap: break-word; /* Compatibilidad adicional */
-    white-space: normal; /* Permite el salto de línea automático */
+    word-wrap: break-word;
+    /* Permite que el texto se divida */
+    overflow-wrap: break-word;
+    /* Compatibilidad adicional */
+    white-space: normal;
+    /* Permite el salto de línea automático */
     color: #212529;
 }
-.tabla-especifica th:nth-child(1), .tabla-especifica td:nth-child(1) {
+
+.tabla-especifica th:nth-child(1),
+.tabla-especifica td:nth-child(1) {
     width: 100px;
 }
-.tabla-especifica th:nth-child(2), .tabla-especifica td:nth-child(2) {
+
+.tabla-especifica th:nth-child(2),
+.tabla-especifica td:nth-child(2) {
     padding: 0px;
 }
-.tabla-especifica th:nth-child(3), .tabla-especifica td:nth-child(3) {
+
+.tabla-especifica th:nth-child(3),
+.tabla-especifica td:nth-child(3) {
     width: 100px;
 }
-.tabla-especifica th:nth-child(4), .tabla-especifica td:nth-child(4) {
-    width: 110px; /* La segunda columna será más ancha */
+
+.tabla-especifica th:nth-child(4),
+.tabla-especifica td:nth-child(4) {
+    width: 110px;
+    /* La segunda columna será más ancha */
 }
-.tabla-especifica th:nth-child(5), .tabla-especifica td:nth-child(5) {
+
+.tabla-especifica th:nth-child(5),
+.tabla-especifica td:nth-child(5) {
     padding: 0px;
 }
-.tabla-especifica th:nth-child(6), .tabla-especifica td:nth-child(6) {
+
+.tabla-especifica th:nth-child(6),
+.tabla-especifica td:nth-child(6) {
     width: 100px;
 }
-.tabla-especifica th:nth-child(7), .tabla-especifica td:nth-child(7) {
+
+.tabla-especifica th:nth-child(7),
+.tabla-especifica td:nth-child(7) {
     width: 100px;
 }
-.tabla-especifica th:nth-child(8), .tabla-especifica td:nth-child(8) {
-    width: 130px; 
+
+.tabla-especifica th:nth-child(8),
+.tabla-especifica td:nth-child(8) {
+    width: 130px;
 }
-.tabla-especifica th:nth-child(9), .tabla-especifica td:nth-child(9) {
-    width: 100px; 
+
+.tabla-especifica th:nth-child(9),
+.tabla-especifica td:nth-child(9) {
+    width: 100px;
 }
 
 /* Aseguramos que todas las celdas se alineen correctamente */
@@ -205,8 +256,10 @@ button:hover {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-left: 20px; /* Espaciado entre los botones y la tabla */
-    position: relative;  /* Cambié de absolute a relative para que se mantengan en su lugar */
+    margin-left: 20px;
+    /* Espaciado entre los botones y la tabla */
+    position: relative;
+    /* Cambié de absolute a relative para que se mantengan en su lugar */
 }
 
 .action-btn {
@@ -244,7 +297,8 @@ button:hover {
         font-size: 14px;
     }
 
-    th, td {
+    th,
+    td {
         padding: 8px;
     }
 
@@ -271,17 +325,21 @@ button:hover {
 
 /* Estilos para el modal */
 .modal {
-    display: none; /* Ocultarlo por defecto */
+    display: none;
+    /* Ocultarlo por defecto */
     position: fixed;
-    z-index: 1; /* Asegurarse de que esté por encima del contenido principal */
+    z-index: 1;
+    /* Asegurarse de que esté por encima del contenido principal */
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0,0,0,0.4); /* Fondo oscuro */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Fondo oscuro */
     padding-top: 60px;
 }
+
 
 /* Contenido del modal */
 .modal-content {
@@ -315,8 +373,40 @@ button:hover {
     border-collapse: collapse;
 }
 
-#registroDetailsTable th, #registroDetailsTable td {
+#registroDetailsTable th,
+#registroDetailsTable td {
     padding: 8px;
     text-align: left;
     border: 1px solid #ddd;
 }
+input[type="email" i] {
+    width: 95%;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background-color: #eee;
+    padding: 5px 10px;
+    font-size: 14px;
+    outline: none;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+.boton-cerrar_modal_registro{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.close_historial{
+    border: none;
+    padding: 0px 0px 20px 10px; 
+    cursor: pointer;
+    float: right;
+    font-size: 40px;
+    position: relative;
+}
+
+

@@ -3,26 +3,28 @@
 class HomeController extends Controlador
 {
 
-    private $articleModel;
     private $porterController;
     private $userController;
-    private $TorreModel;
+    private $torreModel;
+    private $apartamentModel;
+    private $visitorModel;
+    private $paquetModel;
 
     public function __construct()
     {
-        $this->articleModel = $this->modelo('ArticleModel');
         $this->porterController = $this->controller('PorterController');
         $this->userController = $this->controller('UserController');
-        $this->TorreModel = $this->modelo('TorreModel');
+        $this->torreModel = $this->modelo('TorreModel');
+        $this->apartamentModel = $this->modelo('ApartamentModel');
+        $this->visitorModel = $this->modelo('VisitorModel');
+        $this->paquetModel = $this->modelo('PaquetModel');
     }
 
     public function index()
     {
-        // $articles = $this->articleModel->getArticles();
         session_destroy();
         $datos = [
-            'titulo' => 'Bienvenido a MVC render2web',
-            // 'articles' => $articles
+            'titulo' => 'Bienvenido a MVC render2web'
         ];
 
         $this->vista('pages/homeView', $datos);
@@ -33,10 +35,19 @@ class HomeController extends Controlador
     {
         $this->vista('pages/home/informacionView');
     }
+
     public function nosotros()
     {
         $this->vista('pages/home/nosotrosView');
     }
+    
+    public function verUser(){
+        $this->vista("pages/user/userView");
+    }
+    public function notificaciones(){
+        $this->vista("pages/user/notifiView");
+    }
+
 
     public function admin()
     {
@@ -46,13 +57,12 @@ class HomeController extends Controlador
         }
 
         $datos = $this->userController->MostrarDatos();
-        $Torres = $this->TorreModel->setTorres();
+        $Torres = $this->torreModel->setTorres();
 
         $_SESSION['torre'] = $Torres;
         // Pasamos los datos correctamente a la vista
         $this->vista('pages/admin/adminView', $datos);
     }
-
 
     public function guard()
     {
@@ -63,21 +73,55 @@ class HomeController extends Controlador
 
         $this->vista('pages/porter/porterView', ($this->porterController->index()));
     }
+
+    // Cargar datos de residente
+    public function resident()
+    {
+        if (!isset($_SESSION['sesion_activa'])) {
+            header('location:' . RUTA_URL . '/pages/homeView');
+            exit;
+        }
+        $this->vista('pages/user/userView', ($this->userController->index($_SESSION['datos']->Us_usuario)));
+
+    }
     // menu de administracion 
     public function usuario()
     {
         $this->vista('pages/admin/adminView');
     }
+
     public function HistoryRecords()
     {
-        $this->vista('pages/admin/historialViView');
-    }
-    public function HistoryPackages()
-    {
-        $this->vista('pages/admin/paquetesView');
-    }
-    public function Edificios(){
-        $this->vista('pages/admin/edificiosView');
+        $visitors = $this->visitorModel->getVisitrosByTable();
+
+        $datos = [
+            'visitors' => $visitors,
+        ];
+
+        $this->vista('pages/admin/historialViView', $datos);
     }
 
+    public function HistoryPackages()
+    {
+        $paquets = $this->paquetModel->getPackegesByTable();
+
+        $datos = [
+            'paquets' => $paquets
+        ];
+
+        $this->vista('pages/admin/paquetesView', $datos);
+    }
+
+    public function Edificios()
+    {
+        $torres = $this->torreModel->getTorreByTable();
+        $apartaments = $this->apartamentModel->getApartamentByTable();
+
+        $data = [
+            'torres' => $torres,
+            'apartaments' => $apartaments
+        ];
+
+        $this->vista('pages/admin/edificiosView', $data);
+    }
 }

@@ -29,19 +29,19 @@ class PeopleModel
 
         return $this->db->registro();
     }
+
     public function getGuestById($idGuest)
     {
         $this->db->query("UPDATE registro SET Re_hora_salida = CURRENT_TIME() WHERE Vi_id ='$idGuest'");
-
         return $this->db->registro();
     }
 
-    public function getVisitas()
+    public function getVisitantes($id)
     {
-        // $this->db->query("SELECT v.*,h.Re_motivo,h.Re_fecha_entrada,h.Re_hora_entrada,h.Re_hora_salida FROM visitantes v , registro h ");
-        $this->db->query("SELECT DISTINCT *  FROM visitantes");
-        return $this->db->showTables();
+        $this->db->query("SELECT * FROM registro WHERE Vi_id ='$id' AND Re_hora_salida = '00:00:00'");
+        return $this->db->registro();
     }
+
 
 
     public function getPersonaById($id)
@@ -60,18 +60,39 @@ class PeopleModel
         return $result ?: false; // Devuelve false si no hay resultados
     }
 
+    public function getAllPeople($id)
+    {
+        $this->db->query("SELECT * FROM persona p JOIN usuario u ON p.Us_id = u.Us_id  WHERE u.Ro_id = 3 AND p.Pe_id  = $id");
+        $result = $this->db->registros();
+        return $result ? true : false;
+    }
 
-
-
+    public function getAllpersonas($id)
+    {
+        $this->db->query("SELECT * FROM persona p JOIN usuario u ON p.Us_id = u.Us_id  WHERE p.Pe_id  = $id");
+        $result = $this->db->registros();
+        return $result ? true : false;
+    }
 
     public function PeopleID($id)
     {
-        $this->db->query(
-            "SELECT p.*, COUNT(a.Pa_Id) AS Total_paquetes, a.Pa_estado, a.Pa_fecha, a.Pa_descripcion FROM persona p LEFT JOIN paquete a ON p.Pe_id = a.Pe_id WHERE p.Pe_id = $id AND a.Pa_estado != 'Entregado' GROUP BY p.Pe_id;
-"
-        );
+        $this->db->query("SELECT p.Pe_id,
+                            p.Pe_nombre,
+                            p.Pe_telefono,
+                            p.Pe_apellidos,
+                            COUNT(a.Pa_id) AS Total_paquetes,
+                            MAX(a.Pa_estado) AS Pa_estado,
+                            MAX(a.Pa_fecha) AS Pa_fecha,
+                            MAX(a.Pa_descripcion) AS Pa_descripcion,
+                            ap.Ap_numero AS Apartamento,
+                            t.To_letra AS Torre FROM persona p  
+                            LEFT JOIN paquete a ON p.Pe_id = a.Pe_id AND a.Pa_estado != 'Entregado'
+                            LEFT JOIN apartamento ap ON p.Ap_id = ap.Ap_id 
+                            LEFT JOIN torre t ON ap.To_id = t.To_id WHERE p.Pe_id = $id GROUP BY p.Pe_id, p.Pe_nombre, p.Pe_apellidos, ap.Ap_numero, t.To_letra;");
+
         return $this->db->registro();
     }
+
     public function showRegistro()
     {
         $this->db->query("SELECT v.Vi_nombres,r.*,v.Vi_departamento from visitantes v , registro r where v.Vi_id=r.Vi_id");
@@ -108,147 +129,47 @@ class PeopleModel
         return $this->db->registros(); // Devuelve todos los registros
     }
 
-    public function getPackeges()
+    public function getAllResident($result)
+
     {
-        $this->db->query("select a.Pe_id,a.Pe_nombre,p.* from paquete p , persona a where a.Pe_id=p.Pe_id;");
-        return $this->db->showTables();
-    }
-    // public function searchVisitor($cedula)
-    // {
-    //     $this->db->query('SELECT * FROM visitantes WHERE Vi_id = :Cedula');
-    //     $this->db->bind(':Cedula', $cedula);
-    //     return $this->db->registros(); 
-    // }
 
-    public function actualizarPaquete($paqueteId, $nuevoEstado)
+        $this->db->query("SELECT
+                                u.Us_id,
+                                p.Pe_nombre,
+                                p.Pe_apellidos,
+                                u.Us_correo,
+                                p.Pe_telefono,
+                                t.To_letra,
+                                a.Ap_numero
+                                FROM persona p
+                                INNER JOIN usuario u ON p.Us_id = u.Us_id
+                                INNER JOIN apartamento a ON p.Ap_id = a.Ap_id
+                                INNER JOIN torre t ON a.To_id = t.To_id
+                                WHERE u.Us_usuario = '$result'");
+
+        return $this->db->registros();
+    }
+    public function getAllRedident($result)
     {
-        $sql = "UPDATE paquete SET Pa_estado = :estado WHERE Pa_id = :id";
-        $this->db->query($sql);
-        $this->db->bind(':estado', $nuevoEstado);
-        $this->db->bind(':id', $paqueteId);
 
-        return $this->db->execute();
+        $this->db->query("SELECT p2.Pe_nombre, p2.Pe_apellidos 
+                           FROM persona p1 
+                           JOIN apartamento a ON p1.Ap_id = a.Ap_id 
+                           JOIN persona p2 ON a.Ap_id = p2.Ap_id 
+                           WHERE p1.Pe_nombre = '$result' AND p2.Pe_id <> p1.Pe_id",);
+
+        return $this->db->registros();
     }
 
-    // pagina de registro y verificaciones del form de torre y de apartamentos
-
-    public function torres()
+    public function getNotificacion($user)
     {
-        $this->db->query("SELECT * FROM torre");
-        return $this->db->showTables();
-    }
-    public function apartamentos()
-    {
-        $this->db->query("SELECT t.* , a.Ap_numero from torre t,apartamento a where a.To_id=t.To_id;");
-        return $this->db->showTables();
-    }
+        $this->db->query("SELECT v.Vi_nombres, v.Vi_apellidos, r.Re_fecha_entrada, r.Re_hora_entrada, r.Re_motivo
+                            FROM registro r
+                            JOIN visitantes v ON r.Vi_id = v.Vi_id
+                            JOIN persona p ON r.Pe_id = p.Pe_id
+                            WHERE p.Pe_nombre = '$user' AND r.Re_hora_salida='00:00:00'
+                            LIMIT 1;");
 
-    // funciones de torre 
-    public function IngresarTorre($id, $letra) {
-        if ($this->existTorre($id, $letra)) {
-            return "El ID o la letra de la torre ya existe. No se puede guardar.";
-        }
-    
-        $this->db->query('INSERT INTO torre (To_id, To_letra) VALUES (:id, :letra)');
-        $this->db->bind(':id', $id);
-        $this->db->bind(':letra', $letra);
-        return $this->db->execute() ? "Torre guardada correctamente." : "Error al guardar la torre.";
-    }
-    
-    public function existTorre($id, $letra = null) {
-        $this->db->query('SELECT COUNT(*) as count FROM torre WHERE To_id = :id OR To_letra = :letra');
-        $this->db->bind(':id', $id);
-        $this->db->bind(':letra', $letra);
-        $row = $this->db->registro();
-        return $row->count > 0;
-    }
-    
-    public function isTorreInUse($id) {
-        // Verificar si existen apartamentos asociados a esta torre
-        $this->db->query('SELECT COUNT(*) as count FROM apartamento WHERE To_id = :id');
-        $this->db->bind(':id', $id);
-        $row = $this->db->registro(); // Obtiene un objeto stdClass
-        return $row->count > 0; // Verificar si hay apartamentos asociados
-    }
-
-    public function DeleteTorre($id) {
-        // Primero verificamos si la torre está en uso
-        if ($this->isTorreInUse($id)) {
-            return "No se puede eliminar la torre, ya que tiene departamentos asociados.";
-        }
-    
-        // Si no está en uso, procedemos a eliminarla
-        // Iniciar una transacción
-        $this->db->beginTransaction();
-    
-        try {
-            // Eliminar primero los apartamentos relacionados con la torre
-            $this->db->query('DELETE FROM apartamento WHERE To_id = :id');
-            $this->db->bind(':id', $id);
-            $this->db->execute();
-    
-            // Luego eliminar la torre
-            $this->db->query('DELETE FROM torre WHERE To_id = :id');
-            $this->db->bind(':id', $id);
-            $this->db->execute();
-    
-            // Hacer commit si todo sale bien
-            $this->db->commit();
-            return "Torre y apartamentos eliminados correctamente.";
-        } catch (Exception $e) {
-            // En caso de error, revertir la transacción
-            $this->db->rollBack();
-            return "Error al eliminar la torre y los apartamentos: " . $e->getMessage();
-        }
-    }
-    
-
-    
-    // funciones de apartamento
-
-
-    public function IngresarApartamento($torreInput, $apartamento) {
-        $torreId = $this->getTorreByIdOrLetra($torreInput);
-    
-        if (!$torreId) {
-            return "Torre no encontrada. Verifique el número o letra de la torre.";
-        }
-    
-        if ($this->existsApartamento($torreId, $apartamento)) {
-            return "El apartamento ya existe en la torre indicada.";
-        }
-    
-        $this->db->query('INSERT INTO apartamento (To_id, Ap_numero) VALUES (:torreId, :apartamento)');
-        $this->db->bind(':torreId', $torreId);
-        $this->db->bind(':apartamento', $apartamento);
-        return $this->db->execute() ? "Apartamento guardado correctamente." : "Error al guardar el apartamento.";
-    }
-    
-    
-
-    public function existsApartamento($torreId, $apartamento) {
-        $this->db->query('SELECT COUNT(*) as count FROM apartamento WHERE To_id = :torreId AND Ap_numero = :apartamento');
-        $this->db->bind(':torreId', $torreId);
-        $this->db->bind(':apartamento', $apartamento);
-        $row = $this->db->registro();
-        return $row->count > 0;
-    }
-    
-    
-
-    public function DeleteApartamento($torre, $apartamento) {
-        $this->db->query('DELETE FROM apartamento WHERE To_id = :torre AND Ap_numero = :apartamento');
-        $this->db->bind(':torre', $torre);
-        $this->db->bind(':apartamento', $apartamento);
         return $this->db->registro();
     }
-
-    public function getTorreByIdOrLetra($torre) {
-        $this->db->query('SELECT To_id FROM torre WHERE To_id = :torre OR To_letra = :torre');
-        $this->db->bind(':torre', $torre);
-        $row = $this->db->registro();
-        return $row ? $row->To_id : null; 
-    }
-    
-    
 }

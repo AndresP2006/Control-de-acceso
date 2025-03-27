@@ -1,18 +1,23 @@
-let rivera = document.querySelector("img.contenido__imagenes-1");
+const conRivera = document.getElementById("img2");
 
-let fotosArray = [
-  "../img/rivera1.jpg",
-  "../img/rivera2.jpg",
-  "../img/rivera3.jpg",
-];
-
+let fotosArray = ["../img/rivera1.jpg", "../img/rivera2.jpg", "../img/rivera3.jpg"];
 let fotosPos = 0;
 
-function canbiarFoto(direccion) {
+function cambiarFoto(direccion) {
   fotosPos = (fotosPos + direccion + fotosArray.length) % fotosArray.length;
-  rivera.setAttribute("src", fotosArray[fotosPos]);
+  if (conRivera) {
+    // Verifica que conRivera existe antes de usarlo
+    conRivera.setAttribute("src", fotosArray[fotosPos]);
+  }
 }
 
-document.querySelector("img.atras").onclick = () => canbiarFoto(-1);
-document.querySelector("img.adelante").onclick = () => canbiarFoto(1);
+const btnAtras = document.querySelector("img.atras");
+const btnAdelante = document.querySelector("img.adelante");
 
+if (btnAtras) {
+  btnAtras.onclick = () => cambiarFoto(-1);
+}
+
+if (btnAdelante) {
+  btnAdelante.onclick = () => cambiarFoto(1);
+}
