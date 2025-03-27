@@ -1,18 +1,5 @@
 <?php require_once RUTA_APP . '/views/inc/header-porter.php'; ?>
 
-<div class="content">
-    <div class="encabezado">
-        <div class="titulo">
-            <h1 class="titulo_1">Control De Registro <b>Entrada y Salida</b></h1>
-        </div>
-        <div id="popup-cambiar" class="ventana-emergente">
-            <div class="ventana-emergente__caja ventana-emergente__caja--opciones">
-            </div>
-        </div>
-        <h3 class="var_sesion">Bienvenido <?= $_SESSION['datos']->Us_usuario ?></h3>
-        <div class="cerrar-sescion">
-            <a href="<?php echo RUTA_URL; ?>/HomeController/index"><button class="boton">Cerrar Sesión</button></a>
-        </div>
     </div>
     <div class="cuerpo">
         <div class="contador_ingresos">
