@@ -25,7 +25,7 @@ class UserController extends Controlador
         $paquets = $this->paquetModel->getPackegesByTable();
         $resindents = $this->peopleModel->getAllResident($_SESSION['datos']->Us_usuario);
         $people = $this->peopleModel->getAllRedident($_SESSION['datos']->Us_usuario);
-        $notificacion = $this->peopleModel->getNotificacion($_SESSION['datos']->Us_usuario);
+        // $notificacion = $this->peopleModel->getNotificacion($_SESSION['datos']->Us_usuario);
 
         return [
             'messageError' => $messageError,
@@ -33,7 +33,7 @@ class UserController extends Controlador
             'paquets' => $paquets,
             'resindents' => $resindents,
             'people' => $people,
-            'notificacion' => $notificacion
+            // 'notificacion' => $notificacion
         ];
     }
 
