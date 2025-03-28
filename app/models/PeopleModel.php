@@ -167,12 +167,10 @@ class PeopleModel
                           FROM registro r
                           JOIN visitantes v ON r.Vi_id = v.Vi_id
                           JOIN persona p ON r.Pe_id = p.Pe_id
-                          WHERE p.Pe_nombre = :Pe_nombre AND r.Re_hora_salida = '00:00:00'
-                          LIMIT 1;");
+                          WHERE p.Pe_nombre = :Pe_nombre AND r.Re_hora_salida = '00:00:00';");
         $this->db->bind(':Pe_nombre', $nombre_id); // Usar parámetros para evitar inyección SQL
     
-        $result = $this->db->registro();
-        return $result ?: null; // Devuelve null si no hay resultados
+        return $this->db->registros(); // Devuelve múltiples registros
     }
 
     public function getNotificaciones($usuario) {
