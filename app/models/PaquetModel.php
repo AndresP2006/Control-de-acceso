@@ -47,8 +47,9 @@ class PaquetModel
     public function getPaquetesPorUsuario($usuario)
     {
         $this->db->query("SELECT Pa_descripcion, Pa_fecha, Pa_estado, Pa_responsable
-                            FROM paquete
-                            WHERE Pe_id IN (SELECT Pe_id FROM persona WHERE Pe_nombre = :usuario);");
+                          FROM paquete
+                          WHERE Pe_id IN (SELECT Pe_id FROM persona WHERE Pe_nombre = :usuario)
+                          AND Pa_estado = 'Bodega';");
         $this->db->bind(':usuario', $usuario);
         return $this->db->registros();
     }
