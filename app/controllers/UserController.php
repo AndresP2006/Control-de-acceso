@@ -481,29 +481,42 @@ class UserController extends Controlador
 
     public function ActualizarUsuario()
     {
-        
+        // Solo permitir método POST
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            
-            if (!isset($_POST['E_id']) || empty(trim($_POST['E_id']))) {
-                echo json_encode(['success' => false, 'error' => 'Cédula no proporcionada']);
-                exit;
+            // Depuración: ver qué llega por $_POST
+            error_log("Datos recibidos en ActualizarUsuario: " . print_r($_POST, true));
+
+            // Validar que existan los campos requeridos
+            $requiredFields = ['E_id', 'E_Gmail', 'E_Telefono', 'To_id', 'Ap_numero'];
+            foreach ($requiredFields as $field) {
+                if (!isset($_POST[$field]) || empty(trim($_POST[$field]))) {
+                    echo json_encode(['success' => false, 'error' => "Falta el campo: " . $field]);
+                    exit;
+                }
             }
 
-            $datos = [
-                'Cedula' => trim($_POST['E_id']),
-                'Gmail' => trim($_POST['E_Gmail']),
-                'Telefono' => trim($_POST['E_Telefono']),
-                'Torre' => trim($_POST['To_id']),
+            // Armar array para el modelo
+            $usuarioActualizado = [
+                'Cedula'      => trim($_POST['E_id']),
+                'Gmail'       => trim($_POST['E_Gmail']),
+                'Telefono'    => trim($_POST['E_Telefono']),
+                'Torre'       => trim($_POST['To_id']),
                 'Apartamento' => trim($_POST['Ap_numero']),
             ];
 
-            $resultado = $this->adminModel->updateUserPartial($datos);
+            // Llamar al modelo
+            $resultado = $this->adminModel->updateUserPartial($usuarioActualizado);
 
+            // Responder en JSON
             echo json_encode(['success' => $resultado]);
             exit;
         }
 
+        // Si no es POST, mensaje de error
         echo json_encode(['success' => false, 'error' => 'Método no permitido']);
         exit;
     }
+
+
+
 }
