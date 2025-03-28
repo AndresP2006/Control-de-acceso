@@ -9,7 +9,7 @@ class HomeController extends Controlador
     private $apartamentModel;
     private $visitorModel;
     private $paquetModel;
-    private $peopleModel;
+    // private $PeopleModel;
 
     public function __construct()
     {
@@ -19,7 +19,7 @@ class HomeController extends Controlador
         $this->apartamentModel = $this->modelo('ApartamentModel');
         $this->visitorModel = $this->modelo('VisitorModel');
         $this->paquetModel = $this->modelo('PaquetModel');
-        $this->peopleModel = $this->modelo('PeopleModel'); // Corregido
+        // $this->PeopleModel= $this->modelo('PeopleModel');
     }
 
     public function index()
@@ -42,24 +42,34 @@ class HomeController extends Controlador
     {
         $this->vista('pages/home/nosotrosView');
     }
-    
-    public function verUser(){
+
+    public function verUser()
+    {
         $this->vista("pages/user/userView");
     }
-    public function notificaciones() {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $usuario = $_POST['Us_usuario'];
-
-            // Obtener notificaciones desde el modelo PeopleModel
-            $notificaciones = $this->peopleModel->getNotificacion($usuario);
-
-            // Pasar los datos a la vista
+    public function notificaciones()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $nombre_usuario = $_POST['Us_usuario']; // Capturar el valor enviado por POST
+    
+            // Depurar el valor recibido
+            error_log("Valor recibido en POST: " . $nombre_usuario);
+    
+            $peopleModel = $this->modelo('PeopleModel');
+            $notificacion = $peopleModel->getNotificacion($nombre_usuario);
+    
+            // Depurar el resultado de la consulta
+            error_log("Resultado de getNotificacion: " . json_encode($notificacion));
+    
             $datos = [
-                'notificaciones' => $notificaciones
+                'notificacion' => $notificacion
             ];
-            $this->vista("pages/user/notifiView", $datos);
+    
+            $this->vista('pages/user/notifiView', $datos);
         } else {
-            $this->vista('pages/user/notifiView', ($this->userController->index()));
+            // Redirigir o manejar el caso donde no se use POST
+            header('Location: ' . RUTA_URL . '/HomeController/index');
+            exit;
         }
     }
 
@@ -97,7 +107,6 @@ class HomeController extends Controlador
             exit;
         }
         $this->vista('pages/user/userView', ($this->userController->index($_SESSION['datos']->Us_usuario)));
-
     }
     // menu de administracion 
     public function usuario()

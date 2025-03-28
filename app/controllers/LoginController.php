@@ -17,7 +17,7 @@ class LoginController extends Controlador
 
         if ($result && isset($result)) {
             if ($result->Us_contrasena === $_POST['password']) {
-
+                
                 $_SESSION['sesion_activa'] = true;
                 $_SESSION['datos'] = $result;
 
@@ -32,6 +32,7 @@ class LoginController extends Controlador
                         break;
                     case "3": // residente
                         
+                        // header('location:' . RUTA_URL . '/HomeController/notificaciones', );
                         header('location:' . RUTA_URL . '/HomeController/resident', );
                         break;
                 }

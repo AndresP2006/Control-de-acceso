@@ -6,9 +6,18 @@
             <h1>Bienvenido Residente</h1>
             <hr>
             <div class="icons">
-                <a href="<?php echo RUTA_URL; ?>/HomeController/notificaciones" class="enlaces">
+                <!-- <a href="<?php echo RUTA_URL; ?>/HomeController/notificaciones" class="enlaces">
                     <span class="icons">🔔</span>
-                </a>
+                </a> -->
+                <form action="<?php echo RUTA_URL; ?>/HomeController/notificaciones" method="POST" style="display: inline;">
+                    <input type="hidden" name="Us_usuario" value="<?php echo $datos['resindents'][0]->Pe_nombre; ?>">
+                    <button type="submit" class="enlaces" style="background: none; border: none; cursor: pointer;">
+                        <span class="icons">🔔</span>
+                    </button>
+                </form>
+                <!-- <a href="<?php echo RUTA_URL; ?>/HomeController/notificaciones , '$datos'" class="enlaces">
+                    <span class="icons">🔔</span>
+                </a> -->
                 <a href="<?php echo RUTA_URL; ?>/HomeController/index" class="enlaces">
                     <span class="icons">↩️</span>
                 </a>
@@ -24,21 +33,22 @@
             <table class="info-table">
                 <tr>
                     <td><strong>Cédula</strong></td>
-                    <td class="gray-text1">
-                        <?php echo "<script>console.log(" . json_encode($datos) . ");</script>"; ?>
+                    <td class="gray-text">
                         <?php echo $datos['resindents'][0]->Us_id; ?>
+                        <input type="hidden" id="cedula" name="E_id" value="<?php echo $datos['resindents'][0]->Us_id; ?>">
                     </td>
+
                 </tr>
                 <tr>
                     <td><strong>Email</strong></td>
-                    <td class="gray-text1">
-                        <?php echo $datos['resindents'][0]->Us_correo; ?>
+                    <td>
+                        <input class="gray-text1" type="text" id="gmail" name="E_Gmail" value="<?php echo $datos['resindents'][0]->Us_correo; ?>" disabled>
                     </td>
                 </tr>
                 <tr>
                     <td><strong>Teléfono</strong></td>
-                    <td class="gray-text1">
-                        <?php echo $datos['resindents'][0]->Pe_telefono; ?>
+                    <td>
+                        <input class="gray-text1" type="text" id="telefono" name="E_Telefono" value="<?php echo $datos['resindents'][0]->Pe_telefono; ?>" disabled>
                     </td>
                 </tr>
             </table>
@@ -48,14 +58,14 @@
                     <table class="info-table">
                         <tr>
                             <td><strong>Torre</strong></td>
-                            <td class="gray-text1">
-                                <?php echo $datos['resindents'][0]->To_letra; ?>
+                            <td class="gray-text">
+                                <input class="gray-text1" type="text" id="torre" name="To_id" value="<?php echo $datos['resindents'][0]->To_letra; ?>" disabled>
                             </td>
                         </tr>
                         <tr>
                             <td><strong>Departamento</strong></td>
-                            <td class="gray-text1">
-                                <?php echo $datos['resindents'][0]->Ap_numero; ?>
+                            <td class="gray-text">
+                                <input class="gray-text1" type="text" id="apartamento" name="Ap_numero" value="<?php echo $datos['resindents'][0]->Ap_numero; ?>" disabled>
                             </td>
                         </tr>
                     </table>
@@ -81,7 +91,9 @@
         <br>
         <br>
 
-        <div class="footer"> <button class="edit-btn">✏️</button>
+        <div class="footer"> <button id="edit-btn" onclick="habilitarEdicion()">✏️ Editar</button>
+            <button id="save-btn" onclick="guardarDatos()" style="display:none;">✔️ Guardar</button>
+            <button id="cancel-btn" onclick="cancelEditing()" style="display:none;">❌ Cancelar</button>
 
             <p class="access-control">Control de <span class="red-text">Acceso</span></p>
         </div>
@@ -89,3 +101,69 @@
 </div>
 
 </div>
+<script>
+    function habilitarEdicion() {
+        document.getElementById("edit-btn").style.display = "none";
+        document.getElementById("cancel-btn").style.display = "inline-block";
+        document.getElementById("save-btn").style.display = "inline-block";
+
+        // Solo habilitar los campos permitidos
+        const camposEditables = ["gmail", "telefono", "torre", "apartamento"];
+        camposEditables.forEach(id => {
+            let input = document.getElementById(id);
+            if (input) {
+                input.removeAttribute("disabled");
+                input.style.backgroundColor = "white";
+                input.style.border = "1px solid #ccc";
+            }
+        });
+    }
+
+    function cancelEditing() {
+        document.getElementById("edit-btn").style.display = "inline-block";
+        document.getElementById("cancel-btn").style.display = "none";
+        document.getElementById("save-btn").style.display = "none";
+
+        // Volver a deshabilitar los campos editables
+        const camposEditables = ["gmail", "telefono", "torre", "apartamento"];
+        camposEditables.forEach(id => {
+            let input = document.getElementById(id);
+            if (input) {
+                input.setAttribute("disabled", "true");
+                input.style.backgroundColor = "transparent";
+                input.style.border = "none";
+            }
+        });
+    }
+
+    function guardarDatos() {
+        let formData = {
+            E_id: $("#cedula").val(), // Cédula
+            E_Gmail: $("#gmail").val(), // Correo
+            E_Telefono: $("#telefono").val(), // Teléfono
+            To_id: '1', // Torre
+            Ap_numero: $("#apartamento").val() // Apartamento
+        };
+        
+        console.log("Datos enviados:", formData); // Depuración en consola
+
+        $.ajax({
+            url: "<?= RUTA_URL; ?>/UserController/ActualizarUsuario",
+            type: "POST",
+            data: formData,
+            dataType: "json",
+            success: function(response) {
+                if (response.success) {
+                    alert("Usuario actualizado correctamente");
+                    cancelEditing();
+                } else {
+                    alert("Error al actualizar el usuario: " + (response.error || "Inténtalo de nuevo"));
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Error:", xhr.responseText);
+                alert("Error de conexión con el servidor");
+            }
+        });
+    }
+</script>

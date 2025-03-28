@@ -25,7 +25,7 @@ class UserController extends Controlador
         $paquets = $this->paquetModel->getPackegesByTable();
         $resindents = $this->peopleModel->getAllResident($_SESSION['datos']->Us_usuario);
         $people = $this->peopleModel->getAllRedident($_SESSION['datos']->Us_usuario);
-        $notificacion = $this->peopleModel->getNotificacion($_SESSION['datos']->Us_usuario);
+        // $notificacion = $this->peopleModel->getNotificacion($_SESSION['datos']->Us_usuario);
 
         return [
             'messageError' => $messageError,
@@ -33,7 +33,7 @@ class UserController extends Controlador
             'paquets' => $paquets,
             'resindents' => $resindents,
             'people' => $people,
-            'notificacion' => $notificacion
+            // 'notificacion' => $notificacion
         ];
     }
 
@@ -478,4 +478,32 @@ class UserController extends Controlador
     }
 
     public function enterTower() {}
+
+    public function ActualizarUsuario()
+    {
+        
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            
+            if (!isset($_POST['E_id']) || empty(trim($_POST['E_id']))) {
+                echo json_encode(['success' => false, 'error' => 'Cédula no proporcionada']);
+                exit;
+            }
+
+            $datos = [
+                'Cedula' => trim($_POST['E_id']),
+                'Gmail' => trim($_POST['E_Gmail']),
+                'Telefono' => trim($_POST['E_Telefono']),
+                'Torre' => trim($_POST['To_id']),
+                'Apartamento' => trim($_POST['Ap_numero']),
+            ];
+
+            $resultado = $this->adminModel->updateUserPartial($datos);
+
+            echo json_encode(['success' => $resultado]);
+            exit;
+        }
+
+        echo json_encode(['success' => false, 'error' => 'Método no permitido']);
+        exit;
+    }
 }

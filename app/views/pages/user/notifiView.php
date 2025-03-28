@@ -21,17 +21,17 @@
             </div>
             <div class="icono"><a href=""><span>🗑️</span></a></div>
         </div>
-        <?php if (isset($datos['notificacion']) && !empty($datos['notificacion'])) { ?>
+        <?php if (!empty($datos['notificaciones'])): ?>
             <div class="notificacion">
-                <div class="texto">
-                    <strong>Nueva visita en la entrada</strong>
-                    <p>Se ha registrado la persona <?php echo $datos['notificacion'][0]->Vi_nombres; ?> para usted en la entrada del edificio.</p>
-
-                </div>
-                <div class="icono"><a href=""><span>🗑️</span></a></div>
+            <div class="texto">
+            <p>Se ha registrado la persona <?php echo $datos['notificaciones']->Vi_nombres . " " . $datos['notificaciones']->Vi_apellidos; ?> para usted en la entrada del edificio.</p>
             </div>
-        <?php } ?>
-
+            <div class="icono"><a href=""><span>🗑️</span></a></div>
+        </div>
+        <?php else: ?>
+            <li>No hay notificaciones disponibles.</li>
+        <?php endif; ?>
+       
         <div class="notificacion">
             <div class="texto">
                 <strong>¡Tienes un nuevo paquete en recepción!</strong>
@@ -56,3 +56,15 @@
 
     <?php echo "<script>console.log(" . json_encode($datos) . ");</script>"; ?>
 </div>
+
+
+
+
+
+<!-- <div class="container">
+    <h1>Notificaciones</h1>
+    <ul>
+       
+    </ul>
+    <a href="<?php echo RUTA_URL; ?>/HomeController/resident" class="enlaces">↩️ Volver</a>
+</div> -->

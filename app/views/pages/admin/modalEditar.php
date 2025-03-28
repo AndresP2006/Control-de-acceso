@@ -18,7 +18,7 @@
             <input type="text" id="E_Telefono" name="E_Telefono" />
 
             <label for="">Correo</label><br>
-            <input type="email" id="E_Gmail" name="E_Gmail" />
+            <input type="email" id="E_Gmail" name="E_Gmail"  require/>
 
             <!-- <label for="">Departamento</label><br> -->
             <!-- <input type="text" id="E_Departamento" name="E_Departamento" /> -->
