@@ -9,6 +9,7 @@ class HomeController extends Controlador
     private $apartamentModel;
     private $visitorModel;
     private $paquetModel;
+    private $peopleModel;
 
     public function __construct()
     {
@@ -18,6 +19,7 @@ class HomeController extends Controlador
         $this->apartamentModel = $this->modelo('ApartamentModel');
         $this->visitorModel = $this->modelo('VisitorModel');
         $this->paquetModel = $this->modelo('PaquetModel');
+        $this->peopleModel = $this->modelo('PeopleModel'); // Corregido
     }
 
     public function index()
@@ -44,8 +46,21 @@ class HomeController extends Controlador
     public function verUser(){
         $this->vista("pages/user/userView");
     }
-    public function notificaciones(){
-        $this->vista("pages/user/notifiView");
+    public function notificaciones() {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $usuario = $_POST['Us_usuario'];
+
+            // Obtener notificaciones desde el modelo PeopleModel
+            $notificaciones = $this->peopleModel->getNotificacion($usuario);
+
+            // Pasar los datos a la vista
+            $datos = [
+                'notificaciones' => $notificaciones
+            ];
+            $this->vista("pages/user/notifiView", $datos);
+        } else {
+            $this->vista('pages/user/notifiView', ($this->userController->index()));
+        }
     }
 
 

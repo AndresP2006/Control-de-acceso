@@ -174,4 +174,10 @@ class PeopleModel
         $result = $this->db->registro();
         return $result ?: null; // Devuelve null si no hay resultados
     }
+
+    public function getNotificaciones($usuario) {
+        $this->db->query("SELECT * FROM notificaciones WHERE usuario = :usuario");
+        $this->db->bind(':usuario', $usuario);
+        return $this->db->registros();
+    }
 }

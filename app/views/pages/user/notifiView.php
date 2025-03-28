@@ -21,16 +21,17 @@
             </div>
             <div class="icono"><a href=""><span>🗑️</span></a></div>
         </div>
-        <?php if (!empty($datos['notificacion'])): ?>
-            <p>Nombre: <?php echo $datos['notificacion']->Vi_nombres; ?></p>
-            <p>Apellido: <?php echo $datos['notificacion']->Vi_apellidos; ?></p>
-            <p>Fecha de entrada: <?php echo $datos['notificacion']->Re_fecha_entrada; ?></p>
-            <p>Hora de entrada: <?php echo $datos['notificacion']->Re_hora_entrada; ?></p>
-            <p>Motivo: <?php echo $datos['notificacion']->Re_motivo; ?></p>
+        <?php if (!empty($datos['notificaciones'])): ?>
+            <div class="notificacion">
+            <div class="texto">
+            <p>Se ha registrado la persona <?php echo $datos['notificaciones']->Vi_nombres . " " . $datos['notificaciones']->Vi_apellidos; ?> para usted en la entrada del edificio.</p>
+            </div>
+            <div class="icono"><a href=""><span>🗑️</span></a></div>
+        </div>
         <?php else: ?>
-            <p>No hay notificaciones disponibles.</p>
+            <li>No hay notificaciones disponibles.</li>
         <?php endif; ?>
-
+       
         <div class="notificacion">
             <div class="texto">
                 <strong>¡Tienes un nuevo paquete en recepción!</strong>
@@ -46,7 +47,6 @@
             <div class="icono"><a href=""><span>🗑️</span></a></div>
         </div>
 
-        <?php var_dump($datos) ?>
     </div>
 
     <div class="acciones">
@@ -56,3 +56,15 @@
 
     <?php echo "<script>console.log(" . json_encode($datos) . ");</script>"; ?>
 </div>
+
+
+
+
+
+<!-- <div class="container">
+    <h1>Notificaciones</h1>
+    <ul>
+       
+    </ul>
+    <a href="<?php echo RUTA_URL; ?>/HomeController/resident" class="enlaces">↩️ Volver</a>
+</div> -->
