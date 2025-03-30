@@ -169,13 +169,22 @@ class PeopleModel
                           JOIN persona p ON r.Pe_id = p.Pe_id
                           WHERE p.Pe_nombre = :Pe_nombre AND r.Re_hora_salida = '00:00:00';");
         $this->db->bind(':Pe_nombre', $nombre_id); // Usar parámetros para evitar inyección SQL
-    
+
         return $this->db->registros(); // Devuelve múltiples registros
     }
 
-    public function getNotificaciones($usuario) {
+    public function getNotificaciones($usuario)
+    {
         $this->db->query("SELECT * FROM notificaciones WHERE usuario = :usuario");
         $this->db->bind(':usuario', $usuario);
+        return $this->db->registros();
+    }
+
+    // En PaquetModel.php (o el modelo que uses para las solicitudes)
+    public function getAllSolicitudes($id_usuario)
+    {
+        $this->db->query("SELECT * FROM solicitudes_actualizacion WHERE id_residente = :id_usuario");
+        $this->db->bind(':id_usuario', $id_usuario);
         return $this->db->registros();
     }
 }

@@ -142,71 +142,54 @@ class AdminModel
     }
 }
 
-public function updateUserPartial($datos)
-    {
-        try {
-            // Verificar que existan todas las claves
-            $requiredKeys = ['Cedula', 'Gmail', 'Telefono', 'Torre', 'Apartamento'];
-            foreach ($requiredKeys as $key) {
-                if (!isset($datos[$key]) || empty(trim($datos[$key]))) {
-                    throw new Exception("Falta el campo: " . $key);
-                }
+public function insertUserUpdateRequest($datos)
+{
+    try {
+        // Verificar que existan todas las claves requeridas
+        $requiredKeys = ['id_residente', 'correo_nuevo', 'telefono_nuevo', 'torre_nuevo', 'apartamento_nuevo'];
+        foreach ($requiredKeys as $key) {
+            if (!isset($datos[$key]) || empty(trim($datos[$key]))) {
+                throw new Exception("Falta el campo: " . $key);
             }
-
-            // Variables locales
-            $cedula      = trim($datos['Cedula']);
-            $correo      = trim($datos['Gmail']);
-            $telefono    = trim($datos['Telefono']);
-            $torre       = trim($datos['Torre']);
-            $apartamento = trim($datos['Apartamento']);
-
-            // Depuración
-            error_log("updateUserPartial => Cedula=$cedula, Gmail=$correo, Telefono=$telefono, Torre=$torre, Ap=$apartamento");
-
-            // Iniciar transacción
-            $this->db->beginTransaction();
-
-            // 1. Actualizar correo en 'usuario'
-            $this->db->query("UPDATE usuario SET Us_correo = :Correo WHERE Us_id = :Cedula");
-            $this->db->bind(':Correo', $correo);
-            $this->db->bind(':Cedula', $cedula);
-            $this->db->execute();
-
-            // 2. Actualizar teléfono en 'persona'
-            $this->db->query("UPDATE persona SET Pe_telefono = :Telefono WHERE Pe_id = :Cedula");
-            $this->db->bind(':Telefono', $telefono);
-            $this->db->bind(':Cedula', $cedula);
-            $this->db->execute();
-
-            // 3. Actualizar torre y apartamento
-            //    Asumiendo que 'persona' tiene Ap_id
-            //    y que en 'apartamento' se busca Ap_id para setear To_id y Ap_numero
-            $this->db->query("
-                UPDATE apartamento
-                SET To_id = (
-                    SELECT t.To_id FROM torre t WHERE t.To_letra = :Torre LIMIT 1
-                ),
-                    Ap_numero = :Ap_numero
-                WHERE Ap_id = (
-                    SELECT p.Ap_id FROM persona p WHERE p.Pe_id = :Cedula LIMIT 1
-                )
-            ");
-            $this->db->bind(':Torre', $torre);
-            $this->db->bind(':Ap_numero', $apartamento);
-            $this->db->bind(':Cedula', $cedula);
-            $this->db->execute();
-
-            // Confirmar transacción
-            $this->db->commit();
-            return true;
-        } catch (Exception $e) {
-            if ($this->db->inTransaction()) {
-                $this->db->rollBack();
-            }
-            error_log("Error en updateUserPartial: " . $e->getMessage());
-            return false;
         }
+
+        // Asignar variables locales
+        $id_residente      = trim($datos['id_residente']);
+        $correo_nuevo      = trim($datos['correo_nuevo']);
+        $telefono_nuevo    = trim($datos['telefono_nuevo']);
+        $torre_nuevo       = trim($datos['torre_nuevo']);
+        $apartamento_nuevo = trim($datos['apartamento_nuevo']);
+
+        // Iniciar transacción
+        $this->db->beginTransaction();
+
+        // Inserción en la tabla solicitudes_actualizacion
+        $query = "
+            INSERT INTO solicitudes_actualizacion 
+                (id_residente, correo_nuevo, telefono_nuevo, torre_nuevo, apartamento_nuevo)
+            VALUES 
+                (:id_residente, :correo_nuevo, :telefono_nuevo, :torre_nuevo, :apartamento_nuevo)
+        ";
+        $this->db->query($query);
+        $this->db->bind(':id_residente', $id_residente);
+        $this->db->bind(':correo_nuevo', $correo_nuevo);
+        $this->db->bind(':telefono_nuevo', $telefono_nuevo);
+        $this->db->bind(':torre_nuevo', $torre_nuevo);
+        $this->db->bind(':apartamento_nuevo', $apartamento_nuevo);
+        $this->db->execute();
+
+        // Confirmar transacción
+        $this->db->commit();
+        return true;
+    } catch (Exception $e) {
+        if ($this->db->inTransaction()) {
+            $this->db->rollBack();
+        }
+        error_log("Error en insertUserUpdateRequest: " . $e->getMessage());
+        return false;
     }
+}
+
 
 
 
