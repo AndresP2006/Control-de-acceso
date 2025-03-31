@@ -161,15 +161,40 @@ class PeopleModel
         return $this->db->registros();
     }
 
-    public function getNotificacion($user)
+    public function getNotificacion($nombre_id)
     {
         $this->db->query("SELECT v.Vi_nombres, v.Vi_apellidos, r.Re_fecha_entrada, r.Re_hora_entrada, r.Re_motivo
-                            FROM registro r
-                            JOIN visitantes v ON r.Vi_id = v.Vi_id
-                            JOIN persona p ON r.Pe_id = p.Pe_id
-                            WHERE p.Pe_nombre = '$user' AND r.Re_hora_salida='00:00:00'
-                            LIMIT 1;");
+                          FROM registro r
+                          JOIN visitantes v ON r.Vi_id = v.Vi_id
+                          JOIN persona p ON r.Pe_id = p.Pe_id
+                          WHERE p.Pe_nombre = :Pe_nombre AND r.Re_hora_salida = '00:00:00';");
+        $this->db->bind(':Pe_nombre', $nombre_id); // Usar parámetros para evitar inyección SQL
 
-        return $this->db->registro();
+        return $this->db->registros(); // Devuelve múltiples registros
     }
+
+    public function getNotificaciones($usuario)
+    {
+        $this->db->query("SELECT * FROM notificaciones WHERE usuario = :usuario");
+        $this->db->bind(':usuario', $usuario);
+        return $this->db->registros();
+    }
+
+    // En PaquetModel.php (o el modelo que uses para las solicitudes)
+    public function getAllSolicitudes($id_usuario)
+    {
+        $this->db->query("SELECT * FROM solicitudes_actualizacion WHERE id_residente = :id_usuario");
+        $this->db->bind(':id_usuario', $id_usuario);
+        return $this->db->registros();
+    }
+    public function getAllSolicitudesNotifi() {
+        $this->db->query("SELECT * FROM solicitudes_actualizacion");
+        return  $this->db->registros();
+    
+        // echo "<pre>";
+        // print_r($resultados);
+        // echo "</pre>";
+        // exit(); // Detener la ejecución para ver el resultado
+    }
+    
 }
