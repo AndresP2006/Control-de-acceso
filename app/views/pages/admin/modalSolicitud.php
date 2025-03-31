@@ -1,6 +1,5 @@
 <?php require_once RUTA_APP . "/views/inc/header-user.php" ?>
 
-
 <div class="container">
     <div class="card">
         <div class="header">
@@ -40,17 +39,12 @@
                                 <?php echo !empty($datos['datos_resident'][0]->correo_nuevo) ? $datos['datos_resident'][0]->correo_nuevo : 'No disponible'; ?>
                             </span>
                         </p>
-
                     </td>
                 </tr>
                 <tr>
-
-
-
                     <td><strong>Teléfono</strong></td>
                     <td>
-                        <input class="gray-text1" type="text" id="telefono" name="E_Telefono"
-                            value="<?php echo $datos['resindents']->Pe_telefono; ?>" disabled>
+                        <input class="gray-text1" type="text" id="telefono" name="E_Telefono" value="<?php echo $datos['resindents']->Pe_telefono; ?>" disabled>
                     </td>
                 </tr>
             </table>
@@ -61,15 +55,13 @@
                         <tr>
                             <td><strong>Torre</strong></td>
                             <td class="gray-text">
-                                <input class="gray-text1" type="text" id="torre" name="To_id"
-                                    value="<?php echo $datos['resindents']->To_letra; ?>" disabled>
+                                <input class="gray-text1" type="text" id="torre" name="To_id" value="<?php echo $datos['resindents']->To_letra; ?>" disabled>
                             </td>
                         </tr>
                         <tr>
                             <td><strong>Departamento</strong></td>
                             <td class="gray-text">
-                                <input class="gray-text1" type="text" id="apartamento" name="Ap_numero"
-                                    value="<?php echo $datos['resindents']->Ap_numero; ?>" disabled>
+                                <input class="gray-text1" type="text" id="apartamento" name="Ap_numero" value="<?php echo $datos['resindents']->Ap_numero; ?>" disabled>
                             </td>
                         </tr>
                     </table>
@@ -88,6 +80,33 @@
                 </div>
             </div>
         </div>
-        <br><br><br>
+        <br>
+        <div class="buttons">
+            <button id="acceptBtn" class="btn btn-success">Aceptar</button>
+            <button id="rejectBtn" class="btn btn-danger">Rechazar</button>
+        </div>
+        <br>
+        <div id="rejectReason" style="display: none;">
+            <label for="reason">Motivo del rechazo:</label>
+            <textarea id="reason" class="form-control" name="reject_reason" rows="3"></textarea>
+            <br>
+            <button id="submitRejection" class="btn btn-primary">Enviar</button>
+            <button id="cancelRejection" class="btn btn-secondary">Cancelar</button>
+        </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('rejectBtn').addEventListener('click', function() {
+        document.getElementById('rejectReason').style.display = 'block';
+    });
+
+    document.getElementById('cancelRejection').addEventListener('click', function() {
+        document.getElementById('rejectReason').style.display = 'none';
+        document.getElementById('reason').value = '';
+    });
+
+    document.getElementById('acceptBtn').addEventListener('click', function() {
+        alert('Solicitud aceptada');
+    });
+</script>
