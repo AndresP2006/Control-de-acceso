@@ -17,6 +17,11 @@
                 style="color: red; margin-left: 30px;">Entrada y Salida</samp>
         </h1>
         <h3 class="var_sesion_admin">Bienvenido <?= $_SESSION['datos']->Us_usuario ?></h3>
+        <form action="<?php echo RUTA_URL; ?>/HomeController/notificaciones_admin" method="POST" style="display:inline;">
+            <button type="submit" style="background:none; border:none; cursor:pointer;">
+                <span class="icons">🔔</span>
+            </button>
+        </form>
         <div class="cerrar-sescion">
             <a href="<?php echo RUTA_URL; ?>/HomeController/index"><button class="boton">Cerrar Sesión</button></a>
         </div>

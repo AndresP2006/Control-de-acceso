@@ -26,15 +26,15 @@ class UserController extends Controlador
         $resindents = $this->peopleModel->getAllResident($_SESSION['datos']->Us_usuario);
         $people = $this->peopleModel->getAllRedident($_SESSION['datos']->Us_usuario);
         // $notificacion = $this->peopleModel->getNotificacion($_SESSION['datos']->Us_usuario);
-        $datos_resident =$this->peopleModel->getAllSolicitudes($_SESSION['datos']->Us_id);
-        
+        $datos_resident = $this->peopleModel->getAllSolicitudes($_SESSION['datos']->Us_id);
+
 
         return [
             'messageError' => $messageError,
             'messageInfo' => $messageInfo,
             'paquets' => $paquets,
             'resindents' => $resindents,
-            'datos_resident' =>$datos_resident,
+            'datos_resident' => $datos_resident,
             'people' => $people,
             // 'notificacion' => $notificacion
         ];
@@ -483,43 +483,43 @@ class UserController extends Controlador
     public function enterTower() {}
 
     public function ActualizarUsuario()
-{
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Depuración: ver qué llega por $_POST
-        error_log("Datos recibidos en ActualizarUsuario: " . print_r($_POST, true));
+    {
 
-        // Validar que existan los campos requeridos
-        $requiredFields = ['E_id', 'E_Gmail', 'E_Telefono', 'To_id', 'Ap_numero'];
-        foreach ($requiredFields as $field) {
-            if (!isset($_POST[$field]) || empty(trim($_POST[$field]))) {
-                echo json_encode(['success' => false, 'error' => "Falta el campo: " . $field]);
-                exit;
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Depuración: ver qué llega por $_POST
+            error_log("Datos recibidos en ActualizarUsuario: " . print_r($_POST, true));
+
+            // Validar que existan los campos requeridos
+            $requiredFields = ['E_id', 'E_nombre', 'E_Gmail', 'E_Telefono', 'To_id', 'Ap_numero'];
+            foreach ($requiredFields as $field) {
+                if (!isset($_POST[$field]) || empty(trim($_POST[$field]))) {
+                    echo json_encode(['success' => false, 'error' => "Falta el campo: " . $field]);
+                    exit;
+                }
             }
+            $usuario = $this->peopleModel->getPersonaById($_POST['E_id']);
+
+
+
+            // Armar array para el modelo con las claves correspondientes a la tabla de solicitudes
+            $usuarioActualizado = [
+                'id_residente'      => trim($_POST['E_id']),
+                'nombre'      => trim($_POST['E_nombre']),
+                'correo_nuevo'      => trim($_POST['E_Gmail']),
+                'telefono_nuevo'    => trim($_POST['E_Telefono']),
+                'torre_nuevo'       => trim($_POST['To_id']),
+                'apartamento_nuevo' => trim($_POST['Ap_numero']),
+            ];
+
+            // Llamar al modelo para insertar la solicitud de actualización
+            $resultado = $this->adminModel->insertUserUpdateRequest($usuarioActualizado);
+            // Responder en JSON
+            echo json_encode(['success' => $resultado]);
+            exit;
         }
 
-        // Armar array para el modelo con las claves correspondientes a la tabla de solicitudes
-        $usuarioActualizado = [
-            'id_residente'      => trim($_POST['E_id']),
-            'correo_nuevo'      => trim($_POST['E_Gmail']),
-            'telefono_nuevo'    => trim($_POST['E_Telefono']),
-            'torre_nuevo'       => trim($_POST['To_id']),
-            'apartamento_nuevo' => trim($_POST['Ap_numero']),
-        ];
-
-        // Llamar al modelo para insertar la solicitud de actualización
-        $resultado = $this->adminModel->insertUserUpdateRequest($usuarioActualizado);
-
-        // Responder en JSON
-        echo json_encode(['success' => $resultado]);
+        // Si no es POST, mensaje de error
+        echo json_encode(['success' => false, 'error' => 'Método no permitido']);
         exit;
     }
-
-    // Si no es POST, mensaje de error
-    echo json_encode(['success' => false, 'error' => 'Método no permitido']);
-    exit;
-}
-
-
-
-
 }
