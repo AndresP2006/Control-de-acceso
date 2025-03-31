@@ -40,7 +40,8 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
         <br>
         <div class="content">
             <h4 class="nombre">
-                <?= $datos['resindents'][0]->Pe_nombre . " " . $datos['resindents'][0]->Pe_apellidos ?>
+            <input class="gray-text1" type="text" id="nombre" name="E_Telefono" 
+            value="<?= $datos['resindents'][0]->Pe_nombre . " " . $datos['resindents'][0]->Pe_apellidos ?>"disabled>
             </h4>
             <hr class="Linea">
             <br>
@@ -174,6 +175,7 @@ function setWaitingState() {
 function guardarDatos() {
     let formData = new FormData();
     formData.append("E_id", document.getElementById("cedula").value);
+    formData.append("E_nombre", document.getElementById("nombre").value);
     formData.append("E_Gmail", document.getElementById("gmail").value);
     formData.append("E_Telefono", document.getElementById("telefono").value);
     formData.append("To_id", document.getElementById("torre").value);
@@ -199,7 +201,7 @@ function guardarDatos() {
         document.getElementById("save-btn").style.display = "none";
         document.getElementById("cancel-btn").style.display = "none";
 
-        const camposEditables = ["gmail", "telefono", "torre", "apartamento"];
+        const camposEditables = ["Us_usuario","gmail", "telefono", "torre", "apartamento"];
         camposEditables.forEach(function(id) {
             let input = document.getElementById(id);
             if (input) {

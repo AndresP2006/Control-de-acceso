@@ -187,4 +187,14 @@ class PeopleModel
         $this->db->bind(':id_usuario', $id_usuario);
         return $this->db->registros();
     }
+    public function getAllSolicitudesNotifi() {
+        $this->db->query("SELECT * FROM solicitudes_actualizacion");
+        return  $this->db->registros();
+    
+        // echo "<pre>";
+        // print_r($resultados);
+        // echo "</pre>";
+        // exit(); // Detener la ejecución para ver el resultado
+    }
+    
 }

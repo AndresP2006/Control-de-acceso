@@ -146,7 +146,7 @@ public function insertUserUpdateRequest($datos)
 {
     try {
         // Verificar que existan todas las claves requeridas
-        $requiredKeys = ['id_residente', 'correo_nuevo', 'telefono_nuevo', 'torre_nuevo', 'apartamento_nuevo'];
+        $requiredKeys = ['id_residente','nombre' ,'correo_nuevo', 'telefono_nuevo', 'torre_nuevo', 'apartamento_nuevo'];
         foreach ($requiredKeys as $key) {
             if (!isset($datos[$key]) || empty(trim($datos[$key]))) {
                 throw new Exception("Falta el campo: " . $key);
@@ -155,6 +155,7 @@ public function insertUserUpdateRequest($datos)
 
         // Asignar variables locales
         $id_residente      = trim($datos['id_residente']);
+        $nombre      = trim($datos['nombre']);
         $correo_nuevo      = trim($datos['correo_nuevo']);
         $telefono_nuevo    = trim($datos['telefono_nuevo']);
         $torre_nuevo       = trim($datos['torre_nuevo']);
@@ -166,12 +167,13 @@ public function insertUserUpdateRequest($datos)
         // Inserción en la tabla solicitudes_actualizacion
         $query = "
             INSERT INTO solicitudes_actualizacion 
-                (id_residente, correo_nuevo, telefono_nuevo, torre_nuevo, apartamento_nuevo)
+                (id_residente,nombre,correo_nuevo, telefono_nuevo, torre_nuevo, apartamento_nuevo)
             VALUES 
-                (:id_residente, :correo_nuevo, :telefono_nuevo, :torre_nuevo, :apartamento_nuevo)
+                (:id_residente,:nombre, :correo_nuevo, :telefono_nuevo, :torre_nuevo, :apartamento_nuevo)
         ";
         $this->db->query($query);
         $this->db->bind(':id_residente', $id_residente);
+        $this->db->bind(':nombre', $nombre);
         $this->db->bind(':correo_nuevo', $correo_nuevo);
         $this->db->bind(':telefono_nuevo', $telefono_nuevo);
         $this->db->bind(':torre_nuevo', $torre_nuevo);
