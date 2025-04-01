@@ -179,10 +179,13 @@ function guardarDatos() {
 
     camposEditables.forEach(function(id) {
         let input = document.getElementById(id);
-        if (input && input.value !== valoresOriginales[id]) {
-            cambiosRealizados = true;
+        if (input) {
+            // Comparar valores ignorando espacios al inicio y al final
+            if (input.value.trim() !== valoresOriginales[id].trim()) {
+                cambiosRealizados = true;
+            }
+            formData.append(input.name, input.value.trim());
         }
-        formData.append(input.name, input.value);
     });
 
     if (!cambiosRealizados) {
