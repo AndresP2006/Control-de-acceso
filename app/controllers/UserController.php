@@ -522,4 +522,32 @@ class UserController extends Controlador
         echo json_encode(['success' => false, 'error' => 'Método no permitido']);
         exit;
     }
+
+    public function VisitantesPorFecha()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            try {
+                $data = json_decode(file_get_contents('php://input'), true);
+                $fecha = $data['fecha'] ?? '';
+
+                if (empty($fecha)) {
+                    throw new Exception('Fecha no proporcionada');
+                }
+
+                $visitantes = $this->visitorModel->obtenerVisitantesPorFecha($fecha);
+
+                if (!$visitantes) {
+                    $visitantes = []; // Retornar un array vacío si no hay resultados
+                }
+
+                echo json_encode($visitantes);
+            } catch (Exception $e) {
+                http_response_code(500);
+                echo json_encode(['error' => $e->getMessage()]);
+            }
+        } else {
+            http_response_code(405); // Método no permitido
+            echo json_encode(['error' => 'Método no permitido']);
+        }
+    }
 }
