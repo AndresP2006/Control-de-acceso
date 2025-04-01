@@ -174,16 +174,24 @@ function setWaitingState() {
 
 function guardarDatos() {
     let formData = new FormData();
+    const camposEditables = ["gmail", "telefono", "torre", "apartamento"];
+    let cambiosRealizados = false;
+
+    camposEditables.forEach(function(id) {
+        let input = document.getElementById(id);
+        if (input && input.value !== valoresOriginales[id]) {
+            cambiosRealizados = true;
+        }
+        formData.append(input.name, input.value);
+    });
+
+    if (!cambiosRealizados) {
+        alert("No se han realizado cambios en los datos.");
+        return;
+    }
+
     formData.append("E_id", document.getElementById("cedula").value);
     formData.append("E_nombre", document.getElementById("nombre").value);
-    formData.append("E_Gmail", document.getElementById("gmail").value);
-    formData.append("E_Telefono", document.getElementById("telefono").value);
-    formData.append("To_id", document.getElementById("torre").value);
-    formData.append("Ap_numero", document.getElementById("apartamento").value);
-
-    for (let [key, val] of formData.entries()) {
-        console.log(key, ":", val);
-    }
 
     fetch("<?= RUTA_URL; ?>/UserController/ActualizarUsuario", {
         method: "POST",
@@ -201,7 +209,6 @@ function guardarDatos() {
         document.getElementById("save-btn").style.display = "none";
         document.getElementById("cancel-btn").style.display = "none";
 
-        const camposEditables = ["Us_usuario","gmail", "telefono", "torre", "apartamento"];
         camposEditables.forEach(function(id) {
             let input = document.getElementById(id);
             if (input) {
