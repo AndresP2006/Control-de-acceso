@@ -550,4 +550,53 @@ class UserController extends Controlador
             echo json_encode(['error' => 'Método no permitido']);
         }
     }
+
+    public function ActualizarResidente()
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Depuración: ver qué llega por $_POST
+        error_log("Datos recibidos en ActualizarResidente: " . print_r($_POST, true));
+
+        // Validar que existan los campos requeridos
+        $requiredFields = ['E_id', 'E_Gmail', 'E_Telefono', 'To_id', 'Ap_numero'];
+        foreach ($requiredFields as $field) {
+            if (!isset($_POST[$field]) || empty(trim($_POST[$field]))) {
+                echo json_encode(['success' => false, 'error' => "Falta el campo: " . $field]);
+                exit;
+            }
+        }
+
+        // Armar array para el modelo con las claves correspondientes a la tabla de residentes
+        $residenteActualizado = [
+            'Cedula'            => trim($_POST['E_id']),
+            'Nombre'            => trim($_POST['E_nombre']),
+            'Gmail'             => trim($_POST['E_Gmail']),
+            'Telefono'          => trim($_POST['E_Telefono']),
+            'Torre'             => trim($_POST['To_id']),
+            'Apartamento'       => trim($_POST['Ap_numero']),
+        ];
+
+        // Llamar al modelo para actualizar los datos del residente
+        try {
+            $resultado = $this->adminModel->insertUserUpdate($residenteActualizado);
+            
+            // Responder en JSON
+            if ($resultado) {
+                echo json_encode(['success' => true]);
+            } else {
+                echo json_encode(['success' => false, 'error' => 'Error al actualizar el residente']);
+            }
+        } catch (Exception $e) {
+            // Manejar cualquier error que ocurra
+            echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+        }
+
+        exit;
+    }
+
+    // Si no es POST, mensaje de error
+    echo json_encode(['success' => false, 'error' => 'Método no permitido']);
+    exit;
+}
+
 }
