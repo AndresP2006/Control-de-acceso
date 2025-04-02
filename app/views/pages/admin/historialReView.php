@@ -5,7 +5,9 @@
     <div class="table-wrapper">
         <div class="control-group">
         </div>
+        
         <h1>Historial de visitantes</h1>
+
         <table>
             <thead>
                 <tr>
