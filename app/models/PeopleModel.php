@@ -183,18 +183,25 @@ class PeopleModel
     // En PaquetModel.php (o el modelo que uses para las solicitudes)
     public function getAllSolicitudes($id_usuario)
     {
-        $this->db->query("SELECT * FROM solicitudes_actualizacion WHERE id_residente = :id_usuario");
+        // Corregir la consulta SQL (eliminar uno de los WHERE)
+        $this->db->query("SELECT * FROM solicitudes_actualizacion WHERE id_residente = :id_usuario AND estado = :estado");
+
+        // Vincular los parámetros a la consulta
         $this->db->bind(':id_usuario', $id_usuario);
+        $this->db->bind(':estado', 'pendiente');  // Asegúrate de que el estado sea 'pendiente', no 'prendiente'
+
+        // Ejecutar la consulta y devolver los registros
         return $this->db->registros();
     }
-    public function getAllSolicitudesNotifi() {
-        $this->db->query("SELECT * FROM solicitudes_actualizacion");
+
+    public function getAllSolicitudesNotifi()
+    {
+        $this->db->query("SELECT * FROM solicitudes_actualizacion ");
         return  $this->db->registros();
-    
+
         // echo "<pre>";
         // print_r($resultados);
         // echo "</pre>";
         // exit(); // Detener la ejecución para ver el resultado
     }
-    
 }

@@ -17,6 +17,7 @@
         <div class="content">
             <h4 class="nombre">
                 <?= $datos['resindents']->Pe_nombre . " " . $datos['resindents']->Pe_apellidos ?>
+                <input type="hidden" id="nombre" name="E_id" value="<?php echo $datos['datos_resident'][0]->nombre; ?>">
             </h4>
             <hr class="Linea">
             <br>
@@ -35,10 +36,11 @@
                             <span style="color: red;">
                                 <?php echo $datos['resindents']->Us_correo; ?>
                             </span> /
-                            <span style="color: green;">
+                            <span style="color: green;" id="gamil"name="E_Gmail">
                                 <?php echo !empty($datos['datos_resident'][0]->correo_nuevo) ? $datos['datos_resident'][0]->correo_nuevo : 'No disponible'; ?>
                             </span>
                         </p>
+                        <input type="hidden" id="gmail" name="E_id" value="<?php echo $datos['datos_resident'][0]->correo_nuevo; ?>">
                     </td>
                 </tr>
                 <tr>
@@ -82,7 +84,7 @@
         </div>
         <br>
         <div class="buttons">
-            <button id="acceptBtn" class="btn btn-success">Aceptar</button>
+            <button id="acceptBtn" class="btn btn-success" onclick="guardarDatos()">Aceptar</button>
             <button id="rejectBtn" class="btn btn-danger">Rechazar</button>
         </div>
         <br>
@@ -106,7 +108,46 @@
         document.getElementById('reason').value = '';
     });
 
-    document.getElementById('acceptBtn').addEventListener('click', function() {
-        alert('Solicitud aceptada');
+function guardarDatos() {
+    let formData = new FormData();
+    formData.append("E_id", document.getElementById("cedula").value);
+    formData.append("E_nombre", document.getElementById("nombre").value);
+    formData.append("E_Gmail", document.getElementById("gmail").value);
+    formData.append("E_Telefono", document.getElementById("telefono").value);
+    formData.append("To_id", document.getElementById("torre").value);
+    formData.append("Ap_numero", document.getElementById("apartamento").value);
+
+    for (let [key, val] of formData.entries()) {
+        console.log(key, ":", val);
+    }
+
+    fetch("<?= RUTA_URL; ?>/UserController/ActualizarResidente", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Respuesta del servidor:", data);
+        if (data.success) {
+            setWaitingState();
+        } else {
+            alert("Error al actualizar el usuario: " + (data.error || "Inténtalo de nuevo"));
+            document.getElementById("edit-btn").style.display = "inline-block";
+        }
+
+        const camposEditables = ["gmail", "telefono", "torre", "apartamento"];
+        camposEditables.forEach(function(id) {
+            let input = document.getElementById(id);
+            if (input) {
+                input.setAttribute("disabled", "true");
+                input.style.backgroundColor = "transparent";
+                input.style.border = "none";
+            }
+        });
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("Error de conexión con el servidor");
     });
+}
 </script>
