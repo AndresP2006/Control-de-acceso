@@ -222,30 +222,33 @@ class AdminModel
 
             $this->db->execute();
             // Preparar la consulta SQL para actualizar el estado
-            $this->db->query("UPDATE solicitudes_actualizacion
-                            SET estado = 'aprobado'
-                                WHERE id = (
-                                        SELECT id 
-                                    FROM solicitudes_actualizacion 
-                                    WHERE id_residente = 4567 
-                            ORDER BY fecha_solicitud DESC 
-                                    LIMIT 1
-                                    );
-                    id_residente = :Cedula");
+            $this->db->query("UPDATE solicitudes_actualizacion 
+            SET estado = :estado 
+            WHERE id = (
+                SELECT id FROM (
+                    SELECT id 
+                    FROM solicitudes_actualizacion 
+                    WHERE id_residente = :Cedula 
+                    ORDER BY fecha_solicitud DESC 
+                    LIMIT 1
+                ) AS subquery
+            )");
 
             // Vincular los parámetros con los valores
-            $this->db->bind(':Cedula',  $datos['Cedula']);
-            $this->db->bind(':estado', 'aprobado');
+            $this->db->bind(':Cedula', $datos['Cedula']);
+            $this->db->bind(':estado', 'aprobada');
+
+            // Ejecutar la consulta
+            $this->db->execute();
+
             // 2. Actualizar los datos en la tabla 'persona'
             $this->db->query('
             UPDATE persona 
             SET 
-                Pe_apellidos = :Apellidos, 
                 Pe_telefono = :Telefono 
             WHERE Pe_id = :Cedula
         ');
             $this->db->bind(':Cedula', $datos['Cedula']);
-            $this->db->bind(':Apellidos', $datos['Apellidos']);
             $this->db->bind(':Telefono', $datos['Telefono']);
             $this->db->execute();
 
