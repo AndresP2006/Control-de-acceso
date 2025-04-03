@@ -97,7 +97,7 @@
         </div>
     </div>
 </div>
-
+<?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>
 <script>
     document.getElementById('rejectBtn').addEventListener('click', function() {
         document.getElementById('rejectReason').style.display = 'block';
@@ -108,7 +108,7 @@
         document.getElementById('reason').value = '';
     });
 
-function guardarDatos() {
+    function guardarDatos() {
     let formData = new FormData();
     formData.append("E_id", document.getElementById("cedula").value);
     formData.append("E_nombre", document.getElementById("nombre").value);
@@ -129,9 +129,10 @@ function guardarDatos() {
     .then(data => {
         console.log("Respuesta del servidor:", data);
         if (data.success) {
-            setWaitingState();
+            realizado("Dato guardado");
         } else {
-            alert("Error al actualizar el usuario: " + (data.error || "Inténtalo de nuevo"));
+            // Si no es exitoso, se ejecuta una alerta de error genérica:
+            error("Error al actualizar el usuario: " + (data.error || "Inténtalo de nuevo"));
             document.getElementById("edit-btn").style.display = "inline-block";
         }
 
@@ -145,9 +146,9 @@ function guardarDatos() {
             }
         });
     })
-    .catch(error => {
-        console.error("Error:", error);
-        alert("Error de conexión con el servidor");
+    .catch(err => {
+        // En caso de error en la llamada fetch:
+        error("Hubo un problema con la solicitud. Intenta de nuevo más tarde.");
     });
 }
 </script>

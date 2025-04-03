@@ -196,7 +196,7 @@ class PeopleModel
 
     public function getAllSolicitudesNotifi()
     {
-        $this->db->query("SELECT * FROM solicitudes_actualizacion ");
+        $this->db->query("SELECT * FROM solicitudes_actualizacion WHERE estado != 'aprobada'");
         return  $this->db->registros();
 
         // echo "<pre>";
