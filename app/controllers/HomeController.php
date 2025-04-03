@@ -46,6 +46,24 @@ class HomeController extends Controlador
     public function verUser(){
         $this->vista("pages/user/userView");
     }
+    public function notificaciones_admin() {
+        // Obtener todas las solicitudes de actualización pendientes desde el modelo
+        $solicitudes = $this->peopleModel->getAllSolicitudesNotifi();
+    
+        // Formatear los datos para la vista
+        $notificaciones = array_map(function($solicitud) {
+            return ['tipo' => 'solicitud_actualizacion', 'data' => $solicitud];
+        }, $solicitudes);
+    
+        // Pasar los datos a la vista
+        $datos = [
+            'notificaciones' => $notificaciones
+        ];
+        
+        $this->vista("pages/admin/notifiAdmin", $datos);
+    }
+    
+
     public function notificaciones() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $usuario = $_POST['Us_usuario'];
@@ -79,7 +97,22 @@ class HomeController extends Controlador
         }
     }
 
-
+    public function solicitud_user(){
+        if (isset($_POST["detalles"])) {
+            
+            $id_residente = $_POST["id"];
+            $resident = $this->peopleModel->getPersonaById($id_residente);
+            $datos_resident = $this->peopleModel->getAllSolicitudes($id_residente);
+            
+            $datos=[
+            'resindents' => $resident,
+            'datos_resident' =>$datos_resident
+            ];
+            $this->vista("pages/admin/modalSolicitud",$datos);
+        }else{
+            $this->vista("pages/admin/modalSolicitud");
+        }
+    }
     public function admin()
     {
         if (!isset($_SESSION['sesion_activa'])) {

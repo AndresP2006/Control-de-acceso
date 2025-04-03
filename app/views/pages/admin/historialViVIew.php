@@ -1,6 +1,8 @@
 <?php require_once RUTA_APP . '/views/inc/header-admin.php'; ?>
-
-<h1 class="table-titulo">Lista de visitantes</h1>
+<div class="select">
+    <h1 class="table-titulo">Lista de visitantes</h1>
+    <input type="date" name="fecha" id="fecha">
+</div>
 <div class="table-container">
     <div class="table-wrapper">
         <table>
@@ -54,5 +56,45 @@
 </div>
 
 <?php include RUTA_APP . '/views/pages/admin/modalHistorial.php'; ?>
+
+<script>
+    document.getElementById('fecha').addEventListener('change', function() {
+        const fechaSeleccionada = this.value;
+        if (fechaSeleccionada) {
+            fetch('<?php echo RUTA_URL; ?>/UserController/VisitantesPorFecha', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        fecha: fechaSeleccionada
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const tbody = document.querySelector('table tbody');
+                    tbody.innerHTML = ''; // Limpiar la tabla
+                    data.forEach(visitor => {
+                        const row = `
+                        <tr>
+                            <td>${visitor.Vi_id || '-'}</td>
+                            <td>${visitor.Vi_nombres || '-'}</td>
+                            <td>${visitor.Vi_apellidos || '-'}</td>
+                            <td>${visitor.Vi_telefono || '-'}</td>
+                            <td>
+                            <form id="historial-form" action="<?php echo RUTA_URL; ?>/UserController/MostrarHistorial" method="POST">
+                                <input type="hidden" name="historial_id" value="${visitor.Vi_id || ''}">
+                                <button class="historial-btn" name="historial-btn">✏️</button>
+                            </form>
+                            </td>
+                        </tr>
+                    `;
+                        tbody.innerHTML += row;
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    });
+</script>
 
 <?php include RUTA_APP . '/views/inc/footer-visitante.php'; ?>
