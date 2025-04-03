@@ -124,4 +124,11 @@ class HomeController extends Controlador
 
         $this->vista('pages/admin/edificiosView', $data);
     }
+
+    // Recuperar contraseña
+    public function recovery(){
+        $this->vista('pages/recoveryView', null);
+
+
+    }
 }
