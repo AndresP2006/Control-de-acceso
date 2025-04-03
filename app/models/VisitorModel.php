@@ -11,8 +11,10 @@ class VisitorModel
 
     public function getVisitrosByTable()
     {
-        $this->db->query("SELECT DISTINCT *  FROM visitantes");
-        return $this->db->showTables();
+        $this->db->query("SELECT * FROM visitantes");
+        return array_map(function ($registro) {
+            return (array) $registro;
+        }, $this->db->registros());
     }
     public function obtenerVisitantesPorFecha($fecha)
     {
@@ -22,6 +24,10 @@ class VisitorModel
                 WHERE r.Re_fecha_entrada = :fecha";
         $this->db->query($sql);
         $this->db->bind(':fecha', $fecha);
-        return $this->db->registros();
+
+        // Convertir los resultados a arrays asociativos
+        return array_map(function ($registro) {
+            return (array) $registro;
+        }, $this->db->registros());
     }
 }
