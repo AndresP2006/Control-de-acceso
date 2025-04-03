@@ -10,6 +10,10 @@ define('DB_NOMBRE', 'cda');
 define('RUTA_APP', dirname(dirname(__FILE__))) ;
 
 //rUTA URL Ejemplo:http://localhost/MVC2/
+<<<<<<< HEAD
 define('RUTA_URL', 'http://localhost:8080');
+=======
+define('RUTA_URL', 'http://localhost/Control-de-acceso/');
+>>>>>>> 03de12b22d5275be0c890c817f7ffc637d8e073d
 
 define('NOMBRESITIO', 'control de acceso ');
