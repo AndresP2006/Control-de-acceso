@@ -59,9 +59,9 @@ class ApartamentModel
 
     public function DeleteApartamento($torre, $apartamento)
     {
-        $this->db->query('DELETE FROM apartamento WHERE To_id = :torre AND Ap_numero = :apartamento');
+        $this->db->query('DELETE FROM apartamento WHERE To_id = (SELECT To_id FROM torre WHERE To_letra = :torre);');
         $this->db->bind(':torre', $torre);
-        $this->db->bind(':apartamento', $apartamento);
+        // $this->db->bind(':apartamento', $apartamento);
         return $this->db->registro();
     }
 

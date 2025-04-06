@@ -457,6 +457,7 @@ class UserController extends Controlador
     {
         if (isset($_POST['historial-btn'])) {
             $id = $_POST['historial_id'];
+            $fecha = $_POST['fecha'] ?? null;
 
             $registros = $this->peopleModel->getAllRegistro($id);
 
@@ -479,11 +480,16 @@ class UserController extends Controlador
             } else {
                 $datos = ['historial' => []]; // Si no hay registros, aseguramos que la variable no cause errores
             }
+
+            // Mantener los visitantes filtrados por fecha
+            if ($fecha) {
+                $datos['visitors'] = $this->visitorModel->obtenerVisitantesPorFecha($fecha);
+            } else {
+                $datos['visitors'] = $this->visitorModel->getVisitrosByTable();
+            }
+
+            $this->vista('pages/admin/historialViView', $datos);
         }
-
-        $datos['visitors'] = $this->visitorModel->getVisitrosByTable();
-
-        $this->vista('pages/admin/historialViView', $datos);
     }
 
     public function enterTower() {}
@@ -532,28 +538,27 @@ class UserController extends Controlador
     public function VisitantesPorFecha()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            try {
-                $data = json_decode(file_get_contents('php://input'), true);
-                $fecha = $data['fecha'] ?? '';
+            // Verificar si se proporcionó la fecha
+            $fecha = isset($_POST['fecha']) ? trim($_POST['fecha']) : null;
 
-                if (empty($fecha)) {
-                    throw new Exception('Fecha no proporcionada');
-                }
-
-                $visitantes = $this->visitorModel->obtenerVisitantesPorFecha($fecha);
-
-                if (!$visitantes) {
-                    $visitantes = []; // Retornar un array vacío si no hay resultados
-                }
-
-                echo json_encode($visitantes);
-            } catch (Exception $e) {
-                http_response_code(500);
-                echo json_encode(['error' => $e->getMessage()]);
+            if ($fecha) {
+                // Obtener visitantes por fecha desde el modelo
+                $visitors = $this->visitorModel->obtenerVisitantesPorFecha($fecha);
+            } else {
+                // Obtener todos los visitantes si no se proporciona una fecha
+                $visitors = $this->visitorModel->getVisitrosByTable();
             }
+
+            // Pasar los datos a la vista
+            $datos = [
+                'visitors' => $visitors,
+                'error' => null
+            ];
+            $this->vista('pages/admin/historialViView', $datos);
         } else {
-            http_response_code(405); // Método no permitido
-            echo json_encode(['error' => 'Método no permitido']);
+            // Redirigir si no es una solicitud POST
+            header('Location: ' . RUTA_URL . '/HomeController/admin');
+            exit;
         }
     }
 
