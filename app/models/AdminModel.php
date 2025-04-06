@@ -80,66 +80,64 @@ class AdminModel
     }
 
     public function updateUser($datos)
-    {
-        try {
-            // Iniciar una transacción
-            $this->db->beginTransaction();
+{
+    // Registrar los datos recibidos para depuración
+    error_log("updateUser datos: " . print_r($datos, true));
 
+    try {
+        // Iniciar la transacción
+        $this->db->beginTransaction();
 
-            // 1. Actualizar los datos en la tabla 'usuario'
-            $sql = '
+        // 1. Actualizar los datos en la tabla 'usuario'
+        $sql = "
             UPDATE usuario 
             SET 
                 Us_usuario = :Usuario, 
-                Us_correo = :Correo 
-        ';
+                Us_correo = :Correo";
+        if (!empty($datos['Contrasena'])) {
+            $sql .= ", Us_contrasena = :Contrasena";
+        }
+        $sql .= " WHERE Us_id = :Cedula";
 
-            // Solo agregar la contraseña si es proporcionada
-            if (!empty($datos['Contrasena'])) {
-                $sql .= ', Us_contrasena = :Contrasena';
-            }
+        $this->db->query($sql);
+        $this->db->bind(':Cedula', $datos['Cedula']);
+        $this->db->bind(':Usuario', $datos['Nombre']);
+        $this->db->bind(':Correo', $datos['Gmail']);
+        if (!empty($datos['Contrasena'])) {
+            $this->db->bind(':Contrasena', $datos['Contrasena']);
+        }
+        $this->db->execute();
 
-            $sql .= ' WHERE Us_id = :Cedula';
-
-            $this->db->query($sql);
-
-            // Verificar los datos vinculados
-            $this->db->bind(':Cedula', $datos['Cedula']);
-            $this->db->bind(':Usuario', $datos['Nombre']);
-            $this->db->bind(':Correo', $datos['Gmail']);
-
-            // Si se ha proporcionado una nueva contraseña, la vinculamos
-            if (!empty($datos['Contrasena'])) {
-                $this->db->bind(':Contrasena', $datos['Contrasena']);
-            }
-
-            $this->db->execute();
-
-            // 2. Actualizar los datos en la tabla 'persona'
-            $this->db->query('
+        // 3. Actualizar los datos en la tabla 'persona' incluyendo el Ap_id
+        $this->db->query("
             UPDATE persona 
             SET 
                 Pe_nombre = :Nombre, 
                 Pe_apellidos = :Apellidos, 
-                Pe_telefono = :Telefono 
-            WHERE Pe_id = :Cedula
-        ');
-            $this->db->bind(':Cedula', $datos['Cedula']);
-            $this->db->bind(':Nombre', $datos['Nombre']);
-            $this->db->bind(':Apellidos', $datos['Apellidos']);
-            $this->db->bind(':Telefono', $datos['Telefono']);
-            $this->db->execute();
+                Pe_telefono = :Telefono,
+                Ap_id = :Departamento
+            WHERE Us_id = :Cedula
+        ");
+        $this->db->bind(':Cedula', $datos['Cedula']);
+        $this->db->bind(':Nombre', $datos['Nombre']);
+        $this->db->bind(':Apellidos', $datos['Apellidos']);
+        $this->db->bind(':Telefono', $datos['Telefono']);
+        $this->db->bind(':Departamento', $datos['Departamento']);
+        $this->db->execute();
 
-            // Confirmar la transacción si todo fue exitoso
-            $this->db->commit();
-            return true;
-        } catch (Exception $e) {
-            // Deshacer la transacción en caso de error
-            $this->db->rollBack();
-            echo "Error: " . $e->getMessage();
-            return false;
-        }
+        // Confirmar la transacción si todo fue exitoso
+        $this->db->commit();
+        return true;
+    } catch (Exception $e) {
+        // Deshacer la transacción en caso de error
+        $this->db->rollBack();
+        echo "Error: " . $e->getMessage();
+        return false;
     }
+}
+
+
+
 
     public function insertUserUpdateRequest($datos)
     {

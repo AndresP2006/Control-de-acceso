@@ -105,7 +105,7 @@ class PeopleModel
         if ($roleId) {
             // Consulta con filtro por Rol
             $this->db->query('
-            SELECT persona.*, usuario.Ro_id, usuario.Us_correo, r.Ro_tipo, usuario.Us_contrasena, a.Ap_numero, t.To_letra, t.To_id 
+            SELECT persona.*, usuario.Ro_id, usuario.Us_correo, r.Ro_tipo, usuario.Us_contrasena, a.Ap_numero, t.To_letra, t.To_id,a.Ap_id 
             FROM persona 
             LEFT JOIN usuario ON persona.Pe_id = usuario.Us_id 
             LEFT JOIN rol r ON usuario.Ro_id = r.Ro_id 
@@ -196,7 +196,8 @@ class PeopleModel
 
     public function getAllSolicitudesNotifi()
     {
-        $this->db->query("SELECT * FROM solicitudes_actualizacion ");
+        $this->db->query("SELECT * FROM solicitudes_actualizacion WHERE estado != :estado ");
+        $this->db->bind(':estado', 'aprobada');
         return  $this->db->registros();
 
         // echo "<pre>";
