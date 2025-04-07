@@ -56,7 +56,7 @@
             <input class="Formulario__titulo-input" name="usuario" type="text" placeholder="     Usuario" required />
             <input class="Formulario__titulo-input" name="password" type="password" placeholder="   Contraseña"
                 required />
-            <a href="<?php echo RUTA_URL; ?>/RecoveryController/index" style="margin-bottom: 10px;" >¿Olvidaste tu contraseña?</a>
+            <a href="<?php echo RUTA_URL; ?>/RecoveryController/index" style="margin-bottom: 10px;">¿Olvidaste tu contraseña?</a>
             <button type="submit" name="ingresar" class="Formulario__boton">
                 Ingresar
             </button>

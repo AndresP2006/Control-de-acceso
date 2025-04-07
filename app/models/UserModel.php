@@ -9,9 +9,7 @@ class UserModel
         $this->db = new Base;
     }
 
-    public function index(){
-
-    }
+    public function index() {}
 
     public function getUserByEmailOrName($emailOrName)
     {
@@ -20,11 +18,17 @@ class UserModel
         return $this->db->registro();
     }
 
-    public function getUserByEmail($email){
+    public function getUserByEmail($email)
+    {
 
         $this->db->query("select * from usuario u where u.Us_correo='$email'");
         return $this->db->registro();
-
     }
 
+    public function updatePassword($newpass,$correo)
+    {
+        $this->db->query("UPDATE usuario SET Us_contrasena = '$newpass' WHERE Us_correo = '$correo';");
+
+        return $this->db->registro();
+    }
 }
