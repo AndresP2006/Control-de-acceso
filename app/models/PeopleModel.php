@@ -53,7 +53,7 @@ class PeopleModel
 
     public function getAllRegistro($id)
     {
-        $this->db->query("SELECT * FROM registro WHERE Vi_id = :id");
+        $this->db->query("SELECT r.*, Ap_numero,To_letra FROM registro r JOIN persona p ON r.Pe_id = p.Pe_id JOIN apartamento a ON p.Ap_id = a.Ap_id JOIN torre t ON a.To_id = t.To_id WHERE Vi_id = :id");
         $this->db->bind(':id', $id); // Usa parámetros para evitar inyección SQL
         $result = $this->db->registros(); // Asegúrate de usar 'registros()' para obtener múltiples resultados
 
@@ -196,8 +196,8 @@ class PeopleModel
 
     public function getAllSolicitudesNotifi()
     {
-        $this->db->query("SELECT * FROM solicitudes_actualizacion WHERE estado != :estado ");
-        $this->db->bind(':estado', 'aprobada');
+
+        $this->db->query("SELECT * FROM solicitudes_actualizacion ");
         return  $this->db->registros();
 
         // echo "<pre>";

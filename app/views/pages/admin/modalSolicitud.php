@@ -17,7 +17,7 @@
         <div class="content">
             <h4 class="nombre">
                 <?= $datos['resindents']->Pe_nombre . " " . $datos['resindents']->Pe_apellidos ?>
-                <input type="hidden" id="nombre" name="E_id" value="<?php echo $datos['datos_resident'][0]->nombre; ?>">
+                <input type="hidden" id="nombre" name="E_id" value="<?php echo isset($datos['datos_resident'][0]->correo_nuevo) && !empty($datos['datos_resident'][0]->nombre)? $datos['datos_resident'][0]->nombre: ""; ?>">
             </h4>
             <hr class="Linea">
             <br>
@@ -33,14 +33,28 @@
                     <td><strong>Email</strong></td>
                     <td>
                         <p style="font-size: 25px;">
-                            <span style="color: red;">
-                                <?php echo $datos['resindents']->Us_correo; ?>
-                            </span> /
-                            <span style="color: green;" id="gamil"name="E_Gmail">
-                                <?php echo !empty($datos['datos_resident'][0]->correo_nuevo) ? $datos['datos_resident'][0]->correo_nuevo : 'No disponible'; ?>
-                            </span>
+                            <?php
+    $correo_viejo = isset($datos['resindents']->Us_correo) ? $datos['resindents']->Us_correo : "";
+    $correo_nuevo = isset($datos['datos_resident'][0]->correo_nuevo) ? $datos['datos_resident'][0]->correo_nuevo : "";
+
+    // Caso 1: Solo existe correo viejo, mostrarlo en verde
+    if (!empty($correo_viejo) && empty($correo_nuevo)) {
+        echo '<span style="color: green;" name="E_Gmail">' . $correo_viejo . '</span>';
+    }
+    // Caso 2: Ambos existen y son iguales, mostrar uno solo en verde
+    elseif (!empty($correo_viejo) && !empty($correo_nuevo) && $correo_viejo === $correo_nuevo) {
+        echo '<span style="color: green;" name="E_Gmail">' . $correo_viejo . '</span>';
+    }
+    // Caso 3: Ambos existen y son diferentes, mostrar los dos con colores distintos
+    elseif (!empty($correo_viejo) && !empty($correo_nuevo)) {
+        echo '<span style="color: red;" name="E_Gmail">' . $correo_viejo . '</span>';
+        echo '<span style="color: green;" name="E_Gmail"> | ' . $correo_nuevo . '</span>';
+    }
+?>
+
+
                         </p>
-                        <input type="hidden" id="gmail" name="E_id" value="<?php echo $datos['datos_resident'][0]->correo_nuevo; ?>">
+                        <input type="hidden" id="gmail" name="E_id" value="<?php echo isset($datos['datos_resident'][0]->correo_nuevo) && !empty($datos['datos_resident'][0]->correo_nuevo)? $datos['datos_resident'][0]->correo_nuevo: ""; ?>">
                     </td>
                 </tr>
                 <tr>
@@ -92,12 +106,12 @@
             <label for="reason">Motivo del rechazo:</label>
             <textarea id="reason" class="form-control" name="reject_reason" rows="3"></textarea>
             <br>
-            <button id="submitRejection" class="btn btn-primary">Enviar</button>
+            <button id="submitRejection" class="btn btn-primary" onclick="rechazo()">Enviar</button>
             <button id="cancelRejection" class="btn btn-secondary">Cancelar</button>
         </div>
     </div>
 </div>
-
+<?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>
 <script>
     document.getElementById('rejectBtn').addEventListener('click', function() {
         document.getElementById('rejectReason').style.display = 'block';
@@ -108,46 +122,80 @@
         document.getElementById('reason').value = '';
     });
 
-function guardarDatos() {
-    let formData = new FormData();
-    formData.append("E_id", document.getElementById("cedula").value);
-    formData.append("E_nombre", document.getElementById("nombre").value);
-    formData.append("E_Gmail", document.getElementById("gmail").value);
-    formData.append("E_Telefono", document.getElementById("telefono").value);
-    formData.append("To_id", document.getElementById("torre").value);
-    formData.append("Ap_numero", document.getElementById("apartamento").value);
+    function guardarDatos() {
+        let formData = new FormData();
+        formData.append("E_id", document.getElementById("cedula").value);
+        formData.append("E_nombre", document.getElementById("nombre").value);
+        formData.append("E_Gmail", document.getElementById("gmail").value);
+        formData.append("E_Telefono", document.getElementById("telefono").value);
+        formData.append("To_id", document.getElementById("torre").value);
+        formData.append("Ap_numero", document.getElementById("apartamento").value);
 
-    for (let [key, val] of formData.entries()) {
-        console.log(key, ":", val);
-    }
-
-    fetch("<?= RUTA_URL; ?>/UserController/ActualizarResidente", {
-        method: "POST",
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log("Respuesta del servidor:", data);
-        if (data.success) {
-            setWaitingState();
-        } else {
-            alert("Error al actualizar el usuario: " + (data.error || "Inténtalo de nuevo"));
-            document.getElementById("edit-btn").style.display = "inline-block";
+        for (let [key, val] of formData.entries()) {
+            console.log(key, ":", val);
         }
 
-        const camposEditables = ["gmail", "telefono", "torre", "apartamento"];
-        camposEditables.forEach(function(id) {
-            let input = document.getElementById(id);
-            if (input) {
-                input.setAttribute("disabled", "true");
-                input.style.backgroundColor = "transparent";
-                input.style.border = "none";
-            }
-        });
-    })
-    .catch(error => {
-        console.error("Error:", error);
-        alert("Error de conexión con el servidor");
-    });
-}
+        fetch("<?= RUTA_URL; ?>/UserController/ActualizarResidente", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Respuesta del servidor:", data);
+                if (data.success) {
+                    realizado("Dato guardado");
+                } else {
+                    // Si no es exitoso, se ejecuta una alerta de error genérica:
+                    error("Error al actualizar el usuario: " + (data.error || "Inténtalo de nuevo"));
+                    document.getElementById("edit-btn").style.display = "inline-block";
+                }
+
+                const camposEditables = ["gmail", "telefono", "torre", "apartamento"];
+                camposEditables.forEach(function(id) {
+                    let input = document.getElementById(id);
+                    if (input) {
+                        input.setAttribute("disabled", "true");
+                        input.style.backgroundColor = "transparent";
+                        input.style.border = "none";
+                    }
+                });
+            })
+            
+    }
+
+    function rechazo() {
+        let formData = new FormData();
+        formData.append("E_id", document.getElementById("cedula").value);
+        formData.append("M_rechazo", document.getElementById("reason").value);
+
+        for (let [key, val] of formData.entries()) {
+            console.log(key, ":", val);
+        }
+
+        fetch("<?= RUTA_URL; ?>/UserController/MotivoRechazo", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Respuesta del servidor:", data);
+                if (data.success) {
+                    realizado("Dato guardado");
+                } else {
+                    // Si no es exitoso, se ejecuta una alerta de error genérica:
+                    error("Error al actualizar el usuario: " + (data.error || "Inténtalo de nuevo"));
+                    document.getElementById("edit-btn").style.display = "inline-block";
+                }
+
+                const camposEditables = ["gmail", "telefono", "torre", "apartamento"];
+                camposEditables.forEach(function(id) {
+                    let input = document.getElementById(id);
+                    if (input) {
+                        input.setAttribute("disabled", "true");
+                        input.style.backgroundColor = "transparent";
+                        input.style.border = "none";
+                    }
+                });
+            })
+    }
 </script>

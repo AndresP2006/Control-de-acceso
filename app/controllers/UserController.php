@@ -120,67 +120,67 @@ class UserController extends Controlador
 
 
     public function EditarUser()
-{
-    $messageInfo = '';
-    $messageError = '';
-    
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['udate'])) {
-        
-        // Recoger los datos correctamente desde $_POST
-        $datos = [
-            'Cedula'      => trim($_POST['E_id']),
-            'Nombre'      => trim($_POST['E_Nombre']),
-            'Apellidos'   => trim($_POST['E_Apellido']),
-            'Telefono'    => trim($_POST['E_Telefono']),
-            'Gmail'       => trim($_POST['E_Gmail']),
-            'Torre'       => trim($_POST['E_torre']),
-            'Ap_numero'   => trim($_POST['E_Departamento2']),
-            'Departamento'=> trim($_POST['E_Departamento']),
-            'Rol'         => trim($_POST['R_id']),
-            'Contrasena'  => trim($_POST['E_contrasena']),
-        ];
-        
-        
-        $resultado = $this->adminModel->updateUser($datos);
-        $registros = $this->peopleModel->getAllUsuario();
+    {
+        $messageInfo = '';
+        $messageError = '';
 
-        // Formatear los datos de los usuarios
-        $usuarios = [];
-        foreach ($registros as $registro) {
-            $usuarios[] = [
-                'Cedula'    => $registro->Pe_id,
-                'Pe_nombre' => $registro->Pe_nombre,
-                'Pe_apellidos' => $registro->Pe_apellidos,
-                'Pe_telefono'  => $registro->Pe_telefono,
-                'Us_correo'    => $registro->Us_correo,
-                'Ap_id'        => $registro->Ap_id,
-                'Ap_numero'    => $registro->Ap_numero,
-                'To_letra'     => $registro->To_letra,
-                'To_id'        => $registro->To_id,
-                'Ro_tipo'      => $registro->Ro_tipo,
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['udate'])) {
+
+            // Recoger los datos correctamente desde $_POST
+            $datos = [
+                'Cedula'      => trim($_POST['E_id']),
+                'Nombre'      => trim($_POST['E_Nombre']),
+                'Apellidos'   => trim($_POST['E_Apellido']),
+                'Telefono'    => trim($_POST['E_Telefono']),
+                'Gmail'       => trim($_POST['E_Gmail']),
+                'Torre'       => trim($_POST['E_torre']),
+                'Ap_numero'   => trim($_POST['E_Departamento2']),
+                'Departamento' => trim($_POST['E_Departamento']),
+                'Rol'         => trim($_POST['R_id']),
+                'Contrasena'  => trim($_POST['E_contrasena']),
+            ];
+
+
+            $resultado = $this->adminModel->updateUser($datos);
+            $registros = $this->peopleModel->getAllUsuario();
+
+            // Formatear los datos de los usuarios
+            $usuarios = [];
+            foreach ($registros as $registro) {
+                $usuarios[] = [
+                    'Cedula'    => $registro->Pe_id,
+                    'Pe_nombre' => $registro->Pe_nombre,
+                    'Pe_apellidos' => $registro->Pe_apellidos,
+                    'Pe_telefono'  => $registro->Pe_telefono,
+                    'Us_correo'    => $registro->Us_correo,
+                    'Ap_id'        => $registro->Ap_id,
+                    'Ap_numero'    => $registro->Ap_numero,
+                    'To_letra'     => $registro->To_letra,
+                    'To_id'        => $registro->To_id,
+                    'Ro_tipo'      => $registro->Ro_tipo,
+                ];
+            }
+
+            if ($resultado) {
+                $messageInfo = 'Usuario actualizado correctamente';
+            } else {
+                $messageError = 'Error al actualizar el usuario';
+            }
+
+            $datos = [
+                'usuarios'      => $usuarios,
+                'messageError'  => $messageError,
+                'messageInfo'   => $messageInfo,
+            ];
+        } else {
+            $messageError = 'Error: No se pudo procesar la solicitud';
+            $datos = [
+                'messageError' => $messageError,
             ];
         }
-        
-        if ($resultado) {
-            $messageInfo = 'Usuario actualizado correctamente';
-        } else {
-            $messageError = 'Error al actualizar el usuario';
-        }
-        
-        $datos = [
-            'usuarios'      => $usuarios,
-            'messageError'  => $messageError,
-            'messageInfo'   => $messageInfo,
-        ];
-    } else {
-        $messageError = 'Error: No se pudo procesar la solicitud';
-        $datos = [
-            'messageError' => $messageError,
-        ];
+        $this->vista('pages/admin/adminView', $datos);
+        exit;
     }
-    $this->vista('pages/admin/adminView', $datos);
-    exit;
-}
 
 
     public function DeleteUser()
@@ -472,6 +472,8 @@ class UserController extends Controlador
                         'Re_motivo' => $registro->Re_motivo,
                         'Vi_departamento' => $registro->Vi_departamento,
                         'Pe_id' => $registro->Pe_id,
+                        'Ap_numero' => $registro->Ap_numero,
+                        'To_letra' => $registro->To_letra,
                     ];
                 }
                 $datos = [
@@ -563,51 +565,94 @@ class UserController extends Controlador
     }
 
     public function ActualizarResidente()
-{
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Depuración: ver qué llega por $_POST
-        error_log("Datos recibidos en ActualizarResidente: " . print_r($_POST, true));
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Depuración: ver qué llega por $_POST
+            error_log("Datos recibidos en ActualizarResidente: " . print_r($_POST, true));
 
-        // Validar que existan los campos requeridos
-        $requiredFields = ['E_id', 'E_Gmail', 'E_Telefono', 'To_id', 'Ap_numero'];
-        foreach ($requiredFields as $field) {
-            if (!isset($_POST[$field]) || empty(trim($_POST[$field]))) {
-                echo json_encode(['success' => false, 'error' => "Falta el campo: " . $field]);
-                exit;
+            // Validar que existan los campos requeridos
+            $requiredFields = ['E_id', 'E_Gmail', 'E_Telefono', 'To_id', 'Ap_numero'];
+            foreach ($requiredFields as $field) {
+                if (!isset($_POST[$field]) || empty(trim($_POST[$field]))) {
+                    echo json_encode(['success' => false, 'error' => "Falta el campo: " . $field]);
+                    exit;
+                }
             }
+            var_dump($_POST['E_Gmail']);
+
+            // Armar array para el modelo con las claves correspondientes a la tabla de residentes
+            $residenteActualizado = [
+                'Cedula'            => trim($_POST['E_id']),
+                'Nombre'            => trim($_POST['E_nombre']),
+                'Gmail'             => trim($_POST['E_Gmail']),
+                'Telefono'          => trim($_POST['E_Telefono']),
+                'Torre'             => trim($_POST['To_id']),
+                'Apartamento'       => trim($_POST['Ap_numero']),
+            ];
+
+            // Llamar al modelo para actualizar los datos del residente
+            try {
+                $resultado = $this->adminModel->insertUserUpdate($residenteActualizado);
+
+                // Responder en JSON
+                if ($resultado) {
+                    echo json_encode(['success' => true]);
+                } else {
+                    echo json_encode(['success' => false, 'error' => 'Error al actualizar el residente']);
+                }
+            } catch (Exception $e) {
+                // Manejar cualquier error que ocurra
+                echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+            }
+
+            exit;
         }
 
-        // Armar array para el modelo con las claves correspondientes a la tabla de residentes
-        $residenteActualizado = [
-            'Cedula'            => trim($_POST['E_id']),
-            'Nombre'            => trim($_POST['E_nombre']),
-            'Gmail'             => trim($_POST['E_Gmail']),
-            'Telefono'          => trim($_POST['E_Telefono']),
-            'Torre'             => trim($_POST['To_id']),
-            'Apartamento'       => trim($_POST['Ap_numero']),
-        ];
-
-        // Llamar al modelo para actualizar los datos del residente
-        try {
-            $resultado = $this->adminModel->insertUserUpdate($residenteActualizado);
-            
-            // Responder en JSON
-            if ($resultado) {
-                echo json_encode(['success' => true]);
-            } else {
-                echo json_encode(['success' => false, 'error' => 'Error al actualizar el residente']);
-            }
-        } catch (Exception $e) {
-            // Manejar cualquier error que ocurra
-            echo json_encode(['success' => false, 'error' => $e->getMessage()]);
-        }
-
+        // Si no es POST, mensaje de error
+        echo json_encode(['success' => false, 'error' => 'Método no permitido']);
         exit;
     }
+    public function MotivoRechazo()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Depuración: ver qué llega por $_POST
+            error_log("Datos recibidos en ActualizarResidente: " . print_r($_POST, true));
 
-    // Si no es POST, mensaje de error
-    echo json_encode(['success' => false, 'error' => 'Método no permitido']);
-    exit;
-}
+            // Validar que existan los campos requeridos
+            $requiredFields = ['E_id', 'M_rechazo'];
+            foreach ($requiredFields as $field) {
+                if (!isset($_POST[$field]) || empty(trim($_POST[$field]))) {
+                    echo json_encode(['success' => false, 'error' => "Falta el campo: " . $field]);
+                    exit;
+                }
+            }
 
+            // Armar array para el modelo con las claves correspondientes a la tabla de residentes
+            $residenteActualizado = [
+                'Cedula'            => trim($_POST['E_id']),
+                'rechazo'            => trim($_POST['M_rechazo']),
+            ];
+
+            // Llamar al modelo para actualizar los datos del residente
+            try {
+                $resultado = $this->adminModel->insertRechazo($residenteActualizado);
+
+                // Responder en JSON
+                if ($resultado) {
+                    echo json_encode(['success' => true]);
+                } else {
+                    echo json_encode(['success' => false, 'error' => 'Error al actualizar el residente']);
+                }
+            } catch (Exception $e) {
+                // Manejar cualquier error que ocurra
+                echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+            }
+
+            exit;
+        }
+
+        // Si no es POST, mensaje de error
+        echo json_encode(['success' => false, 'error' => 'Método no permitido']);
+        exit;
+    }
 }
