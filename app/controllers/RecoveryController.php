@@ -55,20 +55,33 @@ class RecoveryController extends Controlador
             // Content
             $mail->isHTML(true);
             $mail->Subject = 'Importante: Actividad en su cuenta';
-            $mail->Body    = '
-                <p>Estimado usuario,</p>
-                <p>Hemos detectado actividad reciente en su cuenta. Si usted ha realizado esta acción, no es necesario hacer nada.</p>
-                <p>Si no reconoce esta solicitud, por favor contacte con nuestro equipo de soporte.</p>
-                <p>Código de confirmación: <b>' . htmlspecialchars($codigo) . '</b></p>
-                <p>Atentamente,<br>Soporte Técnico</p>
-            ';
-            $mail->AltBody = 'Estimado usuario,
-            Hemos detectado actividad en su cuenta. Si reconoce esta acción, no es necesario hacer nada. 
-            Si no la reconoce, contacte con nuestro equipo de soporte.
-            Código de confirmación: ' . $codigo . '
-            Atentamente, Soporte Técnico.
-            Contacto: https://.com/contacto';
-
+            $mail->Body = '
+            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" 
+                   style="padding: 20px; text-align: center;">
+                <tr>
+                    <td align="center">
+                        <table role="presentation" width="400px" cellspacing="0" cellpadding="0" border="0" 
+                               style="background-color: #c0c0c0; border-radius: 8px; 
+                                      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); padding: 20px;">
+                            <tr>
+                                <td align="center">
+                                    <h2>Control de <span style="color: red;">Acceso</span></h2>
+                                    <p>Ha solicitado un cambio de clave.</p>
+                                    <p>Si no es usted, ignore este mensaje.</p>
+                                    <p><strong>Código de confirmación:</strong> 
+                                        <span style="font-size: 18px; font-weight: bold; color: #2c3e50; background: #ecf0f1; 
+                                                    padding: 5px; border-radius: 5px;">' . $codigo . '</span>
+                                    </p>
+                                    <p style="margin-top: 20px; font-size: 14px; color: #555;">
+                                        Atentamente, <br> <strong>Soporte Técnico</strong>
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>';
+            
 
             $mail->send();
 

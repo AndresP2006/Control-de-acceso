@@ -19,7 +19,7 @@ require_once RUTA_APP . '/views/inc/header-home.php';
 
     <div id="loading" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; text-align: center;">
         <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 20px;">
-            <p>Enviando correo...</p>
+            <p style="font-size: 50px; color: white;">Enviando correo...</p>
             <img src="https://i.gifer.com/ZKZg.gif" width="50" alt="Cargando...">
         </div>
     </div>
@@ -33,12 +33,21 @@ require_once RUTA_APP . '/views/inc/header-home.php';
         align-items: center;
         justify-content: center;
         width: 100%;
-        height: 100%;
+        height: 55%;
     }
 
     .Formulario {
         display: flex;
         border: solid black 1px;
+        box-shadow: black 1px 1px 10px 0px;
+        border-radius: 10px;
+        padding: 14px;
+        width: 420px;
+    }
+
+    .title_correo {
+        text-align: center;
+        margin: 10px;
     }
 
     .newpassdiv {
@@ -57,18 +66,32 @@ require_once RUTA_APP . '/views/inc/header-home.php';
     }
 
     .modal-content {
+        height: 155px;
+        width: 300px;
         background-color: white;
         margin: 15% auto;
         padding: 20px;
         border: 1px solid #888;
-        width: 300px;
         text-align: center;
         border-radius: 10px;
+    }
+
+    .titulo-codigo {
+        text-align: center;
+        margin: 10px;
+    }
+
+    .subtitulo {
+        text-align: center;
+        margin: 10px;
     }
 
     .close {
         float: right;
         cursor: pointer;
+        font-size: 30px;
+        background: transparent;
+        border: none;
     }
 
     .miModal--activo {
@@ -84,17 +107,28 @@ require_once RUTA_APP . '/views/inc/header-home.php';
 
     <!-- formulario ingresar el correo-->
     <div class="Formulario" id="myModalBase">
-        <h1 class="">Recuperar Contraseña</h1>
+        <h1 class="title_correo">Recuperar Contraseña</h1>
         <input class="Formulario__titulo-input" name="correo" id="correo" type="email" placeholder="     Correo electronico" required />
         <button id="openModal" name="ingresar" class="Formulario__boton">
             Enviar codigo
         </button>
     </div>
 
+    <!-- Modal del ingreso de codigo -->
+    <div id="myModal" class="modal ">
+        <div class="modal-content">
+            <button class="close" id="close" type="button">&times;</button>
+            <h2 class="titulo-codigo">Ingrese el Código</h2>
+            <input class="Formulario__titulo-input" type="number" id="codeInput" placeholder="   Escriba el código" inputmode="numeric" pattern="\d*">
+            <br><br>
+            <button class="Formulario__boton" id="codeSenden">Enviar</button>
+        </div>
+    </div>
+
     <!-- Formulario de cambiar contraseña  -->
     <div class="newpassdiv Formulario " id="myModalnewpass">
-        <h1 id="Bienvenida"></h1>
-        <h3>Por favor digite su nueva contraseña</h3>
+        <h1 class="titulo-codigo" id="Bienvenida"></h1>
+        <h3 class="subtitulo">Por favor digite su nueva contraseña</h3>
         <input class="Formulario__titulo-input" type="text" name="newpassinput" id="newPassInput" placeholder="      Nueva contraseña" required>
         <input class="Formulario__titulo-input" type="text" name="newpassinput" id="newPassInputC" placeholder="      Confirmar contraseña" required>
         <button id="newpassbuton" class="Formulario__boton">
@@ -102,17 +136,6 @@ require_once RUTA_APP . '/views/inc/header-home.php';
         </button>
     </div>
 
-
-    <!-- Modal del ingreso de codigo -->
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <button class="close" id="close" type="button">&times;</button>
-            <h2>Ingrese el Código</h2>
-            <input type="number" id="codeInput" placeholder="Escriba el código" inputmode="numeric" pattern="\d*">
-            <br><br>
-            <button id="codeSenden">Enviar</button>
-        </div>
-    </div>
 </div>
 
 <?php require_once RUTA_APP . '/views/inc/footer-home.php'; ?>
@@ -144,12 +167,15 @@ require_once RUTA_APP . '/views/inc/header-home.php';
                         } else if (resp.messageError) {
                             error(resp.messageError);
                         }
+
                     },
                     error: function() {
                         $('#respuesta').html('Error al procesar la solicitud.');
                     },
                     complete: function() {
                         // Habilitar el botón nuevamente después de completar la solicitud
+                        realizado('Se ha enviado un correo a ' + correo + '.           Revise su bandeja de entrada o carpeta de spam.');
+                        setTimeout(() => {}, "2000");
                         $('#openModal').prop('disabled', false).text('Enviar Código');
                         $('#loading').hide(); // Oculta el loader
                     }
