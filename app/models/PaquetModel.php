@@ -28,10 +28,11 @@ class PaquetModel
         $this->db->bind(':Id', $id);
         return $this->db->registros() ? true : false;
     }
-    public function getPackegesByTable()
+
+    public function getpaquetesByTable()
     {
         $this->db->query("select a.Pe_id,a.Pe_nombre,p.* from paquete p , persona a where a.Pe_id=p.Pe_id;");
-        return $this->db->showTables();
+        return $this->db->registros();
     }
 
     public function actualizarPaquete($paqueteId, $nuevoEstado)
@@ -51,6 +52,28 @@ class PaquetModel
                           WHERE Pe_id IN (SELECT Pe_id FROM persona WHERE Pe_nombre = :usuario)
                           AND Pa_estado = 'Bodega';");
         $this->db->bind(':usuario', $usuario);
+        return $this->db->registros();
+    }
+    public function getPackagesByDateRange($fechaInicio, $fechaFin)
+    {
+        // Usamos LEFT JOIN para traer datos aunque no haya coincidencia (opcional).
+        // Si quieres solo coincidencias exactas, usa INNER JOIN.
+        $this->db->query("SELECT
+        paquete.*, 
+        persona.Pe_nombre,
+        persona.Pe_apellidos
+    FROM paquete
+    INNER JOIN persona ON paquete.Pe_id = persona.Pe_id
+    WHERE DATE(Pa_fecha) BETWEEN :inicio AND :fin
+    ORDER BY Pa_fecha ASC
+");
+
+
+        // Asignamos los valores de las fechas
+        $this->db->bind(':inicio', $fechaInicio);
+        $this->db->bind(':fin', $fechaFin);
+
+        // Ejecutamos y retornamos los resultados
         return $this->db->registros();
     }
 }

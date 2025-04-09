@@ -42,29 +42,32 @@ class HomeController extends Controlador
     {
         $this->vista('pages/home/nosotrosView');
     }
-    
-    public function verUser(){
+
+    public function verUser()
+    {
         $this->vista("pages/user/userView");
     }
-    public function notificaciones_admin() {
+    public function notificaciones_admin()
+    {
         // Obtener todas las solicitudes de actualización pendientes desde el modelo
         $solicitudes = $this->peopleModel->getAllSolicitudesNotifi();
-    
+
         // Formatear los datos para la vista
-        $notificaciones = array_map(function($solicitud) {
+        $notificaciones = array_map(function ($solicitud) {
             return ['tipo' => 'solicitud_actualizacion', 'data' => $solicitud];
         }, $solicitudes);
-    
+
         // Pasar los datos a la vista
         $datos = [
             'notificaciones' => $notificaciones
         ];
-        
+
         $this->vista("pages/admin/notifiAdmin", $datos);
     }
-    
 
-    public function notificaciones() {
+
+    public function notificaciones()
+    {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $usuario = $_POST['Us_usuario'];
 
@@ -76,10 +79,10 @@ class HomeController extends Controlador
 
             // Combinar visitas y paquetes en un solo arreglo
             $notificaciones = array_merge(
-                array_map(function($visita) {
+                array_map(function ($visita) {
                     return ['tipo' => 'visita', 'data' => $visita];
                 }, $visitas),
-                array_map(function($paquete) {
+                array_map(function ($paquete) {
                     return ['tipo' => 'paquete', 'data' => $paquete];
                 }, $paquetes)
             );
@@ -97,19 +100,20 @@ class HomeController extends Controlador
         }
     }
 
-    public function solicitud_user(){
+    public function solicitud_user()
+    {
         if (isset($_POST["detalles"])) {
-            
+
             $id_residente = $_POST["id"];
             $resident = $this->peopleModel->getPersonaById($id_residente);
             $datos_resident = $this->peopleModel->getAllSolicitudes($id_residente);
-            
-            $datos=[
-            'resindents' => $resident,
-            'datos_resident' =>$datos_resident
+
+            $datos = [
+                'resindents' => $resident,
+                'datos_resident' => $datos_resident
             ];
-            $this->vista("pages/admin/modalSolicitud",$datos);
-        }else{
+            $this->vista("pages/admin/modalSolicitud", $datos);
+        } else {
             $this->vista("pages/admin/modalSolicitud");
         }
     }
@@ -146,7 +150,6 @@ class HomeController extends Controlador
             exit;
         }
         $this->vista('pages/user/userView', ($this->userController->index($_SESSION['datos']->Us_usuario)));
-
     }
     // menu de administracion 
     public function usuario()
@@ -167,7 +170,7 @@ class HomeController extends Controlador
 
     public function HistoryPackages()
     {
-        $paquets = $this->paquetModel->getPackegesByTable();
+        $paquets = $this->paquetModel->getpaquetesByTable();
 
         $datos = [
             'paquets' => $paquets
@@ -175,17 +178,67 @@ class HomeController extends Controlador
 
         $this->vista('pages/admin/paquetesView', $datos);
     }
-
-    public function Edificios()
+    public function BuscarPaquetes()
     {
-        $torres = $this->torreModel->getTorreByTable();
-        $apartaments = $this->apartamentModel->getApartamentByTable();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'GET') {
 
-        $data = [
-            'torres' => $torres,
-            'apartaments' => $apartaments
-        ];
+            // Obtener fechas de POST o GET
+            $fechaInicio = isset($_POST['fecha_inicio']) ? trim($_POST['fecha_inicio']) : (isset($_GET['fecha_inicio']) ? trim($_GET['fecha_inicio']) : '');
+            $fechaFin = isset($_POST['fecha_fin']) ? trim($_POST['fecha_fin']) : (isset($_GET['fecha_fin']) ? trim($_GET['fecha_fin']) : '');
 
-        $this->vista('pages/admin/edificiosView', $data);
+            // Validar fechas
+            if (!empty($fechaInicio) && !empty($fechaFin)) {
+                if ($fechaInicio > $fechaFin) {
+                    $datos = [
+                        'paquets' => [],
+                        'messageError' => 'La fecha de inicio no puede ser mayor que la fecha de fin.'
+                    ];
+                } else {
+                    // Obtener paquetes en el rango de fechas
+                    $paquets = $this->paquetModel->getPackagesByDateRange($fechaInicio, $fechaFin);
+                    $datos = [
+                        'paquets' => $paquets,
+                        'filter_date' => true,
+                        'fecha_inicio' => $fechaInicio,
+                        'fecha_fin' => $fechaFin
+                    ];
+                }
+            } else {
+                $datos = [
+                    'paquets' => [],
+                    'messageError' => 'Las fechas no son válidas.'
+                ];
+            }
+
+            // Cargar la vista con los resultados
+            $this->vista('pages/admin/paquetesView', $datos);
+        }
     }
+
+    public function DeletePaquete()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_pid'])) {
+            $paqueteId = $_POST['delete_pid'];
+
+            // Eliminar el paquete
+            $this->paquetModel->deletePaquetById($paqueteId);
+
+            // Recuperar fechas si existen
+            $fechaInicio = isset($_POST['fecha_inicio']) ? $_POST['fecha_inicio'] : '';
+            $fechaFin = isset($_POST['fecha_fin']) ? $_POST['fecha_fin'] : '';
+
+            // Si las fechas existen, redirigir con los filtros activos
+            if (!empty($fechaInicio) && !empty($fechaFin)) {
+                header("Location: " . RUTA_URL . "/HomeController/BuscarPaquetes?fecha_inicio=$fechaInicio&fecha_fin=$fechaFin");
+            } else {
+                header("Location: " . RUTA_URL . "/HomeController/HistoryPackages");
+            }
+
+            exit;
+        } else {
+            header("Location: " . RUTA_URL . "/HomeController/HistoryPackages");
+            exit;
+        }
+    }
+
 }

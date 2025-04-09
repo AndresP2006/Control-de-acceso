@@ -29,6 +29,23 @@ class ApartamentModel
         return $this->db->showTables();
     }
 
+    
+    private function existsApartamento($torreId, $apartamento)
+    {
+        $this->db->query('SELECT COUNT(*) as count FROM apartamento WHERE To_id = :torreId AND Ap_numero = :apartamento');
+        $this->db->bind(':torreId', $torreId);
+        $this->db->bind(':apartamento', $apartamento);
+        $row = $this->db->registro();
+        return $row->count > 0;
+    }
+
+    public function DeleteApartamento($torre, $apartamento)
+    {
+        $this->db->query('DELETE FROM apartamento WHERE To_id = (SELECT To_id FROM torre WHERE To_letra = :torre);');
+        $this->db->bind(':torre', $torre);
+        // $this->db->bind(':apartamento', $apartamento);
+        return $this->db->registro();
+    }
     // funciones de apartamento
     public function IngresarApartamento($torreInput, $apartamento)
     {
@@ -48,22 +65,6 @@ class ApartamentModel
         return $this->db->execute() ? "Apartamento guardado correctamente." : "Error al guardar el apartamento.";
     }
 
-    private function existsApartamento($torreId, $apartamento)
-    {
-        $this->db->query('SELECT COUNT(*) as count FROM apartamento WHERE To_id = :torreId AND Ap_numero = :apartamento');
-        $this->db->bind(':torreId', $torreId);
-        $this->db->bind(':apartamento', $apartamento);
-        $row = $this->db->registro();
-        return $row->count > 0;
-    }
-
-    public function DeleteApartamento($torre, $apartamento)
-    {
-        $this->db->query('DELETE FROM apartamento WHERE To_id = :torre AND Ap_numero = :apartamento');
-        $this->db->bind(':torre', $torre);
-        $this->db->bind(':apartamento', $apartamento);
-        return $this->db->registro();
-    }
 
     private function getTorreByIdOrLetra($torre)
     {
