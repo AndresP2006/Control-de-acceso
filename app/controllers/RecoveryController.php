@@ -48,7 +48,7 @@ class RecoveryController extends Controlador
             $mail->SMTPDebug = 0;
 
             // Recipients
-            $mail->setFrom('jcharryme@gmail.com', 'Control De Acceso');
+            $mail->setFrom('villarica1malambo@gmail.com', 'Control De Acceso');
             $mail->addReplyTo('jcharryme@gmail.com', 'Soporte');
             $mail->addAddress($correo);
 
@@ -61,7 +61,6 @@ class RecoveryController extends Controlador
                 <p>Si no reconoce esta solicitud, por favor contacte con nuestro equipo de soporte.</p>
                 <p>Código de confirmación: <b>' . htmlspecialchars($codigo) . '</b></p>
                 <p>Atentamente,<br>Soporte Técnico</p>
-                <p><a href="https://ControlDeAcceso.com/contacto">Contactar soporte</a></p>
             ';
             $mail->AltBody = 'Estimado usuario,
             Hemos detectado actividad en su cuenta. Si reconoce esta acción, no es necesario hacer nada. 

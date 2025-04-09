@@ -28,8 +28,17 @@ require_once RUTA_APP . '/views/inc/header-home.php';
 </header>
 
 <style>
+    .base {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+
     .Formulario {
         display: flex;
+        border: solid black 1px;
     }
 
     .newpassdiv {
@@ -71,38 +80,38 @@ require_once RUTA_APP . '/views/inc/header-home.php';
     }
 </style>
 
-<!-- Formulario de cambiar contraseña  -->
+<div class="base">
 
-<div class="newpassdiv Formulario " id="myModalnewpass">
-    <h1 id="Bienvenida"></h1>
-    <h3>Por favor digite su nueva contraseña</h3>
-    <input class="Formulario__titulo-input" type="text" name="newpassinput" id="newPassInput" placeholder="      Nueva contraseña" required>
-    <input class="Formulario__titulo-input" type="text" name="newpassinput" id="newPassInputC" placeholder="      Confirmar contraseña" required>
-    <button id="newpassbuton" class="Formulario__boton">
-        Cambiar
-    </button>
-</div>
+    <!-- formulario ingresar el correo-->
+    <div class="Formulario" id="myModalBase">
+        <h1 class="">Recuperar Contraseña</h1>
+        <input class="Formulario__titulo-input" name="correo" id="correo" type="email" placeholder="     Correo electronico" required />
+        <button id="openModal" name="ingresar" class="Formulario__boton">
+            Enviar codigo
+        </button>
+    </div>
+
+    <!-- Formulario de cambiar contraseña  -->
+    <div class="newpassdiv Formulario " id="myModalnewpass">
+        <h1 id="Bienvenida"></h1>
+        <h3>Por favor digite su nueva contraseña</h3>
+        <input class="Formulario__titulo-input" type="text" name="newpassinput" id="newPassInput" placeholder="      Nueva contraseña" required>
+        <input class="Formulario__titulo-input" type="text" name="newpassinput" id="newPassInputC" placeholder="      Confirmar contraseña" required>
+        <button id="newpassbuton" class="Formulario__boton">
+            Cambiar
+        </button>
+    </div>
 
 
-<!-- formulario ingresar el correo-->
-
-<div class="Formulario" id="myModalBase">
-    <h1 class="">Recuperar Contraseña</h1>
-    <input class="Formulario__titulo-input" name="correo" id="correo" type="email" placeholder="     Correo electronico" required />
-    <button id="openModal" name="ingresar" class="Formulario__boton">
-        Enviar codigo
-    </button>
-</div>
-
-<!-- Modal del ingreso de codigo -->
-
-<div id="myModal" class="modal">
-    <div class="modal-content">
-        <button class="close" id="close" type="button">&times;</button>
-        <h2>Ingrese el Código</h2>
-        <input type="number" id="codeInput" placeholder="Escriba el código" inputmode="numeric" pattern="\d*">
-        <br><br>
-        <button id="codeSenden">Enviar</button>
+    <!-- Modal del ingreso de codigo -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <button class="close" id="close" type="button">&times;</button>
+            <h2>Ingrese el Código</h2>
+            <input type="number" id="codeInput" placeholder="Escriba el código" inputmode="numeric" pattern="\d*">
+            <br><br>
+            <button id="codeSenden">Enviar</button>
+        </div>
     </div>
 </div>
 
