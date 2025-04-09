@@ -7,13 +7,13 @@
     <nav class="menu">
         <ul>
             <li class="menu__lista">
-                <a class="menu__lista-a" href="<?php echo RUTA_URL;?>/HomeController/index">Inicio</a>
+                <a class="menu__lista-a" href="<?php echo RUTA_URL; ?>/HomeController/index">Inicio</a>
             </li>
             <li class="menu__lista">
-                <a class="menu__lista-a" href="<?php echo RUTA_URL;?>/HomeController/informacion">Información</a>
+                <a class="menu__lista-a" href="<?php echo RUTA_URL; ?>/HomeController/informacion">Información</a>
             </li>
             <li class="menu__lista">
-                <a class="menu__lista-a" href="<?php echo RUTA_URL;?>/HomeController/nosotros">Nosotros</a>
+                <a class="menu__lista-a" href="<?php echo RUTA_URL; ?>/HomeController/nosotros">Nosotros</a>
             </li>
         </ul>
     </nav>
@@ -26,18 +26,18 @@
             ¡La Ribera Villa Rica <samp>Apartamentos!</samp>
         </h2>
         <p class="cuerpo__informacion-content-titulo-parrafo">
-        LA RIBERA VILLA RICA es un proyecto de viviendas de interés social en Malambo - Atlántico, 
-        con 268 unidades diseñadas para mejorar la calidad de vida de sus residentes. Ubicado en 
-        el Barrio Villa Rica, ofrece fácil acceso a puntos clave como el Parque y la Casa de la Cultura, 
-        fomentando el desarrollo comunitario.
-        <br><br> 
-        Los apartamentos, de 40, 44 y 46 m², cuentan con 2 o 3 alcobas, combinando comodidad y funcionalidad 
-        a precios accesibles. La seguridad es una prioridad, con cerramiento perimetral para mayor tranquilidad.  
-        <br><br> 
-        El proyecto incluye una plaza comercial, áreas recreativas, un parque infantil, creando un entorno ideal 
-        para la convivencia familiar. Más que un conjunto residencial, LA RIBERA VILLA RICA es una comunidad que 
-        promueve un estilo de vida seguro y accesible.
-        <br><br> 
+            LA RIBERA VILLA RICA es un proyecto de viviendas de interés social en Malambo - Atlántico,
+            con 268 unidades diseñadas para mejorar la calidad de vida de sus residentes. Ubicado en
+            el Barrio Villa Rica, ofrece fácil acceso a puntos clave como el Parque y la Casa de la Cultura,
+            fomentando el desarrollo comunitario.
+            <br><br>
+            Los apartamentos, de 40, 44 y 46 m², cuentan con 2 o 3 alcobas, combinando comodidad y funcionalidad
+            a precios accesibles. La seguridad es una prioridad, con cerramiento perimetral para mayor tranquilidad.
+            <br><br>
+            El proyecto incluye una plaza comercial, áreas recreativas, un parque infantil, creando un entorno ideal
+            para la convivencia familiar. Más que un conjunto residencial, LA RIBERA VILLA RICA es una comunidad que
+            promueve un estilo de vida seguro y accesible.
+            <br><br>
         </p>
     </div>
     <div class="cuerpo__informacion-content-fotos">
@@ -56,6 +56,7 @@
             <input class="Formulario__titulo-input" name="usuario" type="text" placeholder="     Usuario" required />
             <input class="Formulario__titulo-input" name="password" type="password" placeholder="   Contraseña"
                 required />
+            <a href="<?php echo RUTA_URL; ?>/RecoveryController/index" style="margin-bottom: 10px;">¿Olvidaste tu contraseña?</a>
             <button type="submit" name="ingresar" class="Formulario__boton">
                 Ingresar
             </button>
@@ -70,9 +71,7 @@
 
 <?php require_once RUTA_APP . '/views/inc/footer-home.php'; ?>
 <script>
-
     <?php if (isset($datos['messageError'])) { ?>
         error("<?php echo $datos['messageError']; ?>")
     <?php } ?>
-
 </script>

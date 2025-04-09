@@ -240,4 +240,11 @@ class HomeController extends Controlador
             exit;
         }
     }
+
+    // Recuperar contraseña
+    public function recovery(){
+        $this->vista('pages/recoveryView', null);
+
+
+    }
 }
