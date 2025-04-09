@@ -73,7 +73,9 @@
                                 data-apellidos='" . htmlspecialchars($registro['Pe_apellidos'] ?? '') . "'
                                 data-telefono='" . htmlspecialchars($registro['Pe_telefono'] ?? '') . "'
                                 data-correo='" . htmlspecialchars($registro['Us_correo'] ?? '') . "'
+                                data-torre='" . htmlspecialchars($registro['To_id'] ?? '') . "'
                                 data-departamento='" . htmlspecialchars($registro['Ap_numero'] ?? '') . "'
+                                data-departamento-id='" . htmlspecialchars($registro['Ap_id'] ?? '') ."'
                                 data-rol='" . htmlspecialchars($registro['Ro_tipo'] ?? '') .
                                 "'
                                 data-contrasena='" . htmlspecialchars($registro['Us_contrasena'] ?? '') . "'
@@ -111,14 +113,14 @@
 <?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>
 <script>
     <?php if (isset($datos['messageError'])) { ?>
-error("<?php echo $datos['messageError']; ?>")
-<?php } ?>
-<?php if (isset($datos['messageInfo'])) { ?>
-realizado("<?php echo $datos['messageInfo']; ?>")
-<?php } ?>
-<?php if (isset($datos['messageDelet'])) { ?>
-realizadoDelet()
-<?php } ?>
+        error("<?php echo $datos['messageError']; ?>")
+    <?php } ?>
+    <?php if (isset($datos['messageInfo'])) { ?>
+        realizado("<?php echo $datos['messageInfo']; ?>")
+    <?php } ?>
+    <?php if (isset($datos['messageDelet'])) { ?>
+        realizadoDelet()
+    <?php } ?>
 
     $(document).ready(function() {
 

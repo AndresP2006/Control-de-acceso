@@ -16,7 +16,8 @@
                             <p><strong>Estado:</strong> <?php echo ucfirst($notificacion['data']->estado); ?></p>
                             <!-- Botón que abrirá el modal cargando el contenido desde "modelSolicitud.php" -->
                             <form action="<?php echo RUTA_URL; ?>/HomeController/solicitud_user" method="post">
-                                <input type="hidden" name="id" value="<?php echo $notificacion['data']->id_residente; ?>">
+                                <input type="hidden" name="id_residente" value="<?php echo $notificacion['data']->id_residente; ?>">
+                                <input type="hidden" name="id" value="<?php echo $notificacion['data']->id; ?>">
                                 <input type="submit"  name="detalles"value="ver detalles">
                             </form>
 

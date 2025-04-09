@@ -123,61 +123,65 @@ class UserController extends Controlador
     {
         $messageInfo = '';
         $messageError = '';
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['udate'])) {
 
-            $departamento = isset($_POST['E_Departamento']) && $_POST['E_Departamento'] != '' ? $_POST['E_Departamento'] : $_POST['E_Departamento2'];
-
+            // Recoger los datos correctamente desde $_POST
             $datos = [
-                'Cedula' => trim($_POST['E_id']),
-                'Nombre' => trim($_POST['E_Nombre']),
-                'Apellidos' => trim($_POST['E_Apellido']),
-                'Telefono' => trim($_POST['E_Telefono']),
-                'Gmail' => trim($_POST['E_Gmail']),
-                'Departamento' => trim($departamento),
-                'Rol' => trim($_POST['R_id']), // Asegúrate de que el nombre del campo sea correcto
-                'Contrasena' => trim($_POST['E_contrasena']),
+                'Cedula'      => trim($_POST['E_id']),
+                'Nombre'      => trim($_POST['E_Nombre']),
+                'Apellidos'   => trim($_POST['E_Apellido']),
+                'Telefono'    => trim($_POST['E_Telefono']),
+                'Gmail'       => trim($_POST['E_Gmail']),
+                'Torre'       => trim($_POST['E_torre']),
+                'Ap_numero'   => trim($_POST['E_Departamento2']),
+                'Departamento' => trim($_POST['E_Departamento']),
+                'Rol'         => trim($_POST['R_id']),
+                'Contrasena'  => trim($_POST['E_contrasena']),
             ];
+
 
             $resultado = $this->adminModel->updateUser($datos);
             $registros = $this->peopleModel->getAllUsuario();
 
-            // Formatear los datos de los usuarios como lo mencionas
+            // Formatear los datos de los usuarios
             $usuarios = [];
             foreach ($registros as $registro) {
                 $usuarios[] = [
-                    'Cedula' => $registro->Pe_id,
+                    'Cedula'    => $registro->Pe_id,
                     'Pe_nombre' => $registro->Pe_nombre,
                     'Pe_apellidos' => $registro->Pe_apellidos,
-                    'Pe_telefono' => $registro->Pe_telefono,
-                    'Us_correo' => $registro->Us_correo,
-                    'Ap_id' => $registro->Ap_id,
-                    'Ap_numero' => $registro->Ap_numero,
-                    'To_letra' => $registro->To_letra,
-                    'To_id' => $registro->To_id,
-                    'Ro_tipo' => $registro->Ro_tipo,
+                    'Pe_telefono'  => $registro->Pe_telefono,
+                    'Us_correo'    => $registro->Us_correo,
+                    'Ap_id'        => $registro->Ap_id,
+                    'Ap_numero'    => $registro->Ap_numero,
+                    'To_letra'     => $registro->To_letra,
+                    'To_id'        => $registro->To_id,
+                    'Ro_tipo'      => $registro->Ro_tipo,
                 ];
             }
 
-
-            $datos = [
-                'usuarios' => $usuarios,
-            ];
             if ($resultado) {
                 $messageInfo = 'Usuario actualizado correctamente';
             } else {
                 $messageError = 'Error al actualizar el usuario';
             }
+
+            $datos = [
+                'usuarios'      => $usuarios,
+                'messageError'  => $messageError,
+                'messageInfo'   => $messageInfo,
+            ];
         } else {
             $messageError = 'Error: No se pudo procesar la solicitud';
+            $datos = [
+                'messageError' => $messageError,
+            ];
         }
-        $datos = [
-            'usuarios' => $usuarios,
-            'messageError' => $messageError,
-            'messageInfo' => $messageInfo,
-        ];
         $this->vista('pages/admin/adminView', $datos);
         exit;
     }
+
 
     public function DeleteUser()
     {
@@ -230,6 +234,8 @@ class UserController extends Controlador
                 'Pe_telefono' => $registro->Pe_telefono,
                 'Us_correo' => $registro->Us_correo,
                 'Ap_id' => $registro->Ap_id,
+                'To_letra' => $registro->To_letra,
+                'Ap_numero' => $registro->Ap_numero,
                 'Ro_tipo' => $registro->Ro_tipo,
             ];
         }
@@ -454,6 +460,8 @@ class UserController extends Controlador
                         'Re_motivo' => $registro->Re_motivo,
                         'Vi_departamento' => $registro->Vi_departamento,
                         'Pe_id' => $registro->Pe_id,
+                        'Ap_numero' => $registro->Ap_numero,
+                        'To_letra' => $registro->To_letra,
                     ];
                 }
                 $datos = [
@@ -550,14 +558,14 @@ class UserController extends Controlador
             // Depuración: ver qué llega por $_POST
             error_log("Datos recibidos en ActualizarResidente: " . print_r($_POST, true));
 
-            // Validar que existan los campos requeridos
-            $requiredFields = ['E_id', 'E_Gmail', 'E_Telefono', 'To_id', 'Ap_numero'];
-            foreach ($requiredFields as $field) {
-                if (!isset($_POST[$field]) || empty(trim($_POST[$field]))) {
-                    echo json_encode(['success' => false, 'error' => "Falta el campo: " . $field]);
-                    exit;
-                }
+        // Validar que existan los campos requeridos
+        $requiredFields = ['E_id', 'E_Gmail', 'E_Telefono', 'To_id', 'Ap_numero'];
+        foreach ($requiredFields as $field) {
+            if (!isset($_POST[$field]) || empty(trim($_POST[$field]))) {
+                echo json_encode(['success' => false, 'error' => "Falta el campo: " . $field]);
+                exit;
             }
+        }
 
             // Armar array para el modelo con las claves correspondientes a la tabla de residentes
             $residenteActualizado = [
@@ -587,8 +595,9 @@ class UserController extends Controlador
             exit;
         }
 
-        // Si no es POST, mensaje de error
-        echo json_encode(['success' => false, 'error' => 'Método no permitido']);
-        exit;
-    }
+    // Si no es POST, mensaje de error
+    echo json_encode(['success' => false, 'error' => 'Método no permitido']);
+    exit;
+}
+
 }

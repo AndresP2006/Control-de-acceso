@@ -81,53 +81,48 @@ class AdminModel
 
     public function updateUser($datos)
     {
+        // Registrar los datos recibidos para depuración
+        error_log("updateUser datos: " . print_r($datos, true));
+
         try {
-            // Iniciar una transacción
+            // Iniciar la transacción
             $this->db->beginTransaction();
 
-
             // 1. Actualizar los datos en la tabla 'usuario'
-            $sql = '
+            $sql = "
             UPDATE usuario 
             SET 
                 Us_usuario = :Usuario, 
-                Us_correo = :Correo 
-        ';
-
-            // Solo agregar la contraseña si es proporcionada
+                Us_correo = :Correo";
             if (!empty($datos['Contrasena'])) {
-                $sql .= ', Us_contrasena = :Contrasena';
+                $sql .= ", Us_contrasena = :Contrasena";
             }
-
-            $sql .= ' WHERE Us_id = :Cedula';
+            $sql .= " WHERE Us_id = :Cedula";
 
             $this->db->query($sql);
-
-            // Verificar los datos vinculados
             $this->db->bind(':Cedula', $datos['Cedula']);
             $this->db->bind(':Usuario', $datos['Nombre']);
             $this->db->bind(':Correo', $datos['Gmail']);
-
-            // Si se ha proporcionado una nueva contraseña, la vinculamos
             if (!empty($datos['Contrasena'])) {
                 $this->db->bind(':Contrasena', $datos['Contrasena']);
             }
-
             $this->db->execute();
 
-            // 2. Actualizar los datos en la tabla 'persona'
-            $this->db->query('
+            // 3. Actualizar los datos en la tabla 'persona' incluyendo el Ap_id
+            $this->db->query("
             UPDATE persona 
             SET 
                 Pe_nombre = :Nombre, 
                 Pe_apellidos = :Apellidos, 
-                Pe_telefono = :Telefono 
-            WHERE Pe_id = :Cedula
-        ');
+                Pe_telefono = :Telefono,
+                Ap_id = :Departamento
+            WHERE Us_id = :Cedula
+        ");
             $this->db->bind(':Cedula', $datos['Cedula']);
             $this->db->bind(':Nombre', $datos['Nombre']);
             $this->db->bind(':Apellidos', $datos['Apellidos']);
             $this->db->bind(':Telefono', $datos['Telefono']);
+            $this->db->bind(':Departamento', $datos['Departamento']);
             $this->db->execute();
 
             // Confirmar la transacción si todo fue exitoso
@@ -140,6 +135,9 @@ class AdminModel
             return false;
         }
     }
+
+
+
 
     public function insertUserUpdateRequest($datos)
     {
@@ -262,4 +260,35 @@ class AdminModel
             return false;
         }
     }
+    public function insertRechazo($datos)
+    {
+        try {
+            // Preparar la consulta SQL para actualizar el estado
+            $this->db->query("UPDATE solicitudes_actualizacion 
+        SET razon_rechazo = :rechazo, estado='rechazada'
+        WHERE id = (
+            SELECT id FROM (
+                SELECT id 
+                FROM solicitudes_actualizacion 
+                WHERE id_residente = :Cedula 
+                ORDER BY fecha_solicitud DESC 
+                LIMIT 1
+            ) AS subquery
+        )");
+
+            // Vincular los parámetros con los valores
+            $this->db->bind(':Cedula', $datos['Cedula']);
+            $this->db->bind(':rechazo', $datos['rechazo']);
+
+            // Ejecutar la consulta
+            $this->db->execute();
+            return true;
+        } catch (Exception $e) {
+            // Deshacer la transacción en caso de error
+            $this->db->rollBack();
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+    
 }
