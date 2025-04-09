@@ -22,7 +22,7 @@ class UserController extends Controlador
 
     public function index($messageError = null, $messageInfo = null,)
     {
-        $paquets = $this->paquetModel->getPackegesByTable();
+        // $paquets = $this->paquetModel->getPackegesByTable();
         $resindents = $this->peopleModel->getAllResident($_SESSION['datos']->Us_usuario);
         $people = $this->peopleModel->getAllRedident($_SESSION['datos']->Us_usuario);
         // $notificacion = $this->peopleModel->getNotificacion($_SESSION['datos']->Us_usuario);
@@ -32,7 +32,7 @@ class UserController extends Controlador
         return [
             'messageError' => $messageError,
             'messageInfo' => $messageInfo,
-            'paquets' => $paquets,
+            // 'paquets' => $paquets,
             'resindents' => $resindents,
             'datos_resident' => $datos_resident,
             'people' => $people,
