@@ -35,7 +35,7 @@
                         if (is_object($historial)) {
                             echo "<tr>";
                             echo "<td>" . htmlspecialchars($historial->Pe_id ?? '') . "</td>";
-                            echo "<td>" . htmlspecialchars($historial->Pe_nombre ?? 'Sin nombre') . " " . htmlspecialchars($historial->Pe_apellidos ?? 'Sin apellidos') . "</td>";
+                            echo "<td>" . htmlspecialchars($historial->Pe_nombre ?? '') . " " . htmlspecialchars($historial->Pe_apellidos ?? '') . "</td>";
                             echo "<td>" . htmlspecialchars($historial->Pa_estado ?? '') . "</td>";
                             echo "<td>" . htmlspecialchars($historial->Pa_fecha ?? '') . "</td>";
                             echo "<td>" . htmlspecialchars($historial->Pa_descripcion ?? '') . "</td>";
