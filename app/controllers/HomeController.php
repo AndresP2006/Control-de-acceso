@@ -240,6 +240,10 @@ class HomeController extends Controlador
             exit;
         }
     }
+   
+
+
+
     public function Edificios()
     {
         $torres = $this->torreModel->getTorreByTable();
@@ -252,5 +256,7 @@ class HomeController extends Controlador
 
         $this->vista('pages/admin/edificiosView', $data);
     }
+
+    
 
 }
