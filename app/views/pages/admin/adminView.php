@@ -112,6 +112,9 @@
 
 <?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>
 <script>
+   const RUTA_URL = "<?= RUTA_URL ?>";
+</script>
+<script>
     <?php if (isset($datos['messageError'])) { ?>
         error("<?php echo $datos['messageError']; ?>")
     <?php } ?>
