@@ -17,7 +17,7 @@
         <div class="content">
             <h4 class="nombre">
                 <?= $datos['resindents']->Pe_nombre . " " . $datos['resindents']->Pe_apellidos ?>
-                <input type="hidden" id="nombre" name="E_id" value="<?php echo isset($datos['datos_resident'][0]->correo_nuevo) && !empty($datos['datos_resident'][0]->nombre)? $datos['datos_resident'][0]->nombre: ""; ?>">
+                <input type="hidden" id="nombre" name="E_id" value="<?php echo isset($datos['datos_resident'][0]->correo_nuevo) && !empty($datos['datos_resident'][0]->nombre) ? $datos['datos_resident'][0]->nombre : ""; ?>">
             </h4>
             <hr class="Linea">
             <br>
@@ -34,27 +34,27 @@
                     <td>
                         <p style="font-size: 25px;">
                             <?php
-    $correo_viejo = isset($datos['resindents']->Us_correo) ? $datos['resindents']->Us_correo : "";
-    $correo_nuevo = isset($datos['datos_resident'][0]->correo_nuevo) ? $datos['datos_resident'][0]->correo_nuevo : "";
+                            $correo_viejo = isset($datos['resindents']->Us_correo) ? $datos['resindents']->Us_correo : "";
+                            $correo_nuevo = isset($datos['datos_resident'][0]->correo_nuevo) ? $datos['datos_resident'][0]->correo_nuevo : "";
 
-    // Caso 1: Solo existe correo viejo, mostrarlo en verde
-    if (!empty($correo_viejo) && empty($correo_nuevo)) {
-        echo '<span style="color: green;" name="E_Gmail">' . $correo_viejo . '</span>';
-    }
-    // Caso 2: Ambos existen y son iguales, mostrar uno solo en verde
-    elseif (!empty($correo_viejo) && !empty($correo_nuevo) && $correo_viejo === $correo_nuevo) {
-        echo '<span style="color: green;" name="E_Gmail">' . $correo_viejo . '</span>';
-    }
-    // Caso 3: Ambos existen y son diferentes, mostrar los dos con colores distintos
-    elseif (!empty($correo_viejo) && !empty($correo_nuevo)) {
-        echo '<span style="color: red;" name="E_Gmail">' . $correo_viejo . '</span>';
-        echo '<span style="color: green;" name="E_Gmail"> | ' . $correo_nuevo . '</span>';
-    }
-?>
+                            // Caso 1: Solo existe correo viejo, mostrarlo en verde
+                            if (!empty($correo_viejo) && empty($correo_nuevo)) {
+                                echo '<span style="color: green;" name="E_Gmail">' . $correo_viejo . '</span>';
+                            }
+                            // Caso 2: Ambos existen y son iguales, mostrar uno solo en verde
+                            elseif (!empty($correo_viejo) && !empty($correo_nuevo) && $correo_viejo === $correo_nuevo) {
+                                echo '<span style="color: green;" name="E_Gmail">' . $correo_viejo . '</span>';
+                            }
+                            // Caso 3: Ambos existen y son diferentes, mostrar los dos con colores distintos
+                            elseif (!empty($correo_viejo) && !empty($correo_nuevo)) {
+                                echo '<span style="color: red;" name="E_Gmail">' . $correo_viejo . '</span>';
+                                echo '<span style="color: green;" name="E_Gmail"> | ' . $correo_nuevo . '</span>';
+                            }
+                            ?>
 
 
                         </p>
-                        <input type="hidden" id="gmail" name="E_id" value="<?php echo isset($datos['datos_resident'][0]->correo_nuevo) && !empty($datos['datos_resident'][0]->correo_nuevo)? $datos['datos_resident'][0]->correo_nuevo: ""; ?>">
+                        <input type="hidden" id="gmail" name="E_id" value="<?php echo isset($datos['datos_resident'][0]->correo_nuevo) && !empty($datos['datos_resident'][0]->correo_nuevo) ? $datos['datos_resident'][0]->correo_nuevo : ""; ?>">
                     </td>
                 </tr>
                 <tr>
@@ -160,7 +160,7 @@
                     }
                 });
             })
-            
+
     }
 
     function rechazo() {
