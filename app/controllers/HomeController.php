@@ -240,6 +240,18 @@ class HomeController extends Controlador
             exit;
         }
     }
+    public function Edificios()
+    {
+        $torres = $this->torreModel->getTorreByTable();
+        $apartaments = $this->apartamentModel->getApartamentByTable();
+
+        $data = [
+            'torres' => $torres,
+             'apartaments' => $apartaments
+        ];
+
+        $this->vista('pages/admin/edificiosView', $data);
+    }
 
 
 
