@@ -104,7 +104,7 @@ class HomeController extends Controlador
     {
         if (isset($_POST["detalles"])) {
 
-            $id_residente = $_POST["id"];
+            $id_residente = $_POST["id_residente"];
             $resident = $this->peopleModel->getPersonaById($id_residente);
             $datos_resident = $this->peopleModel->getAllSolicitudes($id_residente);
 
