@@ -1,4 +1,4 @@
-<?php require_once RUTA_APP . '/views/inc/header-user.php '; ?>
+<?php require_once RUTA_APP . '/views/inc/header-user.php'; ?>
 
 <?php
 // Verificar si el usuario actual tiene una solicitud pendiente.
@@ -26,10 +26,12 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
         <div class="header">
             <h1>Informacion de los Residentes</h1>
             <form action="<?php echo RUTA_URL; ?>/HomeController/notificaciones" method="POST" style="display:inline;">
-                <button type="submit" class="enlaces" style="background:none; border:none; cursor:pointer;">
-                    <span class="icons">🔔</span>
-                    <input type="hidden" name="Us_usuario" value="<?php echo $datos['resindents'][0]->Pe_nombre; ?>">
-                </button>
+                <div class="logos">
+                    <button type="submit" class="enlaces" style="background:none; border:none; cursor:pointer;">
+                        <span class="icons">🔔</span>
+                        <input type="hidden" name="Us_usuario" value="<?php echo $datos['resindents'][0]->Pe_nombre; ?>">
+                    </button>
+                </div>
             </form>
             <hr>
         </div>
@@ -108,7 +110,7 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
                 <button id="edit-btn" onclick="habilitarEdicion()">✏️ Editar</button>
                 <button id="save-btn" onclick="guardarDatos()" style="display:none;">✔️ Guardar</button>
                 <button id="cancel-btn" onclick="cancelEditing()" style="display:none;">❌ Cancelar</button>
-                <p id="status-msg" class="access-control">Control de <span class="red-text">Acceso</span></p>
+
             <?php endif; ?>
         </div>
     </div>
