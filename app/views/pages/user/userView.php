@@ -1,4 +1,4 @@
-<?php require_once RUTA_APP . '/views/inc/header-user.php '; ?>
+<?php require_once RUTA_APP . '/views/inc/header-user.php'; ?>
 
 <?php
 // Verificar si el usuario actual tiene una solicitud pendiente.
@@ -29,6 +29,7 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
                 <button type="submit" class="enlaces" style="background:none; border:none; cursor:pointer;">
                     <span class="icons">🔔</span>
                     <input type="hidden" name="Us_usuario" value="<?php echo $datos['resindents'][0]->Pe_nombre; ?>">
+                    <input type="hidden" name="Us_id" value="<?php echo $datos['resindents'][0]->Us_id; ?>">
                 </button>
             </form>
             <hr>
