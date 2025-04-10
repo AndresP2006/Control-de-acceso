@@ -9,7 +9,7 @@
 <div class="table-container">
     <div class="table-wrapper">
         <table>
-            <thead> 
+            <thead>
                 <tr>
                     <th>Documento</th>
                     <th>Nombre</th>
@@ -63,3 +63,4 @@
 
 <?php include RUTA_APP . '/views/pages/admin/modalHistorial.php'; ?>
 <?php include RUTA_APP . '/views/inc/footer-visitante.php'; ?>
+<?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>
