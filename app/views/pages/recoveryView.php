@@ -164,9 +164,7 @@ require_once RUTA_APP . '/views/inc/header-home.php';
                             (typeof resp.resul === 'string' ? resp.resul.trim() !== '' : true)) {
 
                             $('#myModal').addClass('miModal--activo');
-                        } else if (resp.messageError) {
-                            error(resp.messageError);
-                        }
+                        } 
 
                     },
                     error: function() {
@@ -174,7 +172,12 @@ require_once RUTA_APP . '/views/inc/header-home.php';
                     },
                     complete: function() {
                         // Habilitar el botón nuevamente después de completar la solicitud
-                        realizado('Se ha enviado un correo a ' + correo + '.           Revise su bandeja de entrada o carpeta de spam.');
+                        if (resp.resul && resp.resul !== false && resp.resul !== 'false' &&
+                            (typeof resp.resul === 'string' ? resp.resul.trim() !== '' : true)) {
+                            realizado('Se ha enviado un correo a ' + correo + '.           Revise su bandeja de entrada o carpeta de spam.');
+                        } else {
+                            error('Digite un correo electronico valido');
+                        }
                         setTimeout(() => {}, "2000");
                         $('#openModal').prop('disabled', false).text('Enviar Código');
                         $('#loading').hide(); // Oculta el loader
