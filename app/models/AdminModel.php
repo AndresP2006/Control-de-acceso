@@ -54,6 +54,11 @@ class AdminModel
         try {
             // Iniciar una transacción
             $this->db->beginTransaction();
+            // Luego eliminar el registro de la tabla 'usuario'
+            $sql1 = "DELETE FROM registro WHERE Pe_id = :id";
+            $this->db->query($sql1);
+            $this->db->bind(':id', $id);
+            $this->db->execute();
 
             // Eliminar el registro de la tabla 'persona' primero
             $sql2 = "DELETE FROM persona WHERE Pe_id = :id";
@@ -62,10 +67,11 @@ class AdminModel
             $this->db->execute();
 
             // Luego eliminar el registro de la tabla 'usuario'
-            $sql1 = "DELETE FROM usuario WHERE Us_id = :id";
-            $this->db->query($sql1);
+            $sql3 = "DELETE FROM usuario WHERE Us_id = :id";
+            $this->db->query($sql3);
             $this->db->bind(':id', $id);
             $this->db->execute();
+
 
             // Confirmar la transacción si ambas consultas fueron exitosas
             $this->db->commit();
@@ -290,5 +296,4 @@ class AdminModel
             return false;
         }
     }
-    
 }

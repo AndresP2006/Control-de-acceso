@@ -175,7 +175,7 @@ class PeopleModel
 
     public function getNotificaciones($usuario)
     {
-        $this->db->query("SELECT * FROM notificaciones WHERE usuario = :usuario");
+        $this->db->query("SELECT * FROM notificaciones WHERE usuario = :usuario ");
         $this->db->bind(':usuario', $usuario);
         return $this->db->registros();
     }
@@ -197,7 +197,7 @@ class PeopleModel
     public function getAllSolicitudesNotifi()
     {
 
-        $this->db->query("SELECT * FROM solicitudes_actualizacion ");
+        $this->db->query("SELECT * FROM solicitudes_actualizacion where estado = 'pendiente'");
         return  $this->db->registros();
 
         // echo "<pre>";
