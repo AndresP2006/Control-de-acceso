@@ -45,6 +45,12 @@ body {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+.logos {
+  display: flex;
+  flex-direction: row;
+  margin-right: -792px;
+  align-items: center;
+}
 
 .boton:hover {
   background-color: #ff4b4b;
@@ -76,6 +82,11 @@ body {
 }
 
 /* Títulos, líneas, textos */
+
+b {
+  color: red;
+}
+
 h2,
 .access-control {
   font-size: 1.8rem;
@@ -86,6 +97,7 @@ h2,
   font-size: 2rem;
   font-weight: 600;
   text-decoration: none;
+  margin-right: -892px;
 }
 
 hr {
@@ -96,6 +108,7 @@ hr {
 
 .gray-text1,
 .gray-text {
+  width: 190px; /* Ajustar el ancho según sea necesario */
   color: #6b7280;
   font-size: 1.3rem;
   background: transparent;

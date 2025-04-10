@@ -16,7 +16,7 @@
     <div class="content">
         <div class="encabezado">
             <div class="titulo">
-                <h1 class="titulo_1">Control De Acceso </h1>
+                <h1 class="titulo_1">Control De <b>Acceso</b> </h1>
             </div>
 
             <h3 class="var_sesion">Bienvenido <?= $_SESSION['datos']->Us_usuario ?></h3>
