@@ -18,7 +18,7 @@
                             <form action="<?php echo RUTA_URL; ?>/HomeController/solicitud_user" method="post">
                                 <input type="hidden" name="id_residente" value="<?php echo $notificacion['data']->id_residente; ?>">
                                 <input type="hidden" name="id" value="<?php echo $notificacion['data']->id; ?>">
-                                <input type="submit"  name="detalles"value="ver detalles">
+                                <input type="submit" name="detalles" value="ver detalles">
                             </form>
 
                         </div>
@@ -38,5 +38,5 @@
         <div class="control">Control de <span style="color: black;">Acceso</span></div>
     </div>
 </div>
-
+<?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>
 <script>

@@ -1,4 +1,5 @@
 <?php require_once RUTA_APP . "/views/inc/header-notificacion.php" ?>
+
 <div class="contenedor">
     <div class="titulo">NOTIFICACIONES
         <a href="<?php echo RUTA_URL; ?>/HomeController/resident" class="enlaces">
@@ -42,3 +43,4 @@
         <div class="control">Control de <span style="color: black;">Acceso</span></div>
     </div>
 </div>
+<?php require_once RUTA_APP . "/views/inc/footer-user.php" ?>
