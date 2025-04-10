@@ -22,16 +22,21 @@ class UserController extends Controlador
 
     public function index($messageError = null, $messageInfo = null,)
     {
-        $paquets = $this->paquetModel->getPackegesByTable();
+        // $paquets = $this->paquetModel->getPackegesByTable();
         $resindents = $this->peopleModel->getAllResident($_SESSION['datos']->Us_usuario);
         $people = $this->peopleModel->getAllRedident($_SESSION['datos']->Us_usuario);
+        // $notificacion = $this->peopleModel->getNotificacion($_SESSION['datos']->Us_usuario);
+        $datos_resident = $this->peopleModel->getAllSolicitudes($_SESSION['datos']->Us_id);
+
 
         return [
             'messageError' => $messageError,
             'messageInfo' => $messageInfo,
-            'paquets' => $paquets,
+            // 'paquets' => $paquets,
             'resindents' => $resindents,
-            'people' => $people
+            'datos_resident' => $datos_resident,
+            'people' => $people,
+            // 'notificacion' => $notificacion
         ];
     }
 
@@ -118,61 +123,65 @@ class UserController extends Controlador
     {
         $messageInfo = '';
         $messageError = '';
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['udate'])) {
 
-            $departamento = isset($_POST['E_Departamento']) && $_POST['E_Departamento'] != '' ? $_POST['E_Departamento'] : $_POST['E_Departamento2'];
-
+            // Recoger los datos correctamente desde $_POST
             $datos = [
-                'Cedula' => trim($_POST['E_id']),
-                'Nombre' => trim($_POST['E_Nombre']),
-                'Apellidos' => trim($_POST['E_Apellido']),
-                'Telefono' => trim($_POST['E_Telefono']),
-                'Gmail' => trim($_POST['E_Gmail']),
-                'Departamento' => trim($departamento),
-                'Rol' => trim($_POST['R_id']), // Asegúrate de que el nombre del campo sea correcto
-                'Contrasena' => trim($_POST['E_contrasena']),
+                'Cedula'      => trim($_POST['E_id']),
+                'Nombre'      => trim($_POST['E_Nombre']),
+                'Apellidos'   => trim($_POST['E_Apellido']),
+                'Telefono'    => trim($_POST['E_Telefono']),
+                'Gmail'       => trim($_POST['E_Gmail']),
+                'Torre'       => trim($_POST['E_torre']),
+                'Ap_numero'   => trim($_POST['E_Departamento2']),
+                'Departamento' => trim($_POST['E_Departamento']),
+                'Rol'         => trim($_POST['R_id']),
+                'Contrasena'  => trim($_POST['E_contrasena']),
             ];
+
 
             $resultado = $this->adminModel->updateUser($datos);
             $registros = $this->peopleModel->getAllUsuario();
 
-            // Formatear los datos de los usuarios como lo mencionas
+            // Formatear los datos de los usuarios
             $usuarios = [];
             foreach ($registros as $registro) {
                 $usuarios[] = [
-                    'Cedula' => $registro->Pe_id,
+                    'Cedula'    => $registro->Pe_id,
                     'Pe_nombre' => $registro->Pe_nombre,
                     'Pe_apellidos' => $registro->Pe_apellidos,
-                    'Pe_telefono' => $registro->Pe_telefono,
-                    'Us_correo' => $registro->Us_correo,
-                    'Ap_id' => $registro->Ap_id,
-                    'Ap_numero' => $registro->Ap_numero,
-                    'To_letra' => $registro->To_letra,
-                    'To_id' => $registro->To_id,
-                    'Ro_tipo' => $registro->Ro_tipo,
+                    'Pe_telefono'  => $registro->Pe_telefono,
+                    'Us_correo'    => $registro->Us_correo,
+                    'Ap_id'        => $registro->Ap_id,
+                    'Ap_numero'    => $registro->Ap_numero,
+                    'To_letra'     => $registro->To_letra,
+                    'To_id'        => $registro->To_id,
+                    'Ro_tipo'      => $registro->Ro_tipo,
                 ];
             }
 
-
-            $datos = [
-                'usuarios' => $usuarios,
-            ];
             if ($resultado) {
                 $messageInfo = 'Usuario actualizado correctamente';
             } else {
                 $messageError = 'Error al actualizar el usuario';
             }
+
+            $datos = [
+                'usuarios'      => $usuarios,
+                'messageError'  => $messageError,
+                'messageInfo'   => $messageInfo,
+            ];
         } else {
             $messageError = 'Error: No se pudo procesar la solicitud';
+            $datos = [
+                'messageError' => $messageError,
+            ];
         }
-        $datos = [
-            'usuarios' => $usuarios,
-            'messageError' => $messageError,
-            'messageInfo' => $messageInfo,
-        ];
         $this->vista('pages/admin/adminView', $datos);
         exit;
     }
+
 
     public function DeleteUser()
     {
@@ -225,6 +234,8 @@ class UserController extends Controlador
                 'Pe_telefono' => $registro->Pe_telefono,
                 'Us_correo' => $registro->Us_correo,
                 'Ap_id' => $registro->Ap_id,
+                'To_letra' => $registro->To_letra,
+                'Ap_numero' => $registro->Ap_numero,
                 'Ro_tipo' => $registro->Ro_tipo,
             ];
         }
@@ -244,18 +255,6 @@ class UserController extends Controlador
 
     public function DeleteVisitas() {}
 
-    public function DeletePaquete()
-    {
-
-        if (isset($_POST['deletePaquetes']) && isset($_POST['delete_pid'])) {
-            $id = $_POST['delete_pid'];
-
-            $this->paquetModel->deletePaquetById($id);
-
-            $datos = $this->index(null, 'Paquete borrado correctamente');
-            $this->vista('pages/admin/paquetesView', $datos);
-        }
-    }
 
     public function Torre()
     {
@@ -446,6 +445,7 @@ class UserController extends Controlador
     {
         if (isset($_POST['historial-btn'])) {
             $id = $_POST['historial_id'];
+            $fecha = $_POST['fecha'] ?? null;
 
             $registros = $this->peopleModel->getAllRegistro($id);
 
@@ -460,6 +460,8 @@ class UserController extends Controlador
                         'Re_motivo' => $registro->Re_motivo,
                         'Vi_departamento' => $registro->Vi_departamento,
                         'Pe_id' => $registro->Pe_id,
+                        'Ap_numero' => $registro->Ap_numero,
+                        'To_letra' => $registro->To_letra,
                     ];
                 }
                 $datos = [
@@ -468,12 +470,176 @@ class UserController extends Controlador
             } else {
                 $datos = ['historial' => []]; // Si no hay registros, aseguramos que la variable no cause errores
             }
+
+            // Mantener los visitantes filtrados por fecha
+            if ($fecha) {
+                $datos['visitors'] = $this->visitorModel->obtenerVisitantesPorFecha($fecha);
+            } else {
+                $datos['visitors'] = $this->visitorModel->getVisitrosByTable();
+            }
+
+            $this->vista('pages/admin/historialViView', $datos);
         }
-
-        $datos['visitors'] = $this->visitorModel->getVisitrosByTable();
-
-        $this->vista('pages/admin/historialViView', $datos);
     }
 
     public function enterTower() {}
+
+    public function ActualizarUsuario()
+    {
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Depuración: ver qué llega por $_POST
+            error_log("Datos recibidos en ActualizarUsuario: " . print_r($_POST, true));
+
+            // Validar que existan los campos requeridos
+            $requiredFields = ['E_id', 'E_nombre', 'E_Gmail', 'E_Telefono', 'To_id', 'Ap_numero'];
+            foreach ($requiredFields as $field) {
+                if (!isset($_POST[$field]) || empty(trim($_POST[$field]))) {
+                    echo json_encode(['success' => false, 'error' => "Falta el campo: " . $field]);
+                    exit;
+                }
+            }
+            $usuario = $this->peopleModel->getPersonaById($_POST['E_id']);
+
+
+
+            // Armar array para el modelo con las claves correspondientes a la tabla de solicitudes
+            $usuarioActualizado = [
+                'id_residente'      => trim($_POST['E_id']),
+                'nombre'      => trim($_POST['E_nombre']),
+                'correo_nuevo'      => trim($_POST['E_Gmail']),
+                'telefono_nuevo'    => trim($_POST['E_Telefono']),
+                'torre_nuevo'       => trim($_POST['To_id']),
+                'apartamento_nuevo' => trim($_POST['Ap_numero']),
+            ];
+
+            // Llamar al modelo para insertar la solicitud de actualización
+            $resultado = $this->adminModel->insertUserUpdateRequest($usuarioActualizado);
+            // Responder en JSON
+            echo json_encode(['success' => $resultado]);
+            exit;
+        }
+
+        // Si no es POST, mensaje de error
+        echo json_encode(['success' => false, 'error' => 'Método no permitido']);
+        exit;
+    }
+
+    public function VisitantesPorFecha()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Verificar si se proporcionó la fecha
+            $fecha = isset($_POST['fecha']) ? trim($_POST['fecha']) : null;
+
+            if ($fecha) {
+                // Obtener visitantes por fecha desde el modelo
+                $visitors = $this->visitorModel->obtenerVisitantesPorFecha($fecha);
+            } else {
+                // Obtener todos los visitantes si no se proporciona una fecha
+                $visitors = $this->visitorModel->getVisitrosByTable();
+            }
+
+            // Pasar los datos a la vista
+            $datos = [
+                'visitors' => $visitors,
+                'error' => null
+            ];
+            $this->vista('pages/admin/historialViView', $datos);
+        } else {
+            // Redirigir si no es una solicitud POST
+            header('Location: ' . RUTA_URL . '/HomeController/admin');
+            exit;
+        }
+    }
+
+    public function ActualizarResidente()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Depuración: ver qué llega por $_POST
+            error_log("Datos recibidos en ActualizarResidente: " . print_r($_POST, true));
+
+            // Validar que existan los campos requeridos
+            $requiredFields = ['E_id', 'E_Gmail', 'E_Telefono', 'To_id', 'Ap_numero'];
+            foreach ($requiredFields as $field) {
+                if (!isset($_POST[$field]) || empty(trim($_POST[$field]))) {
+                    echo json_encode(['success' => false, 'error' => "Falta el campo: " . $field]);
+                    exit;
+                }
+            }
+
+            // Armar array para el modelo con las claves correspondientes a la tabla de residentes
+            $residenteActualizado = [
+                'Cedula'            => trim($_POST['E_id']),
+                'Nombre'            => trim($_POST['E_nombre']),
+                'Gmail'             => trim($_POST['E_Gmail']),
+                'Telefono'          => trim($_POST['E_Telefono']),
+                'Torre'             => trim($_POST['To_id']),
+                'Apartamento'       => trim($_POST['Ap_numero']),
+            ];
+
+            // Llamar al modelo para actualizar los datos del residente
+            try {
+                $resultado = $this->adminModel->insertUserUpdate($residenteActualizado);
+
+                // Responder en JSON
+                if ($resultado) {
+                    echo json_encode(['success' => true]);
+                } else {
+                    echo json_encode(['success' => false, 'error' => 'Error al actualizar el residente']);
+                }
+            } catch (Exception $e) {
+                // Manejar cualquier error que ocurra
+                echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+            }
+
+            exit;
+        }
+
+        // Si no es POST, mensaje de error
+        echo json_encode(['success' => false, 'error' => 'Método no permitido']);
+        exit;
+    }
+    public function motivoRechazo()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Depuración: ver qué llega por $_POST
+            error_log("Datos recibidos en ActualizarResidente: " . print_r($_POST, true));
+
+            // Validar que existan los campos requeridos
+            $requiredFields = ['E_id','M_rechazo'];
+            foreach ($requiredFields as $field) {
+                if (!isset($_POST[$field]) || empty(trim($_POST[$field]))) {
+                    echo json_encode(['success' => false, 'error' => "Falta el campo: " . $field]);
+                    exit;
+                }
+            }
+
+            // Armar array para el modelo con las claves correspondientes a la tabla de residentes
+            $residenteActualizado = [
+                'Cedula'            => trim($_POST['E_id']),
+                'rechazo'            => trim($_POST['M_rechazo']),
+            ];
+
+            // Llamar al modelo para actualizar los datos del residente
+            try {
+                $resultado = $this->adminModel->insertRechazo($residenteActualizado);
+
+                // Responder en JSON
+                if ($resultado) {
+                    echo json_encode(['success' => true]);
+                } else {
+                    echo json_encode(['success' => false, 'error' => 'Error al actualizar el residente']);
+                }
+            } catch (Exception $e) {
+                // Manejar cualquier error que ocurra
+                echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+            }
+
+            exit;
+        }
+
+        // Si no es POST, mensaje de error
+        echo json_encode(['success' => false, 'error' => 'Método no permitido']);
+        exit;
+    }
 }

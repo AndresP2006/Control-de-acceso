@@ -1,6 +1,11 @@
 <?php require_once RUTA_APP . '/views/inc/header-admin.php'; ?>
-
-<h1 class="table-titulo">Lista de visitantes</h1>
+<div class="select">
+    <h1 class="table-titulo">Lista de visitantes</h1>
+    <form method="POST" action="<?php echo RUTA_URL; ?>/UserController/VisitantesPorFecha">
+        <input type="date" name="fecha" id="fecha" value="<?php echo htmlspecialchars($_POST['fecha'] ?? ''); ?>">
+        <button type="submit" class="filter-btn" style="position: relative; top: 33px; left:20px;">Filtrar</button>
+    </form>
+</div>
 <div class="table-container">
     <div class="table-wrapper">
         <table>
@@ -15,7 +20,7 @@
             </thead>
             <tbody>
                 <?php
-                if (is_array($datos['visitors'])) {
+                if (isset($datos['visitors']) && is_array($datos['visitors']) && count($datos['visitors']) > 0) {
                     foreach ($datos['visitors'] as $historial) {
                         echo "<tr>";
                         echo "<td>" . (empty($historial['Vi_id']) ? '-' : $historial['Vi_id']) . "</td>";
@@ -28,12 +33,15 @@
                         <td>
                             <form id='historial-form' action='" . RUTA_URL . "/UserController/MostrarHistorial' method='POST'>
                                 <input type='hidden' name='historial_id' value='" . htmlspecialchars($historial['Vi_id'] ?? '') . "'>
+                                <input type='hidden' name='fecha' value='" . htmlspecialchars($_POST['fecha'] ?? '') . "'>
                                 <button class='historial-btn' name='historial-btn'>✏️</button>
                             </form>
                         </td>";
 
                         echo "</tr>";
                     }
+                } else {
+                    echo "<tr><td colspan='5'>No hubo visitas en la fecha seleccionada.</td></tr>";
                 }
                 ?>
             </tbody>
@@ -54,5 +62,5 @@
 </div>
 
 <?php include RUTA_APP . '/views/pages/admin/modalHistorial.php'; ?>
-
 <?php include RUTA_APP . '/views/inc/footer-visitante.php'; ?>
+<?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>

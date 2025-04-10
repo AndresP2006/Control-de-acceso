@@ -18,16 +18,16 @@
             <input type="text" id="E_Telefono" name="E_Telefono" />
 
             <label for="">Correo</label><br>
-            <input type="email" id="E_Gmail" name="E_Gmail" />
+            <input type="email" id="E_Gmail" name="E_Gmail"  require/>
 
-            <!-- <label for="">Departamento</label><br> -->
-            <!-- <input type="text" id="E_Departamento" name="E_Departamento" /> -->
+            <!-- <label for="">Departamento</label><br>
+            <input type="text" id="E_Departamento" name="E_Departamento" /> -->
             <div class="titulo_torre">
                 <h4>Torre</h4>
                 <h4 class="ap">Apartamento</h4>
             </div>
             <div class="select_torre">
-                <select id="select_torre" class="filter-select">
+                <select name="E_torre"id="select_torre" class="filter-select">
                     <option value="">Torre</option>
                     <?php foreach ($_SESSION['torre'] as $torre) {
                         echo "<option value='{$torre->To_id}'>{$torre->To_letra}</option>";

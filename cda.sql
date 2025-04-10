@@ -1,27 +1,25 @@
--- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
---
--- Host: localhost    Database: cda
--- ------------------------------------------------------
--- Server version	5.5.5-10.4.32-MariaDB
+/*
+SQLyog Community v13.2.1 (64 bit)
+MySQL - 10.4.32-MariaDB : Database - cda
+*********************************************************************
+*/
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40101 SET NAMES utf8 */;
+
+/*!40101 SET SQL_MODE=''*/;
+
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`cda` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish2_ci */;
 
---
--- Table structure for table `apartamento`
---
+USE `cda`;
+
+/*Table structure for table `apartamento` */
 
 DROP TABLE IF EXISTS `apartamento`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+
 CREATE TABLE `apartamento` (
   `Ap_id` int(10) NOT NULL AUTO_INCREMENT,
   `To_id` int(10) NOT NULL,
@@ -30,25 +28,19 @@ CREATE TABLE `apartamento` (
   KEY `To_id` (`To_id`),
   CONSTRAINT `apartamento_ibfk_1` FOREIGN KEY (`To_id`) REFERENCES `torre` (`To_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `apartamento`
---
+/*Data for the table `apartamento` */
 
-LOCK TABLES `apartamento` WRITE;
-/*!40000 ALTER TABLE `apartamento` DISABLE KEYS */;
-INSERT INTO `apartamento` VALUES (106,1,302),(107,2,212),(108,1,212),(109,1,302);
-/*!40000 ALTER TABLE `apartamento` ENABLE KEYS */;
-UNLOCK TABLES;
+insert  into `apartamento`(`Ap_id`,`To_id`,`Ap_numero`) values 
+(106,1,302),
+(107,2,212),
+(108,1,212),
+(109,1,302);
 
---
--- Table structure for table `paquete`
---
+/*Table structure for table `paquete` */
 
 DROP TABLE IF EXISTS `paquete`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+
 CREATE TABLE `paquete` (
   `Pa_id` int(10) NOT NULL AUTO_INCREMENT,
   `Pa_estado` varchar(250) NOT NULL,
@@ -60,26 +52,22 @@ CREATE TABLE `paquete` (
   KEY `Pe_id` (`Pe_id`),
   CONSTRAINT `paquete_ibfk_1` FOREIGN KEY (`Pe_id`) REFERENCES `persona` (`Pe_id`),
   CONSTRAINT `paquete_ibfk_2` FOREIGN KEY (`Pe_id`) REFERENCES `persona` (`Pe_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `paquete`
---
+/*Data for the table `paquete` */
 
-LOCK TABLES `paquete` WRITE;
-/*!40000 ALTER TABLE `paquete` DISABLE KEYS */;
-INSERT INTO `paquete` VALUES (1,'activo','Pc gamer','2024-11-07 05:00:00','Stiven',NULL),(2,'activo','PC gamer','2024-11-07 05:00:00','Juan',NULL),(3,'activo','PortÃ¡til','2024-11-08 05:00:00','Juan',NULL),(4,'Estado','asddfgdgf','2024-11-12 05:00:00','Guardia_2',123),(5,'Estado','asddfgdgf','2024-11-12 05:00:00','Guardia_2',123),(6,'Estado','asdddddddddddd','2024-11-12 05:00:00','Guardia_5',123),(7,'bueno','en caja','2024-11-07 05:00:00','portero',12345),(8,'bueno','en caja','2024-11-07 05:00:00','portero',12345),(9,'Fragil','esd','2024-11-20 05:00:00','Guardia_2',123),(10,'Fragil','asdfsd','2024-11-24 05:00:00','Guardia_2',123);
-/*!40000 ALTER TABLE `paquete` ENABLE KEYS */;
-UNLOCK TABLES;
+insert  into `paquete`(`Pa_id`,`Pa_estado`,`Pa_descripcion`,`Pa_fecha`,`Pa_responsable`,`Pe_id`) values 
+(1,'activo','Pc gamer','2024-11-07 00:00:00','Stiven',NULL),
+(2,'activo','PC gamer','2024-11-07 00:00:00','Juan',NULL),
+(3,'activo','PortÃ¡til','2024-11-08 00:00:00','Juan',NULL),
+(7,'bueno','en caja','2024-11-07 00:00:00','portero',12345),
+(9,'Fragil','esd','2024-11-20 00:00:00','Guardia_2',123),
+(14,'Bodega','Pc gamer','2025-03-29 00:00:00','Luis',1043);
 
---
--- Table structure for table `persona`
---
+/*Table structure for table `persona` */
 
 DROP TABLE IF EXISTS `persona`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+
 CREATE TABLE `persona` (
   `Pe_id` int(20) NOT NULL,
   `Pe_nombre` varchar(50) NOT NULL,
@@ -93,25 +81,20 @@ CREATE TABLE `persona` (
   CONSTRAINT `persona_ibfk_3` FOREIGN KEY (`Us_id`) REFERENCES `usuario` (`Us_id`),
   CONSTRAINT `persona_ibfk_4` FOREIGN KEY (`Ap_id`) REFERENCES `apartamento` (`Ap_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `persona`
---
+/*Data for the table `persona` */
 
-LOCK TABLES `persona` WRITE;
-/*!40000 ALTER TABLE `persona` DISABLE KEYS */;
-INSERT INTO `persona` VALUES (0,'Luis','Padilla','30000000',NULL,NULL),(123,'JD','RP','30000000',NULL,106),(2006,'josimar','suñoga','12121312313',2006,NULL),(12345,'David','Rua','30000000',NULL,108),(123456,'Andres','Pereira','300000',NULL,NULL);
-/*!40000 ALTER TABLE `persona` ENABLE KEYS */;
-UNLOCK TABLES;
+insert  into `persona`(`Pe_id`,`Pe_nombre`,`Pe_apellidos`,`Pe_telefono`,`Us_id`,`Ap_id`) values 
+(123,'JD','RP','3000000',NULL,106),
+(1043,'Arthur','Pendragon','3000000',1043,108),
+(2006,'josimar','suñoga','12121312313',2006,NULL),
+(4567,'Naruto','Uzumaki','3000000',4567,109),
+(12345,'David','Rua','30000000',NULL,108);
 
---
--- Table structure for table `registro`
---
+/*Table structure for table `registro` */
 
 DROP TABLE IF EXISTS `registro`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+
 CREATE TABLE `registro` (
   `Re_id` int(10) NOT NULL AUTO_INCREMENT,
   `Re_fecha_entrada` date NOT NULL,
@@ -127,74 +110,78 @@ CREATE TABLE `registro` (
   CONSTRAINT `fk_registro_persona` FOREIGN KEY (`Pe_id`) REFERENCES `persona` (`Pe_id`),
   CONSTRAINT `registro_ibfk_1` FOREIGN KEY (`Vi_id`) REFERENCES `visitantes` (`Vi_id`),
   CONSTRAINT `registro_ibfk_2` FOREIGN KEY (`Pe_id`) REFERENCES `persona` (`Pe_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `registro`
---
+/*Data for the table `registro` */
 
-LOCK TABLES `registro` WRITE;
-/*!40000 ALTER TABLE `registro` DISABLE KEYS */;
-INSERT INTO `registro` VALUES (2,'2024-11-18','14:27:42','22:42:06','','',0,1042851729),(3,'2024-11-20','20:30:30','22:23:46','','',0,123),(4,'2024-11-21','22:42:50','22:44:18','','',0,1),(5,'2024-11-21','22:44:42','22:52:34','','',0,2),(6,'2024-11-21','22:46:23','22:47:34','','',0,3),(7,'2024-11-21','22:48:30','22:49:42','','',0,4),(8,'2024-11-22','20:03:11','20:17:03','','',0,345),(9,'2024-11-22','20:08:18','20:23:55','','',0,321),(10,'2024-11-22','20:09:24','00:00:00','','',0,21),(11,'2024-11-22','20:10:25','21:01:44','','',0,11),(12,'2024-11-22','20:10:48','00:00:00','','',0,22),(13,'2024-11-22','20:12:05','00:00:00','','',0,44),(14,'2024-11-22','20:15:54','00:00:00','','',0,222),(15,'2024-11-22','21:02:22','21:54:29','','',0,4321),(16,'2024-11-24','12:53:01','00:00:00','','',0,1111),(17,'2024-11-24','12:53:57','00:00:00','','',0,1212121),(18,'2024-11-24','20:15:46','20:17:14','','',0,777),(19,'2024-11-25','16:51:23','00:00:00','','',0,1104413144),(20,'2024-11-25','17:10:24','00:00:00','','',0,0);
-/*!40000 ALTER TABLE `registro` ENABLE KEYS */;
-UNLOCK TABLES;
+insert  into `registro`(`Re_id`,`Re_fecha_entrada`,`Re_hora_entrada`,`Re_hora_salida`,`Re_motivo`,`Vi_departamento`,`Pe_id`,`Vi_id`) values 
+(21,'2024-11-25','21:33:17','21:36:02','Comer ramen','106',123,45678),
+(22,'2024-11-25','21:36:54','00:00:00','dattebayo','108',12345,45678),
+(24,'2024-11-26','10:10:12','00:00:00','Pelear','106',123,1267),
+(36,'2025-03-29','13:34:02','00:00:00','Visitar a mi primo','108',1043,1243);
 
---
--- Table structure for table `rol`
---
+/*Table structure for table `rol` */
 
 DROP TABLE IF EXISTS `rol`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+
 CREATE TABLE `rol` (
   `Ro_id` int(10) NOT NULL AUTO_INCREMENT,
   `Ro_tipo` varchar(50) NOT NULL,
   PRIMARY KEY (`Ro_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `rol`
---
+/*Data for the table `rol` */
 
-LOCK TABLES `rol` WRITE;
-/*!40000 ALTER TABLE `rol` DISABLE KEYS */;
-INSERT INTO `rol` VALUES (1,'Administrador'),(2,'Guardia'),(3,'Residente');
-/*!40000 ALTER TABLE `rol` ENABLE KEYS */;
-UNLOCK TABLES;
+insert  into `rol`(`Ro_id`,`Ro_tipo`) values 
+(1,'Administrador'),
+(2,'Guardia'),
+(3,'Residente');
 
---
--- Table structure for table `torre`
---
+/*Table structure for table `solicitudes_actualizacion` */
+
+DROP TABLE IF EXISTS `solicitudes_actualizacion`;
+
+CREATE TABLE `solicitudes_actualizacion` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_residente` int(11) NOT NULL,
+  `nombre` varchar(255) NOT NULL,
+  `correo_nuevo` varchar(255) NOT NULL,
+  `telefono_nuevo` varchar(50) NOT NULL,
+  `torre_nuevo` varchar(10) NOT NULL,
+  `apartamento_nuevo` varchar(50) NOT NULL,
+  `estado` enum('pendiente','aprobada','rechazada') DEFAULT 'pendiente',
+  `razon_rechazo` varchar(255) DEFAULT NULL,
+  `fecha_solicitud` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+/*Data for the table `solicitudes_actualizacion` */
+
+insert  into `solicitudes_actualizacion`(`id`,`id_residente`,`nombre`,`correo_nuevo`,`telefono_nuevo`,`torre_nuevo`,`apartamento_nuevo`,`estado`,`razon_rechazo`,`fecha_solicitud`) values 
+(1,1043,'Arthur Pendragon','Arthurdd@gmail.com','300004300','A','212','pendiente',NULL,'2025-03-31 13:53:43'),
+(12,4567,'Naruto Uzumaki','Narutodd@gmail.com','300003400','A','302','pendiente',NULL,'2025-03-31 15:10:35');
+
+/*Table structure for table `torre` */
 
 DROP TABLE IF EXISTS `torre`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+
 CREATE TABLE `torre` (
   `To_id` int(10) NOT NULL,
   `To_letra` varchar(10) NOT NULL,
   PRIMARY KEY (`To_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `torre`
---
+/*Data for the table `torre` */
 
-LOCK TABLES `torre` WRITE;
-/*!40000 ALTER TABLE `torre` DISABLE KEYS */;
-INSERT INTO `torre` VALUES (1,'A'),(2,'B'),(3,'C');
-/*!40000 ALTER TABLE `torre` ENABLE KEYS */;
-UNLOCK TABLES;
+insert  into `torre`(`To_id`,`To_letra`) values 
+(1,'A'),
+(2,'B'),
+(3,'C');
 
---
--- Table structure for table `usuario`
---
+/*Table structure for table `usuario` */
 
 DROP TABLE IF EXISTS `usuario`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+
 CREATE TABLE `usuario` (
   `Us_id` int(10) NOT NULL,
   `Us_usuario` varchar(50) NOT NULL,
@@ -205,25 +192,19 @@ CREATE TABLE `usuario` (
   KEY `C_id` (`Ro_id`),
   CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`Ro_id`) REFERENCES `rol` (`Ro_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `usuario`
---
+/*Data for the table `usuario` */
 
-LOCK TABLES `usuario` WRITE;
-/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (123,'David','d12345','jrua1043@gmail.com',2),(2006,'Juan','12345','charry@gmail.com',1);
-/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
-UNLOCK TABLES;
+insert  into `usuario`(`Us_id`,`Us_usuario`,`Us_contrasena`,`Us_correo`,`Ro_id`) values 
+(123,'JD','d12345','jrua1043@gmail.com',2),
+(1043,'Arthur','12345','Arthur@gmail.com',3),
+(2006,'Juan','12345','charry@gmail.com',1),
+(4567,'Naruto','12345','Naruto@gmail.com',3);
 
---
--- Table structure for table `visitantes`
---
+/*Table structure for table `visitantes` */
 
 DROP TABLE IF EXISTS `visitantes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+
 CREATE TABLE `visitantes` (
   `Vi_id` int(10) NOT NULL,
   `Vi_nombres` varchar(50) NOT NULL,
@@ -231,29 +212,16 @@ CREATE TABLE `visitantes` (
   `Vi_telefono` varchar(50) NOT NULL,
   PRIMARY KEY (`Vi_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `visitantes`
---
+/*Data for the table `visitantes` */
 
-LOCK TABLES `visitantes` WRITE;
-/*!40000 ALTER TABLE `visitantes` DISABLE KEYS */;
-INSERT INTO `visitantes` VALUES (0,'','',''),(1,'Lucas','Perez','234'),(2,'Juan','Charry','312'),(3,'Juan','Charry','312'),(4,'Juan','Charry','312'),(11,'Pedro','Charry','312'),(21,'Lucas','Perez','312'),(22,'Lucas','Charry','312'),(44,'Juan','Charry','312'),(123,'Juan','Charry','312'),(222,'Lucas','Charry','234'),(321,'Pedro','Peres','312'),(345,'Juan','Charry','312'),(777,'Kendo','Kapony','312'),(1111,'sd','asd','122'),(4321,'Kendo','Kapony','32123213'),(1212121,'sdasdgkf','jhj','24244'),(1042851729,'andres','pereira','3003489600'),(1104413144,'KAPONY','Kapony','2323');
-/*!40000 ALTER TABLE `visitantes` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping routines for database 'cda'
---
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+insert  into `visitantes`(`Vi_id`,`Vi_nombres`,`Vi_apellidos`,`Vi_telefono`) values 
+(0,'','',''),
+(1243,'Andres','Pereira','3333332211'),
+(1267,'Goku','Son','30000000'),
+(45678,'Naruto','Uzumaki','3454345');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2024-11-25 21:11:34

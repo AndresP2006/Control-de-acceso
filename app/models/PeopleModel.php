@@ -53,7 +53,7 @@ class PeopleModel
 
     public function getAllRegistro($id)
     {
-        $this->db->query("SELECT * FROM registro WHERE Vi_id = :id");
+        $this->db->query("SELECT r.*, Ap_numero,To_letra FROM registro r JOIN persona p ON r.Pe_id = p.Pe_id JOIN apartamento a ON p.Ap_id = a.Ap_id JOIN torre t ON a.To_id = t.To_id WHERE Vi_id = :id");
         $this->db->bind(':id', $id); // Usa parámetros para evitar inyección SQL
         $result = $this->db->registros(); // Asegúrate de usar 'registros()' para obtener múltiples resultados
 
@@ -105,7 +105,7 @@ class PeopleModel
         if ($roleId) {
             // Consulta con filtro por Rol
             $this->db->query('
-            SELECT persona.*, usuario.Ro_id, usuario.Us_correo, r.Ro_tipo, usuario.Us_contrasena, a.Ap_numero, t.To_letra, t.To_id 
+            SELECT persona.*, usuario.Ro_id, usuario.Us_correo, r.Ro_tipo, usuario.Us_contrasena, a.Ap_numero, t.To_letra, t.To_id,a.Ap_id 
             FROM persona 
             LEFT JOIN usuario ON persona.Pe_id = usuario.Us_id 
             LEFT JOIN rol r ON usuario.Ro_id = r.Ro_id 
@@ -152,12 +152,57 @@ class PeopleModel
     public function getAllRedident($result)
     {
 
-         $this->db->query("SELECT p2.Pe_nombre, p2.Pe_apellidos 
+        $this->db->query("SELECT p2.Pe_nombre, p2.Pe_apellidos 
                            FROM persona p1 
                            JOIN apartamento a ON p1.Ap_id = a.Ap_id 
                            JOIN persona p2 ON a.Ap_id = p2.Ap_id 
-                           WHERE p1.Pe_nombre = '$result' AND p2.Pe_id <> p1.Pe_id", );
+                           WHERE p1.Pe_nombre = '$result' AND p2.Pe_id <> p1.Pe_id",);
 
         return $this->db->registros();
+    }
+
+    public function getNotificacion($nombre_id)
+    {
+        $this->db->query("SELECT v.Vi_nombres, v.Vi_apellidos, r.Re_fecha_entrada, r.Re_hora_entrada, r.Re_motivo
+                          FROM registro r
+                          JOIN visitantes v ON r.Vi_id = v.Vi_id
+                          JOIN persona p ON r.Pe_id = p.Pe_id
+                          WHERE p.Pe_nombre = :Pe_nombre AND r.Re_hora_salida = '00:00:00';");
+        $this->db->bind(':Pe_nombre', $nombre_id); // Usar parámetros para evitar inyección SQL
+
+        return $this->db->registros(); // Devuelve múltiples registros
+    }
+
+    public function getNotificaciones($usuario)
+    {
+        $this->db->query("SELECT * FROM notificaciones WHERE usuario = :usuario ");
+        $this->db->bind(':usuario', $usuario);
+        return $this->db->registros();
+    }
+
+    // En PaquetModel.php (o el modelo que uses para las solicitudes)
+    public function getAllSolicitudes($id_usuario)
+    {
+        // Corregir la consulta SQL (eliminar uno de los WHERE)
+        $this->db->query("SELECT * FROM solicitudes_actualizacion WHERE id_residente = :id_usuario AND estado = :estado");
+
+        // Vincular los parámetros a la consulta
+        $this->db->bind(':id_usuario', $id_usuario);
+        $this->db->bind(':estado', 'pendiente');  // Asegúrate de que el estado sea 'pendiente', no 'prendiente'
+
+        // Ejecutar la consulta y devolver los registros
+        return $this->db->registros();
+    }
+
+    public function getAllSolicitudesNotifi()
+    {
+
+        $this->db->query("SELECT * FROM solicitudes_actualizacion where estado = 'pendiente'");
+        return  $this->db->registros();
+
+        // echo "<pre>";
+        // print_r($resultados);
+        // echo "</pre>";
+        // exit(); // Detener la ejecución para ver el resultado
     }
 }

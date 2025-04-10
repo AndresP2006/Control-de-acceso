@@ -200,6 +200,7 @@ form {
     max-width: 150px;
     padding: 10px 0;
     border-radius: 30px;
+    cursor: pointer;
 }
 
 .Formulario__boton-a {
