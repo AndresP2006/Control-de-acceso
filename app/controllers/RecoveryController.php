@@ -19,7 +19,8 @@ class RecoveryController extends Controlador
 
     public function index()
     {
-        header('location:' . RUTA_URL . '/HomeController/recovery');
+        $this->vista('pages/recoveryView');
+        header('location:' . RUTA_URL . '/RecoveryController/recovery');
     }
 
     public function recovery()
