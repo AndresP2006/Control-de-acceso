@@ -23,7 +23,7 @@ body {
 .encabezado {
   background-color: #1e2a38;
   color: white;
-  padding: 40px 40px;
+  padding: 28px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -120,6 +120,16 @@ body {
   font-weight: bold;
   color: red;
   font-size: 20px;
+}
+.logos {
+  display: flex;
+  flex-direction: row;
+  margin-right: -892px;
+  align-items: center;
+}
+
+b {
+  color: red;
 }
 
 a {

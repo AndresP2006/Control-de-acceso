@@ -48,7 +48,9 @@
     </div>
 
     <div class="acciones">
-        <div class="control">Control de <span style="color: black;">Acceso</span></div>
+        <div class="control">
+            <span style="color: black !important;">Control de </span> <span style="color: red;">Acceso</span>
+        </div>
     </div>
 </div>
 <?php require_once RUTA_APP . "/views/inc/footer-user.php" ?>
