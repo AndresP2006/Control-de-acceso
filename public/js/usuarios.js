@@ -115,6 +115,33 @@ document.querySelectorAll(".edit-btn").forEach(function (button) {
     // Convertir el texto del rol a número
     var tipo_rol = rol === "Administrador" ? 1 : rol === "Guardia" ? 2 : 3;
 
+
+    $('#R_id').change(function () {
+      let ValueRol = $('#R_id').val()
+      $.ajax({
+        url: 'http://localhost:8080/UserController/verifyRol', // Asegúrate de que la ruta es correcta
+        type: 'POST',
+        data: { ValueRol: ValueRol },
+        dataType: 'json',
+        success: function (respuesta) {
+          console.log('Respuesta cruda:', respuesta) // Ver la respuesta antes de procesarla
+
+          if (respuesta.length === 1 && respuesta[0].Ro_id == 1) {
+            console.log('Un solo usuario encontrado:', respuesta[0])
+            error('Por favor, primero agrugue a otro administrador')
+          } else if (respuesta.length === 1 && respuesta[0].Ro_id == 2) {
+            error('Por favor, primero agrugue a otro guardia')
+          } else {
+            re
+            console.log('Varios usuarios encontrados o ninguno:', respuesta)
+          }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.error('Error en la petición AJAX:', textStatus, errorThrown)
+        }
+      })
+    })
+
     // Seleccionar el rol en el select
     var rolSelect = document.getElementById("R_id");
     for (var i = 0; i < rolSelect.options.length; i++) {
