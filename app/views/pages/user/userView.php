@@ -55,7 +55,7 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
                 <tr>
                     <td><strong>Email</strong></td>
                     <td>
-                        <input class="gray-text1" type="text" id="gmail" name="E_Gmail"
+                        <input class="gray-text1" type="text" id="gmail" name="E_Gmail" style="width: 800px;"
                             value="<?php echo $datos['resindents'][0]->Us_correo; ?>" disabled>
                     </td>
                 </tr>
