@@ -30,7 +30,6 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
                     <button type="submit" class="enlaces" style="background:none; border:none; cursor:pointer;">
                         <span class="icons">🔔</span>
                         <input type="hidden" name="Us_usuario" value="<?php echo $datos['resindents'][0]->Pe_nombre; ?>">
-                    <input type="hidden" name="Us_id" value="<?php echo $datos['resindents'][0]->Us_id; ?>">
                     </button>
                 </div>
             </form>
@@ -111,7 +110,7 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
                 <button id="edit-btn" onclick="habilitarEdicion()">✏️ Editar</button>
                 <button id="save-btn" onclick="guardarDatos()" style="display:none;">✔️ Guardar</button>
                 <button id="cancel-btn" onclick="cancelEditing()" style="display:none;">❌ Cancelar</button>
-
+                <p id="status-msg" class="access-control"></p>
             <?php endif; ?>
         </div>
     </div>
@@ -133,7 +132,6 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
         document.getElementById("edit-btn").style.display = "none";
         document.getElementById("cancel-btn").style.display = "inline-block";
         document.getElementById("save-btn").style.display = "inline-block";
-        document.getElementById("status-msg").innerText = "Control de Acceso";
 
         const camposEditables = ["gmail", "telefono", "torre", "apartamento"];
         camposEditables.forEach(function(id) {
@@ -151,7 +149,6 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
         document.getElementById("edit-btn").style.display = "inline-block";
         document.getElementById("cancel-btn").style.display = "none";
         document.getElementById("save-btn").style.display = "none";
-        document.getElementById("status-msg").innerText = "Control de Acceso";
 
         const camposEditables = ["gmail", "telefono", "torre", "apartamento"];
         camposEditables.forEach(function(id) {
