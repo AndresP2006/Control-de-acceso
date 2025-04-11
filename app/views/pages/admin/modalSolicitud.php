@@ -118,29 +118,37 @@
         <br>
         <div class="buttons">
             <button id="acceptBtn" class="btn" onclick="guardarDatos()">Aceptar</button>
-            <button id="rejectBtn" class="btn btn-dr" onclick="rechazo()">Rechazar</button>
+            <button id="rejectBtn" class="btn btn-dr">Rechazar</button>
         </div>
         <br>
         <div id="rejectReason" style="display: none;">
             <label for="reason">Motivo del rechazo:</label>
             <textarea id="reason" class="form-control" name="reject_reason" rows="3"></textarea>
             <br>
-            <button id="submitRejection" class="btn btn-primary" onclick="rechazo_enviar()">Enviar</button>
+            <button id="submitRejection" class="btn btn-primary" onclick="rechazo()">Enviar</button>
             <button id="cancelRejection" class="btn btn-secondary">Cancelar</button>
         </div>
     </div>
 </div>
 <?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>
+
 <script>
+    // Mostrar el formulario de rechazo y desactivar los botones "Aceptar" y "Rechazar"
     document.getElementById('rejectBtn').addEventListener('click', function() {
-        document.getElementById('rejectReason').style.display = 'block';
+        document.getElementById('rejectReason').style.display = 'block'; // Mostrar el textarea de rechazo
+        document.getElementById('acceptBtn').disabled = true; // Desactivar "Aceptar"
+        document.getElementById('rejectBtn').disabled = true; // Desactivar "Rechazar"
     });
 
+    // Al hacer clic en "Cancelar", ocultar el formulario de rechazo y habilitar los botones "Aceptar" y "Rechazar"
     document.getElementById('cancelRejection').addEventListener('click', function() {
-        document.getElementById('rejectReason').style.display = 'none';
-        document.getElementById('reason').value = '';
+        document.getElementById('rejectReason').style.display = 'none'; // Ocultar textarea de rechazo
+        document.getElementById('reason').value = ''; // Limpiar el texto del textarea
+        document.getElementById('acceptBtn').disabled = false; // Habilitar "Aceptar"
+        document.getElementById('rejectBtn').disabled = false; // Habilitar "Rechazar"
     });
 
+    // Función para guardar datos
     function guardarDatos() {
         let formData = new FormData();
         formData.append("E_id", document.getElementById("cedula").value);
@@ -178,30 +186,11 @@
                         input.style.border = "none";
                     }
                 });
-            })
-
+            });
     }
 
+    // Función para manejar el rechazo
     function rechazo() {
-        document.getElementById('acceptBtn').addEventListener('click', function() {
-            document.getElementById('acceptBtn').style.display = 'none';
-        });
-
-        document.getElementById('rejectBtn').addEventListener('click', function() {
-            document.getElementById('rejectBtn').style.display = 'none';
-        });
-    }
-
-    function rechazo_enviar() {
-        document.getElementById('rejectBtn').addEventListener('click', function() {
-            document.getElementById('rejectReason').style.display = 'block';
-        });
-
-        document.getElementById('cancelRejection').addEventListener('click', function() {
-            document.getElementById('rejectReason').style.display = 'none';
-            document.getElementById('reason').value = '';
-        });
-
         let formData = new FormData();
         formData.append("E_id", document.getElementById("cedula").value);
         formData.append("M_rechazo", document.getElementById("reason").value);
@@ -234,6 +223,15 @@
                         input.style.border = "none";
                     }
                 });
-            })
+
+                // Ocultar todos los botones después de enviar el rechazo
+                document.getElementById('acceptBtn').style.display = 'none';
+                document.getElementById('rejectBtn').style.display = 'none';
+                document.getElementById('submitRejection').style.display = 'none';
+                document.getElementById('cancelRejection').style.display = 'none';
+
+                // Mostrar un mensaje de éxito si es necesario
+                realizado("Rechazo enviado con éxito.");
+            });
     }
 </script>
