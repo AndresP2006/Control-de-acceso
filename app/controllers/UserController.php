@@ -297,13 +297,20 @@ class UserController extends Controlador
             if (isset($_POST['borrar']) && isset($_POST['torre']) && isset($_POST['apartamento'])) {
                 $torre = $_POST['torre'];
                 $apartamento = $_POST['apartamento'];
-                $this->apartamentModel->DeleteApartamento($torre, $apartamento);
-                $mensaje = 'Apartamento eliminado correctamente.';
+                $hay = $this->apartamentModel->peopleApartamento($torre,$apartamento);
+                
+                if(!$hay){
+                     $this->apartamentModel->DeleteApartamento($torre, $apartamento);
+                     $mensaje = 'Apartamento eliminado correctamente.';
+                }else{
+                    $mensaje = 'No se puede eliminar: el apartamento tiene personas asociadas.';
+                }
+               
             } elseif (isset($_POST['guardar']) && isset($_POST['torre']) && isset($_POST['apartamento'])) {
                 $torre = $_POST['torre'];
                 $apartamento = $_POST['apartamento'];
 
-                $mensaje1 = $this->apartamentModel->IngresarApartamento($torre, $apartamento);
+                $this->apartamentModel->IngresarApartamento($torre, $apartamento);
             } else {
                 $mensaje2 = 'Datos incompletos.';
             }
