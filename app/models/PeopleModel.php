@@ -205,4 +205,17 @@ class PeopleModel
         // echo "</pre>";
         // exit(); // Detener la ejecución para ver el resultado
     }
+    public function getNotifi($usuario)
+    {
+
+        $this->db->query("SELECT * FROM solicitudes_actualizacion WHERE id_residente = :Cedula AND estado = :estado");
+        $this->db->bind(':Cedula', $usuario);
+        $this->db->bind(':estado', 'rechazada'); 
+        return  $this->db->registros();
+
+        // echo "<pre>";
+        // print_r($resultados);
+        // echo "</pre>";
+        // exit(); // Detener la ejecución para ver el resultado
+    }
 }

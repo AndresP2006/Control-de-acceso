@@ -11,7 +11,7 @@ class PaquetModel
 
     public function getPaquetById($id)
     {
-        $this->db->query("SELECT * FROM paquete WHERE pe_id = $id AND Pa_estado != 'Entregado';");
+        $this->db->query("SELECT * FROM paquete WHERE pe_id = $id AND Pa_estado != 'Entregado'");
         return $this->db->registros();
     }
 
@@ -24,7 +24,7 @@ class PaquetModel
 
     public function getPackegesBy($id)
     {
-        $this->db->query("SELECT * FROM paquete WHERE Pe_id = :Id");
+        $this->db->query("SELECT * FROM paquete WHERE Pe_id = :Id AND Pa_estado != 'Entregado'");
         $this->db->bind(':Id', $id);
         return $this->db->registros() ? true : false;
     }

@@ -70,12 +70,13 @@ class HomeController extends Controlador
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $usuario = $_POST['Us_usuario'];
-
+            $id = $_POST['Us_id'];
             // Obtener visitas desde el modelo PeopleModel
             $visitas = $this->peopleModel->getNotificacion($usuario);
 
             // Obtener paquetes desde el modelo PaquetModel
             $paquetes = $this->paquetModel->getPaquetesPorUsuario($usuario);
+            $rechazo = $this->peopleModel->getNotifi($id);
 
             // Combinar visitas y paquetes en un solo arreglo
             $notificaciones = array_merge(
@@ -84,7 +85,10 @@ class HomeController extends Controlador
                 }, $visitas),
                 array_map(function ($paquete) {
                     return ['tipo' => 'paquete', 'data' => $paquete];
-                }, $paquetes)
+                }, $paquetes),
+                array_map(function ($rechazo) {
+                    return ['tipo' => 'rechazo', 'data' => $rechazo];
+                }, $rechazo)
             );
 
             // Mezclar las notificaciones de forma aleatoria

@@ -54,6 +54,10 @@ class AdminModel
         try {
             // Iniciar una transacción
             $this->db->beginTransaction();
+            $sql = "DELETE FROM paquete WHERE Pe_id = :id";
+            $this->db->query($sql);
+            $this->db->bind(':id', $id);
+            $this->db->execute();
             // Luego eliminar el registro de la tabla 'usuario'
             $sql1 = "DELETE FROM registro WHERE Pe_id = :id";
             $this->db->query($sql1);

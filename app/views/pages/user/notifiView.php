@@ -28,6 +28,14 @@
                             <p><strong>Responsable:</strong> <?php echo $notificacion['data']->Pa_responsable; ?></p>
                         </div>
                     </div>
+                <?php elseif ($notificacion['tipo'] === 'rechazo'): ?>
+                    <div class="notificacion">
+                        <div class="texto">
+                            <p>La solicitud de cambio de información ha sido rechazada.</p>
+                            <p><strong>Motivo del rechazo:</strong> <?php echo $notificacion['data']->razon_rechazo; ?></p>
+                            <p><strong>Fecha de solicitud:</strong> <?php echo $notificacion['data']->fecha_solicitud; ?></p>
+                        </div>
+                    </div>
                 <?php endif; ?>
             <?php endforeach; ?>
         <?php else: ?>

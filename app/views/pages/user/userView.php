@@ -110,7 +110,7 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
                 <button id="edit-btn" onclick="habilitarEdicion()">✏️ Editar</button>
                 <button id="save-btn" onclick="guardarDatos()" style="display:none;">✔️ Guardar</button>
                 <button id="cancel-btn" onclick="cancelEditing()" style="display:none;">❌ Cancelar</button>
-
+                <p id="status-msg" class="access-control"></p>
             <?php endif; ?>
         </div>
     </div>
@@ -132,7 +132,6 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
         document.getElementById("edit-btn").style.display = "none";
         document.getElementById("cancel-btn").style.display = "inline-block";
         document.getElementById("save-btn").style.display = "inline-block";
-        document.getElementById("status-msg").innerText = "Control de Acceso";
 
         const camposEditables = ["gmail", "telefono", "torre", "apartamento"];
         camposEditables.forEach(function(id) {
@@ -150,7 +149,6 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
         document.getElementById("edit-btn").style.display = "inline-block";
         document.getElementById("cancel-btn").style.display = "none";
         document.getElementById("save-btn").style.display = "none";
-        document.getElementById("status-msg").innerText = "Control de Acceso";
 
         const camposEditables = ["gmail", "telefono", "torre", "apartamento"];
         camposEditables.forEach(function(id) {
