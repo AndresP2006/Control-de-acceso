@@ -7,6 +7,7 @@ class UserController extends Controlador
     private $apartamentModel;
     private $torreModel;
     private $visitorModel;
+    private $userModel;
 
     public function __construct()
     {
@@ -17,6 +18,7 @@ class UserController extends Controlador
         $this->apartamentModel = $this->modelo('ApartamentModel');
         $this->torreModel = $this->modelo('TorreModel');
         $this->visitorModel = $this->modelo('VisitorModel');
+        $this->userModel = $this->modelo('UserModel');
     }
 
 
@@ -297,15 +299,14 @@ class UserController extends Controlador
             if (isset($_POST['borrar']) && isset($_POST['torre']) && isset($_POST['apartamento'])) {
                 $torre = $_POST['torre'];
                 $apartamento = $_POST['apartamento'];
-                $hay = $this->apartamentModel->peopleApartamento($torre,$apartamento);
-                
-                if(!$hay){
-                     $this->apartamentModel->DeleteApartamento($torre, $apartamento);
-                     $mensaje = 'Apartamento eliminado correctamente.';
-                }else{
+                $hay = $this->apartamentModel->peopleApartamento($torre, $apartamento);
+
+                if (!$hay) {
+                    $this->apartamentModel->DeleteApartamento($torre, $apartamento);
+                    $mensaje = 'Apartamento eliminado correctamente.';
+                } else {
                     $mensaje = 'No se puede eliminar: el apartamento tiene personas asociadas.';
                 }
-               
             } elseif (isset($_POST['guardar']) && isset($_POST['torre']) && isset($_POST['apartamento'])) {
                 $torre = $_POST['torre'];
                 $apartamento = $_POST['apartamento'];
@@ -613,7 +614,7 @@ class UserController extends Controlador
             error_log("Datos recibidos en ActualizarResidente: " . print_r($_POST, true));
 
             // Validar que existan los campos requeridos
-            $requiredFields = ['E_id','M_rechazo'];
+            $requiredFields = ['E_id', 'M_rechazo'];
             foreach ($requiredFields as $field) {
                 if (!isset($_POST[$field]) || empty(trim($_POST[$field]))) {
                     echo json_encode(['success' => false, 'error' => "Falta el campo: " . $field]);
@@ -647,6 +648,18 @@ class UserController extends Controlador
 
         // Si no es POST, mensaje de error
         echo json_encode(['success' => false, 'error' => 'Método no permitido']);
+        exit;
+    }
+
+    public function verifyRol()
+    {
+        file_put_contents('log.txt', "Llamado a verifyRol\n", FILE_APPEND);
+
+        header('Content-Type: application/json');
+
+        $respuesta =  $this->userModel->getUserByRol($_POST['ValueRol']);
+
+        echo json_encode($respuesta);
         exit;
     }
 }
