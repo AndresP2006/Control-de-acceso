@@ -30,6 +30,7 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
                     <button type="submit" class="enlaces" style="background:none; border:none; cursor:pointer;">
                         <span class="icons">🔔</span>
                         <input type="hidden" name="Us_usuario" value="<?php echo $datos['resindents'][0]->Pe_nombre; ?>">
+                        <input type="hidden" name="Us_id" value="<?php echo $datos['resindents'][0]->Us_id; ?>">
                     </button>
                 </div>
             </form>
@@ -133,7 +134,7 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
         document.getElementById("cancel-btn").style.display = "inline-block";
         document.getElementById("save-btn").style.display = "inline-block";
 
-        const camposEditables = ["gmail", "telefono", "torre", "apartamento"];
+        const camposEditables = ["gmail", "telefono"]; // Torre y apartamento se excluyen de edición
         camposEditables.forEach(function(id) {
             let input = document.getElementById(id);
             if (input) {
@@ -141,6 +142,16 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
                 input.removeAttribute("disabled");
                 input.style.backgroundColor = "white";
                 input.style.border = "1px solid #ccc";
+            }
+        });
+
+        // Guardar también los valores originales de los campos no editables,
+        // para que cancelEditing() funcione correctamente
+        const soloLectura = ["torre", "apartamento"];
+        soloLectura.forEach(function(id) {
+            let input = document.getElementById(id);
+            if (input) {
+                valoresOriginales[id] = input.value;
             }
         });
     }

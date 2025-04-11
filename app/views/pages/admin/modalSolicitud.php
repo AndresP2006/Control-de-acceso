@@ -32,18 +32,18 @@
                 <tr>
                     <td><strong>Email</strong></td>
                     <td>
-                        <p style="font-size: 25px;">
+                        <p style="font-size: 25px; width:100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                             <?php
                             $correo_viejo = isset($datos['resindents']->Us_correo) ? $datos['resindents']->Us_correo : "";
                             $correo_nuevo = isset($datos['datos_resident'][0]->correo_nuevo) ? $datos['datos_resident'][0]->correo_nuevo : "";
 
                             // Caso 1: Solo existe correo viejo, mostrarlo en verde
                             if (!empty($correo_viejo) && empty($correo_nuevo)) {
-                                echo '<span style="color: green;" name="E_Gmail">' . $correo_viejo . '</span>';
+                                echo '<span style="color: gray;" name="E_Gmail">' . $correo_viejo . '</span>';
                             }
                             // Caso 2: Ambos existen y son iguales, mostrar uno solo en verde
                             elseif (!empty($correo_viejo) && !empty($correo_nuevo) && $correo_viejo === $correo_nuevo) {
-                                echo '<span style="color: green;" name="E_Gmail">' . $correo_viejo . '</span>';
+                                echo '<span style="color: gray;" name="E_Gmail">' . $correo_viejo . '</span>';
                             }
                             // Caso 3: Ambos existen y son diferentes, mostrar los dos con colores distintos
                             elseif (!empty($correo_viejo) && !empty($correo_nuevo)) {
@@ -60,7 +60,26 @@
                 <tr>
                     <td><strong>Teléfono</strong></td>
                     <td>
-                        <input class="gray-text1" type="text" id="telefono" name="E_Telefono" value="<?php echo $datos['resindents']->Pe_telefono; ?>" disabled>
+                        <p style="font-size: 25px; width:100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                            <?php
+                            $telefono_viejo = isset($datos['resindents']->Pe_telefono) ? $datos['resindents']->Pe_telefono : "";
+                            $telefono_nuevo = isset($datos['datos_resident'][0]->telefono_nuevo) ? $datos['datos_resident'][0]->telefono_nuevo : "";
+
+                            if (!empty($telefono_viejo) && empty($telefono_nuevo)) {
+                                // Solo teléfono viejo
+                                echo '<span style="color: green; display: inline;" name="E_Gmail">' . $telefono_viejo . '</span>';
+                            } elseif (!empty($telefono_viejo) && !empty($telefono_nuevo) && $telefono_viejo === $telefono_nuevo) {
+                                // Son iguales
+                                echo '<span style="color: gray; display: inline;" name="E_Gmail">' . $telefono_viejo . '</span>';
+                            } elseif (!empty($telefono_viejo) && !empty($telefono_nuevo)) {
+                                // Son distintos
+                                echo '<span style="color: red; display: inline;" name="E_Gmail">' . $telefono_viejo . '</span>';
+                                echo '<span style="color: green; display: inline;" name="E_Gmail"> | ' . $telefono_nuevo . '</span>';
+                            }
+                            ?>
+                        </p>
+
+                        <input type="hidden" id="telefono" name="E_telefono" value="<?php echo isset($datos['datos_resident'][0]->telefono_nuevo) && !empty($datos['datos_resident'][0]->telefono_nuevo) ? $datos['datos_resident'][0]->telefono_nuevo : ""; ?>">
                     </td>
                 </tr>
             </table>
@@ -98,15 +117,15 @@
         </div>
         <br>
         <div class="buttons">
-            <button id="acceptBtn" class="btn btn-success" onclick="guardarDatos()">Aceptar</button>
-            <button id="rejectBtn" class="btn btn-danger">Rechazar</button>
+            <button id="acceptBtn" class="btn" onclick="guardarDatos()">Aceptar</button>
+            <button id="rejectBtn" class="btn btn-dr" onclick="rechazo()">Rechazar</button>
         </div>
         <br>
         <div id="rejectReason" style="display: none;">
             <label for="reason">Motivo del rechazo:</label>
             <textarea id="reason" class="form-control" name="reject_reason" rows="3"></textarea>
             <br>
-            <button id="submitRejection" class="btn btn-primary" onclick="rechazo()">Enviar</button>
+            <button id="submitRejection" class="btn btn-primary" onclick="rechazo_enviar()">Enviar</button>
             <button id="cancelRejection" class="btn btn-secondary">Cancelar</button>
         </div>
     </div>
@@ -164,6 +183,25 @@
     }
 
     function rechazo() {
+        document.getElementById('acceptBtn').addEventListener('click', function() {
+            document.getElementById('acceptBtn').style.display = 'none';
+        });
+
+        document.getElementById('rejectBtn').addEventListener('click', function() {
+            document.getElementById('rejectBtn').style.display = 'none';
+        });
+    }
+
+    function rechazo_enviar() {
+        document.getElementById('rejectBtn').addEventListener('click', function() {
+            document.getElementById('rejectReason').style.display = 'block';
+        });
+
+        document.getElementById('cancelRejection').addEventListener('click', function() {
+            document.getElementById('rejectReason').style.display = 'none';
+            document.getElementById('reason').value = '';
+        });
+
         let formData = new FormData();
         formData.append("E_id", document.getElementById("cedula").value);
         formData.append("M_rechazo", document.getElementById("reason").value);
