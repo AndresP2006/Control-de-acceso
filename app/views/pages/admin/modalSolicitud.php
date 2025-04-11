@@ -7,7 +7,7 @@
             <hr>
             <div class="icons">
                 <form action="<?php echo RUTA_URL; ?>/HomeController/notificaciones" method="POST" style="display:inline;">
-                    <a href="<?php echo RUTA_URL; ?>/HomeController/notificaciones_admin" class="enlaces">
+                    <a href="<?php echo RUTA_URL; ?>/HomeController/notificaciones_admin" class="enlaces" style="text-decoration: none;">
                         <span class="icons">↩️</span>
                     </a>
                 </form>

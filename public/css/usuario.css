@@ -12,6 +12,8 @@ body {
 .icons {
   font-size: 30px;
   margin-right: -450px;
+  position: relative;
+  left: 70%;
 }
 .header {
   display: flex;
