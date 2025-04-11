@@ -6,17 +6,21 @@ var categoriaInput = document.getElementById("U_id");
 var passwordInput = document.getElementById("U_password");
 var passwordLabel = document.getElementById("passwordLabel");
 
-// Abrir el modal
-newVisitorBtn.onclick = function () {
-  visitorModal.style.display = "block";
-  passwordInput.style.display = "none";
-  passwordLabel.style.display = "none";
-};
+if (newVisitorBtn) {
+  newVisitorBtn.onclick = function () {
+    visitorModal.style.display = "block";
+    passwordInput.style.display = "none";
+    passwordLabel.style.display = "none";
+  };
+}
 
-// Cerrar el modal
-visitorCloseBtn.onclick = function () {
-  visitorModal.style.display = "none";
-};
+if (visitorCloseBtn) {
+  // Cerrar el modal
+  visitorCloseBtn.onclick = function () {
+    visitorModal.style.display = "none";
+  };
+}
+
 
 // Cerrar el modal si se hace clic fuera de él
 window.onclick = function (event) {
@@ -26,36 +30,38 @@ window.onclick = function (event) {
 };
 
 // Mostrar el campo de contraseña según el valor de categoría
-categoriaInput.addEventListener("input", function () {
-  if (
-    categoriaInput.value === "1" ||
-    categoriaInput.value === "2" ||
-    categoriaInput.value === "3"
-  ) {
-    passwordLabel.style.display = "block";
-    passwordInput.style.display = "block";
-  } else {
-    passwordLabel.style.display = "none";
-    passwordInput.style.display = "none";
-  }
-});
+if (categoriaInput && passwordInput && passwordLabel) {
+  categoriaInput.addEventListener("input", function () {
+    if (
+      categoriaInput.value === "1" ||
+      categoriaInput.value === "2" ||
+      categoriaInput.value === "3"
+    ) {
+      passwordLabel.style.display = "block";
+      passwordInput.style.display = "block";
+    } else {
+      passwordLabel.style.display = "none";
+      passwordInput.style.display = "none";
+    }
+  });
+}
 
 // Mantener o cambiar el filtro después de un registro
-document.getElementById("myForm").onsubmit = function () {
-  var selectedRole = categoriaInput.value;
+var form = document.getElementById("myForm");
+if (form && categoriaInput && document.getElementById("R_id")) {
+  form.onsubmit = function () {
+    var selectedRole = categoriaInput.value;
 
-  // Si es guardia (R_id = 2) y estás en la categoría de residente (R_id = 3), cambiar el filtro
-  if (selectedRole === "2" && document.getElementById("R_id").value == "3") {
-    // Actualizar el filtro a "Guardia" automáticamente
-    document.querySelector('input[name="filter"]').value = "2";
-  } else if (
-    selectedRole === "3" &&
-    document.getElementById("R_id").value != "3"
-  ) {
-    // Mantener el filtro si es Residente
-    document.querySelector('input[name="filter"]').value = "3";
-  }
-};
+    if (selectedRole === "2" && document.getElementById("R_id").value == "3") {
+      document.querySelector('input[name="filter"]').value = "2";
+    } else if (
+      selectedRole === "3" &&
+      document.getElementById("R_id").value != "3"
+    ) {
+      document.querySelector('input[name="filter"]').value = "3";
+    }
+  };
+}
 
 //------------Fin modal registro--------------
 
@@ -136,11 +142,13 @@ document.querySelectorAll(".edit-btn").forEach(function (button) {
     document.getElementById("myModal-Udate").style.display = "block";
   };
 });
+if (visitorCloseBtnEdit) {
+  // Cerrar el modal cuando el usuario haga clic en la "X" o fuera del modal de edición
+  visitorCloseBtnEdit.onclick = function () {
+    visitorModalEdit.style.display = "none";
+  };
+}
 
-// Cerrar el modal cuando el usuario haga clic en la "X" o fuera del modal de edición
-visitorCloseBtnEdit.onclick = function () {
-  visitorModalEdit.style.display = "none";
-};
 
 // Cerrar el modal si el usuario hace clic fuera del modal de edición
 window.onclick = function (event) {

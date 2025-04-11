@@ -58,6 +58,10 @@ class AdminModel
             $this->db->query($sql);
             $this->db->bind(':id', $id);
             $this->db->execute();
+            $sql0 = "DELETE FROM solicitudes_actualizacion WHERE id_residente = :id";
+            $this->db->query($sql0);
+            $this->db->bind(':id', $id);
+            $this->db->execute();
             // Luego eliminar el registro de la tabla 'usuario'
             $sql1 = "DELETE FROM registro WHERE Pe_id = :id";
             $this->db->query($sql1);

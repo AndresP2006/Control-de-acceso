@@ -114,6 +114,72 @@ hr {
   background: transparent;
   border: none;
 }
+#edit-btn, #save-btn, #cancel-btn,#acceptBtn,#rejectBtn {
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.25s ease-in-out;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Estilo individual por botón */
+#edit-btn {
+  background-color: #ffffff;
+  color: #333333;
+  border: 1px solid #cccccc;
+}
+
+#edit-btn:hover {
+  background-color: #f5f5f5;
+  transform: translateY(-1px);
+}
+
+#save-btn,#acceptBtn {
+  background-color: #28a745;
+  color: white;
+}
+
+#save-btn:hover,#acceptBtn:hover {
+  background-color: #218838;
+  transform: translateY(-1px);
+}
+
+#cancel-btn,#rejectBtn {
+  background-color: #dc3545;
+  color: white;
+}
+
+#cancel-btn:hover,#rejectBtn:hover {
+  background-color: #c82333;
+  transform: translateY(-1px);
+}
+#reason {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  resize: vertical;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fff;
+  color: #333;
+}
+
+#reason:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  outline: none;
+}
+
 
 .habitantes {
   display: flex;
