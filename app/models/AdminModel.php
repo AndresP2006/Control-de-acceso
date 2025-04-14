@@ -107,7 +107,8 @@ class AdminModel
             UPDATE usuario 
             SET 
                 Us_usuario = :Usuario, 
-                Us_correo = :Correo";
+                Us_correo = :Correo,
+                Ro_id = :Rol";
             if (!empty($datos['Contrasena'])) {
                 $sql .= ", Us_contrasena = :Contrasena";
             }
@@ -117,6 +118,7 @@ class AdminModel
             $this->db->bind(':Cedula', $datos['Cedula']);
             $this->db->bind(':Usuario', $datos['Nombre']);
             $this->db->bind(':Correo', $datos['Gmail']);
+            $this->db->bind(':Rol', $datos['Rol']);
             if (!empty($datos['Contrasena'])) {
                 $this->db->bind(':Contrasena', $datos['Contrasena']);
             }

@@ -653,11 +653,10 @@ class UserController extends Controlador
 
     public function verifyRol()
     {
-        file_put_contents('log.txt', "Llamado a verifyRol\n", FILE_APPEND);
 
         header('Content-Type: application/json');
 
-        $respuesta =  $this->userModel->getUserByRol($_POST['ValueRol']);
+        $respuesta =  $this->userModel->getUserByRol();
 
         echo json_encode($respuesta);
         exit;
