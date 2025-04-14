@@ -32,10 +32,10 @@ class UserModel
         return $this->db->registro();
     }
 
-    public function getUserByRol($ValueRol)
+    public function getUserByRol()
     {
-        $this->db->query("SELECT u.* FROM usuario u INNER JOIN rol r ON u.Ro_id = r.Ro_id WHERE r.Ro_id = :rol_id");
-        $this->db->bind(':rol_id', (int) $ValueRol);
+        $this->db->query("SELECT u.* FROM usuario u INNER JOIN rol r ON u.Ro_id = r.Ro_id WHERE r.Ro_id = 1");
+        // $this->db->bind(':rol_id', (int) $ValueRol);
         return $this->db->registros();
     }
 }
