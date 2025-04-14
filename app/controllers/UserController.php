@@ -7,6 +7,7 @@ class UserController extends Controlador
     private $apartamentModel;
     private $torreModel;
     private $visitorModel;
+    private $notificacionModel;
 
     public function __construct()
     {
@@ -17,6 +18,7 @@ class UserController extends Controlador
         $this->apartamentModel = $this->modelo('ApartamentModel');
         $this->torreModel = $this->modelo('TorreModel');
         $this->visitorModel = $this->modelo('VisitorModel');
+        $this->notificacionModel = $this->modelo('NotificacionModel');
     }
 
 
@@ -24,15 +26,20 @@ class UserController extends Controlador
     {
         // $paquets = $this->paquetModel->getPackegesByTable();
         $resindents = $this->peopleModel->getAllResident($_SESSION['datos']->Us_usuario);
-        $people = $this->peopleModel->getAllRedident($_SESSION['datos']->Us_usuario);
+        $people = $this->peopleModel->getAllRedident($_SESSION['datos']->Us_id);
         // $notificacion = $this->peopleModel->getNotificacion($_SESSION['datos']->Us_usuario);
-        $datos_resident = $this->peopleModel->getAllSolicitudes($_SESSION['datos']->Us_id);
+        $datos_resident = $this->peopleModel->getAllSolicitudesUser($_SESSION['datos']->Us_id);
+        $notificacion = $this->notificacionModel->getNotifiPaquete($_SESSION['datos']->Us_id);
+        $visitantes = $this->notificacionModel->getNotifiRegistro($_SESSION['datos']->Us_id);
+        $rechazo = $this->notificacionModel->getNotifiRechazo($_SESSION['datos']->Us_id);
 
 
         return [
             'messageError' => $messageError,
             'messageInfo' => $messageInfo,
-            // 'paquets' => $paquets,
+            'paquets' => $notificacion,
+            'visitante' => $visitantes,
+            'rechazo' => $rechazo,
             'resindents' => $resindents,
             'datos_resident' => $datos_resident,
             'people' => $people,
@@ -137,7 +144,6 @@ class UserController extends Controlador
                 'Ap_numero'   => trim($_POST['E_Departamento2']),
                 'Departamento' => trim($_POST['E_Departamento']),
                 'Rol'         => trim($_POST['R_id']),
-                'Contrasena'  => trim($_POST['E_contrasena']),
             ];
 
 
@@ -297,15 +303,14 @@ class UserController extends Controlador
             if (isset($_POST['borrar']) && isset($_POST['torre']) && isset($_POST['apartamento'])) {
                 $torre = $_POST['torre'];
                 $apartamento = $_POST['apartamento'];
-                $hay = $this->apartamentModel->peopleApartamento($torre,$apartamento);
-                
-                if(!$hay){
-                     $this->apartamentModel->DeleteApartamento($torre, $apartamento);
-                     $mensaje = 'Apartamento eliminado correctamente.';
-                }else{
+                $hay = $this->apartamentModel->peopleApartamento($torre, $apartamento);
+
+                if (!$hay) {
+                    $this->apartamentModel->DeleteApartamento($torre, $apartamento);
+                    $mensaje = 'Apartamento eliminado correctamente.';
+                } else {
                     $mensaje = 'No se puede eliminar: el apartamento tiene personas asociadas.';
                 }
-               
             } elseif (isset($_POST['guardar']) && isset($_POST['torre']) && isset($_POST['apartamento'])) {
                 $torre = $_POST['torre'];
                 $apartamento = $_POST['apartamento'];
@@ -499,7 +504,7 @@ class UserController extends Controlador
             error_log("Datos recibidos en ActualizarUsuario: " . print_r($_POST, true));
 
             // Validar que existan los campos requeridos
-            $requiredFields = ['E_id', 'E_nombre', 'E_Gmail', 'E_Telefono', 'To_id', 'Ap_numero'];
+            $requiredFields = ['E_id', 'E_nombre', 'E_Gmail', 'E_Telefono', 'E_TelefonoV', 'E_GmailV'];
             foreach ($requiredFields as $field) {
                 if (!isset($_POST[$field]) || empty(trim($_POST[$field]))) {
                     echo json_encode(['success' => false, 'error' => "Falta el campo: " . $field]);
@@ -516,8 +521,8 @@ class UserController extends Controlador
                 'nombre'      => trim($_POST['E_nombre']),
                 'correo_nuevo'      => trim($_POST['E_Gmail']),
                 'telefono_nuevo'    => trim($_POST['E_Telefono']),
-                'torre_nuevo'       => trim($_POST['To_id']),
-                'apartamento_nuevo' => trim($_POST['Ap_numero']),
+                'correo_viejo'       => trim($_POST['E_GmailV']),
+                'telefono_viejo' => trim($_POST['E_TelefonoV']),
             ];
 
             // Llamar al modelo para insertar la solicitud de actualización
@@ -613,7 +618,7 @@ class UserController extends Controlador
             error_log("Datos recibidos en ActualizarResidente: " . print_r($_POST, true));
 
             // Validar que existan los campos requeridos
-            $requiredFields = ['E_id','M_rechazo'];
+            $requiredFields = ['E_id', 'M_rechazo'];
             foreach ($requiredFields as $field) {
                 if (!isset($_POST[$field]) || empty(trim($_POST[$field]))) {
                     echo json_encode(['success' => false, 'error' => "Falta el campo: " . $field]);
@@ -649,4 +654,16 @@ class UserController extends Controlador
         echo json_encode(['success' => false, 'error' => 'Método no permitido']);
         exit;
     }
+    // En UserController.php
+
+    public function estadoSolicitud($idHabitante)
+{
+    $estado = $this->peopleModel->obtenerEstadoSolicitud($idHabitante); // Debes tener un método en el modelo
+    if ($estado) {
+        echo json_encode(['estado' => $estado]);
+    } else {
+        echo json_encode(['estado' => 'ninguna']);
+    }
+}
+
 }

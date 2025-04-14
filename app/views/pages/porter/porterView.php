@@ -1,198 +1,202 @@
 <?php require_once RUTA_APP . '/views/inc/header-porter.php'; ?>
 
-   
-    <div class="cuerpo">
-        <div class="contador_ingresos">
-            <h2>Han Ingresado</h2>
-            <div class="contador">
-                <?php
-                if (isset($datos['total'])) {
-                    echo $datos['total'];
-                }
-                ?>
-            </div>
+
+<div class="cuerpo">
+    <div class="contador_ingresos">
+        <h2>Han Ingresado</h2>
+        <div class="contador">
+            <?php
+            if (isset($datos['total'])) {
+                echo $datos['total'];
+            }
+            ?>
         </div>
-        <div class="opciones">
-            <!-- Buscar  -->
-            <div>
-                <form>
-                    <input id="texto" class="PeopleId" type="text" name="residente"
-                        placeholder="Buscar Persona con paquetes" />
-                    <center>
-                        <button class="Buscar" id="abrirMiModal" name="Busca" type="button">Buscar</button>
-                    </center>
-                </form>
-            </div>
-            <!-- Modal -->
-            <!-- Modal con formulario -->
-            <div class="miModal" id="miModal">
-                <form class="miModal__contenido">
-                    <button class="miModal__cerrar close" id="cerrarMiModal" type="button">&times;</button>
-                    <h2 class="miModal__titulo">Información del Residente</h2>
-
-
-                    <div class="miModal__grupo">
-                        <label class="miModal__label" for="nombres">Nombre:</label>
-                        <input class="miModal__input" type="text" id="nombres" readonly name="nombres">
-                    </div>
-
-                    <div class="miModal__grupo">
-                        <label class="miModal__label" for="apellidos">Apellido:</label>
-                        <input class="miModal__input" type="text" id="apellidos" readonly name="apellidos">
-                    </div>
-
-                    <div class="miModal__grupo">
-                        <label class="miModal__label" for="telefono">Teléfono:</label>
-                        <input class="miModal__input" type="text" id="telefono" readonly name="telefono">
-                    </div>
-
-                    <div class="miModal__grupo">
-                        <label class="miModal__label" for="torre">Torre:</label>
-                        <input class="miModal__input" type="text" id="torre" readonly name="torre">
-                    </div>
-                    <div class="miModal__grupo">
-                        <label class="miModal__label" for="apartamento">Número de Departamento:</label>
-                        <input class="miModal__input" type="text" id="apartamento" readonly name="apartamento">
-                    </div>
-
-                    <div class="miModal__grupo">
-                        <label class="miModal__label" for="Paquete">Total de paquetes:</label>
-                        <input class="miModal__input" type="text" id="Paquete" readonly name="Paquete">
-                    </div>
-
-                    <button class="boton-flotante" id="abrirTablaFlotante" type="button">Paquetes</button>
-
-                    <div class="tabla-flotante" id="tablaFlotante">
-                        <div class="tabla-flotante__contenido">
-                            <h2>Tabla de datos</h2>
-                            <table class="tabla-flotante__tabla">
-                                <thead>
-                                    <tr>
-                                        <th>Fecha</th>
-                                        <th>Descripcion</th>
-                                        <th>Estado</th>
-                                        <th>Entregar</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="paquetesTable">
-
-
-
-                                </tbody>
-                            </table>
-
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-
-            <form action="<?php echo RUTA_URL; ?>/PorterController/dropGuest" method="post">
-                <input id="texto" type="text" placeholder="Salida de visitante" name="salida_visita" />
+    </div>
+    <div class="opciones">
+        <!-- Buscar  -->
+        <div>
+            <form>
+                <input id="texto" class="PeopleId" type="text" name="residente"
+                    placeholder="Buscar Persona con paquetes" />
                 <center>
-                    <input type="submit" value="Salida" class="Buscar" id="Actualizar" name="salida">
+                    <button class="Buscar" id="abrirMiModal" name="Busca" type="button">Buscar</button>
                 </center>
             </form>
+        </div>
+        <!-- Modal -->
+        <!-- Modal con formulario -->
+        <div class="miModal" id="miModal">
+            <form class="miModal__contenido">
+                <button class="miModal__cerrar close" id="cerrarMiModal" type="button">&times;</button>
+                <h2 class="miModal__titulo">Información del Residente</h2>
 
-            <!-- fin -->
+
+                <div class="miModal__grupo">
+                    <label class="miModal__label" for="nombres">Nombre:</label>
+                    <input class="miModal__input" type="text" id="nombres" readonly name="nombres">
+                </div>
+
+                <div class="miModal__grupo">
+                    <label class="miModal__label" for="apellidos">Apellido:</label>
+                    <input class="miModal__input" type="text" id="apellidos" readonly name="apellidos">
+                </div>
+
+                <div class="miModal__grupo">
+                    <label class="miModal__label" for="telefono">Teléfono:</label>
+                    <input class="miModal__input" type="text" id="telefono" readonly name="telefono">
+                </div>
+
+                <div class="miModal__grupo">
+                    <label class="miModal__label" for="torre">Torre:</label>
+                    <input class="miModal__input" type="text" id="torre" readonly name="torre">
+                </div>
+                <div class="miModal__grupo">
+                    <label class="miModal__label" for="apartamento">Número de Departamento:</label>
+                    <input class="miModal__input" type="text" id="apartamento" readonly name="apartamento">
+                </div>
+
+                <div class="miModal__grupo">
+                    <label class="miModal__label" for="Paquete">Total de paquetes:</label>
+                    <input class="miModal__input" type="text" id="Paquete" readonly name="Paquete">
+                </div>
+
+                <button class="boton-flotante" id="abrirTablaFlotante" type="button">Paquetes</button>
+
+                <div class="tabla-flotante" id="tablaFlotante">
+                    <div class="tabla-flotante__contenido">
+                        <h2>Tabla de datos</h2>
+                        <table class="tabla-flotante__tabla">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Descripcion</th>
+                                    <th>Estado</th>
+                                    <th>Entregar</th>
+                                </tr>
+                            </thead>
+                            <tbody id="paquetesTable">
 
 
-            <div class="registros">
-                <button class="nuevo_registro" id="nuevo_registro">
-                    Nuevo Visitante
-                </button>
 
-                <!-- Formulario modal de visitantes -->
-                <div id="VisitasModal" class="modal_v">
-                    <div class="modal-content">
-                        <div class="cerrado">
-                            <h3 class="titulo-form">Nuevo registro</h3>
-                            <button class="miModal__cerrar_v close" id="close" type="button">&times;</button>
+                            </tbody>
+                        </table>
 
-                            <!-- <span class="close" id="close">&times;</span> -->
-                        </div>
-                        <form id="myForm" action="<?php echo RUTA_URL; ?>/PorterController/createGuest" method="post">
-                            <h4>Documento: <input type="text" id="u_id" name="u_id" /></h4>
-                            <h4>Nombre: <input type="text" id="U_Nombre" name="U_Nombre" /></h4>
-                            <h4>Apellido: <input type="text" id="U_Apellido" name="U_Apellido" /></h4>
-                            <h4>Telefono: <input type="text" id="U_Telefono" name="U_Telefono" /></h4>
-                            <h4>Motivo de visita: <input type="text" id="U_Motivo" name="U_Motivo" /></h4>
-                            <div class="titulo_torre">
-                                <h4>Torre</h4>
-                                <h4 class="ap">Apartamento</h4>
-                            </div>
-                            <div class="select_torre">
-                                <select id="select_torre" class="filter-select">
-                                    <option value="">Torre</option>
-                                    <?php foreach ($datos['torre'] as $torre) {
-                                        echo "<option value='{$torre->To_id}'>{$torre->To_letra}</option>";
-                                    } ?>
-                                </select>
-                                <select name="select_id" id="select_apartamento" class="filter-select">
-                                    <option value="0">Apartamento</option>
-                                </select>
-                            </div>
-                            <select name="select_personas" id="select_personas" class="filter-select_personas">
-                                <option value="0">Residentes</option>
-                            </select>
-                            <center>
-                                <input type="submit" value="Enviar" class="Enviar" name="Visitantes" />
-                            </center>
-                        </form>
                     </div>
                 </div>
-            </div>
-            <!-- Fin del formulario -->
-            <br />
-            <br />
-            <br />
-            <!-- formulario del Paquete -->
-            <button class="paquetes" id="openModalBtn">Nuevo Paquete</button>
+            </form>
+        </div>
 
-            <!-- Formulario modal de paquetes -->
-            <div id="packageModal" class="modal">
-                <div class="modal-content2">
+
+        <form action="<?php echo RUTA_URL; ?>/PorterController/dropGuest" method="post">
+            <input id="texto" type="text" placeholder="Salida de visitante" name="salida_visita" />
+            <center>
+                <input type="submit" value="Salida" class="Buscar" id="Actualizar" name="salida">
+            </center>
+        </form>
+
+        <!-- fin -->
+
+
+        <div class="registros">
+            <button class="nuevo_registro" id="nuevo_registro">
+                Nuevo Visitante
+            </button>
+
+            <!-- Formulario modal de visitantes -->
+            <div id="VisitasModal" class="modal_v">
+                <div class="modal-content">
                     <div class="cerrado">
-                        <h3 class="titulo-form">Registro de paquetes</h3>
-                        <span class="close2" id="closeModal">&times;</span>
-                    </div>
-                    <form id="packageForm" action="<?php echo RUTA_URL; ?>/PorterController/enterPackage" method="post">
-                        <h4>Descripcion: <textarea id="Pa_Descripcion" name="descripcion"></textarea></h4>
-                        <?php
-                        date_default_timezone_set('UTC');
-                        $hoy = date("Y-m-d");
-                        ?>
-                        <h4>Fecha de entrega: <input type="date" id="Pa_Fecha" name="fecha" max="<?php echo $hoy; ?>" />
-                        </h4>
-                        <h4>Recibidor: <input type="text" id="Pa_Firma" name="recibidor" /></h4>
+                        <h3 class="titulo-form">Nuevo registro</h3>
+                        <button class="miModal__cerrar_v close" id="close" type="button">&times;</button>
 
+                        <!-- <span class="close" id="close">&times;</span> -->
+                    </div>
+                    <form id="myForm" action="<?php echo RUTA_URL; ?>/PorterController/createGuest" method="post">
+                        <h4>Documento: <input type="text" id="u_id" name="u_id" /></h4>
+                        <h4>Nombre: <input type="text" id="U_Nombre" name="U_Nombre" /></h4>
+                        <h4>Apellido: <input type="text" id="U_Apellido" name="U_Apellido" /></h4>
+                        <h4>Telefono: <input type="text" id="U_Telefono" name="U_Telefono" /></h4>
+                        <h4>Motivo de visita: <input type="text" id="U_Motivo" name="U_Motivo" /></h4>
                         <div class="titulo_torre">
                             <h4>Torre</h4>
                             <h4 class="ap">Apartamento</h4>
                         </div>
                         <div class="select_torre">
-                            <select id="select_torre_p" class="filter-select">
+                            <select id="select_torre" class="filter-select">
                                 <option value="">Torre</option>
                                 <?php foreach ($datos['torre'] as $torre) {
                                     echo "<option value='{$torre->To_id}'>{$torre->To_letra}</option>";
                                 } ?>
                             </select>
-                            <select name="select_id" id="select_apartamento_p" class="filter-select">
+                            <select name="select_id" id="select_apartamento" class="filter-select">
                                 <option value="0">Apartamento</option>
                             </select>
                         </div>
-                        <select name="select_personas" id="select_personas_p" class="filter-select_personas">
+                        <select name="select_personas" id="select_personas" class="filter-select_personas">
                             <option value="0">Residentes</option>
                         </select>
                         <center>
-                            <input type="submit" value="Enviar" name="paquetes" class="Enviar" />
+                            <input type="submit" value="Enviar" class="Enviar" name="Visitantes" />
                         </center>
                     </form>
                 </div>
             </div>
-            <!-- Fin del formulario del Paquete -->
         </div>
+        <!-- Fin del formulario -->
+        <br />
+        <br />
+        <br />
+        <!-- formulario del Paquete -->
+        <button class="paquetes" id="openModalBtn">Nuevo Paquete</button>
+
+        <!-- Formulario modal de paquetes -->
+        <div id="packageModal" class="modal">
+            <div class="modal-content2">
+                <div class="cerrado">
+                    <h3 class="titulo-form">Registro de paquetes</h3>
+                    <span class="close2" id="closeModal">&times;</span>
+                </div>
+                <form id="packageForm" action="<?php echo RUTA_URL; ?>/PorterController/enterPackage" method="post">
+                    <h4>Descripcion: <textarea id="Pa_Descripcion" name="descripcion"></textarea></h4>
+                    <?php
+                    date_default_timezone_set('America/Bogota');
+                    $ahora = date('Y-m-d\TH:i'); // formato correcto sin segundos
+                    ?>
+                    <h4>Fecha de entrega:
+                        <input type="datetime-local" id="Pa_Fecha" name="fecha" max="<?= $ahora ?>" value="<?= $ahora ?>" />
+                    </h4>
+
+
+
+                    <h4>Recibidor: <input type="text" id="Pa_Firma" name="recibidor" /></h4>
+
+                    <div class="titulo_torre">
+                        <h4>Torre</h4>
+                        <h4 class="ap">Apartamento</h4>
+                    </div>
+                    <div class="select_torre">
+                        <select id="select_torre_p" class="filter-select">
+                            <option value="">Torre</option>
+                            <?php foreach ($datos['torre'] as $torre) {
+                                echo "<option value='{$torre->To_id}'>{$torre->To_letra}</option>";
+                            } ?>
+                        </select>
+                        <select name="select_id" id="select_apartamento_p" class="filter-select">
+                            <option value="0">Apartamento</option>
+                        </select>
+                    </div>
+                    <select name="select_personas" id="select_personas_p" class="filter-select_personas">
+                        <option value="0">Residentes</option>
+                    </select>
+                    <center>
+                        <input type="submit" value="Enviar" name="paquetes" class="Enviar" />
+                    </center>
+                </form>
+            </div>
+        </div>
+        <!-- Fin del formulario del Paquete -->
     </div>
+</div>
 </div>
 <!-- Formulario para mostrar los datos -->
 </div>
@@ -207,10 +211,10 @@
     <?php } ?>
 
 
-    $(document).ready(function () {
+    $(document).ready(function() {
 
 
-        $('#abrirMiModal').click(function () {
+        $('#abrirMiModal').click(function() {
             let PeopleID = $('#texto').val();
             if (PeopleID) {
                 let tabla = $('#paquetesTable').val();
@@ -220,7 +224,7 @@
                     data: {
                         residente: PeopleID
                     },
-                    success: function (respuesta) {
+                    success: function(respuesta) {
                         let resp = JSON.parse(respuesta);
 
                         $('#miModal').addClass('miModal--activo');
@@ -241,7 +245,7 @@
                             $('#miModal').addClass('miModal--activo');
                         }
 
-                        $('#abrirTablaFlotante').click(function () {
+                        $('#abrirTablaFlotante').click(function() {
                             $.ajax({
                                 url: '<?php echo RUTA_URL; ?>/PorterController/getPaquetById',
                                 type: 'POST',
@@ -249,7 +253,7 @@
                                     residente: PeopleID
                                 },
 
-                                success: function (paquetes) {
+                                success: function(paquetes) {
 
                                     let paq = JSON.parse(paquetes);
 
@@ -283,13 +287,13 @@
                             })
                         })
                     },
-                    error: function () {
+                    error: function() {
                         $('#respuesta').html('Error al procesar la solicitud.');
                     }
                 });
             }
         });
-        $(document).on('click', '.btnEditarPaquete', function () {
+        $(document).on('click', '.btnEditarPaquete', function() {
             let paqueteId = $(this).data('id');
             $.ajax({
                 url: '<?php echo RUTA_URL; ?>/PorterController/updatePaquete',
@@ -298,7 +302,7 @@
                     paquete_id: paqueteId,
                     nuevo_estado: 'Entregado'
                 },
-                success: function (response) {
+                success: function(response) {
                     let resp = JSON.parse(response);
                     if (resp.success) {
                         realizado('Paquete entregado.')
@@ -307,7 +311,7 @@
                         error('Error al entregar el paquete.');
                     }
                 },
-                error: function () {
+                error: function() {
                     advertencia('Hubo un problema con la solicitud.');
                 }
             });
@@ -315,7 +319,7 @@
 
 
         // selector de torre visitas
-        $('#select_torre').change(function () {
+        $('#select_torre').change(function() {
             let ValueTower = $('#select_torre').val();
             if (ValueTower) {
 
@@ -325,7 +329,7 @@
                     data: {
                         TowerId: ValueTower
                     },
-                    success: function (respuesta) {
+                    success: function(respuesta) {
 
                         const res = JSON.parse(respuesta)
 
@@ -333,13 +337,13 @@
 
                         for (let item of res)
                             optionSelect += '<option value="' + item.Ap_id + '">' + item
-                                .Ap_numero + '</option>'
+                            .Ap_numero + '</option>'
 
                         $('#select_apartamento').html(optionSelect)
                     }
                 })
 
-                $('#select_apartamento').change(function () {
+                $('#select_apartamento').change(function() {
                     let valueApartament = $('#select_apartamento').val();
                     if (valueApartament) {
 
@@ -349,7 +353,7 @@
                             data: {
                                 apartamento_id: valueApartament
                             },
-                            success: function (personas) {
+                            success: function(personas) {
 
                                 const pers = JSON.parse(personas)
 
@@ -358,8 +362,8 @@
 
                                 for (let item of pers)
                                     optionSelect_pe += '<option value="' + item.Pe_id +
-                                        '">' + item.Pe_nombre + ' ' + item.Pe_apellidos +
-                                        '</option>'
+                                    '">' + item.Pe_nombre + ' ' + item.Pe_apellidos +
+                                    '</option>'
 
                                 $('#select_personas').html(optionSelect_pe)
                             }
@@ -386,7 +390,7 @@
 
         // selector de torre paquetes
 
-        $('#select_torre_p').change(function () {
+        $('#select_torre_p').change(function() {
             let ValueTower = $('#select_torre_p').val();
             if (ValueTower) {
 
@@ -396,7 +400,7 @@
                     data: {
                         TowerId: ValueTower
                     },
-                    success: function (respuesta) {
+                    success: function(respuesta) {
 
                         const res_p = JSON.parse(respuesta)
 
@@ -409,7 +413,7 @@
                     }
                 })
 
-                $('#select_apartamento_p').change(function () {
+                $('#select_apartamento_p').change(function() {
                     let valueApartament = $('#select_apartamento_p').val();
                     if (valueApartament) {
 
@@ -419,7 +423,7 @@
                             data: {
                                 apartamento_id: valueApartament
                             },
-                            success: function (personas) {
+                            success: function(personas) {
 
                                 const pers_p = JSON.parse(personas)
 

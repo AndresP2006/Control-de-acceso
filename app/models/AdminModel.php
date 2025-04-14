@@ -108,18 +108,12 @@ class AdminModel
             SET 
                 Us_usuario = :Usuario, 
                 Us_correo = :Correo";
-            if (!empty($datos['Contrasena'])) {
-                $sql .= ", Us_contrasena = :Contrasena";
-            }
             $sql .= " WHERE Us_id = :Cedula";
 
             $this->db->query($sql);
             $this->db->bind(':Cedula', $datos['Cedula']);
             $this->db->bind(':Usuario', $datos['Nombre']);
             $this->db->bind(':Correo', $datos['Gmail']);
-            if (!empty($datos['Contrasena'])) {
-                $this->db->bind(':Contrasena', $datos['Contrasena']);
-            }
             $this->db->execute();
 
             // 3. Actualizar los datos en la tabla 'persona' incluyendo el Ap_id
@@ -157,7 +151,7 @@ class AdminModel
     {
         try {
             // Verificar que existan todas las claves requeridas
-            $requiredKeys = ['id_residente', 'nombre', 'correo_nuevo', 'telefono_nuevo', 'torre_nuevo', 'apartamento_nuevo'];
+            $requiredKeys = ['id_residente','nombre', 'correo_nuevo', 'telefono_nuevo', 'correo_viejo', 'telefono_viejo'];
             foreach ($requiredKeys as $key) {
                 if (!isset($datos[$key]) || empty(trim($datos[$key]))) {
                     throw new Exception("Falta el campo: " . $key);
@@ -169,8 +163,8 @@ class AdminModel
             $nombre      = trim($datos['nombre']);
             $correo_nuevo      = trim($datos['correo_nuevo']);
             $telefono_nuevo    = trim($datos['telefono_nuevo']);
-            $torre_nuevo       = trim($datos['torre_nuevo']);
-            $apartamento_nuevo = trim($datos['apartamento_nuevo']);
+            $correo_viejo       = trim($datos['correo_viejo']);
+            $telefono_viejo = trim($datos['telefono_viejo']);
 
             // Iniciar transacción
             $this->db->beginTransaction();
@@ -178,17 +172,17 @@ class AdminModel
             // Inserción en la tabla solicitudes_actualizacion
             $query = "
             INSERT INTO solicitudes_actualizacion 
-                (id_residente,nombre,correo_nuevo, telefono_nuevo, torre_nuevo, apartamento_nuevo)
+                (id_residente,nombre,correo_nuevo, telefono_nuevo, correo_viejo, telefono_viejo)
             VALUES 
-                (:id_residente,:nombre, :correo_nuevo, :telefono_nuevo, :torre_nuevo, :apartamento_nuevo)
+                (:id_residente,:nombre, :correo_nuevo, :telefono_nuevo, :correo_viejo, :telefono_viejo)
         ";
             $this->db->query($query);
             $this->db->bind(':id_residente', $id_residente);
             $this->db->bind(':nombre', $nombre);
             $this->db->bind(':correo_nuevo', $correo_nuevo);
             $this->db->bind(':telefono_nuevo', $telefono_nuevo);
-            $this->db->bind(':torre_nuevo', $torre_nuevo);
-            $this->db->bind(':apartamento_nuevo', $apartamento_nuevo);
+            $this->db->bind(':correo_viejo', $correo_viejo);
+            $this->db->bind(':telefono_viejo', $telefono_viejo);
             $this->db->execute();
 
             // Confirmar transacción
@@ -196,7 +190,6 @@ class AdminModel
             return true;
         } catch (Exception $e) {
             if ($this->db->inTransaction()) {
-                $this->db->rollBack();
             }
             error_log("Error en insertUserUpdateRequest: " . $e->getMessage());
             return false;

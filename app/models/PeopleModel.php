@@ -152,11 +152,17 @@ class PeopleModel
     public function getAllRedident($result)
     {
 
-        $this->db->query("SELECT p2.Pe_nombre, p2.Pe_apellidos 
-                           FROM persona p1 
-                           JOIN apartamento a ON p1.Ap_id = a.Ap_id 
-                           JOIN persona p2 ON a.Ap_id = p2.Ap_id 
-                           WHERE p1.Pe_nombre = '$result' AND p2.Pe_id <> p1.Pe_id",);
+        $this->db->query("SELECT 
+    p2.Pe_id AS id_habitante,
+    p2.Pe_nombre, 
+    p2.Pe_apellidos,
+    u.Us_correo,
+    p2.Pe_telefono
+FROM persona p1
+JOIN apartamento a ON p1.Ap_id = a.Ap_id
+JOIN persona p2 ON a.Ap_id = p2.Ap_id
+JOIN usuario u ON p2.Us_id = u.Us_id
+WHERE p1.Pe_id = '$result' AND p2.Pe_id <> '$result'",);
 
         return $this->db->registros();
     }
@@ -184,11 +190,23 @@ class PeopleModel
     public function getAllSolicitudes($id_usuario)
     {
         // Corregir la consulta SQL (eliminar uno de los WHERE)
-        $this->db->query("SELECT * FROM solicitudes_actualizacion WHERE id_residente = :id_usuario AND estado = :estado");
+        $this->db->query("SELECT * FROM solicitudes_actualizacion WHERE id = :id_usuario");
 
         // Vincular los parámetros a la consulta
         $this->db->bind(':id_usuario', $id_usuario);
-        $this->db->bind(':estado', 'pendiente');  // Asegúrate de que el estado sea 'pendiente', no 'prendiente'
+        // Asegúrate de que el estado sea 'pendiente', no 'prendiente'
+
+        // Ejecutar la consulta y devolver los registros
+        return $this->db->registros();
+    }
+    public function getAllSolicitudesUser($id_usuario)
+    {
+        // Corregir la consulta SQL (eliminar uno de los WHERE)
+        $this->db->query("SELECT * FROM solicitudes_actualizacion WHERE id_residente = :id_usuario");
+
+        // Vincular los parámetros a la consulta
+        $this->db->bind(':id_usuario', $id_usuario);
+        // Asegúrate de que el estado sea 'pendiente', no 'prendiente'
 
         // Ejecutar la consulta y devolver los registros
         return $this->db->registros();
@@ -197,7 +215,7 @@ class PeopleModel
     public function getAllSolicitudesNotifi()
     {
 
-        $this->db->query("SELECT * FROM solicitudes_actualizacion where estado = 'pendiente'");
+        $this->db->query("SELECT * FROM solicitudes_actualizacion ORDER BY fecha_solicitud DESC;");
         return  $this->db->registros();
 
         // echo "<pre>";
@@ -210,7 +228,7 @@ class PeopleModel
 
         $this->db->query("SELECT * FROM solicitudes_actualizacion WHERE id_residente = :Cedula AND estado = :estado");
         $this->db->bind(':Cedula', $usuario);
-        $this->db->bind(':estado', 'rechazada'); 
+        $this->db->bind(':estado', 'rechazada');
         return  $this->db->registros();
 
         // echo "<pre>";
@@ -218,4 +236,14 @@ class PeopleModel
         // echo "</pre>";
         // exit(); // Detener la ejecución para ver el resultado
     }
+
+    public function obtenerEstadoSolicitud($idHabitante)
+{
+    $this->db->query("SELECT estado FROM solicitudes_actualizacion WHERE id_residente = :id ORDER BY id DESC LIMIT 1");
+    $this->db->bind(':id', $idHabitante);
+    $resultado = $this->db->registro();
+    return $resultado ? $resultado->estado : null;
+}
+
+    
 }

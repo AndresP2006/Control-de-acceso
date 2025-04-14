@@ -80,7 +80,6 @@ document.querySelectorAll(".edit-btn").forEach(function (button) {
     var departamentoId = this.getAttribute("data-departamento-id");
     var torre = this.getAttribute("data-torre");
     var rol = this.getAttribute("data-rol"); // Obtener el valor del rol (por ejemplo, "1" para Administrador)
-    var pass = this.getAttribute("data-contrasena");
 
 
     // Asignamos esos valores a los campos del formulario de edición
@@ -128,15 +127,6 @@ document.querySelectorAll(".edit-btn").forEach(function (button) {
     var passwordLabel = document.getElementById("E_passwordl");
     var passwordInput = document.getElementById("E_password");
 
-    if (pass) {
-      passwordLabel.style.display = "block";
-      passwordInput.style.display = "block";
-      passwordInput.value = pass;
-    } else {
-      passwordLabel.style.display = "none";
-      passwordInput.style.display = "none";
-      passwordInput.value = "";
-    }
 
     // Mostrar el modal de edición
     document.getElementById("myModal-Udate").style.display = "block";

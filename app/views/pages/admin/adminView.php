@@ -76,9 +76,6 @@
                                 data-torre='" . htmlspecialchars($registro['To_id'] ?? '') . "'
                                 data-departamento='" . htmlspecialchars($registro['Ap_numero'] ?? '') . "'
                                 data-departamento-id='" . htmlspecialchars($registro['Ap_id'] ?? '') . "'
-                                data-rol='" . htmlspecialchars($registro['Ro_tipo'] ?? '') .
-                                "'
-                                data-contrasena='" . htmlspecialchars($registro['Us_contrasena'] ?? '') . "'
                                 >✏️</button>
                                 <form action='" . RUTA_URL . "/UserController/DeleteUser' method='POST' style='display:inline;'>
                                     <input type='hidden' name='delete_id' value='" . htmlspecialchars($registro['Cedula'] ?? '') . "'>
