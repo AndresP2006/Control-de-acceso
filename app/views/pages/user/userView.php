@@ -26,9 +26,9 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
             <form action="<?php echo RUTA_URL; ?>/HomeController/notificaciones" method="POST" style="display:inline;">
                 <div class="logos">
                     <button type="submit" class="enlaces" style="background:none; border:none; cursor:pointer; position: relative;">
-                        <span class="icons2" style="font-size: 30px;">🔔</span>
+                        <span class="icons2" style="font-size: 30px; position:relative;left:200px;">🔔</span>
                         <?php if (!empty($datos['paquets']) || !empty($datos['visitante']) || !empty($datos['rechazo'])): ?>
-                            <span style="position: absolute; top: 0; right: 0; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px;">
+                            <span style="position: relative; top: 0; right: 0; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px; left: 175px;">
                                 <?= count($datos['paquets'] + $datos['visitante'] + $datos['rechazo']) ?>
                             </span>
                         <?php endif; ?>
@@ -58,7 +58,7 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
                     <td><strong>Email</strong></td>
                     <td>
                         <input class="gray-text1" type="text" id="gmail" name="E_Gmail"
-                            value="<?php echo $datos['resindents'][0]->Us_correo; ?>" disabled>
+                            value="<?php echo $datos['resindents'][0]->Us_correo; ?>" disabled style="width:500px;">
                         <input class="gray-text1" type="hidden" id="gmailV" name="E_GmailV"
                             value="<?php echo $datos['resindents'][0]->Us_correo; ?>" disabled>
                     </td>

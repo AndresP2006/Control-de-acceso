@@ -52,6 +52,7 @@ body {
   flex-direction: row;
   margin-right: -792px;
   align-items: center;
+  width: 500px;
 }
 
 .boton:hover {
