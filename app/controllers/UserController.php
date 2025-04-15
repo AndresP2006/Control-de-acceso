@@ -8,6 +8,7 @@ class UserController extends Controlador
     private $torreModel;
     private $visitorModel;
     private $notificacionModel;
+    private $userModel;
 
     public function __construct()
     {
@@ -19,6 +20,7 @@ class UserController extends Controlador
         $this->torreModel = $this->modelo('TorreModel');
         $this->visitorModel = $this->modelo('VisitorModel');
         $this->notificacionModel = $this->modelo('NotificacionModel');
+        $this->userModel = $this->modelo('UserModel');
     }
 
 
@@ -303,6 +305,12 @@ class UserController extends Controlador
             if (isset($_POST['borrar']) && isset($_POST['torre']) && isset($_POST['apartamento'])) {
                 $torre = $_POST['torre'];
                 $apartamento = $_POST['apartamento'];
+                $hay = $this->apartamentModel->peopleApartamento($torre, $apartamento);
+
+                if (!$hay) {
+                    $this->apartamentModel->DeleteApartamento($torre, $apartamento);
+                    $mensaje = 'Apartamento eliminado correctamente.';
+                } else {
                 $hay = $this->apartamentModel->peopleApartamento($torre, $apartamento);
 
                 if (!$hay) {
@@ -618,7 +626,7 @@ class UserController extends Controlador
             error_log("Datos recibidos en ActualizarResidente: " . print_r($_POST, true));
 
             // Validar que existan los campos requeridos
-            $requiredFields = ['E_id', 'M_rechazo'];
+            $requiredFields = ['E_id',  'M_rechazo'];
             foreach ($requiredFields as $field) {
                 if (!isset($_POST[$field]) || empty(trim($_POST[$field]))) {
                     echo json_encode(['success' => false, 'error' => "Falta el campo: " . $field]);
@@ -652,6 +660,17 @@ class UserController extends Controlador
 
         // Si no es POST, mensaje de error
         echo json_encode(['success' => false, 'error' => 'Método no permitido']);
+        exit;
+    }
+
+    public function verifyRol()
+    {
+
+        header('Content-Type: application/json');
+
+        $respuesta =  $this->userModel->getUserByRol();
+
+        echo json_encode($respuesta);
         exit;
     }
     // En UserController.php

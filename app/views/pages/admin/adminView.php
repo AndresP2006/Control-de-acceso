@@ -79,7 +79,7 @@
                                 >✏️</button>
                                 <form action='" . RUTA_URL . "/UserController/DeleteUser' method='POST' style='display:inline;'>
                                     <input type='hidden' name='delete_id' value='" . htmlspecialchars($registro['Cedula'] ?? '') . "'>
-                                    <button type='button' class='delete-btn' data-id='" . $registro['Cedula'] . "'>🗑️</button>
+                                    <button type='button' id='delete-btn-admin' class='delete-btn' data-id='" . $registro['Cedula'] . "'>🗑️</button>
                                 </form>
                             </td>";
                             echo "</tr>";
@@ -109,7 +109,7 @@
 
 <?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>
 <script>
-   const RUTA_URL = "<?= RUTA_URL ?>";
+    const RUTA_URL = "<?= RUTA_URL ?>";
 </script>
 <script>
     <?php if (isset($datos['messageError'])) { ?>
@@ -170,6 +170,30 @@
                 }
             })
         })
+
+
+        $(document).on('click', '#delete-btn-admin', function () {
+
+            $.ajax({
+                url: '<?php echo RUTA_URL ?>/UserController/verifyRol', // Asegúrate de que la ruta es correcta
+                type: 'POST',
+                data: {},
+                dataType: 'json',
+                success: function(respuesta) {
+                    console.log('Respuesta cruda:', respuesta) // Ver la respuesta antes de procesarla
+
+                    if (respuesta.length === 1 && respuesta[0].Ro_id == 1) {
+                        error('Por favor, primero agregue a otro administrador')
+
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('Error en la petición AJAX:', textStatus, errorThrown)
+                }
+            })
+
+        })
+
     });
 </script>
 <?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>

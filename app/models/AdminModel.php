@@ -107,13 +107,15 @@ class AdminModel
             UPDATE usuario 
             SET 
                 Us_usuario = :Usuario, 
-                Us_correo = :Correo";
+                Us_correo = :Correo,
+                Ro_id = :Rol";
             $sql .= " WHERE Us_id = :Cedula";
 
             $this->db->query($sql);
             $this->db->bind(':Cedula', $datos['Cedula']);
             $this->db->bind(':Usuario', $datos['Nombre']);
             $this->db->bind(':Correo', $datos['Gmail']);
+            $this->db->bind(':Rol', $datos['Rol']);
             $this->db->execute();
 
             // 3. Actualizar los datos en la tabla 'persona' incluyendo el Ap_id
