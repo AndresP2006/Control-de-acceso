@@ -130,6 +130,7 @@ require_once RUTA_APP . '/views/inc/header-home.php';
         <h1 class="titulo-codigo" id="Bienvenida"></h1>
         <h3 class="subtitulo">Por favor digite su nueva contraseña</h3>
         <input class="Formulario__titulo-input" type="text" name="newpassinput" id="newPassInput" placeholder="      Nueva contraseña" required>
+        <div id="sugerencias" style="color: red; margin-top: 5px;"></div>
         <input class="Formulario__titulo-input" type="text" name="newpassinput" id="newPassInputC" placeholder="      Confirmar contraseña" required>
         <button id="newpassbuton" class="Formulario__boton">
             Cambiar
@@ -139,6 +140,33 @@ require_once RUTA_APP . '/views/inc/header-home.php';
 </div>
 
 <?php require_once RUTA_APP . '/views/inc/footer-home.php'; ?>
+<script>
+      const clave = document.getElementById('newPassInput');
+  const sugerencias = document.getElementById('sugerencias');
+
+  clave.addEventListener('input', () => {
+    const valor = clave.value;
+    let mensajes = [];
+
+    if (valor.length > 15) {
+      mensajes.push("No debe tener más de 10 caracteres.");
+    }
+
+    if (!/[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(valor)) {
+      mensajes.push("Agrega al menos un carácter especial (@, #, $, etc).");
+    }
+
+    if (valor.length < 6) {
+      mensajes.push("Mínimo 6 caracteres.");
+    }
+
+    if (!/[A-Z]/.test(valor)) {
+      mensajes.push("Agrega al menos una letra mayúscula.");
+    }
+
+    sugerencias.innerHTML = mensajes.join("<br>");
+  });
+</script>
 <script>
     $(document).ready(function() {
         var resp = null;
