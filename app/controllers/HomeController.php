@@ -198,20 +198,28 @@ class HomeController extends Controlador
     public function BuscarPaquetes()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'GET') {
-
-            // Obtener fechas de POST o GET
-            $fechaInicio = isset($_POST['fecha_inicio']) ? trim($_POST['fecha_inicio']) : (isset($_GET['fecha_inicio']) ? trim($_GET['fecha_inicio']) : '');
-            $fechaFin = isset($_POST['fecha_fin']) ? trim($_POST['fecha_fin']) : (isset($_GET['fecha_fin']) ? trim($_GET['fecha_fin']) : '');
-
-            // Validar fechas
-            if (!empty($fechaInicio) && !empty($fechaFin)) {
+    
+            $fechaInicio = isset($_POST['fecha_inicio']) ? trim($_POST['fecha_inicio']) :
+                           (isset($_GET['fecha_inicio']) ? trim($_GET['fecha_inicio']) : '');
+    
+            $fechaFin = isset($_POST['fecha_fin']) ? trim($_POST['fecha_fin']) :
+                        (isset($_GET['fecha_fin']) ? trim($_GET['fecha_fin']) : '');
+    
+            // Si las dos fechas están vacías o solo una está vacía, mostrar todos los paquetes
+            if (empty($fechaInicio) || empty($fechaFin)) {
+                $paquets = $this->paquetModel->getAllPackages();
+                $datos = [
+                    'paquets' => $paquets,
+                    'filter_date' => false
+                ];
+            } else {
+                // Validar fechas si ambas están presentes
                 if ($fechaInicio > $fechaFin) {
                     $datos = [
                         'paquets' => [],
                         'messageError' => 'La fecha de inicio no puede ser mayor que la fecha de fin.'
                     ];
                 } else {
-                    // Obtener paquetes en el rango de fechas
                     $paquets = $this->paquetModel->getPackagesByDateRange($fechaInicio, $fechaFin);
                     $datos = [
                         'paquets' => $paquets,
@@ -220,17 +228,12 @@ class HomeController extends Controlador
                         'fecha_fin' => $fechaFin
                     ];
                 }
-            } else {
-                $datos = [
-                    'paquets' => [],
-                    'messageError' => 'Las fechas no son válidas.'
-                ];
             }
-
-            // Cargar la vista con los resultados
+    
             $this->vista('pages/admin/paquetesView', $datos);
         }
     }
+    
 
     public function DeletePaquete()
     {

@@ -6,11 +6,11 @@
         <form action="<?php echo RUTA_URL; ?>/HomeController/BuscarPaquetes" method="POST" class="formFiltro">
             <label for=" fecha_inicio"> Fecha inicio:</label>
             <input type="date" name="fecha_inicio"
-                value="<?php echo isset($datos['fecha_inicio']) ? $datos['fecha_inicio'] : ''; ?>" required>
+                value="<?php echo isset($datos['fecha_inicio']) ? $datos['fecha_inicio'] : ''; ?>" >
 
             <label for="fecha_fin"> Fecha final:</label>
             <input type="date" name="fecha_fin" value="<?php echo isset($datos['fecha_fin']) ? $datos['fecha_fin'] : ''; ?>"
-                required>
+                >
 
             <button class="btn" type="submit">Filtrar por Fecha</button>
         </form>
