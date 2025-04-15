@@ -13,7 +13,7 @@ require_once RUTA_APP . '/views/inc/header-home.php';
             <li class="menu__lista">
                 <a class="menu__lista-a" href="<?php echo RUTA_URL; ?>/HomeController/index">Inicio</a>
             </li>
-            <li class="menu__lista">
+            
         </ul>
     </nav>
 

@@ -13,7 +13,7 @@
 
     <div class="pie__copy">
         <p style="color: white;">&copy; 2024 Villarica Malambo. Todos los derechos reservados.</p>
-        <p><a href="#">Política de privacidad</a> | <a href="#">Términos y condiciones</a></p>
+        <!-- <p><a href="#">Política de privacidad</a> | <a href="#">Términos y condiciones</a></p> -->
     </div>
 </footer>
 </body>
