@@ -21,9 +21,9 @@ body {
 }
 /* Header / Encabezado */
 .encabezado {
+  height: 150px;
   background-color: #1e2a38;
   color: white;
-  padding: 28px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -66,9 +66,10 @@ body {
 
 .contenedor {
   margin-top: 20px;
-  margin-left: 22%;
+  margin-left: auto;
+  margin-right: auto;
   margin-bottom: 20px;
-  width: 90%;
+  width: 80%;
   max-width: 1000px;
   background: #fff;
   padding: 30px;
@@ -77,30 +78,86 @@ body {
   overflow: hidden;
 }
 
+.slider-notificaciones {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
 .titulo {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-weight: bold;
   font-size: 32px;
   padding: 10px;
   border-bottom: 2px solid black;
 }
 
+/* Estilo estilo Gmail para las notificaciones */
+/* Aumentamos el padding para tener mensajes "más grandes" */
 .notificacion {
+  background-color: #ffffff;
+  padding: 10px 10px;   /* Incrementa padding para agrandar el mensaje */
+  transition: background-color 0.2s, box-shadow 0.2s;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #e0e0e0;
+  cursor: pointer;
 }
 
-.notificacion p {
-  margin: 0;
-  font-size: 20px;
+.notificacion:hover {
+  background-color: #f0f0f0;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25); /* sombra negra más intensa */
+  z-index: 2;
+  position: relative;
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
-.notificacion .texto {
+.contenido-notificacion {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center; /* ← Esto centra verticalmente la fecha */
+  gap: 10px;
+}
+
+/* Aumentamos el tamaño de la fuente del texto principal */
+.contenido-notificacion .texto {
   flex: 1;
+  font-size: 20px;    /* Tamaño de fuente aumentado */
+}
+
+/* La fecha también un poco más grande para contrastar */
+.contenido-notificacion .fecha {
+  white-space: nowrap;
+  font-size: 16px;    /* Aumentado para ser consistente con el nuevo tamaño */
+  color: #555;
+  margin-left: 10px;
+}
+
+.notificacion.visto {
+  background-color: #f0f0f0; /* gris claro para los mensajes vistos */
+}
+
+/* Personalizar colores por estado */
+.notificacion.resaltado {
+  background-color: #e8f0fe; /* Azul claro para estado pendiente */
+}
+
+/* Estilos de botones en la notificación */
+.notificacion input[type="submit"] {
+  padding: 8px 12px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.notificacion input[type="submit"]:hover {
+  background-color: #0056b3;
 }
 
 .acciones {
@@ -140,6 +197,42 @@ a {
   overflow-y: auto;
   max-height: 70vh;
 }
+.overflo::-webkit-scrollbar {
+  width: 10px;
+}
+
+.overflo::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.overflo::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.overflo::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Ajuste de formularios en notificaciones */
+.notificacion form {
+  margin-top: 10px;
+}
+
+.notificacion input[type="submit"] {
+  padding: 8px 12px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.notificacion input[type="submit"]:hover {
+  background-color: #0056b3;
+}
 
 /* NUEVO: Sección de detalles dividida */
 .details {
@@ -173,14 +266,13 @@ a {
   .details {
     flex-direction: column;
   }
-
   .details .left,
   .details .right {
     width: 100%;
   }
 }
-/*footer*/
 
+/* Footer */
 .main-content {
   flex: 1;
 }
@@ -219,4 +311,56 @@ a {
 
 .footer-link:hover {
   color: #ccc;
+}
+
+.foto-residente {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.foto-residente img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.fade-transition {
+  transition: opacity 0.3s ease;
+  opacity: 1;
+
+  /* Evita movimientos inesperados al cambiar opacidad */
+  position: relative;
+  will-change: opacity;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+.fade-in {
+  opacity: 1;
+}
+#edit-btn,
+.access-control {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: default;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 160px;
+    margin-top: 10px;
+}
+
+#status-container.hidden {
+    visibility: hidden;
 }

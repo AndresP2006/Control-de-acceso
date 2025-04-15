@@ -21,8 +21,14 @@
             <div class="logos">
                 <h3 class="var_sesion_admin">Bienvenido <?= $_SESSION['datos']->Us_usuario ?></h3>
                 <form action="<?php echo RUTA_URL; ?>/HomeController/notificaciones_admin" method="POST" style="display:inline;">
-                    <button type="submit" style="background:none; border:none; cursor:pointer;">
+
+                    <button type="submit" style="background:none; border:none; cursor:pointer; position: relative;">
                         <span class="icons2" style=" font-size: 30px;">🔔</span>
+                        <?php if (!empty($_SESSION['notificaciones'])): ?>
+                            <span style="position: absolute; top: 0; right: 0; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px;">
+                                <?= count($_SESSION['notificaciones']) ?>
+                            </span>
+                        <?php endif; ?>
                     </button>
             </div>
             </form>

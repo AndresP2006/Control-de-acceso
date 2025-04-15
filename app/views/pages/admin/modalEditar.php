@@ -47,9 +47,6 @@
                 <option value=3>Residente</option>
             </select>
 
-            <label for="" id="E_passwordl">Contraseña</label><br>
-            <input type="text" id="E_password" name="E_contrasena" />
-
             <center>
                 <input type="submit" value="Actualizar" class="Enviar" name="udate" />
             </center>

@@ -80,7 +80,6 @@ document.querySelectorAll(".edit-btn").forEach(function (button) {
     var departamentoId = this.getAttribute("data-departamento-id");
     var torre = this.getAttribute("data-torre");
     var rol = this.getAttribute("data-rol"); // Obtener el valor del rol (por ejemplo, "1" para Administrador)
-    var pass = this.getAttribute("data-contrasena");
 
 
     // Asignamos esos valores a los campos del formulario de edición
@@ -122,46 +121,42 @@ document.querySelectorAll(".edit-btn").forEach(function (button) {
         break;
       }
     }
-    $('#R_id').change(function () {
-      if (tipo_rol == 1) {
-        let ValueRol = $('#R_id').val()
-        if (ValueRol != 1) {
+    let valorAnterior = $('#R_id').val(); // guardamos el valor inicial
 
-          $.ajax({
-            url: 'http://localhost:8080/UserController/verifyRol', // Asegúrate de que la ruta es correcta
-            type: 'POST',
-            data: {},
-            dataType: 'json',
-            success: function (respuesta) {
-              console.log('Respuesta cruda:', respuesta) // Ver la respuesta antes de procesarla
+$('#R_id').focus(function () {
+  valorAnterior = $(this).val(); // al enfocar, guardamos el valor anterior
+});
 
-              if (respuesta.length === 1 && respuesta[0].Ro_id == 1) {
-                error('Por favor, primero agregue a otro administrador')
-                $('#R_id').val(1).change();
-              }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-              console.error('Error en la petición AJAX:', textStatus, errorThrown)
-            }
-          })
+$('#R_id').change(function () {
+  let nuevoValor = $(this).val();
+
+  // Si el valor anterior era 1 (administrador) y se intenta cambiar a otro
+  if (tipo_rol == 1 && valorAnterior == 1 && nuevoValor != 1) {
+    $.ajax({
+      url: RUTA_URL + '/UserController/verifyRol',
+      type: 'POST',
+      data: {},
+      dataType: 'json',
+      success: function (respuesta) {
+        console.log('Respuesta cruda:', respuesta);
+
+        if (respuesta.length === 1 && respuesta[0].Ro_id == 1) {
+          error('Por favor, primero agregue a otro administrador antes de quitar este rol');
+          $('#R_id').val(1); // volvemos a Administrador
+        } else {
+          valorAnterior = nuevoValor; // se permite el cambio
         }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.error('Error en la petición AJAX:', textStatus, errorThrown);
       }
+    });
+  } else {
+    valorAnterior = nuevoValor; // actualización normal
+  }
+});
 
-    })
 
-    // Mostrar u ocultar el campo de contraseña
-    var passwordLabel = document.getElementById("E_passwordl");
-    var passwordInput = document.getElementById("E_password");
-
-    if (pass) {
-      passwordLabel.style.display = "block";
-      passwordInput.style.display = "block";
-      passwordInput.value = pass;
-    } else {
-      passwordLabel.style.display = "none";
-      passwordInput.style.display = "none";
-      passwordInput.value = "";
-    }
 
     // Mostrar el modal de edición
     document.getElementById("myModal-Udate").style.display = "block";

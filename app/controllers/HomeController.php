@@ -10,6 +10,7 @@ class HomeController extends Controlador
     private $visitorModel;
     private $paquetModel;
     private $peopleModel;
+    private $notificacionModel;
 
     public function __construct()
     {
@@ -20,6 +21,7 @@ class HomeController extends Controlador
         $this->visitorModel = $this->modelo('VisitorModel');
         $this->paquetModel = $this->modelo('PaquetModel');
         $this->peopleModel = $this->modelo('PeopleModel'); // Corregido
+        $this->notificacionModel = $this->modelo('NotificacionModel'); // Corregido
     }
 
     public function index()
@@ -51,8 +53,8 @@ class HomeController extends Controlador
     {
         // Obtener todas las solicitudes de actualización pendientes desde el modelo
         $solicitudes = $this->peopleModel->getAllSolicitudesNotifi();
-
         // Formatear los datos para la vista
+        $this->notificacionModel->markNotificationAsViewed();
         $notificaciones = array_map(function ($solicitud) {
             return ['tipo' => 'solicitud_actualizacion', 'data' => $solicitud];
         }, $solicitudes);
@@ -73,7 +75,12 @@ class HomeController extends Controlador
             $id = $_POST['Us_id'];
             // Obtener visitas desde el modelo PeopleModel
             $visitas = $this->peopleModel->getNotificacion($usuario);
-
+            //Insertar en la tabla paquetes la vista
+            $this->notificacionModel->markNotificationPaqued($id);
+            //Insertar en la tabla registro la vista
+            $this->notificacionModel->markNotificationRegistro($id);
+            //Insertar en la tabla de solicitud la vista
+            $this->notificacionModel->markNotificationRechazo($id);
             // Obtener paquetes desde el modelo PaquetModel
             $paquetes = $this->paquetModel->getPaquetesPorUsuario($usuario);
             $rechazo = $this->peopleModel->getNotifi($id);
@@ -107,13 +114,16 @@ class HomeController extends Controlador
     public function solicitud_user()
     {
         if (isset($_POST["detalles"])) {
-
+            echo '<script>console.log("Valores de $_POST:", ' . json_encode($_POST) . ');</script>';
             $id_residente = $_POST["id_residente"];
+            $id = $_POST["id"];
             $resident = $this->peopleModel->getPersonaById($id_residente);
-            $datos_resident = $this->peopleModel->getAllSolicitudes($id_residente);
-
+            $people = $this->peopleModel->getAllRedident($id_residente);
+            $datos_resident = $this->peopleModel->getAllSolicitudes($id);
+            
             $datos = [
                 'resindents' => $resident,
+                'people'=>$people,
                 'datos_resident' => $datos_resident
             ];
             $this->vista("pages/admin/modalSolicitud", $datos);
@@ -127,11 +137,14 @@ class HomeController extends Controlador
             header('location:' . RUTA_URL . '/pages/homeView');
             exit;
         }
-
+        
         $datos = $this->userController->MostrarDatos();
+        
         $Torres = $this->torreModel->setTorres();
+        $notificacion= $this->notificacionModel->getPendingNotifications();
 
         $_SESSION['torre'] = $Torres;
+        $_SESSION['notificaciones'] = $notificacion;
         // Pasamos los datos correctamente a la vista
         $this->vista('pages/admin/adminView', $datos);
     }

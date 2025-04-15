@@ -34,26 +34,21 @@
                     <td>
                         <p style="font-size: 25px; width:100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                             <?php
-                            $correo_viejo = isset($datos['resindents']->Us_correo) ? $datos['resindents']->Us_correo : "";
+                            $correo_viejo = isset($datos['datos_resident'][0]->correo_viejo) ? $datos['datos_resident'][0]->correo_viejo : "";
                             $correo_nuevo = isset($datos['datos_resident'][0]->correo_nuevo) ? $datos['datos_resident'][0]->correo_nuevo : "";
 
-                            // Caso 1: Solo existe correo viejo, mostrarlo en verde
-                            if (!empty($correo_viejo) && empty($correo_nuevo)) {
+                            // Caso 2: Ambos existen y son iguales
+                            if (!empty($correo_viejo) && !empty($correo_nuevo) && $correo_viejo === $correo_nuevo) {
                                 echo '<span style="color: gray;" name="E_Gmail">' . $correo_viejo . '</span>';
                             }
-                            // Caso 2: Ambos existen y son iguales, mostrar uno solo en verde
-                            elseif (!empty($correo_viejo) && !empty($correo_nuevo) && $correo_viejo === $correo_nuevo) {
-                                echo '<span style="color: gray;" name="E_Gmail">' . $correo_viejo . '</span>';
-                            }
-                            // Caso 3: Ambos existen y son diferentes, mostrar los dos con colores distintos
+                            // Caso 3: Ambos existen y son distintos
                             elseif (!empty($correo_viejo) && !empty($correo_nuevo)) {
                                 echo '<span style="color: red;" name="E_Gmail">' . $correo_viejo . '</span>';
                                 echo '<span style="color: green;" name="E_Gmail"> | ' . $correo_nuevo . '</span>';
                             }
                             ?>
-
-
                         </p>
+
                         <input type="hidden" id="gmail" name="E_id" value="<?php echo isset($datos['datos_resident'][0]->correo_nuevo) && !empty($datos['datos_resident'][0]->correo_nuevo) ? $datos['datos_resident'][0]->correo_nuevo : ""; ?>">
                     </td>
                 </tr>
@@ -116,10 +111,12 @@
             </div>
         </div>
         <br>
-        <div class="buttons">
-            <button id="acceptBtn" class="btn" onclick="guardarDatos()">Aceptar</button>
-            <button id="rejectBtn" class="btn btn-dr">Rechazar</button>
-        </div>
+        <?php if (strtolower($datos['datos_resident'][0]->estado ?? '') === 'pendiente'): ?>
+            <div class="buttons">
+                <button id="acceptBtn" class="btn" onclick="guardarDatos()">Aceptar</button>
+                <button id="rejectBtn" class="btn btn-dr">Rechazar</button>
+            </div>
+        <?php endif; ?>
         <br>
         <div id="rejectReason" style="display: none;">
             <label for="reason">Motivo del rechazo:</label>
@@ -133,12 +130,20 @@
 <?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>
 
 <script>
-    // Mostrar el formulario de rechazo y desactivar los botones "Aceptar" y "Rechazar"
-    document.getElementById('rejectBtn').addEventListener('click', function() {
-        document.getElementById('rejectReason').style.display = 'block'; // Mostrar el textarea de rechazo
-        document.getElementById('acceptBtn').disabled = true; // Desactivar "Aceptar"
-        document.getElementById('rejectBtn').disabled = true; // Desactivar "Rechazar"
-    });
+    document.addEventListener('DOMContentLoaded', function () {
+    const rejectBtn = document.getElementById('rejectBtn');
+    const rejectReason = document.getElementById('rejectReason');
+    const acceptBtn = document.getElementById('acceptBtn');
+
+    if (rejectBtn && rejectReason && acceptBtn) {
+        rejectBtn.addEventListener('click', function () {
+            rejectReason.style.display = 'block';
+            acceptBtn.disabled = true;
+            rejectBtn.disabled = true;
+        });
+    }
+});
+
 
     // Al hacer clic en "Cancelar", ocultar el formulario de rechazo y habilitar los botones "Aceptar" y "Rechazar"
     document.getElementById('cancelRejection').addEventListener('click', function() {
