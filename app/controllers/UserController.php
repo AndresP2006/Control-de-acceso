@@ -312,14 +312,8 @@ class UserController extends Controlador
                     $mensaje = 'Apartamento eliminado correctamente.';
                 } else {
                 $hay = $this->apartamentModel->peopleApartamento($torre, $apartamento);
-
-                if (!$hay) {
-                    $this->apartamentModel->DeleteApartamento($torre, $apartamento);
-                    $mensaje = 'Apartamento eliminado correctamente.';
-                } else {
-                    $mensaje = 'No se puede eliminar: el apartamento tiene personas asociadas.';
                 }
-            } elseif (isset($_POST['guardar']) && isset($_POST['torre']) && isset($_POST['apartamento'])) {
+            } elseif(isset($_POST['guardar']) && isset($_POST['torre']) && isset($_POST['apartamento'])) {
                 $torre = $_POST['torre'];
                 $apartamento = $_POST['apartamento'];
 
@@ -662,19 +656,6 @@ class UserController extends Controlador
         echo json_encode(['success' => false, 'error' => 'Método no permitido']);
         exit;
     }
-
-    public function verifyRol()
-    {
-
-        header('Content-Type: application/json');
-
-        $respuesta =  $this->userModel->getUserByRol();
-
-        echo json_encode($respuesta);
-        exit;
-    }
-    // En UserController.php
-
     public function estadoSolicitud($idHabitante)
 {
     $estado = $this->peopleModel->obtenerEstadoSolicitud($idHabitante); // Debes tener un método en el modelo
@@ -684,5 +665,17 @@ class UserController extends Controlador
         echo json_encode(['estado' => 'ninguna']);
     }
 }
+    public function verifyRol()
+    {
+
+        header('Content-Type: application/json');
+
+        $respuesta =  $this->userModel->getUserByRol();
+        
+
+        echo json_encode($respuesta);
+        exit;
+    }
+    // En UserController.php
 
 }

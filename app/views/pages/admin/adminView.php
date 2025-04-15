@@ -76,11 +76,10 @@
                                 data-torre='" . htmlspecialchars($registro['To_id'] ?? '') . "'
                                 data-departamento='" . htmlspecialchars($registro['Ap_numero'] ?? '') . "'
                                 data-departamento-id='" . htmlspecialchars($registro['Ap_id'] ?? '') . "'
+                                data-rol='" . htmlspecialchars($registro['Ro_tipo'] ?? '') . "'
                                 >✏️</button>
-                                <form action='" . RUTA_URL . "/UserController/DeleteUser' method='POST' style='display:inline;'>
                                     <input type='hidden' name='delete_id' value='" . htmlspecialchars($registro['Cedula'] ?? '') . "'>
-                                    <button type='button' id='delete-btn-admin' class='delete-btn' data-id='" . $registro['Cedula'] . "'>🗑️</button>
-                                </form>
+                                    <button type='button' id='delete-btn-admin' class='delete-btn' data-id='" . $registro['Cedula'] . "'data-rol='" . $registro['Ro_tipo'] . "'>🗑️</button>
                             </td>";
                             echo "</tr>";
                         } else {
@@ -172,8 +171,9 @@
         })
 
 
-        $(document).on('click', '#delete-btn-admin', function () {
-
+        $(document).on('click', '.delete-btn', function () {
+            const boton = $(this);
+            const rolUsuario = boton.data('rol');
             $.ajax({
                 url: '<?php echo RUTA_URL ?>/UserController/verifyRol', // Asegúrate de que la ruta es correcta
                 type: 'POST',
@@ -182,7 +182,7 @@
                 success: function(respuesta) {
                     console.log('Respuesta cruda:', respuesta) // Ver la respuesta antes de procesarla
 
-                    if (respuesta.length === 1 && respuesta[0].Ro_id == 1) {
+                    if (respuesta.length === 1 && respuesta[0].Ro_id == 1 && rolUsuario=== 'Administrador') {
                         error('Por favor, primero agregue a otro administrador')
 
                     }
