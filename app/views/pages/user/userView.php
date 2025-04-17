@@ -17,6 +17,74 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
     #edit-btn {
         visibility: hidden;
     }
+
+    #save-btn {
+        background-color: #008E4B;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        min-width: 130px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        padding: 0 20px;
+        overflow: hidden;
+    }
+
+    #save-btn:disabled {
+        background-color: #008E4B;
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    .spinner {
+        width: 24px;
+        height: 24px;
+        border: 4px solid #fff;
+        border-top: 4px solid transparent;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: translate(-50%, -50%) rotate(0deg);
+        }
+
+        100% {
+            transform: translate(-50%, -50%) rotate(360deg);
+        }
+    }
+
+    #save-text {
+        z-index: 1;
+    }
+
+    input[type="text"] {
+        font-size: 20px;
+        transition: all 0.3s ease;
+        outline: none;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    input[type="text"]:focus {
+        border-color: #008E4B;
+        box-shadow: 0 0 0 3px rgba(0, 142, 75, 0.2);
+    }
+    strong{
+        font-size: 20px;
+    }
 </style>
 
 <div class="container">
@@ -115,10 +183,29 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
         <br><br><br>
         <div class="footer">
             <button id="edit-btn" onclick="habilitarEdicion()" style="display:none;">✏️ Editar</button>
-            <button id="save-btn" onclick="guardarDatos()" style="display:none;">✔️ Guardar</button>
+
+            <button
+                id="save-btn"
+                onclick="guardarDatos()"
+                style="display: none; min-width: 130px; position: relative; padding: 10px 20px;">
+                <span
+                    id="spinner"
+                    class="spinner"
+                    style="display: none;"></span>
+                <span id="save-text">✔️ Guardar</span>
+            </button>
+
+
+
+
+
             <button id="cancel-btn" onclick="cancelEditing()" style="display:none;">❌ Cancelar</button>
-            <p id="status-msg" class="access-control"><?= ($pendiente ? "Tu solicitud está en proceso, por favor espera..." : "") ?></p>
+
+            <p id="status-msg" class="access-control">
+                <?= ($pendiente ? "Tu solicitud está en proceso, por favor espera..." : "") ?>
+            </p>
         </div>
+
     </div>
 </div>
 
@@ -227,88 +314,98 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
     }
 
     function guardarDatos(callback) {
-        let cambiosRealizados = false;
-        const camposEditables = ["gmail", "telefono", "gmailV", "telefonoV"];
-        camposEditables.forEach(function(id) {
-            let input = document.getElementById(id);
-            if (input && input.value.trim() !== valoresOriginales[id].trim()) {
-                cambiosRealizados = true;
+        const campos = ["gmail", "telefono", "gmailV", "telefonoV"];
+        let cambios = false;
+
+        campos.forEach(id => {
+            const inp = document.getElementById(id);
+            if (inp && inp.value.trim() !== valoresOriginales[id].trim()) {
+                cambios = true;
             }
         });
 
-        let formData = new FormData();
-        camposEditables.forEach(function(id) {
-            let input = document.getElementById(id);
-            if (input) {
-                formData.append(input.name, input.value.trim());
-            }
-        });
-
-        formData.append("E_id", document.getElementById("cedula").value);
-        formData.append("E_nombre", document.getElementById("nombre").value);
-
-        if (!cambiosRealizados) {
-            if (typeof callback === "function") {
-                callback();
-            }
+        if (!cambios) {
+            if (typeof callback === "function") callback();
             return;
         }
 
-        fetch("<?= RUTA_URL; ?>/UserController/ActualizarUsuario", {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log("Respuesta del servidor:", data);
-                if (data.success) {
-                    editando = false;
-                } else {
-                    alert("Error al actualizar el usuario: " + (data.error || "Inténtalo de nuevo"));
-                }
+        const btn = document.getElementById("save-btn");
+        const spinner = document.getElementById("spinner");
+        const txt = document.getElementById("save-text");
+        const cancelBtn = document.getElementById("cancel-btn");
 
-                camposEditables.forEach(function(id) {
-                    let input = document.getElementById(id);
-                    if (input) {
-                        input.setAttribute("disabled", "true");
-                        input.style.backgroundColor = "transparent";
-                        input.style.border = "none";
-                    }
-                });
+        // Mostrar spinner y bloquear botones
+        spinner.style.display = "block";
+        txt.style.visibility = "hidden"; // mantiene el espacio del texto
+        btn.disabled = true;
+        cancelBtn.disabled = true;
 
-                document.getElementById("save-btn").style.display = "none";
-                document.getElementById("cancel-btn").style.display = "none";
-
-                const editBtn = document.getElementById("edit-btn");
-                editBtn.style.display = "none";
-                editBtn.style.visibility = "hidden";
-
-                const statusMsg = document.getElementById("status-msg");
-                statusMsg.innerText = "Tu solicitud está en proceso, por favor espera...";
-
-                if (typeof callback === "function") {
-                    callback();
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                alert("Error de conexión con el servidor");
-                if (typeof callback === "function") {
-                    callback();
-                }
+        setTimeout(() => {
+            const formData = new FormData();
+            campos.forEach(id => {
+                const inp = document.getElementById(id);
+                if (inp) formData.append(inp.name, inp.value.trim());
             });
+            formData.append("E_id", document.getElementById("cedula").value);
+            formData.append("E_nombre", document.getElementById("nombre").value);
+
+            fetch("<?= RUTA_URL; ?>/UserController/ActualizarUsuario", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        editando = false;
+                        realizado("Tu solicitud está en proceso, por favor espera.");
+                    } else {
+                        error("Error al actualizar: " + (data.error || "Inténtalo de nuevo"));
+                    }
+
+                    // Desactivar campos y ocultar botones
+                    campos.forEach(id => {
+                        const inp = document.getElementById(id);
+                        if (inp) {
+                            inp.disabled = true;
+                            inp.style.backgroundColor = "transparent";
+                            inp.style.border = "none";
+                        }
+                    });
+
+                    btn.style.display = "none";
+                    cancelBtn.style.display = "none";
+                    document.getElementById("edit-btn").style.display = "none";
+                    document.getElementById("status-msg").innerText =
+                        "Tu solicitud está en proceso, por favor espera...";
+                })
+                .catch(e => {
+                    console.error(e);
+                    alert("Error de conexión con el servidor");
+                })
+                .finally(() => {
+                    // Restaurar botón
+                    spinner.style.display = "none";
+                    txt.style.visibility = "visible";
+                    btn.disabled = false;
+                    cancelBtn.disabled = false;
+
+                    if (typeof callback === "function") callback();
+                });
+        }, 1000);
     }
 
-    function cambiarHabitante(elemento) {
+
+    async function cambiarHabitante(elemento) {
         if (editando) {
-            if (!confirm("Tienes cambios sin guardar. ¿Deseas guardarlos antes de cambiar de habitante?")) {
-                return;
-            }
+            const confirmar = await advertencia("Tienes cambios sin guardar. Por favor guarda o cancela antes de cambiar de habitante.");
+            if (!confirmar) return;
+
             guardarDatos(() => manejarCambio(elemento));
         } else {
             manejarCambio(elemento);
         }
     }
+
 
     function manejarCambio(nuevoElemento) {
         const listaHabitantes = document.querySelector(".habitantes");
@@ -351,15 +448,15 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
     }
 
     function cargarHabitante(elemento) {
-        const idHabitante   = elemento.getAttribute("data-id");
-        const nombreHabit   = elemento.getAttribute("data-nombre");
-        const gmailHabit    = elemento.getAttribute("data-gmail");
+        const idHabitante = elemento.getAttribute("data-id");
+        const nombreHabit = elemento.getAttribute("data-nombre");
+        const gmailHabit = elemento.getAttribute("data-gmail");
         const telefonoHabit = elemento.getAttribute("data-telefono");
 
-        document.getElementById("cedula").value   = idHabitante;
-        document.getElementById("nombre").value   = nombreHabit;
-        document.getElementById("gmail").value    = gmailHabit;
-        document.getElementById("gmailV").value   = gmailHabit;
+        document.getElementById("cedula").value = idHabitante;
+        document.getElementById("nombre").value = nombreHabit;
+        document.getElementById("gmail").value = gmailHabit;
+        document.getElementById("gmailV").value = gmailHabit;
         document.getElementById("telefono").value = telefonoHabit;
         document.getElementById("telefonoV").value = telefonoHabit;
 
