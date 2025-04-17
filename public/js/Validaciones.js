@@ -83,6 +83,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     console.log(errores);
   });
+
+  //Formulario de personas de admin
 });
 
 function advertencia(mensaje) {
