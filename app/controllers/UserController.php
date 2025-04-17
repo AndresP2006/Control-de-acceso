@@ -266,27 +266,44 @@ class UserController extends Controlador
 
     public function Torre()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
             if (isset($_POST['borrar']) && isset($_POST['id'])) {
                 $id = $_POST['id'];
-                $mensaje = $this->torreModel->DeleteTorre($id);
 
+                $verificar = $this->torreModel->verifyTower($id);
+                if ($verificar == false) {
+                    $datos['messageError'] = "Por favor verifique el id de la torre.";
+                } else {
+
+                    $mensaje = $this->torreModel->DeleteTorre($id);
+                    if ($mensaje == true) {
+
+                        $datos['messageInfo'] = "Torre y apartamentos eliminados correctamente.";
+                    } else {
+
+                        $datos['messageError'] = "Primero elimine los departamentos asociados.";
+                    }
+                }
 
                 $datos['filter'] = 'borrar';
-                $datos['error'] = $mensaje;
             } elseif (isset($_POST['guardar']) && isset($_POST['id']) && isset($_POST['torre'])) {
                 $id = $_POST['id'];
                 $torre = $_POST['torre'];
 
                 // Lógica para guardar la torre
                 $mensaje = $this->torreModel->IngresarTorre($id, $torre);
+                if ($mensaje == true) {
 
+                    $datos['messageInfo'] = "Torre guardada correctamente.";
+                } else {
+
+                    $datos['messageError'] = "El ID o la letra de la torre ya existe. No se puede guardar.";
+                }
 
                 $datos['filter'] = 'guardar';
-                $datos['error'] = $mensaje;
             } else {
                 // Si no se envían datos válidos
-                $datos['error'] = 'Datos incompletos.';
+                $datos['messageError'] = 'Datos incompletos.';
             }
         }
 
@@ -309,21 +326,21 @@ class UserController extends Controlador
 
                 if (!$hay) {
                     $this->apartamentModel->DeleteApartamento($torre, $apartamento);
-                    $mensaje = 'Apartamento eliminado correctamente.';
+                    $datos['messageInfo'] = 'Apartamento eliminado correctamente.';
                 } else {
-                $hay = $this->apartamentModel->peopleApartamento($torre, $apartamento);
+                    $hay = $this->apartamentModel->peopleApartamento($torre, $apartamento);
                 }
-            } elseif(isset($_POST['guardar']) && isset($_POST['torre']) && isset($_POST['apartamento'])) {
+            } elseif (isset($_POST['guardar']) && isset($_POST['torre']) && isset($_POST['apartamento'])) {
                 $torre = $_POST['torre'];
                 $apartamento = $_POST['apartamento'];
 
                 $this->apartamentModel->IngresarApartamento($torre, $apartamento);
             } else {
-                $mensaje2 = 'Datos incompletos.';
+                $datos['messageError'] = 'Datos incompletos.';
             }
-            $datos['messageError'] = $mensaje2;
-            $datos['messageInfo'] = $mensaje;
-            $datos = $this->index($mensaje);
+            // $datos['messageError'] = $mensaje2;
+            // $datos['messageInfo'] = $mensaje;
+            // $datos = $this->index($mensaje);
         }
 
         $datos['torres'] = $this->torreModel->getTorreByTable();
@@ -657,21 +674,21 @@ class UserController extends Controlador
         exit;
     }
     public function estadoSolicitud($idHabitante)
-{
-    $estado = $this->peopleModel->obtenerEstadoSolicitud($idHabitante); // Debes tener un método en el modelo
-    if ($estado) {
-        echo json_encode(['estado' => $estado]);
-    } else {
-        echo json_encode(['estado' => 'ninguna']);
+    {
+        $estado = $this->peopleModel->obtenerEstadoSolicitud($idHabitante); // Debes tener un método en el modelo
+        if ($estado) {
+            echo json_encode(['estado' => $estado]);
+        } else {
+            echo json_encode(['estado' => 'ninguna']);
+        }
     }
-}
     public function verifyRol()
     {
 
         header('Content-Type: application/json');
 
         $respuesta =  $this->userModel->getUserByRol();
-        
+
 
         echo json_encode($respuesta);
         exit;
