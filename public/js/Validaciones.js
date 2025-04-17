@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const formulario = document.getElementById("myForm");
-
+  const formularioPaquetes = document.getElementById("packageForm");
+  // Formularo de ingreso de visitas
   formulario.addEventListener("submit", (e) => {
     const idV = document.getElementById("u_id").value.trim();
     const nombreV = document.getElementById("U_Nombre").value.trim();
@@ -42,6 +43,44 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Si no hay errores, el formulario se enviará automáticamente al PHP
+    console.log(errores);
+  });
+
+  //Formulario de paquetes
+  formularioPaquetes.addEventListener("submit", (e) => {
+    const descriptionPaquetes = document
+      .getElementById("Pa_Descripcion")
+      .value.trim();
+    const fechaPaquetes = document.getElementById("Pa_Fecha").value.trim();
+    const Firma = document.getElementById("Pa_Firma").value.trim();
+    const torrePaquetes = document
+      .getElementById("select_torre_p")
+      .value.trim();
+    const apartamentoPaquetes = document
+      .getElementById("select_apartamento_p")
+      .value.trim();
+    const destinatario = document
+      .getElementById("select_personas_p")
+      .value.trim();
+
+    let errores = [];
+
+    if (
+      !descriptionPaquetes ||
+      !fechaPaquetes ||
+      !Firma ||
+      !torrePaquetes ||
+      apartamentoPaquetes === "0" ||
+      destinatario === "0"
+    ) {
+      errores.push("Por favor, complete todos los campos.");
+    }
+
+    if (errores.length > 0) {
+      e.preventDefault(); // ❗ Solo se bloquea si hay errores
+      advertencia(errores.join(" / "));
+    }
+
     console.log(errores);
   });
 });
