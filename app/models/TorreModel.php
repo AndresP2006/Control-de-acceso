@@ -22,17 +22,30 @@ class TorreModel
         return $this->db->showTables();
     }
 
+    public function verifyTower($id)
+    {
+        $this->db->query('SELECT COUNT(*) as count FROM torre WHERE To_id = :id ');
+        $this->db->bind(':id', $id);
+        $row = $this->db->registro();
+        if ($row->count > 0) {
+            return true;
+        } else {
+
+            return false;
+        }
+    }
+
     // funciones de torre 
     public function IngresarTorre($id, $letra)
     {
         if ($this->existTorre($id, $letra)) {
-            return "El ID o la letra de la torre ya existe. No se puede guardar.";
+            return false;
         }
 
         $this->db->query('INSERT INTO torre (To_id, To_letra) VALUES (:id, :letra)');
         $this->db->bind(':id', $id);
         $this->db->bind(':letra', $letra);
-        return $this->db->execute() ? "Torre guardada correctamente." : "Error al guardar la torre.";
+        return $this->db->execute() ? true : false;
     }
 
     private function existTorre($id, $letra = null)
@@ -57,7 +70,7 @@ class TorreModel
     {
         // Primero verificamos si la torre está en uso
         if ($this->isTorreInUse($id)) {
-            return "No se puede eliminar la torre, ya que tiene departamentos asociados.";
+            return false;
         }
 
         // Si no está en uso, procedemos a eliminarla
@@ -77,7 +90,7 @@ class TorreModel
 
             // Hacer commit si todo sale bien
             $this->db->commit();
-            return "Torre y apartamentos eliminados correctamente.";
+            return true;
         } catch (Exception $e) {
             // En caso de error, revertir la transacción
             $this->db->rollBack();
