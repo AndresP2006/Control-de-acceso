@@ -14,19 +14,22 @@
             </div>
         </div>
         <br>
+
         <div class="content">
             <h4 class="nombre">
                 <?= $datos['resindents']->Pe_nombre . " " . $datos['resindents']->Pe_apellidos ?>
-                <input type="hidden" id="nombre" name="E_id" value="<?php echo isset($datos['datos_resident'][0]->correo_nuevo) && !empty($datos['datos_resident'][0]->nombre) ? $datos['datos_resident'][0]->nombre : ""; ?>">
+                <input type="hidden" id="nombre" name="E_id" value="<?= !empty($datos['datos_resident'][0]->nombre) ? $datos['datos_resident'][0]->nombre : "" ?>">
             </h4>
+
             <hr class="Linea">
             <br>
+
             <table class="info-table">
                 <tr>
                     <td><strong>Cédula</strong></td>
                     <td class="gray-text">
-                        <?php echo $datos['resindents']->Us_id; ?>
-                        <input type="hidden" id="cedula" name="E_id" value="<?php echo $datos['resindents']->Us_id; ?>">
+                        <?= $datos['resindents']->Us_id ?>
+                        <input type="hidden" id="cedula" value="<?= $datos['resindents']->Us_id ?>">
                     </td>
                 </tr>
                 <tr>
@@ -34,22 +37,18 @@
                     <td>
                         <p style="font-size: 25px; width:100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                             <?php
-                            $correo_viejo = isset($datos['datos_resident'][0]->correo_viejo) ? $datos['datos_resident'][0]->correo_viejo : "";
-                            $correo_nuevo = isset($datos['datos_resident'][0]->correo_nuevo) ? $datos['datos_resident'][0]->correo_nuevo : "";
+                            $correo_viejo = $datos['datos_resident'][0]->correo_viejo ?? "";
+                            $correo_nuevo = $datos['datos_resident'][0]->correo_nuevo ?? "";
 
-                            // Caso 2: Ambos existen y son iguales
-                            if (!empty($correo_viejo) && !empty($correo_nuevo) && $correo_viejo === $correo_nuevo) {
-                                echo '<span style="color: gray;" name="E_Gmail">' . $correo_viejo . '</span>';
-                            }
-                            // Caso 3: Ambos existen y son distintos
-                            elseif (!empty($correo_viejo) && !empty($correo_nuevo)) {
-                                echo '<span style="color: red;" name="E_Gmail">' . $correo_viejo . '</span>';
-                                echo '<span style="color: green;" name="E_Gmail"> | ' . $correo_nuevo . '</span>';
+                            if ($correo_viejo && $correo_nuevo && $correo_viejo === $correo_nuevo) {
+                                echo '<span style="color: gray;">' . $correo_viejo . '</span>';
+                            } elseif ($correo_viejo && $correo_nuevo) {
+                                echo '<span style="color: red;">' . $correo_viejo . '</span>';
+                                echo '<span style="color: green;"> | ' . $correo_nuevo . '</span>';
                             }
                             ?>
                         </p>
-
-                        <input type="hidden" id="gmail" name="E_id" value="<?php echo isset($datos['datos_resident'][0]->correo_nuevo) && !empty($datos['datos_resident'][0]->correo_nuevo) ? $datos['datos_resident'][0]->correo_nuevo : ""; ?>">
+                        <input type="hidden" id="gmail" value="<?= $correo_nuevo ?>">
                     </td>
                 </tr>
                 <tr>
@@ -57,41 +56,39 @@
                     <td>
                         <p style="font-size: 25px; width:100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                             <?php
-                            $telefono_viejo = isset($datos['resindents']->Pe_telefono) ? $datos['resindents']->Pe_telefono : "";
-                            $telefono_nuevo = isset($datos['datos_resident'][0]->telefono_nuevo) ? $datos['datos_resident'][0]->telefono_nuevo : "";
+                            $telefono_viejo = $datos['resindents']->Pe_telefono ?? "";
+                            $telefono_nuevo = $datos['datos_resident'][0]->telefono_nuevo ?? "";
 
-                            if (!empty($telefono_viejo) && empty($telefono_nuevo)) {
-                                // Solo teléfono viejo
-                                echo '<span style="color: green; display: inline;" name="E_Gmail">' . $telefono_viejo . '</span>';
-                            } elseif (!empty($telefono_viejo) && !empty($telefono_nuevo) && $telefono_viejo === $telefono_nuevo) {
-                                // Son iguales
-                                echo '<span style="color: gray; display: inline;" name="E_Gmail">' . $telefono_viejo . '</span>';
-                            } elseif (!empty($telefono_viejo) && !empty($telefono_nuevo)) {
-                                // Son distintos
-                                echo '<span style="color: red; display: inline;" name="E_Gmail">' . $telefono_viejo . '</span>';
-                                echo '<span style="color: green; display: inline;" name="E_Gmail"> | ' . $telefono_nuevo . '</span>';
+                            if ($telefono_viejo && !$telefono_nuevo) {
+                                echo '<span style="color: green;">' . $telefono_viejo . '</span>';
+                            } elseif ($telefono_viejo === $telefono_nuevo) {
+                                echo '<span style="color: gray;">' . $telefono_viejo . '</span>';
+                            } elseif ($telefono_viejo && $telefono_nuevo) {
+                                echo '<span style="color: red;">' . $telefono_viejo . '</span>';
+                                echo '<span style="color: green;"> | ' . $telefono_nuevo . '</span>';
                             }
                             ?>
                         </p>
-
-                        <input type="hidden" id="telefono" name="E_telefono" value="<?php echo isset($datos['datos_resident'][0]->telefono_nuevo) && !empty($datos['datos_resident'][0]->telefono_nuevo) ? $datos['datos_resident'][0]->telefono_nuevo : ""; ?>">
+                        <input type="hidden" id="telefono" value="<?= $telefono_nuevo ?>">
                     </td>
                 </tr>
             </table>
+
             <hr>
+
             <div class="details">
                 <div>
                     <table class="info-table">
                         <tr>
                             <td><strong>Torre</strong></td>
                             <td class="gray-text">
-                                <input class="gray-text1" type="text" id="torre" name="To_id" value="<?php echo $datos['resindents']->To_letra; ?>" disabled>
+                                <input class="gray-text1" type="text" id="torre" value="<?= $datos['resindents']->To_letra ?>" disabled>
                             </td>
                         </tr>
                         <tr>
                             <td><strong>Departamento</strong></td>
                             <td class="gray-text">
-                                <input class="gray-text1" type="text" id="apartamento" name="Ap_numero" value="<?php echo $datos['resindents']->Ap_numero; ?>" disabled>
+                                <input class="gray-text1" type="text" id="apartamento" value="<?= $datos['resindents']->Ap_numero ?>" disabled>
                             </td>
                         </tr>
                     </table>
@@ -100,9 +97,7 @@
                     <p class="habitantes"><strong>Habitantes</strong></p>
                     <?php if (!empty($datos['people'])): ?>
                         <?php foreach ($datos['people'] as $persona): ?>
-                            <p class="gray-text">
-                                <?php echo $persona->Pe_nombre . " " . $persona->Pe_apellidos; ?>
-                            </p>
+                            <p class="gray-text"><?= $persona->Pe_nombre . " " . $persona->Pe_apellidos ?></p>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <p class="gray-text">Actualmente no cuenta con más habitantes</p>
@@ -110,50 +105,62 @@
                 </div>
             </div>
         </div>
+
         <br>
+
+        <!-- Botones Aceptar/Rechazar solo si el estado es pendiente -->
         <?php if (strtolower($datos['datos_resident'][0]->estado ?? '') === 'pendiente'): ?>
             <div class="buttons">
                 <button id="acceptBtn" class="btn" onclick="guardarDatos()">Aceptar</button>
                 <button id="rejectBtn" class="btn btn-dr">Rechazar</button>
             </div>
         <?php endif; ?>
+
         <br>
-        <div id="rejectReason" style="display: none;">
-            <label for="reason">Motivo del rechazo:</label>
-            <textarea id="reason" class="form-control" name="reject_reason" rows="3"></textarea>
-            <br>
-            <button id="submitRejection" class="btn btn-primary" onclick="rechazo()">Enviar</button>
-            <button id="cancelRejection" class="btn btn-secondary">Cancelar</button>
-        </div>
+
+        <!-- Mostrar motivo si ya fue rechazado -->
+        <?php if ($datos['datos_resident'][0]->estado === 'rechazada'): ?>
+            <div id="rejectReason" style="display: block;">
+                <label for="reason"><strong>Motivo del rechazo</strong></label>
+                <textarea id="reason" class="form-control" name="reject_reason" rows="3" disabled><?= htmlspecialchars($datos['datos_resident'][0]->razon_rechazo) ?></textarea>
+                <br>
+            </div>
+        <?php else: ?>
+            <div id="rejectReason" style="display: none;">
+                <label for="reason"><strong>Motivo del rechazo</strong></label>
+                <textarea id="reason" class="form-control" name="reject_reason" rows="3"></textarea>
+                <br>
+                <button id="submitRejection" class="btn btn-primary" onclick="rechazo()">Enviar</button>
+                <button id="cancelRejection" class="btn btn-secondary">Cancelar</button>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
+
 <?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-    const rejectBtn = document.getElementById('rejectBtn');
-    const rejectReason = document.getElementById('rejectReason');
-    const acceptBtn = document.getElementById('acceptBtn');
+        const rejectBtn = document.getElementById('rejectBtn');
+        const acceptBtn = document.getElementById('acceptBtn');
+        const rejectReason = document.getElementById('rejectReason');
 
-    if (rejectBtn && rejectReason && acceptBtn) {
-        rejectBtn.addEventListener('click', function () {
-            rejectReason.style.display = 'block';
-            acceptBtn.disabled = true;
-            rejectBtn.disabled = true;
+        if (rejectBtn) {
+            rejectBtn.addEventListener('click', function () {
+                rejectReason.style.display = 'block';
+                rejectBtn.disabled = true;
+                acceptBtn.disabled = true;
+            });
+        }
+
+        document.getElementById('cancelRejection')?.addEventListener('click', function () {
+            rejectReason.style.display = 'none';
+            document.getElementById('reason').value = '';
+            acceptBtn.disabled = false;
+            rejectBtn.disabled = false;
         });
-    }
-});
-
-
-    // Al hacer clic en "Cancelar", ocultar el formulario de rechazo y habilitar los botones "Aceptar" y "Rechazar"
-    document.getElementById('cancelRejection').addEventListener('click', function() {
-        document.getElementById('rejectReason').style.display = 'none'; // Ocultar textarea de rechazo
-        document.getElementById('reason').value = ''; // Limpiar el texto del textarea
-        document.getElementById('acceptBtn').disabled = false; // Habilitar "Aceptar"
-        document.getElementById('rejectBtn').disabled = false; // Habilitar "Rechazar"
     });
 
-    // Función para guardar datos
     function guardarDatos() {
         let formData = new FormData();
         formData.append("E_id", document.getElementById("cedula").value);
@@ -163,80 +170,41 @@
         formData.append("To_id", document.getElementById("torre").value);
         formData.append("Ap_numero", document.getElementById("apartamento").value);
 
-        for (let [key, val] of formData.entries()) {
-            console.log(key, ":", val);
-        }
-
         fetch("<?= RUTA_URL; ?>/UserController/ActualizarResidente", {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log("Respuesta del servidor:", data);
-                if (data.success) {
-                    realizado("Dato guardado");
-                } else {
-                    // Si no es exitoso, se ejecuta una alerta de error genérica:
-                    error("Error al actualizar el usuario: " + (data.error || "Inténtalo de nuevo"));
-                    document.getElementById("edit-btn").style.display = "inline-block";
-                }
-
-                const camposEditables = ["gmail", "telefono", "torre", "apartamento"];
-                camposEditables.forEach(function(id) {
-                    let input = document.getElementById(id);
-                    if (input) {
-                        input.setAttribute("disabled", "true");
-                        input.style.backgroundColor = "transparent";
-                        input.style.border = "none";
-                    }
-                });
-            });
+            method: "POST",
+            body: formData
+        }).then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                realizado("Dato guardado");
+                document.getElementById('acceptBtn').style.display = 'none';
+                document.getElementById('rejectBtn').style.display = 'none';
+            } else {
+                error("Error al actualizar el usuario: " + (data.error || "Inténtalo de nuevo"));
+            }
+        });
     }
 
-    // Función para manejar el rechazo
     function rechazo() {
         let formData = new FormData();
         formData.append("E_id", document.getElementById("cedula").value);
         formData.append("M_rechazo", document.getElementById("reason").value);
 
-        for (let [key, val] of formData.entries()) {
-            console.log(key, ":", val);
-        }
-
         fetch("<?= RUTA_URL; ?>/UserController/MotivoRechazo", {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log("Respuesta del servidor:", data);
-                if (data.success) {
-                    realizado("Dato guardado");
-                } else {
-                    // Si no es exitoso, se ejecuta una alerta de error genérica:
-                    error("Error al actualizar el usuario: " + (data.error || "Inténtalo de nuevo"));
-                    document.getElementById("edit-btn").style.display = "inline-block";
-                }
-
-                const camposEditables = ["gmail", "telefono", "torre", "apartamento"];
-                camposEditables.forEach(function(id) {
-                    let input = document.getElementById(id);
-                    if (input) {
-                        input.setAttribute("disabled", "true");
-                        input.style.backgroundColor = "transparent";
-                        input.style.border = "none";
-                    }
-                });
-
-                // Ocultar todos los botones después de enviar el rechazo
+            method: "POST",
+            body: formData
+        }).then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                realizado("Rechazo enviado con éxito.");
+                // Ocultar todos los botones tras el rechazo
                 document.getElementById('acceptBtn').style.display = 'none';
                 document.getElementById('rejectBtn').style.display = 'none';
                 document.getElementById('submitRejection').style.display = 'none';
                 document.getElementById('cancelRejection').style.display = 'none';
-
-                // Mostrar un mensaje de éxito si es necesario
-                realizado("Rechazo enviado con éxito.");
-            });
+            } else {
+                error("Error al rechazar: " + (data.error || "Inténtalo de nuevo"));
+            }
+        });
     }
 </script>
