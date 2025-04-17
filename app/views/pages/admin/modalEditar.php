@@ -51,6 +51,5 @@
                 <input type="submit" value="Actualizar" class="Enviar" name="udate" />
             </center>
         </form>
-
     </div>
 </div>
