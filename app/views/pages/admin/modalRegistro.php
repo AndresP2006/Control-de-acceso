@@ -50,6 +50,7 @@
         </form>
     </div>
 </div>
+<script src="<?php echo RUTA_URL;?>/js/ValidacionesAdmin.js"></script>
 <script>
   const clave = document.getElementById('U_password');
   const sugerencias = document.getElementById('sugerencias');
