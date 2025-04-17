@@ -329,12 +329,15 @@ class UserController extends Controlador
                     $datos['messageInfo'] = 'Apartamento eliminado correctamente.';
                 } else {
                     $hay = $this->apartamentModel->peopleApartamento($torre, $apartamento);
+                    
+                    $datos['messageError'] = 'Hay personas viviendo en este apartamento';
                 }
             } elseif (isset($_POST['guardar']) && isset($_POST['torre']) && isset($_POST['apartamento'])) {
                 $torre = $_POST['torre'];
                 $apartamento = $_POST['apartamento'];
 
                 $this->apartamentModel->IngresarApartamento($torre, $apartamento);
+                $datos['messageInfo'] = 'Apartametno guardado correctamente';
             } else {
                 $datos['messageError'] = 'Datos incompletos.';
             }
