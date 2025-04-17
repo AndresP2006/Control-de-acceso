@@ -136,7 +136,7 @@
                             <option value="0">Residentes</option>
                         </select>
                         <center>
-                            <input type="submit" value="Enviar" class="Enviar" name="Visitantes" />
+                            <input type="submit" value="Enviar" class="Enviar" id="enviarVisita" name="Visitantes" />
                         </center>
                     </form>
                 </div>
