@@ -245,5 +245,10 @@ WHERE p1.Pe_id = '$result' AND p2.Pe_id <> '$result'",);
     return $resultado ? $resultado->estado : null;
 }
 
+public function obtenerUsuarioPorId($u_id){
+    $this->db->query("SELECT Vi_nombres, Vi_apellidos, Vi_telefono FROM visitantes WHERE Vi_id = :u_id");
+    $this->db->bind(':u_id', $u_id);
+    return $this->db->registro();
+}
     
 }

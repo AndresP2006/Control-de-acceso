@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const formulario = document.getElementById("myForm");
   const formularioPaquetes = document.getElementById("packageForm");
+  // const formularioContraseñaNew = document.getElementById("myModalnewpass")
   // Formularo de ingreso de visitas
   formulario.addEventListener("submit", (e) => {
     const idV = document.getElementById("u_id").value.trim();
