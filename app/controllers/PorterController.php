@@ -148,4 +148,34 @@ class PorterController extends Controlador
     {
         $this->torreModel->getTorreByTable();
     }
+
+    public function buscarUsuario(){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['u_id'])) {
+            $u_id = $_POST['u_id'];
+
+            // Llama a la función del modelo para obtener el usuario por ID
+            $usuario = $this->peopleModel->obtenerUsuarioPorId($u_id);
+
+            if ($usuario) {
+                // Codifica los datos del usuario como JSON y los envía
+                $response = [
+                    'existe' => true,
+                    'nombre' => $usuario->Vi_nombres, // Ajusta los nombres de las propiedades según tu modelo
+                    'apellido' => $usuario->Vi_apellidos,
+                    'telefono' => $usuario->Vi_telefono
+                ];
+                header('Content-Type: application/json');
+                echo json_encode($response);
+            } else {
+                // Si no se encuentra el usuario, envía una respuesta JSON indicando que no existe
+                $response = ['existe' => false];
+                header('Content-Type: application/json');
+                echo json_encode($response);
+            }
+        } else {
+            // Si la petición no es POST o no se envió el 'u_id', puedes enviar un error
+            http_response_code(400); // Bad Request
+            echo json_encode(['error' => 'Petición inválida']);
+        }
+    }
 }

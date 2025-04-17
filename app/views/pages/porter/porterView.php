@@ -112,7 +112,7 @@
                         <!-- <span class="close" id="close">&times;</span> -->
                     </div>
                     <form id="myForm" action="<?php echo RUTA_URL; ?>/PorterController/createGuest" method="post">
-                        <h4>Documento: <input type="text" id="u_id" name="u_id" /></h4>
+                    <h4>Documento: <input type="text" id="u_id" name="u_id" autocomplete="off" /></h4>
                         <h4>Nombre: <input type="text" id="U_Nombre" name="U_Nombre" /></h4>
                         <h4>Apellido: <input type="text" id="U_Apellido" name="U_Apellido" /></h4>
                         <h4>Telefono: <input type="text" id="U_Telefono" name="U_Telefono" /></h4>
@@ -202,7 +202,45 @@
 </div>
 
 <?php require_once RUTA_APP . '/views/inc/footer-porter.php'; ?>
+<script>
+  document.getElementById("u_id").addEventListener("blur", function () {
+    const documento = this.value;
 
+    fetch("<?php echo RUTA_URL; ?>/PorterController/buscarUsuario", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "u_id=" + encodeURIComponent(documento)
+    })
+    .then(response => response.text())
+    .then(text => {
+        console.log("Respuesta cruda:", text);
+        try {
+            const data = JSON.parse(text);
+            console.log("JSON:", data);
+            if (data.existe) {
+                document.getElementById("U_Nombre").value = data.nombre;
+                document.getElementById("U_Apellido").value = data.apellido;
+                document.getElementById("U_Telefono").value = data.telefono;
+            } else {
+                document.getElementById("U_Nombre").value = "";
+                document.getElementById("U_Apellido").value = "";
+                document.getElementById("U_Telefono").value = "";
+                console.log("Usuario no encontrado.");
+                // Opcional: Puedes mostrar un mensaje visual al usuario aquí
+            }
+        } catch (error) {
+            console.error("Error al parsear la respuesta JSON:", error);
+            // Opcional: Manejar el error de parseo, por ejemplo, mostrar un mensaje al usuario
+        }
+    })
+    .catch(error => {
+        console.error("Error en la petición:", error);
+        // Opcional: Manejar el error de la petición, por ejemplo, mostrar un mensaje al usuario
+    });
+});
+</script>
 <script>
     <?php if (isset($datos['messageError']) && $datos['messageError'] != null) { ?>
         error("<?php echo htmlspecialchars($datos['messageError']); ?>");
