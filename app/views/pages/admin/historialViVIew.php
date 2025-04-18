@@ -3,7 +3,7 @@
     <h1 class="table-titulo">Lista de visitantes</h1>
     <form method="POST" action="<?php echo RUTA_URL; ?>/UserController/VisitantesPorFecha">
         <input type="date" name="fecha" id="fecha" value="<?php echo htmlspecialchars($_POST['fecha'] ?? ''); ?>">
-        <button type="submit" class="filter-btn" style="position: relative; top: 33px; left:20px;">Filtrar</button>
+        <button type="submit" class="btn" style="position: relative; top: 33px; left:20px;">Filtrar</button>
     </form>
 </div>
 <div class="table-container">
@@ -11,11 +11,11 @@
         <table>
             <thead>
                 <tr>
-                    <th>Documento</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Telefono</th>
-                    <th>Registro</th>
+                    <th>DOCUMENTO</th>
+                    <th>NOMBRE</th>
+                    <th>APELLIDO</th>
+                    <th>TELEFONO</th>
+                    <th>REGISTRO</th>
                 </tr>
             </thead>
             <tbody>

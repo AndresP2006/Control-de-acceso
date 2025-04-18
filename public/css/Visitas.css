@@ -129,7 +129,7 @@ h2 {
 .titulo-form {
   color: rgb(252, 249, 249);
   font-weight: 700;
-  padding-top: 20px;
+  padding-top: 10px;
   padding-left: 30px;
 }
 
@@ -856,6 +856,10 @@ h4 {
   justify-content: space-evenly;
   width: 710px;
   margin-bottom: 30px;
+}
+.select2 {
+  display: flex; 
+  gap: 20px;
 }
 .filter-btn {
   position: relative;
