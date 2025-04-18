@@ -42,6 +42,7 @@
                 <tr>
                     <th>DOCUMENTO</th>
                     <th>NOMBRE</th>
+                    <th>APELLIDO</th>
                     <th>TELEFONO</th>
                     <th>CORREO</th>
                     <th>APARTAMENTO</th>
@@ -59,29 +60,40 @@
                         if (is_array($registro) || is_object($registro)) {
                             echo "<tr>";
                             echo "<td>" . htmlspecialchars($registro['Cedula'] ?? '') . "</td>";
-                            echo "<td>" . htmlspecialchars($registro['Pe_nombre'] ?? '') . " " . htmlspecialchars($registro['Pe_apellidos'] ?? '') . "</td>";
+                            echo "<td>" . htmlspecialchars($registro['Pe_nombre'] ?? '') . "</td>";
+                            echo "<td>" . htmlspecialchars($registro['Pe_apellidos'] ?? '') . "</td>";
                             echo "<td>" . htmlspecialchars($registro['Pe_telefono'] ?? '') . "</td>";
                             echo "<td>" . htmlspecialchars($registro['Us_correo'] ?? '') . "</td>";
-                            echo "<td>" . htmlspecialchars($registro['Ap_numero'] ?? '') . "</td>";
-                            echo "<td>" . htmlspecialchars($registro['To_letra'] ?? '') . "</td>";
-                            echo "<td>" . htmlspecialchars($registro['Ro_tipo'] ?? '') . "</td>";
+                            echo "<td>" . htmlspecialchars($registro['Ap_numero'] ?? '') . "</td>";  // APARTAMENTO
+                            echo "<td>" . htmlspecialchars($registro['To_letra'] ?? '') . "</td>";   // TORRE
+                            echo "<td>" . htmlspecialchars($registro['Ro_tipo'] ?? '') . "</td>";    // ROL
+
                             echo "<td>
-                                <button class='edit-btn' data-id='" . htmlspecialchars($registro['Cedula'] ?? '') . "' 
-                                data-nombre='" . htmlspecialchars($registro['Pe_nombre'] ?? '') . "'
-                                data-apellidos='" . htmlspecialchars($registro['Pe_apellidos'] ?? '') . "'
-                                data-telefono='" . htmlspecialchars($registro['Pe_telefono'] ?? '') . "'
-                                data-correo='" . htmlspecialchars($registro['Us_correo'] ?? '') . "'
-                                data-torre='" . htmlspecialchars($registro['To_id'] ?? '') . "'
-                                data-departamento='" . htmlspecialchars($registro['Ap_numero'] ?? '') . "'
-                                data-departamento-id='" . htmlspecialchars($registro['Ap_id'] ?? '') . "'
-                                data-rol='" . htmlspecialchars($registro['Ro_tipo'] ?? '') . "'
-                                >✏️</button>
+                                    <button class='edit-btn'
+                                        data-id='" . htmlspecialchars($registro['Cedula'] ?? '') . "'
+                                        data-nombre='" . htmlspecialchars($registro['Pe_nombre'] ?? '') . "'
+                                        data-apellidos='" . htmlspecialchars($registro['Pe_apellidos'] ?? '') . "'
+                                        data-telefono='" . htmlspecialchars($registro['Pe_telefono'] ?? '') . "'
+                                        data-correo='" . htmlspecialchars($registro['Us_correo'] ?? '') . "'
+                                        data-torre='" . htmlspecialchars($registro['To_id'] ?? '') . "'
+                                        data-departamento='" . htmlspecialchars($registro['Ap_numero'] ?? '') . "'
+                                        data-departamento-id='" . htmlspecialchars($registro['Ap_id'] ?? '') . "'
+                                        data-rol='" . htmlspecialchars($registro['Ro_tipo'] ?? '') . "'
+                                    >✏️</button>
+
                                     <input type='hidden' name='delete_id' value='" . htmlspecialchars($registro['Cedula'] ?? '') . "'>
-                                    <button type='button' id='delete-btn-admin' class='delete-btn' data-id='" . $registro['Cedula'] . "'data-rol='" . $registro['Ro_tipo'] . "'>🗑️</button>
-                            </td>";
+
+                                    <button type='button'
+                                        id='delete-btn-admin'
+                                        class='delete-btn'
+                                        data-id='" . htmlspecialchars($registro['Cedula'] ?? '') . "'
+                                        data-rol='" . htmlspecialchars($registro['Ro_tipo'] ?? '') . "'
+                                    >🗑️</button>
+                                </td>";
+
                             echo "</tr>";
                         } else {
-                            echo "<tr><td colspan='8'>Datos incorrectos para este usuario</td></tr>";
+                            echo "<tr><td colspan='9'>Datos incorrectos para este usuario</td></tr>";
                         }
                     }
                 } else {
@@ -169,7 +181,7 @@
         })
 
 
-        $(document).on('click', '.delete-btn', function () {
+        $(document).on('click', '.delete-btn', function() {
             const boton = $(this);
             const rolUsuario = boton.data('rol');
             $.ajax({
@@ -180,7 +192,7 @@
                 success: function(respuesta) {
                     console.log('Respuesta cruda:', respuesta) // Ver la respuesta antes de procesarla
 
-                    if (respuesta.length === 1 && respuesta[0].Ro_id == 1 && rolUsuario=== 'Administrador') {
+                    if (respuesta.length === 1 && respuesta[0].Ro_id == 1 && rolUsuario === 'Administrador') {
                         error('Por favor, primero agregue a otro administrador')
 
                     }

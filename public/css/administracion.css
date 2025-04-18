@@ -224,51 +224,69 @@ td {
   color: #212529;
 }
 
-.tabla-especifica th:nth-child(1),
+.tabla-especifica th,
+.tabla-especifica td {
+  padding: 8px 10px;
+  text-align: left;
+  text-align: center;
+}
+
+.tabla-especifica {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.tabla-especifica th:nth-child(1), /* Documento */
 .tabla-especifica td:nth-child(1) {
   width: 100px;
 }
 
-.tabla-especifica th:nth-child(2),
+.tabla-especifica th:nth-child(2), /* Nombre */
 .tabla-especifica td:nth-child(2) {
-  padding: 0px;
+  width: 140px;
 }
 
-.tabla-especifica th:nth-child(3),
+.tabla-especifica th:nth-child(3), /* Apellido */
 .tabla-especifica td:nth-child(3) {
-  width: 250px;
+  width: 150px;
 }
 
-.tabla-especifica th:nth-child(4),
+.tabla-especifica th:nth-child(4), /* Teléfono */
 .tabla-especifica td:nth-child(4) {
-  width: 110px;
-  /* La segunda columna será más ancha */
+  width: 90px;
 }
 
-.tabla-especifica th:nth-child(5),
+.tabla-especifica th:nth-child(5), /* Correo */
 .tabla-especifica td:nth-child(5) {
-  padding: 0px;
+  width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.tabla-especifica th:nth-child(6),
+.tabla-especifica th:nth-child(6), /* Apartamento */
 .tabla-especifica td:nth-child(6) {
-  width: 100px;
-}
-
-.tabla-especifica th:nth-child(7),
-.tabla-especifica td:nth-child(7) {
-  width: 100px;
-}
-
-.tabla-especifica th:nth-child(8),
-.tabla-especifica td:nth-child(8) {
   width: 130px;
+  text-align: center;
 }
 
-.tabla-especifica th:nth-child(9),
-.tabla-especifica td:nth-child(9) {
+.tabla-especifica th:nth-child(7), /* Torre */
+.tabla-especifica td:nth-child(7) {
+  width: 80px;
+  text-align: center;
+}
+
+.tabla-especifica th:nth-child(8), /* Rol */
+.tabla-especifica td:nth-child(8) {
   width: 100px;
 }
+
+.tabla-especifica th:nth-child(9), /* Acciones */
+.tabla-especifica td:nth-child(9) {
+  width: 80px;
+  text-align: center;
+}
+
 
 /* Aseguramos que todas las celdas se alineen correctamente */
 tr {

@@ -176,7 +176,7 @@
         }).then(response => response.json())
         .then(data => {
             if (data.success) {
-                realizado("Dato guardado");
+                realizado("La solicitud ha sido aceptada");
                 document.getElementById('acceptBtn').style.display = 'none';
                 document.getElementById('rejectBtn').style.display = 'none';
             } else {
