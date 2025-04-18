@@ -10,6 +10,7 @@ class HomeController extends Controlador
     private $visitorModel;
     private $paquetModel;
     private $peopleModel;
+    private $notificacionModel;
 
     public function __construct()
     {
@@ -20,6 +21,7 @@ class HomeController extends Controlador
         $this->visitorModel = $this->modelo('VisitorModel');
         $this->paquetModel = $this->modelo('PaquetModel');
         $this->peopleModel = $this->modelo('PeopleModel'); // Corregido
+        $this->notificacionModel = $this->modelo('NotificacionModel'); // Corregido
     }
 
     public function index()
@@ -51,8 +53,8 @@ class HomeController extends Controlador
     {
         // Obtener todas las solicitudes de actualización pendientes desde el modelo
         $solicitudes = $this->peopleModel->getAllSolicitudesNotifi();
-
         // Formatear los datos para la vista
+        $this->notificacionModel->markNotificationAsViewed();
         $notificaciones = array_map(function ($solicitud) {
             return ['tipo' => 'solicitud_actualizacion', 'data' => $solicitud];
         }, $solicitudes);
@@ -70,12 +72,18 @@ class HomeController extends Controlador
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $usuario = $_POST['Us_usuario'];
-
+            $id = $_POST['Us_id'];
             // Obtener visitas desde el modelo PeopleModel
             $visitas = $this->peopleModel->getNotificacion($usuario);
-
+            //Insertar en la tabla paquetes la vista
+            $this->notificacionModel->markNotificationPaqued($id);
+            //Insertar en la tabla registro la vista
+            $this->notificacionModel->markNotificationRegistro($id);
+            //Insertar en la tabla de solicitud la vista
+            $this->notificacionModel->markNotificationRechazo($id);
             // Obtener paquetes desde el modelo PaquetModel
             $paquetes = $this->paquetModel->getPaquetesPorUsuario($usuario);
+            $rechazo = $this->peopleModel->getNotifi($id);
 
             // Combinar visitas y paquetes en un solo arreglo
             $notificaciones = array_merge(
@@ -84,7 +92,10 @@ class HomeController extends Controlador
                 }, $visitas),
                 array_map(function ($paquete) {
                     return ['tipo' => 'paquete', 'data' => $paquete];
-                }, $paquetes)
+                }, $paquetes),
+                array_map(function ($rechazo) {
+                    return ['tipo' => 'rechazo', 'data' => $rechazo];
+                }, $rechazo)
             );
 
             // Mezclar las notificaciones de forma aleatoria
@@ -103,13 +114,16 @@ class HomeController extends Controlador
     public function solicitud_user()
     {
         if (isset($_POST["detalles"])) {
-
-            $id_residente = $_POST["id"];
+            echo '<script>console.log("Valores de $_POST:", ' . json_encode($_POST) . ');</script>';
+            $id_residente = $_POST["id_residente"];
+            $id = $_POST["id"];
             $resident = $this->peopleModel->getPersonaById($id_residente);
-            $datos_resident = $this->peopleModel->getAllSolicitudes($id_residente);
-
+            $people = $this->peopleModel->getAllRedident($id_residente);
+            $datos_resident = $this->peopleModel->getAllSolicitudes($id);
+            
             $datos = [
                 'resindents' => $resident,
+                'people'=>$people,
                 'datos_resident' => $datos_resident
             ];
             $this->vista("pages/admin/modalSolicitud", $datos);
@@ -123,11 +137,14 @@ class HomeController extends Controlador
             header('location:' . RUTA_URL . '/pages/homeView');
             exit;
         }
-
+        
         $datos = $this->userController->MostrarDatos();
+        
         $Torres = $this->torreModel->setTorres();
+        $notificacion= $this->notificacionModel->getPendingNotifications();
 
         $_SESSION['torre'] = $Torres;
+        $_SESSION['notificaciones'] = $notificacion;
         // Pasamos los datos correctamente a la vista
         $this->vista('pages/admin/adminView', $datos);
     }
@@ -181,20 +198,28 @@ class HomeController extends Controlador
     public function BuscarPaquetes()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'GET') {
-
-            // Obtener fechas de POST o GET
-            $fechaInicio = isset($_POST['fecha_inicio']) ? trim($_POST['fecha_inicio']) : (isset($_GET['fecha_inicio']) ? trim($_GET['fecha_inicio']) : '');
-            $fechaFin = isset($_POST['fecha_fin']) ? trim($_POST['fecha_fin']) : (isset($_GET['fecha_fin']) ? trim($_GET['fecha_fin']) : '');
-
-            // Validar fechas
-            if (!empty($fechaInicio) && !empty($fechaFin)) {
+    
+            $fechaInicio = isset($_POST['fecha_inicio']) ? trim($_POST['fecha_inicio']) :
+                           (isset($_GET['fecha_inicio']) ? trim($_GET['fecha_inicio']) : '');
+    
+            $fechaFin = isset($_POST['fecha_fin']) ? trim($_POST['fecha_fin']) :
+                        (isset($_GET['fecha_fin']) ? trim($_GET['fecha_fin']) : '');
+    
+            // Si las dos fechas están vacías o solo una está vacía, mostrar todos los paquetes
+            if (empty($fechaInicio) || empty($fechaFin)) {
+                $paquets = $this->paquetModel->getAllPackages();
+                $datos = [
+                    'paquets' => $paquets,
+                    'filter_date' => false
+                ];
+            } else {
+                // Validar fechas si ambas están presentes
                 if ($fechaInicio > $fechaFin) {
                     $datos = [
                         'paquets' => [],
                         'messageError' => 'La fecha de inicio no puede ser mayor que la fecha de fin.'
                     ];
                 } else {
-                    // Obtener paquetes en el rango de fechas
                     $paquets = $this->paquetModel->getPackagesByDateRange($fechaInicio, $fechaFin);
                     $datos = [
                         'paquets' => $paquets,
@@ -203,17 +228,12 @@ class HomeController extends Controlador
                         'fecha_fin' => $fechaFin
                     ];
                 }
-            } else {
-                $datos = [
-                    'paquets' => [],
-                    'messageError' => 'Las fechas no son válidas.'
-                ];
             }
-
-            // Cargar la vista con los resultados
+    
             $this->vista('pages/admin/paquetesView', $datos);
         }
     }
+    
 
     public function DeletePaquete()
     {
@@ -240,5 +260,23 @@ class HomeController extends Controlador
             exit;
         }
     }
+   
+
+
+
+    public function Edificios()
+    {
+        $torres = $this->torreModel->getTorreByTable();
+        $apartaments = $this->apartamentModel->getApartamentByTable();
+
+        $data = [
+            'torres' => $torres,
+             'apartaments' => $apartaments
+        ];
+
+        $this->vista('pages/admin/edificiosView', $data);
+    }
+
+    
 
 }

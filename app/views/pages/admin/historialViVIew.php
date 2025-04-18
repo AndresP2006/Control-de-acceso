@@ -1,21 +1,21 @@
 <?php require_once RUTA_APP . '/views/inc/header-admin.php'; ?>
 <div class="select">
-    <h1 class="table-titulo">Lista de visitantes</h1>
+    <h1 class="table-titulo2">Lista de visitantes</h1>
     <form method="POST" action="<?php echo RUTA_URL; ?>/UserController/VisitantesPorFecha">
         <input type="date" name="fecha" id="fecha" value="<?php echo htmlspecialchars($_POST['fecha'] ?? ''); ?>">
-        <button type="submit" class="filter-btn" style="position: relative; top: 33px; left:20px;">Filtrar</button>
+        <button type="submit" class="btn" style="position: relative; left:266px;">Filtrar</button>
     </form>
 </div>
 <div class="table-container">
     <div class="table-wrapper">
         <table>
-            <thead> 
+            <thead>
                 <tr>
-                    <th>Documento</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Telefono</th>
-                    <th>Registro</th>
+                    <th>DOCUMENTO</th>
+                    <th>NOMBRE</th>
+                    <th>APELLIDO</th>
+                    <th>TELEFONO</th>
+                    <th>REGISTRO</th>
                 </tr>
             </thead>
             <tbody>
@@ -63,3 +63,4 @@
 
 <?php include RUTA_APP . '/views/pages/admin/modalHistorial.php'; ?>
 <?php include RUTA_APP . '/views/inc/footer-visitante.php'; ?>
+<?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>

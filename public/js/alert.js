@@ -50,7 +50,7 @@ document.querySelectorAll('.delete-btn').forEach(button => {
       // Crear el formulario para eliminar el registro
       let form = document.createElement('form');
       form.method = 'POST';
-      form.action = 'http://localhost/Control-de-acceso/UserController/DeleteUser';  // Cambiar la URL de acuerdo con tu ruta
+      form.action =  RUTA_URL+'/UserController/DeleteUser';  // Cambiar la URL de acuerdo con tu ruta
 
       // Crear el campo para el ID de eliminación
       let deleteInput = document.createElement('input');

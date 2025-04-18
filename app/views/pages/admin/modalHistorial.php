@@ -14,6 +14,7 @@
                     <th>Hora de Salida</th>
                     <th>Motivo</th>
                     <th>Departamento</th>
+                    <th>Torre</th>
                     <th>Residente</th>
                 </tr>
             </thead>
@@ -25,7 +26,8 @@
                             <td><?php echo htmlspecialchars($historial['Re_hora_entrada']); ?></td>
                             <td><?php echo htmlspecialchars($historial['Re_hora_salida']); ?></td>
                             <td><?php echo htmlspecialchars($historial['Re_motivo']); ?></td>
-                            <td><?php echo htmlspecialchars($historial['Vi_departamento']); ?></td>
+                            <td><?php echo htmlspecialchars($historial['Ap_numero']); ?></td>
+                            <td><?php echo htmlspecialchars($historial['To_letra']); ?></td>
                             <td><?php echo htmlspecialchars($historial['Pe_id']); ?></td>
                         </tr>
                     <?php endforeach; ?>

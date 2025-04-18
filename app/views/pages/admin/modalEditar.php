@@ -4,8 +4,8 @@
             <h3 class="titulo-form">Registro</h3>
             <span class="close" id="close">&times;</span>
         </div>
-        <form id="myForm" action="<?php echo RUTA_URL; ?>/UserController/EditarUser" method="post">
-            <label for="">Documento</label><br>
+        <form id="myForm" class="editarForm" action="<?php echo RUTA_URL; ?>/UserController/EditarUser" method="post">
+            <label for="">Documento123</label><br>
             <input type="text" id="E_id" name="E_id" readonly />
 
             <label for="">Nombre</label><br>
@@ -20,14 +20,14 @@
             <label for="">Correo</label><br>
             <input type="email" id="E_Gmail" name="E_Gmail"  require/>
 
-            <!-- <label for="">Departamento</label><br> -->
-            <!-- <input type="text" id="E_Departamento" name="E_Departamento" /> -->
+            <!-- <label for="">Departamento</label><br>
+            <input type="text" id="E_Departamento" name="E_Departamento" /> -->
             <div class="titulo_torre">
                 <h4>Torre</h4>
                 <h4 class="ap">Apartamento</h4>
             </div>
             <div class="select_torre">
-                <select id="select_torre" class="filter-select">
+                <select name="E_torre"id="select_torre" class="filter-select">
                     <option value="">Torre</option>
                     <?php foreach ($_SESSION['torre'] as $torre) {
                         echo "<option value='{$torre->To_id}'>{$torre->To_letra}</option>";
@@ -47,13 +47,10 @@
                 <option value=3>Residente</option>
             </select>
 
-            <label for="" id="E_passwordl">Contraseña</label><br>
-            <input type="text" id="E_password" name="E_contrasena" />
-
             <center>
                 <input type="submit" value="Actualizar" class="Enviar" name="udate" />
             </center>
         </form>
-
     </div>
+    <!-- <script src="<?php echo RUTA_URL; ?>/js/ValidacionesAdmin.js"></script> -->
 </div>

@@ -11,7 +11,7 @@ class PaquetModel
 
     public function getPaquetById($id)
     {
-        $this->db->query("SELECT * FROM paquete WHERE pe_id = $id AND Pa_estado != 'Entregado';");
+        $this->db->query("SELECT * FROM paquete WHERE pe_id = $id AND Pa_estado != 'Entregado'");
         return $this->db->registros();
     }
 
@@ -24,7 +24,7 @@ class PaquetModel
 
     public function getPackegesBy($id)
     {
-        $this->db->query("SELECT * FROM paquete WHERE Pe_id = :Id");
+        $this->db->query("SELECT * FROM paquete WHERE Pe_id = :Id AND Pa_estado != 'Entregado'");
         $this->db->bind(':Id', $id);
         return $this->db->registros() ? true : false;
     }
@@ -49,8 +49,7 @@ class PaquetModel
     {
         $this->db->query("SELECT Pa_descripcion, Pa_fecha, Pa_estado, Pa_responsable
                           FROM paquete
-                          WHERE Pe_id IN (SELECT Pe_id FROM persona WHERE Pe_nombre = :usuario)
-                          AND Pa_estado = 'Bodega';");
+                          WHERE Pe_id IN (SELECT Pe_id FROM persona WHERE Pe_nombre = :usuario)AND Pa_estado = 'Bodega';");
         $this->db->bind(':usuario', $usuario);
         return $this->db->registros();
     }
@@ -59,15 +58,14 @@ class PaquetModel
         // Usamos LEFT JOIN para traer datos aunque no haya coincidencia (opcional).
         // Si quieres solo coincidencias exactas, usa INNER JOIN.
         $this->db->query("SELECT
-        paquete.*, 
-        persona.Pe_nombre,
-        persona.Pe_apellidos
-    FROM paquete
-    INNER JOIN persona ON paquete.Pe_id = persona.Pe_id
-    WHERE DATE(Pa_fecha) BETWEEN :inicio AND :fin
-    ORDER BY Pa_fecha ASC
-");
-
+                    paquete.*, 
+                    persona.Pe_nombre,
+                    persona.Pe_apellidos
+                FROM paquete
+                INNER JOIN persona ON paquete.Pe_id = persona.Pe_id
+                WHERE DATE(Pa_fecha) BETWEEN :inicio AND :fin
+                ORDER BY Pa_fecha ASC
+                ");
 
         // Asignamos los valores de las fechas
         $this->db->bind(':inicio', $fechaInicio);
@@ -76,4 +74,16 @@ class PaquetModel
         // Ejecutamos y retornamos los resultados
         return $this->db->registros();
     }
+
+    public function getAllPackages()
+{
+            $this->db->query("SELECT 
+                paquete.*, 
+                persona.Pe_nombre, 
+                persona.Pe_apellidos
+            FROM paquete
+            INNER JOIN persona ON paquete.Pe_id = persona.Pe_id
+            ORDER BY Pa_fecha ASC");
+            return $this->db->registros();
+}
 }

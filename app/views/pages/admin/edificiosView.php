@@ -105,12 +105,12 @@
         <a href="<?php echo RUTA_URL; ?>/HomeController/Edificios"><button class="action-btn">Edificio</button></a>
     </div>
 </div>
-<script>
-        <?php if (isset($datos['messageError'])) { ?>
-error("<?php echo $datos['messageError']; ?>")
-<?php } ?>
-<?php if (isset($datos['messageInfo'])) { ?>
-realizado("<?php echo $datos['messageInfo']; ?>")
-<?php } ?>
-</script>
 <?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>
+<script>
+    <?php if (isset($datos['messageError'])) { ?>
+        error("<?php echo $datos['messageError']; ?>")
+    <?php } ?>
+    <?php if (isset($datos['messageInfo'])) { ?>
+        realizado("<?php echo $datos['messageInfo']; ?>")
+    <?php } ?>
+</script>

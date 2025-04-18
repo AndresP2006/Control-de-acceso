@@ -1,29 +1,31 @@
 <?php require_once RUTA_APP . '/views/inc/header-admin.php'; ?>
+<div class="select2">
+    <h1 class="table-titulo">Historial de Paquetes</h1>
+    <form action="<?php echo RUTA_URL; ?>/HomeController/BuscarPaquetes" method="POST" class="table-titulo">
+        <label for=" fecha_inicio"> Fecha inicio:</label>
+        <input type="date" name="fecha_inicio"
+            value="<?php echo isset($datos['fecha_inicio']) ? $datos['fecha_inicio'] : ''; ?>">
 
-<form action="<?php echo RUTA_URL; ?>/HomeController/BuscarPaquetes" method="POST" class="formFiltro">
-    <label for=" fecha_inicio"> Fecha inicio:</label>
-    <input type="date" name="fecha_inicio"
-        value="<?php echo isset($datos['fecha_inicio']) ? $datos['fecha_inicio'] : ''; ?>" required>
+        <label for="fecha_fin"> Fecha final:</label>
+        <input type="date" name="fecha_fin" value="<?php echo isset($datos['fecha_fin']) ? $datos['fecha_fin'] : ''; ?>">
 
-    <label for="fecha_fin"> Fecha final:</label>
-    <input type="date" name="fecha_fin" value="<?php echo isset($datos['fecha_fin']) ? $datos['fecha_fin'] : ''; ?>"
-        required>
-
-    <button class="btn" type="submit">Filtrar por Fecha</button>
-</form>
+        <button class="btn" type="submit">Filtrar</button>
+    </form>
+</div>
 <div class="table-container">
+
     <div class="table-wrapper">
-        <h1>Historial de Paquetes</h1>
+
         <table>
             <thead>
                 <tr>
-                    <th>Documento</th>
-                    <th>Destinatario</th>
-                    <th>Estado</th>
-                    <th>Fecha</th>
-                    <th>Descripcion</th>
-                    <th>Recibidor</th>
-                    <th>Accion</th>
+                    <th>DOCUMENTO</th>
+                    <th>DESTINATARIO</th>
+                    <th>ESTADO</th>
+                    <th>FECHA</th>
+                    <th>DESCRIPCION</th>
+                    <th>RECIBIDOR</th>
+                    <th>ACCION</th>
 
                 </tr>
 
