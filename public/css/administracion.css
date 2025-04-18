@@ -358,9 +358,18 @@ button:hover {
 }
 .logos {
   display: flex;
+  position: relative;
+  width: 600px;
   flex-direction: row;
-  margin-right: -792px;
   align-items: center;
+  justify-content: space-around;
+  flex-wrap: nowrap;
+}
+.sistemas{
+  display: flex;
+  padding-top: 10px;
+  width: 310px;
+  justify-content: space-around;
 }
 
 /* Estilos para el modal */
