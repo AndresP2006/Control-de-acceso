@@ -82,7 +82,8 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
         border-color: #008E4B;
         box-shadow: 0 0 0 3px rgba(0, 142, 75, 0.2);
     }
-    strong{
+
+    strong {
         font-size: 20px;
     }
 </style>
@@ -223,20 +224,20 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
 
     // ————— Valida ambos campos y actúa sobre el botón —————
     function validarCampos() {
-        const telInput   = document.getElementById("telefono");
-        const mailInput  = document.getElementById("gmail");
-        const saveBtn    = document.getElementById("save-btn");
+        const telInput = document.getElementById("telefono");
+        const mailInput = document.getElementById("gmail");
+        const saveBtn = document.getElementById("save-btn");
 
-        const telValido   = esTelefonoValido( telInput.value.trim() );
-        const mailValido  = esCorreoValido( mailInput.value.trim() );
+        const telValido = esTelefonoValido(telInput.value.trim());
+        const mailValido = esCorreoValido(mailInput.value.trim());
 
         // Pintar bordes
-        telInput.style.border  = telValido  ? "" : "2px solid red";
+        telInput.style.border = telValido ? "" : "2px solid red";
         mailInput.style.border = mailValido ? "" : "2px solid red";
 
         // Mensajes de validación nativa
-        telInput.setCustomValidity(  telValido  ? "" : "Sólo números (8–15 dígitos)" );
-        mailInput.setCustomValidity( mailValido ? "" : "Formato de correo inválido" );
+        telInput.setCustomValidity(telValido ? "" : "Sólo números (8–15 dígitos)");
+        mailInput.setCustomValidity(mailValido ? "" : "Formato de correo inválido");
 
         // Habilita sólo si ambos son válidos
         saveBtn.disabled = !(telValido && mailValido);
@@ -333,21 +334,35 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
 
     function cancelEditing() {
         editando = false;
+
+        // Restaurar botones
         document.getElementById("edit-btn").style.display = "inline-block";
         document.getElementById("cancel-btn").style.display = "none";
-        document.getElementById("save-btn").style.display = "none";
 
-        const camposEditables = ["gmail", "telefono", "gmailV", "telefonoV"];
-        camposEditables.forEach(function(id) {
-            let input = document.getElementById(id);
+        const saveBtn = document.getElementById("save-btn");
+        saveBtn.style.display = "none";
+        saveBtn.disabled = false;
+
+        document.getElementById("spinner").style.display = "none";
+        document.getElementById("save-text").style.visibility = "visible";
+
+        // Restaurar campos editables
+        ["gmail", "telefono", "gmailV", "telefonoV"].forEach(id => {
+            const input = document.getElementById(id);
             if (input) {
                 input.value = valoresOriginales[id];
-                input.setAttribute("disabled", "true");
+                input.disabled = true;
                 input.style.backgroundColor = "transparent";
+                input.style.border = "none";
+
+                // Eliminar cualquier validación previa
+                input.setCustomValidity("");
                 input.style.border = "none";
             }
         });
     }
+
+
 
     function guardarDatos(callback) {
         const campos = ["gmail", "telefono", "gmailV", "telefonoV"];
