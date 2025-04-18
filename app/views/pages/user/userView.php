@@ -210,7 +210,39 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
 </div>
 
 <script>
-    // Función para consultar el estado de la solicitud
+    // ————— Validadores puros —————
+    function esTelefonoValido(telefono) {
+        // Sólo dígitos, entre 8 y 15 caracteres
+        return /^\d{8,15}$/.test(telefono);
+    }
+
+    function esCorreoValido(correo) {
+        const regex = /^[^\s@]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}$/i;
+        return regex.test(correo);
+    }
+
+    // ————— Valida ambos campos y actúa sobre el botón —————
+    function validarCampos() {
+        const telInput   = document.getElementById("telefono");
+        const mailInput  = document.getElementById("gmail");
+        const saveBtn    = document.getElementById("save-btn");
+
+        const telValido   = esTelefonoValido( telInput.value.trim() );
+        const mailValido  = esCorreoValido( mailInput.value.trim() );
+
+        // Pintar bordes
+        telInput.style.border  = telValido  ? "" : "2px solid red";
+        mailInput.style.border = mailValido ? "" : "2px solid red";
+
+        // Mensajes de validación nativa
+        telInput.setCustomValidity(  telValido  ? "" : "Sólo números (8–15 dígitos)" );
+        mailInput.setCustomValidity( mailValido ? "" : "Formato de correo inválido" );
+
+        // Habilita sólo si ambos son válidos
+        saveBtn.disabled = !(telValido && mailValido);
+    }
+
+    // ————— Tu función existente —————
     function consultarEstadoSolicitud(idUsuario) {
         fetch(`<?= RUTA_URL; ?>/UserController/estadoSolicitud/${idUsuario}`)
             .then(response => response.json())
@@ -235,38 +267,42 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
                     editBtn.style.visibility = "visible";
                 }
             })
-            .catch(err => {
-                console.error("Error consultando estado:", err);
-            });
+            .catch(err => console.error("Error consultando estado:", err));
     }
 
-    // Variables globales
+    // ————— Variables globales —————
     let valoresOriginales = {};
-    let editando = false; // Bandera para saber si el usuario está en modo edición
+    let editando = false;
 
     document.addEventListener("DOMContentLoaded", function() {
+        // Asociar validación a teléfono y correo
+        const tel = document.getElementById("telefono");
+        const mail = document.getElementById("gmail");
+        tel.addEventListener("blur", validarCampos);
+        tel.addEventListener("input", validarCampos);
+        mail.addEventListener("blur", validarCampos);
+        mail.addEventListener("input", validarCampos);
+
+        // Estado inicial del botón
+        validarCampos();
+
+        // Mostrar/ocultar botón editar según pendiente
         let pendiente = <?php echo json_encode($pendiente); ?>;
-        // Si no hay solicitud pendiente, se limpia el mensaje y se muestra el botón de editar
         if (!pendiente) {
             document.getElementById("status-msg").innerText = "";
-            let editBtn = document.getElementById("edit-btn");
+            const editBtn = document.getElementById("edit-btn");
             editBtn.style.display = "inline-block";
             editBtn.style.visibility = "visible";
         }
-        // Si hay solicitud pendiente, se deja lo que imprimió PHP
 
-        // Asignar manejador de eventos a cada habitante
-        const habitantes = document.querySelectorAll(".habitante-item");
-        habitantes.forEach(function(item) {
-            item.addEventListener("click", function() {
-                cambiarHabitante(this);
-            });
-        });
+        // Click en habitantes
+        document.querySelectorAll(".habitante-item").forEach(item =>
+            item.addEventListener("click", () => cambiarHabitante(item))
+        );
 
-        // Consultar el estado del usuario principal si hay solicitud pendiente
-        const idUsuarioInicial = document.getElementById("cedula").value;
+        // Si hay pendiente, consulta su estado
         if (pendiente) {
-            consultarEstadoSolicitud(idUsuarioInicial);
+            consultarEstadoSolicitud(document.getElementById("cedula").value);
         }
     });
 
