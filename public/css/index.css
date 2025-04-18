@@ -1,335 +1,327 @@
 * {
-    padding: 0px;
-    margin: 0px;
-    color: #080808;
-    font-family: Arial, Helvetica, sans-serif !important;
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif !important;
 }
-
 
 /* Encabezado */
 
-.cabeza {
-    /* background-image: url(../imagenes_logos/fondo\ de\ pagian.jpg); */
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    height: 20vh;
-    border-radius: 0 0 20% 20%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+h1 {
+  font-size: 2em;
+  text-align: center;
+  color: #fff;
 }
-
-.title {
-    font-size: 7vw;
-    color: azure;
-    padding-left: 5%;
-}
-
-b {
-    color: red;
-}
-
-.menu {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    padding-right: 2%;
-}
-
-ul {
-    list-style-type: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
-}
-
-.menu__lista {
-    margin: 0 20px;
-    font-size: 4vw;
-    border-right: 2px solid #fff;
-    padding-right: 20px;
-}
-
-.menu__lista:last-child {
-    border-right: none;
-}
-
-a {
-    color: #fff;
-    text-decoration: none;
-    text-align: center;
-}
-
-a:hover {
-    color: red;
-}
-
 h2 {
-    margin-top: 10px;
+  font-size: 1.5em;
 }
-
+h3 {
+  font-size: 1em;
+}
+p {
+  font-size: 1em;
+  text-align: justify;
+}
+b {
+  color: #f00;
+}
+header .container {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  text-align: center;
+  width: 100%;
+  margin: auto;
+}
+header h1 {
+  margin: 0;
+  padding: 25px 30px;
+}
+header a {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  text-align: center;
+  color: #fff;
+  padding: 5px 12px;
+}
+a:hover {
+  color: #f00;
+}
+header nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 10px;
+}
 
 /* Cuerpo */
 
-.cuerpo {
-    width: 90%;
-    margin: auto;
-    padding: 150px 0;
-    text-align: center;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding-top: 7cm;
-    padding-bottom: 7cm;
-    justify-content:center;
-    
+main {
+  width: 90%;
+  margin: auto;
 }
 
-.cuerpo__informacion-content-titulo {
-    font-size: 40px;
+main h2 {
+  margin: 0;
+  padding: 20px 0;
+  text-align: center;
+}
+section article {
+  padding-bottom: 10px;
+}
+.carrusel {
+  width: 100%;
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  height: auto;
 }
 
-samp {
-    color: rgb(255, 0, 0);
+.foto1 {
+  width: 100%;
+  display: block;
+  height: auto;
+  border-radius: 8px;
 }
 
-.cuerpo__informacion-content {
-    display: flex;
-    width: 50%;
-    padding-right: 40px;
-    padding-left: 40px;
-    flex-direction: column;
-    align-items: center;
-}
-
-.cuerpo__informacion-content-titulo-parrafo {
-    height: 261px;
-    width: 700px;
-    text-align: justify;
-    padding-top: 40px;
-    font-size: 22px;
-}
-
-.cuerpo__informacion-content-fotos {
-    margin-top: 150px;
-    width: 40%;
-    display: flex;
-    justify-content: center;
-    position: relative;
-    /* Añadido para que los hijos con posición absoluta se posicionen dentro de este contenedor */
-}
-
-.cuerpo__informacion-content-fotos img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 20px;
-}
-
+/* Flechas (sin cambiar el nombre de las clases) */
 .atras,
 .adelante {
-    position: absolute;
-    width: 30px;
-    height: 50px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.atras:hover,
+.adelante:hover {
+  opacity: 1;
 }
 
 .atras {
-    top: 50%;
-    left: 50px;
-    transform: translateY(-50%);
+  left: 10px;
 }
 
 .adelante {
-    top: 50%;
-    right: 50px;
-    transform: translateY(-50%);
+  right: 10px;
 }
-
-
-/* Formulario */
+/* Formulario de inicio de sesion */
 
 .inicia_seccion {
-    /* background-image: url(../imagenes_logos/fondo\ de\ pagian.jpg); */
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    height: 300px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 100px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-
-form {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
+.formulario {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
 }
-
-.Formulario {
-    display: flex;
-    flex-direction: column;
-    width: 40%;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-}
-
-.Formulario__titulo {
-    font-size: 5vw;
-    color: #fff;
-    margin-bottom: 20px;
-}
-
-.Formulario__titulo-input,
-.Formulario__titulo-input-opcion {
-    width: 80%;
-    max-width: 300px;
-    height: 40px;
-    margin-bottom: 20px;
-    font-size: 15px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 600;
-}
-
-.Formulario__boton {
-    width: 60%;
-    max-width: 150px;
-    padding: 10px 0;
-    border-radius: 30px;
-    cursor: pointer;
-}
-
-.Formulario__boton-a {
-    color: #080808;
-    font-size: 20px;
-    padding: 15px 25px;
-}
-
-.Formulario__boton:hover {
-    background-color: red;
-}
-
-.Formulario__boton-a:hover {
+.Formulario__titulo{
     color: #fff;
 }
+.formulario input {
+  max-width: 250px;
+}
+.Formulario__boton{
+    margin-bottom: 20px;
+    border-radius: 3px;
+    border-width: 0;
+    padding: 3px;
+}
+.Formulario__boton:hover{
+    background-color: aqua;
 
+}
 .imagen {
-    width: 60%;
-    display: flex;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ 
 }
-
 .imagen__mapa {
-    width: 100%;
-    max-width: 400px;
-    padding: 10px;
-    border-radius: 30px;
-}
-
-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 15px 0;
-}
-
-.content__tabla-titulo,
-.content__tabla-informacion {
-    padding: 8px;
-    text-align: left;
-    text-align: center;
-}
-
-.titulo {
-    background-color: #bebaba;
-    color: aqua;
-    font-size: 30px;
+  width: 80%;
+  border-radius: 10px;
 }
 
 .pie {
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
 }
 
 .pie__titulo {
-    font-size: 24px;
-    margin-bottom: 10px;
-    color: white;
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #fff;
 }
 
-.pie a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 15px;
-    font-size: 18px;
+.icons_footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
-.pie a:hover {
-    text-decoration: underline;
-}
-
-
-.lista {
-    margin-top: 15px;
-}
-
-.lista a {
-    display: inline-block;
-    margin: 0 10px;
+.icon_item {
+  display: flex;
+  align-items: center;
+  color: white;
+  font-size: 16px;
+  flex: 1 1 200px;
+  justify-content: center;
 }
 
 hr {
-    border: none;
-    border-top: 2px solid #fff;
-    margin: 10px 0;
+  border: none;
+  border-top: 2px solid #fff;
+  margin: 10px 0;
 }
-
-.icons_footer{
-    display: flex;
-    align-items: center;
-    color: white;
-    justify-content:center;
-}
-.icons_footer *{
-    color: white;
-}
-
 
 .pie__copy {
-    margin-top: 20px;
-    font-size: 14px;
-    color: #ccc;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #ccc;
 }
 
 .pie__copy p {
-    margin: 5px 0;
+  margin: 5px 0;
 }
 
-.pie__copy a {
-    color: #fff;
-    text-decoration: none;
-}
+@media (min-width: 750px) {
+    header .container {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  
+    header nav {
+      flex-direction: row;
+      padding-bottom: 0;
+      padding-right: 20px;
+    }
+    header a{
+        font-size: 1.5em;
+    }
+  
+    #hero {
+      display: flex;
+    }
+  
+    main article {
+      width: 50%;
+      text-align: initial;
+      padding-top: 50px;
+      padding-right: 20px;
+      font-size: 100%;
+    }
+  
+    .carrusel {
+      background-size: cover;
+      background-position: center center;
+      width: 50%;
+      padding-top: 150px;
+      padding-bottom: 10%;
+    }
+  
+    .atras,
+    .adelante {
+      top: 50%;
+      width: 40px;
+      height: 40px;
+    }
+  
+    /* 🔧 SOLUCIÓN PARA FORMULARIO E IMAGEN LATERAL */
+    .inicia_seccion {
+        display: flex;
+        justify-content: center;
+        padding: 40px 20px;
+      }
+    
+      .inicia_seccion form {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 50px;
+        max-width: 1000px;
+        width: 100%;
+      }
+    
+      .formulario {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        max-width: 400px;
+      }
+    
+      .Formulario__titulo {
+        font-size: 2.8em;
+        color: #fff;
+        text-align: left;
+      }
+    
+      .formulario input {
+        width: 100%;
+        padding: 10px;
+        font-size: 1em;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+      }
+    
+      .Formulario__boton {
+        padding: 10px;
+        font-size: 1em;
+        cursor: pointer;
+        background-color: white;
+        border: none;
+        border-radius: 20px;
+        transition: background-color 0.3s ease;
+      }
+    
+      .Formulario__boton:hover {
+        background-color: aqua;
+      }
+    
+      .imagen {
+        flex: 1;
+        display: flex;
+        justify-content: center;
 
-.pie__copy a:hover {
-    text-decoration: underline;
-}
-
-@media (min-width: 768px) {
-    .cabeza {
-        height: 200px;
+      }
+    
+      .imagen iframe,
+      .imagen__mapa {
+        width: 100%;
+        max-width: 400px;
+        height: 400px; /* Aumentado desde 300px */
+        border-radius: 15px;
+        border: 0;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+      
+  }
+  
+  @media (min-width: 1000px) {
+    main article {
+        padding-top: 120px;
     }
-    .title {
-        font-size: 40px;
+    p{
+        font-size: 1.3em;
     }
-    .menu__lista {
-        font-size: 35px;
+    .container{
+        border-radius: 0 0 20% 20%;
     }
-    .Formulario {
-        max-width: 60%;
-    }
-}
+  }
+  

@@ -1,209 +1,179 @@
-*{
-  margin: 0%;
-  font-family: Arial, Helvetica, sans-serif !important;
+/* Reset & Box Sizing */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
 }
 
 /* Encabezado */
-.cabeza {
-  background-image: url(../imagenes_logos/fondo\ de\ pagian.jpg);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  height: 20vh;
-  border-radius: 0 0 20% 20%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.title {
-  font-size: 7vw;
-  color: azure;
-  padding-left: 5%;
-}
-
-b {
-  color: red;
-}
-
-.menu {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  padding-right: 2%;
-}
-
-ul {
-  list-style-type: none;
-  display: flex;
-  margin: 0;
-  padding: 0;
-}
-
-.menu__lista {
-  margin: 0 20px;
-  font-size: 4vw;
-  border-right: 2px solid #fff;
-  padding-right: 20px;
-}
-
-.menu__lista:last-child {
-  border-right: none;
-}
-
-a {
-  color: #fff;
-  text-decoration: none;
-  text-align: center;
-}
-
-a:hover {
-  color: red;
-}
-
-/* Cuerpo de la página */
-.content {
-  width: 950px;
+header .container {
   display: flex;
   flex-direction: column;
-  margin: auto;
-  padding-top: 100px;
-  padding-bottom: 100px;
-}
-
-.content__primero {
-  display: flex;
-  flex-direction: row;
-  padding-bottom: 100px;
-}
-
-.mision {
   text-align: center;
-  padding-bottom: 40px;
+  width: 100%;
+  margin: auto;
+}
+header h1 {
+  font-size: 2em;
+  color: #fff;
+  padding: 25px 30px;
+}
+b {
+  color: #f00;
+}
+header nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 10px;
+}
+header nav a {
+  color: #fff;
+  text-decoration: none;
+  padding: 5px 12px;
+}
+header nav a:hover {
+  color: #f00;
 }
 
-.texto {
-  width: 500px;
-  text-align: justify;
-  font-size: 20px;
+/* Contenedor general */
+.content {
+  width: 95%;
+  max-width: 1000px;
+  margin: auto;
+  padding: 15px 0;
 }
 
-.Mision-img {
-  width: 450px;
-  padding-left: 50px;
-  padding-right: 50px;
-}
-
+/* Secciones por defecto en columna */
+.content__primero,
 .content__segundo {
   display: flex;
-  flex-direction: row-reverse;
-  padding-right: 50px;
-  padding-bottom: 100px;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
 }
 
-.vision {
-  text-align: center;
-  padding-bottom: 40px;
-}
-
-table {
+.content__primero .texto,
+.content__segundo .texto {
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 15px 0;
 }
 
-.content__tabla-titulo, .content__tabla-informacion {
-  padding: 20px; /* Aumentado el padding */
-  text-align: center; /* Centrado el texto */
+/* Títulos */
+.mision, .vision {
+  font-size: 1.5em;
+  text-align: center;
+  margin-bottom: 8px;
+}
+.mision b, .vision b {
+  color: #f00;
 }
 
-.titulo {
-  background-color: #bebaba;
-  color: rgb(255, 0, 0);
-  font-size: 30px;
+/* Párrafos */
+.texto p {
+  font-size: 0.95em;
+  line-height: 1.5;
+  text-align: justify;
 }
 
-/* Pie de página */
+/* Imágenes */
+.Mision-img {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 8px;
+}
+
+/* Tablas */
+.tablas {
+  width: 100%;
+  overflow-x: auto;
+}
+.tablas table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+.tablas th {
+  background: #ddd;
+  padding: 8px;
+  color: #f00;
+  text-align: left;
+  font-size: 1em;
+}
+.tablas td {
+  padding: 6px 10px;
+}
+.tablas li {
+  list-style: inside;
+  font-size: 0.9em;
+}
+/* Footer */
 .pie {
   background-color: #333;
   color: #fff;
   padding: 20px;
   text-align: center;
 }
-
-.pie__titulo {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.pie a {
-  color: #fff;
-  text-decoration: none;
-  margin: 0 15px;
-  font-size: 18px;
-}
-
-.pie a:hover {
-  text-decoration: underline;
-}
-
-.lista {
-  margin-top: 15px;
-}
-
-.lista a {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-hr {
-  border: none;
-  border-top: 2px solid #fff;
-  margin: 10px 0;
-}
-
-.pie__copy {
-  margin-top: 20px;
-  font-size: 14px;
-  color: #ccc;
-}
-
-.pie__copy p {
-  margin: 5px 0;
-}
-
-.pie__copy a {
-  color: #fff;
-  text-decoration: none;
-}
-
-.pie__copy a:hover {
-  text-decoration: underline;
-}
-
-.fa-facebook {
-  font-size: 24px;
-  color: #3b5998;
-  margin-top: 10px;
-}
-
-.fa-facebook:hover {
-  color: #1e2e4f;
-}
-
-
+.pie__titulo { font-size: 24px; margin-bottom: 10px; }
+.icons_footer { display: flex; justify-content: center; gap: 15px; margin: 15px 0; }
+.icon_item { color: #fff; font-size: 16px; display: flex; align-items: center; gap: 8px; }
+.pie__copy { margin-top: 20px; font-size: 14px; color: #ccc; }
+/* ===== Desktop layout ===== */
 @media (min-width: 768px) {
-  .cabeza {
-      height: 200px;
+  header .container {
+    flex-direction: row;
+    justify-content: space-between;
   }
 
-  .title {
-      font-size: 40px;
+  header nav {
+    flex-direction: row;
+    padding-bottom: 0;
+    padding-right: 20px;
   }
+  header a{
+      font-size: 1.5em;
+  }
+header .container {
+  flex-direction: row;
+  justify-content: space-between;
+}
+header nav {
+  flex-direction: row;
+  padding-bottom: 0;
+}
 
-  .menu__lista {
-      font-size: 35px;
+  .content__primero,
+  .content__segundo {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
   }
+  .content__primero .texto,
+  .content__segundo .texto {
+    width: 50%;
+    padding-right: 10px;
+  }
+  .Mision-img {
+    width: 50%;
+    max-width: none;
+  }
+}
+
+
+/* ===== Grandes pantallas: ajustar márgenes ===== */
+@media (min-width: 1000px) {
+  .mision, .vision {
+    font-size: 2em;
+  }
+  .texto p {
+    font-size: 1.1em;
+  }
+  .content__primero,
+  .content__segundo {
+    gap: 40px;
+  }
+  .container{
+    border-radius: 0 0 20% 20%;
+}
 }
