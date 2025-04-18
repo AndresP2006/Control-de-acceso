@@ -854,11 +854,11 @@ h4 {
 .select {
   display: flex;
   justify-content: space-evenly;
-  width: 710px;
+  width: 660px;
   margin-bottom: 30px;
 }
 .select2 {
-  display: flex; 
+  display: flex;
   gap: 20px;
 }
 .filter-btn {

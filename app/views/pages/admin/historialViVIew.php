@@ -1,9 +1,9 @@
 <?php require_once RUTA_APP . '/views/inc/header-admin.php'; ?>
 <div class="select">
-    <h1 class="table-titulo">Lista de visitantes</h1>
+    <h1 class="table-titulo2">Lista de visitantes</h1>
     <form method="POST" action="<?php echo RUTA_URL; ?>/UserController/VisitantesPorFecha">
         <input type="date" name="fecha" id="fecha" value="<?php echo htmlspecialchars($_POST['fecha'] ?? ''); ?>">
-        <button type="submit" class="btn" style="position: relative; top: 33px; left:20px;">Filtrar</button>
+        <button type="submit" class="btn" style="position: relative; left:266px;">Filtrar</button>
     </form>
 </div>
 <div class="table-container">
