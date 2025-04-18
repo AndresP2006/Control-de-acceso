@@ -33,13 +33,14 @@
                         <?php endif; ?>
                     </button>
                 
-                    <div class="cerrar-sescion">
+                    
+                    
+            </div>
+            </form>
+            <div class="cerrar-sescion">
                         <a href="<?php echo RUTA_URL; ?>/HomeController/index"><button class="boton">Cerrar Sesión</button></a>
                     </div>
                     </div>
-            </div>
-            </form>
-            
         </div>
     </header>
 
