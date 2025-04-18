@@ -1,6 +1,35 @@
 * {
-  margin: 0%;
-  font-family: Arial, Helvetica, sans-serif !important;
+  margin: 0;
+  font-family: "Inter", sans-serif;
+}
+
+body,
+html {
+  background-color: #f4f6f8;
+  height: 100vh;
+  margin: 0;
+  color: #1a1a1a;
+  height: 100%;
+  margin: 0;
+}
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Contenido se expande pero deja espacio para footer */
+.main-content {
+  flex: 1;
+}
+
+/* Footer fijo al fondo cuando hay poco contenido */
+.footer-global {
+  background-color: #1f2a36;
+  color: white;
+  padding: 40px 40px;
+  font-size: 16px;
+  box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .label_new_registro {
@@ -16,13 +45,20 @@
 .content_Encabezado {
   margin-bottom: 50px;
   height: 150px;
-  background-color: rgb(184, 184, 184);
+  background-color: #1e2a38;
+  color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 .content_Encabezado-titulo {
   margin-left: 60px;
+}
+.var_sesion_admin {
+  font-size: 2rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: white;
 }
 
 .content_Encabezado-titulo-boton {
@@ -51,7 +87,7 @@
   padding: 20px;
   max-width: 100%;
   margin: 0 auto;
-  gap: 10px;
+  gap: 800px;
 }
 
 .control-group {
@@ -81,6 +117,7 @@
   background-color: #fff;
   font-size: 14px;
   color: #495057;
+  margin-left: 5px;
 }
 
 .filter-rol {
@@ -106,10 +143,10 @@
 .table-container {
   width: 98%;
   max-width: 1500px;
-  margin: 20px auto;
-  background: #fff;
+  margin: auto;
+  background: transparent;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
   overflow-x: auto;
   display: flex;
   justify-content: space-between;
@@ -128,9 +165,17 @@
 }
 
 .table-titulo {
+  width: 571px;
   position: relative;
   margin-top: 30px;
-  left: 20px;
+  left: 100px;
+  bottom: 20px;
+}
+.table-titulo2 {
+  width: 571px;
+  position: relative;
+  margin-top: 30px;
+  left: 100px;
 }
 
 table {
@@ -147,7 +192,7 @@ thead {
   position: sticky;
   top: 0;
   /* Mantiene la cabecera fija al hacer scroll */
-  z-index: 10;
+  z-index: 1;
   /* Asegura que la cabecera esté por encima del contenido */
   background-color: #f8f9fa;
   /* Fondo sólido para la cabecera */
@@ -163,6 +208,7 @@ td {
 }
 
 th {
+  z-index: 1;
   background-color: #e9ecef;
   color: #495057;
   font-weight: bold;
@@ -178,51 +224,69 @@ td {
   color: #212529;
 }
 
-.tabla-especifica th:nth-child(1),
+.tabla-especifica th,
+.tabla-especifica td {
+  padding: 8px 10px;
+  text-align: left;
+  text-align: center;
+}
+
+.tabla-especifica {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.tabla-especifica th:nth-child(1), /* Documento */
 .tabla-especifica td:nth-child(1) {
   width: 100px;
 }
 
-.tabla-especifica th:nth-child(2),
+.tabla-especifica th:nth-child(2), /* Nombre */
 .tabla-especifica td:nth-child(2) {
-  padding: 0px;
+  width: 140px;
 }
 
-.tabla-especifica th:nth-child(3),
+.tabla-especifica th:nth-child(3), /* Apellido */
 .tabla-especifica td:nth-child(3) {
-  width: 100px;
+  width: 150px;
 }
 
-.tabla-especifica th:nth-child(4),
+.tabla-especifica th:nth-child(4), /* Teléfono */
 .tabla-especifica td:nth-child(4) {
-  width: 110px;
-  /* La segunda columna será más ancha */
+  width: 90px;
 }
 
-.tabla-especifica th:nth-child(5),
+.tabla-especifica th:nth-child(5), /* Correo */
 .tabla-especifica td:nth-child(5) {
-  padding: 0px;
+  width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.tabla-especifica th:nth-child(6),
+.tabla-especifica th:nth-child(6), /* Apartamento */
 .tabla-especifica td:nth-child(6) {
-  width: 100px;
-}
-
-.tabla-especifica th:nth-child(7),
-.tabla-especifica td:nth-child(7) {
-  width: 100px;
-}
-
-.tabla-especifica th:nth-child(8),
-.tabla-especifica td:nth-child(8) {
   width: 130px;
+  text-align: center;
 }
 
-.tabla-especifica th:nth-child(9),
-.tabla-especifica td:nth-child(9) {
+.tabla-especifica th:nth-child(7), /* Torre */
+.tabla-especifica td:nth-child(7) {
+  width: 80px;
+  text-align: center;
+}
+
+.tabla-especifica th:nth-child(8), /* Rol */
+.tabla-especifica td:nth-child(8) {
   width: 100px;
 }
+
+.tabla-especifica th:nth-child(9), /* Acciones */
+.tabla-especifica td:nth-child(9) {
+  width: 80px;
+  text-align: center;
+}
+
 
 /* Aseguramos que todas las celdas se alineen correctamente */
 tr {
@@ -317,6 +381,21 @@ button:hover {
     width: 100%;
   }
 }
+.logos {
+  display: flex;
+  position: relative;
+  width: 600px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: nowrap;
+}
+.sistemas {
+  display: flex;
+  padding-top: 10px;
+  width: 70px;
+  justify-content: space-around;
+}
 
 /* Estilos para el modal */
 .modal {
@@ -337,11 +416,12 @@ button:hover {
 
 /* Contenido del modal */
 .modal-content {
+  z-index: 3;
   background-color: #fefefe;
   margin: 5% auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%;
+  width: 24%;
   max-width: 600px;
 }
 
@@ -406,9 +486,13 @@ input[type="email" i] {
   width: 50px;
 }
 .formFiltro {
-  max-width: 960px;
+  max-width: 637px;
   height: 56px;
   margin: auto;
+  margin-bottom: 30px;
+  position: relative;
+  left: 17%;
+  bottom: 30px;
 }
 
 .input-group {
@@ -450,4 +534,45 @@ input:focus {
 
 .btn:hover {
   background: #0056b3;
+}
+/*footer*/
+.main-content {
+  flex: 1;
+}
+.footer-global {
+  margin-top: 267 px;
+  background-color: #1f2a36;
+  color: white;
+  padding: 40px 40px;
+  bottom: 0;
+  position: relative;
+  font-size: 16px;
+  box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.footer-left {
+  font-weight: bold;
+}
+
+.footer-right {
+  display: flex;
+  gap: 15px;
+}
+
+.footer-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: #ccc;
 }

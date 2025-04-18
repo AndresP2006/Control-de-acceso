@@ -13,10 +13,11 @@
 
     <div class="pie__copy">
         <p style="color: white;">&copy; 2024 Villarica Malambo. Todos los derechos reservados.</p>
-        <p><a href="#">Política de privacidad</a> | <a href="#">Términos y condiciones</a></p>
+        <!-- <p><a href="#">Política de privacidad</a> | <a href="#">Términos y condiciones</a></p> -->
     </div>
 </footer>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="<?php echo RUTA_URL; ?>/js/alert.js"></script>
+<script src="<?php echo RUTA_URL;?>/js/Validaciones.js"></script>
 </html>

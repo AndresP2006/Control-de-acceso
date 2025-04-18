@@ -19,7 +19,13 @@ class RecoveryController extends Controlador
 
     public function index()
     {
-        header('location:' . RUTA_URL . '/HomeController/recovery');
+        // $this->vista('pages/recoveryView', null);
+        header('location:' . RUTA_URL . '/RecoveryController/recoveryView');
+    }
+
+    public function recoveryView()
+    {
+        $this->vista("pages/recoveryView");
     }
 
     public function recovery()
@@ -81,7 +87,7 @@ class RecoveryController extends Controlador
                     </td>
                 </tr>
             </table>';
-            
+
 
             $mail->send();
 
