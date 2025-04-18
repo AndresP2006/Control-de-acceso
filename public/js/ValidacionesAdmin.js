@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
   const formulario = document.getElementById("myForm");
-  const editarPersona = document.getElementById("myFomr");
 
   formulario.addEventListener("submit", (e) => {
     const id = document.getElementById("u_id").value.trim();
@@ -51,7 +50,59 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("Formulario enviado");
   });
 });
+document.addEventListener("DOMContentLoaded", () => {
+  const editarPersonas = document.getElementsByClassName("editarForm");
 
+  for (let i = 0; i < editarPersonas.length; i++) {
+    editarPersonas[i].addEventListener("submit", (e) => {
+      const errores = []; // Declara errores dentro del listener de cada formulario
+
+      const idE = document.getElementById("E_id").value.trim();
+      const nombreE = document.getElementById("E_Nombre").value.trim();
+      const apellidoE = document.getElementById("E_Apellido").value.trim();
+      const telefonoE = document.getElementById("E_Telefono").value.trim();
+      const correoE = document.getElementById("E_Gmail").value.trim();
+      const torreE = document.getElementById("select_torre").value.trim();
+      const departamentoE = document
+        .getElementById("E_Departamento")
+        .value.trim();
+      const rolE = document.getElementById("R_id").value.trim();
+
+      if (idE && isNaN(idE)) {
+        errores.push("El Documento debe ser un número.");
+      }
+      if (telefonoE && isNaN(telefonoE)) {
+        errores.push("El Teléfono debe ser un número.");
+      }
+      const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (correoE && !regexCorreo.test(correoE)) {
+        errores.push("El Correo no es válido.");
+      }
+      if (
+        !idE ||
+        !nombreE ||
+        !apellidoE ||
+        !telefonoE ||
+        !correoE ||
+        !torreE ||
+        !departamentoE ||
+        !rolE
+      ) {
+        errores.push("Por favor, complete todos los campos.");
+      }
+
+      if (errores.length > 0) {
+        e.preventDefault(); // Previene el envío SOLO si hay errores
+        mostrarAdvertencia(errores.join("\n"));
+      } else {
+        // Si no hay errores, el formulario se enviará normalmente
+        // No necesitas llamar a submit() explícitamente a menos que estés usando AJAX
+        // editarPersonas[i].submit(); // Esto es innecesario para envíos tradicionales
+        console.log("Formulario válido, enviando..."); // Para depuración
+      }
+    });
+  }
+});
 function mostrarAdvertencia(mensaje) {
   Swal.fire({
     title: "ADVERTENCIA",

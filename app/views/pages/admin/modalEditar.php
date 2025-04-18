@@ -4,8 +4,8 @@
             <h3 class="titulo-form">Registro</h3>
             <span class="close" id="close">&times;</span>
         </div>
-        <form id="myForm" action="<?php echo RUTA_URL; ?>/UserController/EditarUser" method="post">
-            <label for="">Documento</label><br>
+        <form id="myForm" class="editarForm" action="<?php echo RUTA_URL; ?>/UserController/EditarUser" method="post">
+            <label for="">Documento123</label><br>
             <input type="text" id="E_id" name="E_id" readonly />
 
             <label for="">Nombre</label><br>
@@ -52,4 +52,5 @@
             </center>
         </form>
     </div>
+    <!-- <script src="<?php echo RUTA_URL; ?>/js/ValidacionesAdmin.js"></script> -->
 </div>
