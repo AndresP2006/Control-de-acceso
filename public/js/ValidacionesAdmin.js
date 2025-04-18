@@ -48,6 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       mostrarAdvertencia(errores.join("\n"));
     }
+    console.log("Formulario enviado");
   });
 });
 
