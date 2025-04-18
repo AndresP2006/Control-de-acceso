@@ -40,18 +40,17 @@
         <table>
             <thead>
                 <tr>
-                    <th>Documento</th>
-                    <th>Nombre</th>
-                    <th>Contraseña</th>
-                    <th>Telefono</th>
-                    <th>Correo</th>
-                    <th>Departamento</th>
-                    <th>Torre</th>
-                    <th>Tipo de usuario</th>
-                    <th>Acciones</th>
+                    <th>DOCUMENTO</th>
+                    <th>NOMBRE</th>
+                    <th>TELEFONO</th>
+                    <th>CORREO</th>
+                    <th>APARTAMENTO</th>
+                    <th>TORRE</th>
+                    <th>ROL</th>
+                    <th>ACCIONES</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="table-body">
                 <?php
                 // Verificar si la variable 'usuarios' tiene registros
                 if (!empty($datos['usuarios'])) {
@@ -61,7 +60,6 @@
                             echo "<tr>";
                             echo "<td>" . htmlspecialchars($registro['Cedula'] ?? '') . "</td>";
                             echo "<td>" . htmlspecialchars($registro['Pe_nombre'] ?? '') . " " . htmlspecialchars($registro['Pe_apellidos'] ?? '') . "</td>";
-                            echo "<td>*****</td>"; // Campo oculto para la contraseña
                             echo "<td>" . htmlspecialchars($registro['Pe_telefono'] ?? '') . "</td>";
                             echo "<td>" . htmlspecialchars($registro['Us_correo'] ?? '') . "</td>";
                             echo "<td>" . htmlspecialchars($registro['Ap_numero'] ?? '') . "</td>";
@@ -73,15 +71,13 @@
                                 data-apellidos='" . htmlspecialchars($registro['Pe_apellidos'] ?? '') . "'
                                 data-telefono='" . htmlspecialchars($registro['Pe_telefono'] ?? '') . "'
                                 data-correo='" . htmlspecialchars($registro['Us_correo'] ?? '') . "'
+                                data-torre='" . htmlspecialchars($registro['To_id'] ?? '') . "'
                                 data-departamento='" . htmlspecialchars($registro['Ap_numero'] ?? '') . "'
-                                data-rol='" . htmlspecialchars($registro['Ro_tipo'] ?? '') .
-                                "'
-                                data-contrasena='" . htmlspecialchars($registro['Us_contrasena'] ?? '') . "'
+                                data-departamento-id='" . htmlspecialchars($registro['Ap_id'] ?? '') . "'
+                                data-rol='" . htmlspecialchars($registro['Ro_tipo'] ?? '') . "'
                                 >✏️</button>
-                                <form action='" . RUTA_URL . "/UserController/DeleteUser' method='POST' style='display:inline;'>
                                     <input type='hidden' name='delete_id' value='" . htmlspecialchars($registro['Cedula'] ?? '') . "'>
-                                    <button type='button' class='delete-btn' data-id='" . $registro['Cedula'] . "'>🗑️</button>
-                                </form>
+                                    <button type='button' id='delete-btn-admin' class='delete-btn' data-id='" . $registro['Cedula'] . "'data-rol='" . $registro['Ro_tipo'] . "'>🗑️</button>
                             </td>";
                             echo "</tr>";
                         } else {
@@ -110,15 +106,18 @@
 
 <?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>
 <script>
+    const RUTA_URL = "<?= RUTA_URL ?>";
+</script>
+<script>
     <?php if (isset($datos['messageError'])) { ?>
-error("<?php echo $datos['messageError']; ?>")
-<?php } ?>
-<?php if (isset($datos['messageInfo'])) { ?>
-realizado("<?php echo $datos['messageInfo']; ?>")
-<?php } ?>
-<?php if (isset($datos['messageDelet'])) { ?>
-realizadoDelet()
-<?php } ?>
+        error("<?php echo $datos['messageError']; ?>")
+    <?php } ?>
+    <?php if (isset($datos['messageInfo'])) { ?>
+        realizado("<?php echo $datos['messageInfo']; ?>")
+    <?php } ?>
+    <?php if (isset($datos['messageDelet'])) { ?>
+        realizadoDelet()
+    <?php } ?>
 
     $(document).ready(function() {
 
@@ -168,5 +167,31 @@ realizadoDelet()
                 }
             })
         })
+
+
+        $(document).on('click', '.delete-btn', function () {
+            const boton = $(this);
+            const rolUsuario = boton.data('rol');
+            $.ajax({
+                url: '<?php echo RUTA_URL ?>/UserController/verifyRol', // Asegúrate de que la ruta es correcta
+                type: 'POST',
+                data: {},
+                dataType: 'json',
+                success: function(respuesta) {
+                    console.log('Respuesta cruda:', respuesta) // Ver la respuesta antes de procesarla
+
+                    if (respuesta.length === 1 && respuesta[0].Ro_id == 1 && rolUsuario=== 'Administrador') {
+                        error('Por favor, primero agregue a otro administrador')
+
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('Error en la petición AJAX:', textStatus, errorThrown)
+                }
+            })
+
+        })
+
     });
 </script>
+<?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>

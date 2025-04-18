@@ -20,14 +20,14 @@
             <label for="">Correo</label><br>
             <input type="email" id="E_Gmail" name="E_Gmail"  require/>
 
-            <!-- <label for="">Departamento</label><br> -->
-            <!-- <input type="text" id="E_Departamento" name="E_Departamento" /> -->
+            <!-- <label for="">Departamento</label><br>
+            <input type="text" id="E_Departamento" name="E_Departamento" /> -->
             <div class="titulo_torre">
                 <h4>Torre</h4>
                 <h4 class="ap">Apartamento</h4>
             </div>
             <div class="select_torre">
-                <select id="select_torre" class="filter-select">
+                <select name="E_torre"id="select_torre" class="filter-select">
                     <option value="">Torre</option>
                     <?php foreach ($_SESSION['torre'] as $torre) {
                         echo "<option value='{$torre->To_id}'>{$torre->To_letra}</option>";
@@ -47,13 +47,9 @@
                 <option value=3>Residente</option>
             </select>
 
-            <label for="" id="E_passwordl">Contraseña</label><br>
-            <input type="text" id="E_password" name="E_contrasena" />
-
             <center>
                 <input type="submit" value="Actualizar" class="Enviar" name="udate" />
             </center>
         </form>
-
     </div>
 </div>

@@ -7,6 +7,8 @@ class UserController extends Controlador
     private $apartamentModel;
     private $torreModel;
     private $visitorModel;
+    private $notificacionModel;
+    private $userModel;
 
     public function __construct()
     {
@@ -17,6 +19,8 @@ class UserController extends Controlador
         $this->apartamentModel = $this->modelo('ApartamentModel');
         $this->torreModel = $this->modelo('TorreModel');
         $this->visitorModel = $this->modelo('VisitorModel');
+        $this->notificacionModel = $this->modelo('NotificacionModel');
+        $this->userModel = $this->modelo('UserModel');
     }
 
 
@@ -24,15 +28,20 @@ class UserController extends Controlador
     {
         // $paquets = $this->paquetModel->getPackegesByTable();
         $resindents = $this->peopleModel->getAllResident($_SESSION['datos']->Us_usuario);
-        $people = $this->peopleModel->getAllRedident($_SESSION['datos']->Us_usuario);
+        $people = $this->peopleModel->getAllRedident($_SESSION['datos']->Us_id);
         // $notificacion = $this->peopleModel->getNotificacion($_SESSION['datos']->Us_usuario);
-        $datos_resident = $this->peopleModel->getAllSolicitudes($_SESSION['datos']->Us_id);
+        $datos_resident = $this->peopleModel->getAllSolicitudesUser($_SESSION['datos']->Us_id);
+        $notificacion = $this->notificacionModel->getNotifiPaquete($_SESSION['datos']->Us_id);
+        $visitantes = $this->notificacionModel->getNotifiRegistro($_SESSION['datos']->Us_id);
+        $rechazo = $this->notificacionModel->getNotifiRechazo($_SESSION['datos']->Us_id);
 
 
         return [
             'messageError' => $messageError,
             'messageInfo' => $messageInfo,
-            // 'paquets' => $paquets,
+            'paquets' => $notificacion,
+            'visitante' => $visitantes,
+            'rechazo' => $rechazo,
             'resindents' => $resindents,
             'datos_resident' => $datos_resident,
             'people' => $people,
@@ -123,61 +132,64 @@ class UserController extends Controlador
     {
         $messageInfo = '';
         $messageError = '';
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['udate'])) {
 
-            $departamento = isset($_POST['E_Departamento']) && $_POST['E_Departamento'] != '' ? $_POST['E_Departamento'] : $_POST['E_Departamento2'];
-
+            // Recoger los datos correctamente desde $_POST
             $datos = [
-                'Cedula' => trim($_POST['E_id']),
-                'Nombre' => trim($_POST['E_Nombre']),
-                'Apellidos' => trim($_POST['E_Apellido']),
-                'Telefono' => trim($_POST['E_Telefono']),
-                'Gmail' => trim($_POST['E_Gmail']),
-                'Departamento' => trim($departamento),
-                'Rol' => trim($_POST['R_id']), // Asegúrate de que el nombre del campo sea correcto
-                'Contrasena' => trim($_POST['E_contrasena']),
+                'Cedula'      => trim($_POST['E_id']),
+                'Nombre'      => trim($_POST['E_Nombre']),
+                'Apellidos'   => trim($_POST['E_Apellido']),
+                'Telefono'    => trim($_POST['E_Telefono']),
+                'Gmail'       => trim($_POST['E_Gmail']),
+                'Torre'       => trim($_POST['E_torre']),
+                'Ap_numero'   => trim($_POST['E_Departamento2']),
+                'Departamento' => trim($_POST['E_Departamento']),
+                'Rol'         => trim($_POST['R_id']),
             ];
+
 
             $resultado = $this->adminModel->updateUser($datos);
             $registros = $this->peopleModel->getAllUsuario();
 
-            // Formatear los datos de los usuarios como lo mencionas
+            // Formatear los datos de los usuarios
             $usuarios = [];
             foreach ($registros as $registro) {
                 $usuarios[] = [
-                    'Cedula' => $registro->Pe_id,
+                    'Cedula'    => $registro->Pe_id,
                     'Pe_nombre' => $registro->Pe_nombre,
                     'Pe_apellidos' => $registro->Pe_apellidos,
-                    'Pe_telefono' => $registro->Pe_telefono,
-                    'Us_correo' => $registro->Us_correo,
-                    'Ap_id' => $registro->Ap_id,
-                    'Ap_numero' => $registro->Ap_numero,
-                    'To_letra' => $registro->To_letra,
-                    'To_id' => $registro->To_id,
-                    'Ro_tipo' => $registro->Ro_tipo,
+                    'Pe_telefono'  => $registro->Pe_telefono,
+                    'Us_correo'    => $registro->Us_correo,
+                    'Ap_id'        => $registro->Ap_id,
+                    'Ap_numero'    => $registro->Ap_numero,
+                    'To_letra'     => $registro->To_letra,
+                    'To_id'        => $registro->To_id,
+                    'Ro_tipo'      => $registro->Ro_tipo,
                 ];
             }
 
-
-            $datos = [
-                'usuarios' => $usuarios,
-            ];
             if ($resultado) {
                 $messageInfo = 'Usuario actualizado correctamente';
             } else {
                 $messageError = 'Error al actualizar el usuario';
             }
+
+            $datos = [
+                'usuarios'      => $usuarios,
+                'messageError'  => $messageError,
+                'messageInfo'   => $messageInfo,
+            ];
         } else {
             $messageError = 'Error: No se pudo procesar la solicitud';
+            $datos = [
+                'messageError' => $messageError,
+            ];
         }
-        $datos = [
-            'usuarios' => $usuarios,
-            'messageError' => $messageError,
-            'messageInfo' => $messageInfo,
-        ];
         $this->vista('pages/admin/adminView', $datos);
         exit;
     }
+
 
     public function DeleteUser()
     {
@@ -230,6 +242,8 @@ class UserController extends Controlador
                 'Pe_telefono' => $registro->Pe_telefono,
                 'Us_correo' => $registro->Us_correo,
                 'Ap_id' => $registro->Ap_id,
+                'To_letra' => $registro->To_letra,
+                'Ap_numero' => $registro->Ap_numero,
                 'Ro_tipo' => $registro->Ro_tipo,
             ];
         }
@@ -252,27 +266,44 @@ class UserController extends Controlador
 
     public function Torre()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
             if (isset($_POST['borrar']) && isset($_POST['id'])) {
                 $id = $_POST['id'];
-                $mensaje = $this->torreModel->DeleteTorre($id);
 
+                $verificar = $this->torreModel->verifyTower($id);
+                if ($verificar == false) {
+                    $datos['messageError'] = "Por favor verifique el id de la torre.";
+                } else {
+
+                    $mensaje = $this->torreModel->DeleteTorre($id);
+                    if ($mensaje == true) {
+
+                        $datos['messageInfo'] = "Torre y apartamentos eliminados correctamente.";
+                    } else {
+
+                        $datos['messageError'] = "Primero elimine los departamentos asociados.";
+                    }
+                }
 
                 $datos['filter'] = 'borrar';
-                $datos['error'] = $mensaje;
             } elseif (isset($_POST['guardar']) && isset($_POST['id']) && isset($_POST['torre'])) {
                 $id = $_POST['id'];
                 $torre = $_POST['torre'];
 
                 // Lógica para guardar la torre
                 $mensaje = $this->torreModel->IngresarTorre($id, $torre);
+                if ($mensaje == true) {
 
+                    $datos['messageInfo'] = "Torre guardada correctamente.";
+                } else {
+
+                    $datos['messageError'] = "El ID o la letra de la torre ya existe. No se puede guardar.";
+                }
 
                 $datos['filter'] = 'guardar';
-                $datos['error'] = $mensaje;
             } else {
                 // Si no se envían datos válidos
-                $datos['error'] = 'Datos incompletos.';
+                $datos['messageError'] = 'Datos incompletos.';
             }
         }
 
@@ -291,19 +322,28 @@ class UserController extends Controlador
             if (isset($_POST['borrar']) && isset($_POST['torre']) && isset($_POST['apartamento'])) {
                 $torre = $_POST['torre'];
                 $apartamento = $_POST['apartamento'];
-                $this->apartamentModel->DeleteApartamento($torre, $apartamento);
-                $mensaje = 'Apartamento eliminado correctamente.';
+                $hay = $this->apartamentModel->peopleApartamento($torre, $apartamento);
+
+                if (!$hay) {
+                    $this->apartamentModel->DeleteApartamento($torre, $apartamento);
+                    $datos['messageInfo'] = 'Apartamento eliminado correctamente.';
+                } else {
+                    $hay = $this->apartamentModel->peopleApartamento($torre, $apartamento);
+                    
+                    $datos['messageError'] = 'Hay personas viviendo en este apartamento';
+                }
             } elseif (isset($_POST['guardar']) && isset($_POST['torre']) && isset($_POST['apartamento'])) {
                 $torre = $_POST['torre'];
                 $apartamento = $_POST['apartamento'];
 
-                $mensaje1 = $this->apartamentModel->IngresarApartamento($torre, $apartamento);
+                $this->apartamentModel->IngresarApartamento($torre, $apartamento);
+                $datos['messageInfo'] = 'Apartametno guardado correctamente';
             } else {
-                $mensaje2 = 'Datos incompletos.';
+                $datos['messageError'] = 'Datos incompletos.';
             }
-            $datos['messageError'] = $mensaje2;
-            $datos['messageInfo'] = $mensaje;
-            $datos = $this->index($mensaje);
+            // $datos['messageError'] = $mensaje2;
+            // $datos['messageInfo'] = $mensaje;
+            // $datos = $this->index($mensaje);
         }
 
         $datos['torres'] = $this->torreModel->getTorreByTable();
@@ -454,6 +494,8 @@ class UserController extends Controlador
                         'Re_motivo' => $registro->Re_motivo,
                         'Vi_departamento' => $registro->Vi_departamento,
                         'Pe_id' => $registro->Pe_id,
+                        'Ap_numero' => $registro->Ap_numero,
+                        'To_letra' => $registro->To_letra,
                     ];
                 }
                 $datos = [
@@ -484,7 +526,7 @@ class UserController extends Controlador
             error_log("Datos recibidos en ActualizarUsuario: " . print_r($_POST, true));
 
             // Validar que existan los campos requeridos
-            $requiredFields = ['E_id', 'E_nombre', 'E_Gmail', 'E_Telefono', 'To_id', 'Ap_numero'];
+            $requiredFields = ['E_id', 'E_nombre', 'E_Gmail', 'E_Telefono', 'E_TelefonoV', 'E_GmailV'];
             foreach ($requiredFields as $field) {
                 if (!isset($_POST[$field]) || empty(trim($_POST[$field]))) {
                     echo json_encode(['success' => false, 'error' => "Falta el campo: " . $field]);
@@ -501,8 +543,8 @@ class UserController extends Controlador
                 'nombre'      => trim($_POST['E_nombre']),
                 'correo_nuevo'      => trim($_POST['E_Gmail']),
                 'telefono_nuevo'    => trim($_POST['E_Telefono']),
-                'torre_nuevo'       => trim($_POST['To_id']),
-                'apartamento_nuevo' => trim($_POST['Ap_numero']),
+                'correo_viejo'       => trim($_POST['E_GmailV']),
+                'telefono_viejo' => trim($_POST['E_TelefonoV']),
             ];
 
             // Llamar al modelo para insertar la solicitud de actualización
@@ -591,4 +633,69 @@ class UserController extends Controlador
         echo json_encode(['success' => false, 'error' => 'Método no permitido']);
         exit;
     }
+    public function motivoRechazo()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Depuración: ver qué llega por $_POST
+            error_log("Datos recibidos en ActualizarResidente: " . print_r($_POST, true));
+
+            // Validar que existan los campos requeridos
+            $requiredFields = ['E_id',  'M_rechazo'];
+            foreach ($requiredFields as $field) {
+                if (!isset($_POST[$field]) || empty(trim($_POST[$field]))) {
+                    echo json_encode(['success' => false, 'error' => "Falta el campo: " . $field]);
+                    exit;
+                }
+            }
+
+            // Armar array para el modelo con las claves correspondientes a la tabla de residentes
+            $residenteActualizado = [
+                'Cedula'            => trim($_POST['E_id']),
+                'rechazo'            => trim($_POST['M_rechazo']),
+            ];
+
+            // Llamar al modelo para actualizar los datos del residente
+            try {
+                $resultado = $this->adminModel->insertRechazo($residenteActualizado);
+
+                // Responder en JSON
+                if ($resultado) {
+                    echo json_encode(['success' => true]);
+                } else {
+                    echo json_encode(['success' => false, 'error' => 'Error al actualizar el residente']);
+                }
+            } catch (Exception $e) {
+                // Manejar cualquier error que ocurra
+                echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+            }
+
+            exit;
+        }
+
+        // Si no es POST, mensaje de error
+        echo json_encode(['success' => false, 'error' => 'Método no permitido']);
+        exit;
+    }
+    public function estadoSolicitud($idHabitante)
+    {
+        $estado = $this->peopleModel->obtenerEstadoSolicitud($idHabitante); // Debes tener un método en el modelo
+        if ($estado) {
+            echo json_encode(['estado' => $estado]);
+        } else {
+            echo json_encode(['estado' => 'ninguna']);
+        }
+    }
+    public function verifyRol()
+    {
+
+        header('Content-Type: application/json');
+
+        $respuesta =  $this->userModel->getUserByRol();
+
+
+        echo json_encode($respuesta);
+        exit;
+    }
+    // En UserController.php
+
 }

@@ -13,7 +13,7 @@ require_once RUTA_APP . '/views/inc/header-home.php';
             <li class="menu__lista">
                 <a class="menu__lista-a" href="<?php echo RUTA_URL; ?>/HomeController/index">Inicio</a>
             </li>
-            <li class="menu__lista">
+
         </ul>
     </nav>
 
@@ -130,8 +130,9 @@ require_once RUTA_APP . '/views/inc/header-home.php';
         <h1 class="titulo-codigo" id="Bienvenida"></h1>
         <h3 class="subtitulo">Por favor digite su nueva contraseña</h3>
         <input class="Formulario__titulo-input" type="text" name="newpassinput" id="newPassInput" placeholder="      Nueva contraseña" required>
+        <div id="sugerencias" style="color: red; margin-top: -10px; margin-bottom: 10px; "></div>
         <input class="Formulario__titulo-input" type="text" name="newpassinput" id="newPassInputC" placeholder="      Confirmar contraseña" required>
-        <button id="newpassbuton" class="Formulario__boton">
+        <button id="newpassbuton" class="Formulario__boton" disabled>
             Cambiar
         </button>
     </div>
@@ -139,6 +140,33 @@ require_once RUTA_APP . '/views/inc/header-home.php';
 </div>
 
 <?php require_once RUTA_APP . '/views/inc/footer-home.php'; ?>
+<script>
+    const inputConfirmar = document.getElementById('newPassInput');
+    const sugerencias = document.getElementById('sugerencias');
+    const botonCambiar = document.getElementById('newpassbuton');
+
+    inputConfirmar.addEventListener('input', () => {
+        const valor = inputConfirmar.value;
+        let mensaje = "";
+
+        if (valor.trim() === "") {
+            mensaje = ""; // No muestra nada si está vacío
+        } else if (valor.length > 15) {
+            mensaje = "No debe tener más de 10 caracteres.";
+        } else if (!/[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(valor)) {
+            mensaje = "Agrega al menos un carácter especial (@, #, $, etc).";
+        } else if (valor.length < 6) {
+            mensaje = "Mínimo 6 caracteres.";
+        } else if (!/[A-Z]/.test(valor)) {
+            mensaje = "Agrega al menos una letra mayúscula.";
+        }
+
+        sugerencias.innerHTML = mensaje;
+
+        // Si hay mensaje, desactiva el botón
+        botonCambiar.disabled = mensaje !== "";
+    });
+</script>
 <script>
     $(document).ready(function() {
         var resp = null;
@@ -164,8 +192,6 @@ require_once RUTA_APP . '/views/inc/header-home.php';
                             (typeof resp.resul === 'string' ? resp.resul.trim() !== '' : true)) {
 
                             $('#myModal').addClass('miModal--activo');
-                        } else if (resp.messageError) {
-                            error(resp.messageError);
                         }
 
                     },
@@ -174,7 +200,12 @@ require_once RUTA_APP . '/views/inc/header-home.php';
                     },
                     complete: function() {
                         // Habilitar el botón nuevamente después de completar la solicitud
-                        realizado('Se ha enviado un correo a ' + correo + '.           Revise su bandeja de entrada o carpeta de spam.');
+                        if (resp.resul && resp.resul !== false && resp.resul !== 'false' &&
+                            (typeof resp.resul === 'string' ? resp.resul.trim() !== '' : true)) {
+                            realizado('Se ha enviado un correo a ' + correo + '.           Revise su bandeja de entrada o carpeta de spam.');
+                        } else {
+                            error('Digite un correo electronico valido');
+                        }
                         setTimeout(() => {}, "2000");
                         $('#openModal').prop('disabled', false).text('Enviar Código');
                         $('#loading').hide(); // Oculta el loader
