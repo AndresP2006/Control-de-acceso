@@ -40,18 +40,17 @@
         <table>
             <thead>
                 <tr>
-                    <th>Documento</th>
-                    <th>Nombre</th>
-                    <th>Contraseña</th>
-                    <th>Telefono</th>
-                    <th>Correo</th>
-                    <th>Departamento</th>
-                    <th>Torre</th>
-                    <th>Tipo de usuario</th>
-                    <th>Acciones</th>
+                    <th>DOCUMENTO</th>
+                    <th>NOMBRE</th>
+                    <th>TELEFONO</th>
+                    <th>CORREO</th>
+                    <th>APARTAMENTO</th>
+                    <th>TORRE</th>
+                    <th>ROL</th>
+                    <th>ACCIONES</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="table-body">
                 <?php
                 // Verificar si la variable 'usuarios' tiene registros
                 if (!empty($datos['usuarios'])) {
@@ -61,7 +60,6 @@
                             echo "<tr>";
                             echo "<td>" . htmlspecialchars($registro['Cedula'] ?? '') . "</td>";
                             echo "<td>" . htmlspecialchars($registro['Pe_nombre'] ?? '') . " " . htmlspecialchars($registro['Pe_apellidos'] ?? '') . "</td>";
-                            echo "<td>*****</td>"; // Campo oculto para la contraseña
                             echo "<td>" . htmlspecialchars($registro['Pe_telefono'] ?? '') . "</td>";
                             echo "<td>" . htmlspecialchars($registro['Us_correo'] ?? '') . "</td>";
                             echo "<td>" . htmlspecialchars($registro['Ap_numero'] ?? '') . "</td>";
