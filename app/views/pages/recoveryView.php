@@ -6,25 +6,21 @@ require_once RUTA_APP . '/views/inc/header-home.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<header class="cabeza">
-    <h1 class="title">Control de <b>Acceso</b></h1>
-    <nav class="menu">
-        <ul>
-            <li class="menu__lista">
-                <a class="menu__lista-a" href="<?php echo RUTA_URL; ?>/HomeController/index">Inicio</a>
-            </li>
+<header>
+    <div class="container">
+        <h1>Control de <b>Acceso</b></h1>
+        <nav>
+            <a class="menu__lista-a" href="<?php echo RUTA_URL; ?>/HomeController/index">Inicio</a>
+        </nav>
 
-        </ul>
-    </nav>
-
-    <div id="loading" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; text-align: center;">
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 20px;">
-            <p style="font-size: 50px; color: white;">Enviando correo...</p>
-            <img src="https://i.gifer.com/ZKZg.gif" width="50" alt="Cargando...">
+        <div id="loading" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; text-align: center;">
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 20px;">
+                <p style="font-size: 50px; color: white;">Enviando correo...</p>
+                <img src="https://i.gifer.com/ZKZg.gif" width="50" alt="Cargando...">
+            </div>
         </div>
+
     </div>
-
-
 </header>
 
 <style>
@@ -33,7 +29,7 @@ require_once RUTA_APP . '/views/inc/header-home.php';
         align-items: center;
         justify-content: center;
         width: 100%;
-        height: 55%;
+        height: 100%;
     }
 
     .Formulario {
