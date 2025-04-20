@@ -9,23 +9,16 @@ body {
   margin: 0;
   color: #1a1a1a;
 }
-.icons {
-  font-size: 30px;
-  margin-right: -450px;
-  position: relative;
-  left: 70%;
-}
-.header {
-  display: flex;
-}
+
 /* Header / Encabezado */
 .encabezado {
   background-color: #1e2a38;
   color: white;
-  padding: 40px 40px;
+  padding: 20px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
 }
 
@@ -34,10 +27,20 @@ body {
   font-weight: 600;
 }
 
-/* Botón Cerrar sesión */
-.boton {
-  padding: 12px 24px;
-  font-size: 16px;
+.derecha-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.var_sesion {
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+
+.cerrar-sescion .boton {
+  padding: 10px 24px;
+  font-size: 15px;
   font-weight: 600;
   background-color: #ff6b6b;
   color: white;
@@ -46,45 +49,40 @@ body {
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: background-color 0.3s ease;
-}
-.logos {
-  display: flex;
-  flex-direction: row;
-  margin-right: -792px;
-  align-items: center;
-  width: 500px;
+  width: auto;
+  min-width: 140px;
+  text-align: center;
 }
 
-.boton:hover {
+.cerrar-sescion .boton:hover {
   background-color: #ff4b4b;
 }
+
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: calc(84.2vh - 80px); /* Altura total menos el encabezado */
+  height: calc(84.2vh - 80px);
 }
 
 /* Card del residente */
 .card {
   background: white;
-  padding: 2rem;
+  padding: 1.5rem;
   border-radius: 16px;
   width: 90%;
-  max-width: 800px;
+  max-width: 600px; /* TAMAÑO REDUCIDO */
   margin: auto;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   border: none;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: none;
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+  transform: none;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
-
-/* Títulos, líneas, textos */
 
 b {
   color: red;
@@ -96,13 +94,6 @@ h2,
   font-weight: 600;
   text-decoration: none;
 }
-.var_sesion {
-  font-size: 2rem;
-  font-weight: 600;
-  text-decoration: none;
-  position: relative;
-  left: 300px;
-}
 
 hr {
   border: none;
@@ -112,13 +103,14 @@ hr {
 
 .gray-text1,
 .gray-text {
-  width: 190px; /* Ajustar el ancho según sea necesario */
+  width: 190px;
   color: #6b7280;
   font-size: 1.3rem;
   background: transparent;
   border: none;
 }
-#edit-btn, #save-btn, #cancel-btn,#acceptBtn,#rejectBtn,#submitRejection,#cancelRejection {
+
+#edit-btn, #save-btn, #cancel-btn, #acceptBtn, #rejectBtn, #submitRejection, #cancelRejection {
   padding: 10px 20px;
   margin-right: 10px;
   border: none;
@@ -133,7 +125,6 @@ hr {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Estilo individual por botón */
 #edit-btn {
   background-color: #ffffff;
   color: #333333;
@@ -142,28 +133,26 @@ hr {
 
 #edit-btn:hover {
   background-color: #f5f5f5;
-  transform: translateY(-1px);
 }
 
-#save-btn,#acceptBtn,#submitRejection {
+#save-btn, #acceptBtn, #submitRejection {
   background-color: #28a745;
   color: white;
 }
 
-#save-btn:hover,#acceptBtn:hover,#submitRejection:hover {
+#save-btn:hover, #acceptBtn:hover, #submitRejection:hover {
   background-color: #218838;
-  transform: translateY(-1px);
 }
 
-#cancel-btn,#rejectBtn,#cancelRejection {
+#cancel-btn, #rejectBtn, #cancelRejection {
   background-color: #dc3545;
   color: white;
 }
 
-#cancel-btn:hover,#rejectBtn:hover,#cancelRejection:hover {
+#cancel-btn:hover, #rejectBtn:hover, #cancelRejection:hover {
   background-color: #c82333;
-  transform: translateY(-1px);
 }
+
 #reason {
   width: 100%;
   padding: 12px 14px;
@@ -183,7 +172,6 @@ hr {
   outline: none;
 }
 
-
 .habitantes {
   display: flex;
   flex-direction: column;
@@ -193,7 +181,6 @@ hr {
   margin-top: 0.5rem;
 }
 
-/* Asegurar espacio entre label y valores */
 .details {
   display: flex;
   justify-content: space-between;
@@ -209,20 +196,6 @@ hr {
 .details .right .habitantes {
   margin-top: 0.5rem;
 }
-
-/* Para pantallas pequeñas, ajustamos el diseño */
-@media (max-width: 768px) {
-  .details {
-    flex-direction: column;
-  }
-
-  .details .left,
-  .details .right {
-    width: 100%;
-  }
-}
-
-/* Footer / Acciones */
 
 .edit-btn,
 .cancel-btn {
@@ -251,10 +224,12 @@ hr {
 .cancel-btn:hover {
   background-color: #6b7280;
 }
-/*footer*/
+
+/* Footer */
 .main-content {
   flex: 1;
 }
+
 .footer-global {
   background-color: #1f2a36;
   color: white;
@@ -290,4 +265,136 @@ hr {
 
 .footer-link:hover {
   color: #ccc;
+}
+
+/* Botones sin movimiento */
+#edit-btn:hover,
+#save-btn:hover,
+#acceptBtn:hover,
+#submitRejection:hover,
+#cancel-btn:hover,
+#rejectBtn:hover,
+#cancelRejection:hover {
+  transform: none;
+}
+
+.header {
+  position: relative;
+}
+
+/* Estilo para la campana en PC */
+.header .logos {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+}
+
+.header .logos .icons2 {
+  font-size: 26px !important;
+  left: 0 !important;
+}
+
+.header .logos span:nth-child(2) {
+  position: absolute !important;
+  top: -8px !important;
+  right: -8px !important;
+  left: auto !important;
+}
+
+/* Responsive mejorado */
+@media (max-width: 768px) {
+  .encabezado {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 20px;
+  }
+
+  .derecha-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .titulo_1 {
+    font-size: 1.5rem;
+  }
+
+  .var_sesion {
+    font-size: 1rem;
+    order: 1;
+  }
+
+  .logos {
+    order: 2;
+    align-self: flex-start;
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    margin-left: 0;
+  }
+
+  .logos .icons2 {
+    left: 0 !important;
+    font-size: 24px !important;
+  }
+
+  .logos span:nth-child(2) {
+    top: -10px !important;
+    right: -8px !important;
+    font-size: 11px !important;
+  }
+
+  .cerrar-sescion {
+    order: 3;
+    width: 100%;
+  }
+
+  .cerrar-sescion .boton {
+    padding: 10px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: auto;
+    min-width: 140px;
+    text-align: center;
+  }
+
+  .container {
+    padding: 10px;
+    height: auto;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 100%;
+    padding: 1.2rem;
+  }
+
+  .details {
+    flex-direction: column;
+  }
+
+  .details .left,
+  .details .right {
+    width: 100%;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .footer-right {
+    flex-direction: column;
+    gap: 5px;
+  }
 }

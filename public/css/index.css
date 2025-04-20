@@ -20,7 +20,6 @@ h3 {
 }
 p {
   font-size: 1em;
-  text-align: justify;
 }
 b {
   color: #f00;
@@ -69,6 +68,7 @@ main h2 {
 }
 section article {
   padding-bottom: 10px;
+  text-align: justify;
 }
 .carrusel {
   width: 100%;
@@ -158,47 +158,10 @@ section article {
   padding: 20px;
   text-align: center;
 }
-
-.pie__titulo {
-  font-size: 24px;
-  margin-bottom: 10px;
-  color: #fff;
-}
-
-.icons_footer {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 15px;
-  margin-bottom: 15px;
-}
-
-.icon_item {
-  display: flex;
-  align-items: center;
-  color: white;
-  font-size: 16px;
-  flex: 1 1 200px;
-  justify-content: center;
-}
-
-hr {
-  border: none;
-  border-top: 2px solid #fff;
-  margin: 10px 0;
-}
-
-.pie__copy {
-  margin-top: 20px;
-  font-size: 14px;
-  color: #ccc;
-}
-
-.pie__copy p {
-  margin: 5px 0;
-}
-
+.pie__titulo { font-size: 24px; margin-bottom: 10px; }
+.icons_footer { display: flex; justify-content: center; gap: 15px; margin: 15px 0; }
+.icon_item { color: #fff; font-size: 16px; display: flex; align-items: center; gap: 8px; }
+.pie__copy { margin-top: 20px; font-size: 14px; color: #ccc; }
 @media (min-width: 750px) {
     header .container {
       flex-direction: row;
