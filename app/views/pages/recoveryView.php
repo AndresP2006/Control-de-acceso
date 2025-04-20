@@ -29,7 +29,7 @@ require_once RUTA_APP . '/views/inc/header-home.php';
         align-items: center;
         justify-content: center;
         width: 100%;
-        height: 100%;
+        height: 70%;
     }
 
     .Formulario {
@@ -44,6 +44,7 @@ require_once RUTA_APP . '/views/inc/header-home.php';
     .title_correo {
         text-align: center;
         margin: 10px;
+        color:black;
     }
 
     .newpassdiv {

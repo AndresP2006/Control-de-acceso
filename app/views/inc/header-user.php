@@ -19,7 +19,7 @@
                 <h1 class="titulo_1">Control De <b>Acceso</b> </h1>
             </div>
 
-            <h3 class="var_sesion">Bienvenido <?= $_SESSION['datos']->Us_usuario ?></h3>
+            <!-- <h3 class="var_sesion">Bienvenido <?= $_SESSION['datos']->Us_usuario ?></h3> -->
             <div class="cerrar-sescion">
                 <a href="<?php echo RUTA_URL; ?>/HomeController/index"><button class="boton">Cerrar Sesión</button></a>
             </div>
