@@ -86,7 +86,6 @@ html {
   align-items: center;
   padding: 20px;
   max-width: 100%;
-  margin: 0 auto;
   gap: 800px;
 }
 
@@ -286,7 +285,6 @@ td {
   width: 80px;
   text-align: center;
 }
-
 
 /* Aseguramos que todas las celdas se alineen correctamente */
 tr {
