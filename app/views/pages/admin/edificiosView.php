@@ -30,7 +30,7 @@
                 <!-- Formulario de torres -->
                 <div class="form-wrapper">
                     <h3>Ingresar Torre</h3>
-                    <form class="dataForm" action="<?php echo RUTA_URL; ?>/UserController/Torre" method="POST">
+                    <form class="dataForm" id="torre" action="<?php echo RUTA_URL; ?>/UserController/Torre" method="POST">
                         <div class="form-group">
                             <label for="departamento1">ID de Torre</label>
                             <input type="text" id="ID" name="id" placeholder="Numero de Torre">
@@ -77,7 +77,7 @@
                 <!-- Formulario de apartamento -->
                 <div class="form-wrapper">
                     <h3>Ingresar Apartamento</h3>
-                    <form class="dataForm" action="<?php echo RUTA_URL; ?>/UserController/Apartamento" method="POST">
+                    <form class="dataForm" id="apartamento" action="<?php echo RUTA_URL; ?>/UserController/Apartamento" method="POST">
                         <div class="form-group">
                             <label for="departamento2">Torre</label>
                             <input type="text" id="torre" name="torre" placeholder="Numero de Torre">
@@ -106,6 +106,7 @@
     </div>
 </div>
 <?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>
+<script src="<?php echo RUTA_URL; ?>/js/validacionesEdificio.js"></script>
 <script>
     <?php if (isset($datos['messageError'])) { ?>
         error("<?php echo $datos['messageError']; ?>")

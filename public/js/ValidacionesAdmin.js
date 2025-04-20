@@ -1,5 +1,33 @@
 document.addEventListener("DOMContentLoaded", () => {
   const formulario = document.getElementById("myForm");
+  const editarPersonas = document.getElementsByClassName("editarForm");
+
+  // Bloquear números en los campos nombre y apellido (SE MANTIENE, AHORA FUERA DE LOS LISTENERS SUBMIT)
+  const bloquearNumeros = (e) => {
+    const letra = e.key;
+    const soloLetras = /^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]$/; // permite solo letras y espacios
+    if (!soloLetras.test(letra)) {
+      e.preventDefault(); // bloquea el carácter si no es una letra
+    }
+  };
+
+  // Agregar el evento para bloquear números en nombre y apellido (SE MANTIENE, AHORA FUERA DE LOS LISTENERS SUBMIT)
+  document
+    .getElementById("U_Nombre")
+    .addEventListener("keypress", bloquearNumeros);
+  document
+    .getElementById("U_Apellido")
+    .addEventListener("keypress", bloquearNumeros);
+
+  // Agregar los listeners keypress a los formularios de edición también
+  for (let i = 0; i < editarPersonas.length; i++) {
+    document
+      .getElementById("E_Nombre")
+      .addEventListener("keypress", bloquearNumeros);
+    document
+      .getElementById("E_Apellido")
+      .addEventListener("keypress", bloquearNumeros);
+  }
 
   formulario.addEventListener("submit", (e) => {
     const id = document.getElementById("u_id").value.trim();
@@ -10,7 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const torre = document.getElementById("select_torre2").value.trim();
     const apartamento = document.getElementById("U_Departamento").value.trim();
     const rol = document.getElementById("U_id").value.trim();
-    const contrasena = document.getElementById("U_password").value.trim();
 
     let errores = [];
 
@@ -43,15 +70,20 @@ document.addEventListener("DOMContentLoaded", () => {
       errores.push("El Correo no es válido.");
     }
 
+    // Validar nombre y apellido sin números
+    if (nombre && /\d/.test(nombre)) {
+      errores.push("El Nombre no debe contener números.");
+    }
+    if (apellido && /\d/.test(apellido)) {
+      errores.push("El Apellido no debe contener números.");
+    }
+
     if (errores.length > 0) {
       e.preventDefault();
       mostrarAdvertencia(errores.join("\n"));
     }
     console.log("Formulario enviado");
   });
-});
-document.addEventListener("DOMContentLoaded", () => {
-  const editarPersonas = document.getElementsByClassName("editarForm");
 
   for (let i = 0; i < editarPersonas.length; i++) {
     editarPersonas[i].addEventListener("submit", (e) => {
@@ -91,6 +123,14 @@ document.addEventListener("DOMContentLoaded", () => {
         errores.push("Por favor, complete todos los campos.");
       }
 
+      // Validar nombre y apellido sin números
+      if (nombreE && /\d/.test(nombreE)) {
+        errores.push("El Nombre no debe contener números.");
+      }
+      if (apellidoE && /\d/.test(apellidoE)) {
+        errores.push("El Apellido no debe contener números.");
+      }
+
       if (errores.length > 0) {
         e.preventDefault(); // Previene el envío SOLO si hay errores
         mostrarAdvertencia(errores.join("\n"));
@@ -103,6 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
 function mostrarAdvertencia(mensaje) {
   Swal.fire({
     title: "ADVERTENCIA",
