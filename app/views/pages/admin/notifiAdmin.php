@@ -3,7 +3,7 @@
 <div class="contenedor">
     <div class="titulo">NOTIFICACIONES
         <a href="<?php echo RUTA_URL; ?>/HomeController/admin" class="enlaces">
-            <span class="icons exit">↩️</span>
+            <span class="icons exit" style="top:20px; font-size: 40px;">↩️</span>
         </a>
     </div>
 

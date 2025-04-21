@@ -292,6 +292,8 @@ hr {
 
 .header {
   position: relative;
+  display: flex;
+  justify-content: space-between;
 }
 
 /* Estilo para la campana en PC */
