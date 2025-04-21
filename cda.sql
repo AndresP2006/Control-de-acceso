@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 20-04-2025 a las 23:33:38
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Servidor: 127.0.0.1:3306
+-- Tiempo de generación: 21-04-2025 a las 15:46:21
+-- Versión del servidor: 9.1.0
+-- Versión de PHP: 8.3.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,11 +27,14 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `apartamento`
 --
 
-CREATE TABLE `apartamento` (
-  `Ap_id` int(10) NOT NULL,
-  `To_id` int(10) NOT NULL,
-  `Ap_numero` int(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+DROP TABLE IF EXISTS `apartamento`;
+CREATE TABLE IF NOT EXISTS `apartamento` (
+  `Ap_id` int NOT NULL AUTO_INCREMENT,
+  `To_id` int NOT NULL,
+  `Ap_numero` int NOT NULL,
+  PRIMARY KEY (`Ap_id`),
+  KEY `To_id` (`To_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `apartamento`
@@ -47,15 +50,18 @@ INSERT INTO `apartamento` (`Ap_id`, `To_id`, `Ap_numero`) VALUES
 -- Estructura de tabla para la tabla `paquete`
 --
 
-CREATE TABLE `paquete` (
-  `Pa_id` int(10) NOT NULL,
-  `Pa_estado` varchar(250) NOT NULL,
-  `Pa_descripcion` varchar(250) NOT NULL,
-  `Pa_fecha` timestamp NOT NULL DEFAULT current_timestamp(),
-  `Pa_responsable` varchar(50) NOT NULL,
-  `Pe_id` int(11) DEFAULT NULL,
-  `vista` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+DROP TABLE IF EXISTS `paquete`;
+CREATE TABLE IF NOT EXISTS `paquete` (
+  `Pa_id` int NOT NULL AUTO_INCREMENT,
+  `Pa_estado` varchar(250) COLLATE utf8mb4_general_ci NOT NULL,
+  `Pa_descripcion` varchar(250) COLLATE utf8mb4_general_ci NOT NULL,
+  `Pa_fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `Pa_responsable` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `Pe_id` int DEFAULT NULL,
+  `vista` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`Pa_id`),
+  KEY `Pe_id` (`Pe_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -63,13 +69,17 @@ CREATE TABLE `paquete` (
 -- Estructura de tabla para la tabla `persona`
 --
 
-CREATE TABLE `persona` (
-  `Pe_id` int(20) NOT NULL,
-  `Pe_nombre` varchar(50) NOT NULL,
-  `Pe_apellidos` varchar(50) NOT NULL,
-  `Pe_telefono` varchar(50) NOT NULL,
-  `Us_id` int(11) DEFAULT NULL,
-  `Ap_id` int(10) DEFAULT NULL
+DROP TABLE IF EXISTS `persona`;
+CREATE TABLE IF NOT EXISTS `persona` (
+  `Pe_id` int NOT NULL,
+  `Pe_nombre` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `Pe_apellidos` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `Pe_telefono` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `Us_id` int DEFAULT NULL,
+  `Ap_id` int DEFAULT NULL,
+  PRIMARY KEY (`Pe_id`),
+  KEY `U_id` (`Us_id`),
+  KEY `Ap_id` (`Ap_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -78,7 +88,7 @@ CREATE TABLE `persona` (
 
 INSERT INTO `persona` (`Pe_id`, `Pe_nombre`, `Pe_apellidos`, `Pe_telefono`, `Us_id`, `Ap_id`) VALUES
 (2006, 'admin', 'admin', '3202116434', 2006, 106),
-(2020, 'porter', 'porter', '3202116434', 2020, 106),
+(2020, 'porter david', 'porter', '3202116434', 2020, 106),
 (1042851729, 'Andres', 'Pereira', '3202116434', 1042851729, 106);
 
 -- --------------------------------------------------------
@@ -87,17 +97,21 @@ INSERT INTO `persona` (`Pe_id`, `Pe_nombre`, `Pe_apellidos`, `Pe_telefono`, `Us_
 -- Estructura de tabla para la tabla `registro`
 --
 
-CREATE TABLE `registro` (
-  `Re_id` int(10) NOT NULL,
+DROP TABLE IF EXISTS `registro`;
+CREATE TABLE IF NOT EXISTS `registro` (
+  `Re_id` int NOT NULL AUTO_INCREMENT,
   `Re_fecha_entrada` date NOT NULL,
   `Re_hora_entrada` time NOT NULL,
   `Re_hora_salida` time NOT NULL,
-  `Re_motivo` varchar(50) NOT NULL,
-  `Vi_departamento` varchar(50) NOT NULL,
-  `Pe_id` int(20) NOT NULL,
-  `Vi_id` int(10) NOT NULL,
-  `vista` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `Re_motivo` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `Vi_departamento` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `Pe_id` int NOT NULL,
+  `Vi_id` int NOT NULL,
+  `vista` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`Re_id`),
+  KEY `Vi_id` (`Vi_id`),
+  KEY `Pe_id` (`Pe_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -105,10 +119,12 @@ CREATE TABLE `registro` (
 -- Estructura de tabla para la tabla `rol`
 --
 
-CREATE TABLE `rol` (
-  `Ro_id` int(10) NOT NULL,
-  `Ro_tipo` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+DROP TABLE IF EXISTS `rol`;
+CREATE TABLE IF NOT EXISTS `rol` (
+  `Ro_id` int NOT NULL AUTO_INCREMENT,
+  `Ro_tipo` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`Ro_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `rol`
@@ -125,20 +141,22 @@ INSERT INTO `rol` (`Ro_id`, `Ro_tipo`) VALUES
 -- Estructura de tabla para la tabla `solicitudes_actualizacion`
 --
 
-CREATE TABLE `solicitudes_actualizacion` (
-  `id` int(11) NOT NULL,
-  `id_residente` int(11) NOT NULL,
-  `nombre` varchar(255) DEFAULT NULL,
-  `correo_nuevo` varchar(255) NOT NULL,
-  `correo_viejo` varchar(255) DEFAULT NULL,
-  `telefono_nuevo` varchar(50) NOT NULL,
-  `telefono_viejo` varchar(50) DEFAULT NULL,
-  `estado` enum('pendiente','aprobada','rechazada') DEFAULT 'pendiente',
-  `razon_rechazo` varchar(255) DEFAULT NULL,
-  `fecha_solicitud` timestamp NOT NULL DEFAULT current_timestamp(),
-  `vista` tinyint(1) NOT NULL DEFAULT 0,
-  `vista_resident` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+DROP TABLE IF EXISTS `solicitudes_actualizacion`;
+CREATE TABLE IF NOT EXISTS `solicitudes_actualizacion` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_residente` int NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb3_spanish2_ci DEFAULT NULL,
+  `correo_nuevo` varchar(255) COLLATE utf8mb3_spanish2_ci NOT NULL,
+  `correo_viejo` varchar(255) COLLATE utf8mb3_spanish2_ci DEFAULT NULL,
+  `telefono_nuevo` varchar(50) COLLATE utf8mb3_spanish2_ci NOT NULL,
+  `telefono_viejo` varchar(50) COLLATE utf8mb3_spanish2_ci DEFAULT NULL,
+  `estado` enum('pendiente','aprobada','rechazada') COLLATE utf8mb3_spanish2_ci DEFAULT 'pendiente',
+  `razon_rechazo` varchar(255) COLLATE utf8mb3_spanish2_ci DEFAULT NULL,
+  `fecha_solicitud` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `vista` tinyint(1) NOT NULL DEFAULT '0',
+  `vista_resident` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish2_ci;
 
 -- --------------------------------------------------------
 
@@ -146,9 +164,11 @@ CREATE TABLE `solicitudes_actualizacion` (
 -- Estructura de tabla para la tabla `torre`
 --
 
-CREATE TABLE `torre` (
-  `To_id` int(10) NOT NULL,
-  `To_letra` varchar(10) NOT NULL
+DROP TABLE IF EXISTS `torre`;
+CREATE TABLE IF NOT EXISTS `torre` (
+  `To_id` int NOT NULL,
+  `To_letra` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`To_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -165,12 +185,15 @@ INSERT INTO `torre` (`To_id`, `To_letra`) VALUES
 -- Estructura de tabla para la tabla `usuario`
 --
 
-CREATE TABLE `usuario` (
-  `Us_id` int(10) NOT NULL,
-  `Us_usuario` varchar(50) NOT NULL,
-  `Us_contrasena` varchar(255) DEFAULT NULL,
-  `Us_correo` varchar(100) NOT NULL,
-  `Ro_id` int(10) NOT NULL
+DROP TABLE IF EXISTS `usuario`;
+CREATE TABLE IF NOT EXISTS `usuario` (
+  `Us_id` int NOT NULL,
+  `Us_usuario` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `Us_contrasena` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `Us_correo` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `Ro_id` int NOT NULL,
+  PRIMARY KEY (`Us_id`),
+  KEY `C_id` (`Ro_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -178,10 +201,9 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`Us_id`, `Us_usuario`, `Us_contrasena`, `Us_correo`, `Ro_id`) VALUES
-(2006, 'admin', 'Hola_papu', 'pereirapuelloandresdavid@gmail.com', 1),
-(2020, 'porter', 'Hola_papu', 'pereirapuelloandresdavid@gmail.com', 2),
-(56789, 'Carlos', 'Carlos_456', 'carlos@example.com', 1),
-(1042851729, 'Andres', 'Hola_papu', 'pereirapuelloandresdavid@gmail.com', 3);
+(2006, 'admin', 'Hola_papu', 'jrua1043@gmail.com', 1),
+(2020, 'porter david', 'Hola_papu', 'jcharryme@gmail.com', 2),
+(1042851729, 'Andres', 'Andres_2006', 'pereirapuelloandresdavid@gmail.com', 3);
 
 -- --------------------------------------------------------
 
@@ -189,111 +211,14 @@ INSERT INTO `usuario` (`Us_id`, `Us_usuario`, `Us_contrasena`, `Us_correo`, `Ro_
 -- Estructura de tabla para la tabla `visitantes`
 --
 
-CREATE TABLE `visitantes` (
-  `Vi_id` int(10) NOT NULL,
-  `Vi_nombres` varchar(50) NOT NULL,
-  `Vi_apellidos` varchar(50) NOT NULL,
-  `Vi_telefono` varchar(50) NOT NULL
+DROP TABLE IF EXISTS `visitantes`;
+CREATE TABLE IF NOT EXISTS `visitantes` (
+  `Vi_id` int NOT NULL,
+  `Vi_nombres` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `Vi_apellidos` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `Vi_telefono` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`Vi_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `apartamento`
---
-ALTER TABLE `apartamento`
-  ADD PRIMARY KEY (`Ap_id`),
-  ADD KEY `To_id` (`To_id`);
-
---
--- Indices de la tabla `paquete`
---
-ALTER TABLE `paquete`
-  ADD PRIMARY KEY (`Pa_id`),
-  ADD KEY `Pe_id` (`Pe_id`);
-
---
--- Indices de la tabla `persona`
---
-ALTER TABLE `persona`
-  ADD PRIMARY KEY (`Pe_id`),
-  ADD KEY `U_id` (`Us_id`),
-  ADD KEY `Ap_id` (`Ap_id`);
-
---
--- Indices de la tabla `registro`
---
-ALTER TABLE `registro`
-  ADD PRIMARY KEY (`Re_id`),
-  ADD KEY `Vi_id` (`Vi_id`),
-  ADD KEY `Pe_id` (`Pe_id`);
-
---
--- Indices de la tabla `rol`
---
-ALTER TABLE `rol`
-  ADD PRIMARY KEY (`Ro_id`);
-
---
--- Indices de la tabla `solicitudes_actualizacion`
---
-ALTER TABLE `solicitudes_actualizacion`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `torre`
---
-ALTER TABLE `torre`
-  ADD PRIMARY KEY (`To_id`);
-
---
--- Indices de la tabla `usuario`
---
-ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`Us_id`),
-  ADD KEY `C_id` (`Ro_id`);
-
---
--- Indices de la tabla `visitantes`
---
-ALTER TABLE `visitantes`
-  ADD PRIMARY KEY (`Vi_id`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `apartamento`
---
-ALTER TABLE `apartamento`
-  MODIFY `Ap_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
-
---
--- AUTO_INCREMENT de la tabla `paquete`
---
-ALTER TABLE `paquete`
-  MODIFY `Pa_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
-
---
--- AUTO_INCREMENT de la tabla `registro`
---
-ALTER TABLE `registro`
-  MODIFY `Re_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
-
---
--- AUTO_INCREMENT de la tabla `rol`
---
-ALTER TABLE `rol`
-  MODIFY `Ro_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `solicitudes_actualizacion`
---
-ALTER TABLE `solicitudes_actualizacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- Restricciones para tablas volcadas

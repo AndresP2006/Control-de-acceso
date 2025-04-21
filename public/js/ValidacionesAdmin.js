@@ -48,12 +48,15 @@ document.addEventListener("DOMContentLoaded", () => {
       !apellido ||
       !telefono ||
       !correo ||
-      !torre ||
-      !apartamento ||
       !rol ||
       !contrasena
     ) {
       errores.push("Por favor, complete todos los campos.");
+    }
+    if (rol === "3") {
+      if (!torre || !apartamento) {
+        errores.push("Por favor, complete los campos Torre y Apartamento.");
+      }
     }
 
     // Validar que documento y teléfono sean números

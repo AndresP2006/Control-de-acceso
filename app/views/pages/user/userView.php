@@ -86,6 +86,11 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
     strong {
         font-size: 20px;
     }
+    .icons2{
+        font-size: 30px; position:relative;left:200px;
+        position: relative;
+        bottom: 15px;
+    }
 </style>
 
 <div class="container">
@@ -95,7 +100,7 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
             <form action="<?php echo RUTA_URL; ?>/HomeController/notificaciones" method="POST" style="display:inline;">
                 <div class="logos">
                     <button type="submit" class="enlaces" style="background:none; border:none; cursor:pointer; position: relative;">
-                        <span class="icons2" style="font-size: 30px; position:relative;left:200px;">🔔</span>
+                        <span class="icons2">🔔</span>
                         <?php if (!empty($datos['paquets']) || !empty($datos['visitante']) || !empty($datos['rechazo'])): ?>
                             <span style="position: relative; top: 0; right: 0; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px; left: 175px;">
                                 <?= count($datos['paquets'] + $datos['visitante'] + $datos['rechazo']) ?>
