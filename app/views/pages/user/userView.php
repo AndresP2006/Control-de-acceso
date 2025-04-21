@@ -166,19 +166,36 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
                     <p class="habitantes-title"><strong>Habitantes</strong></p>
                     <?php if (!empty($datos['people'])): ?>
                         <?php foreach ($datos['people'] as $persona): ?>
+                            <?php
+                            // Tomamos el nombre completo y aplicamos el formato corto
+                            $nombre = $persona->Pe_nombre . ' ' . $persona->Pe_apellidos;
+                            $partes = preg_split('/\s+/', trim($nombre)); // Separar por espacios
+                            $cantidad = count($partes);
+
+                            if ($cantidad >= 3) {
+                                $nombreCorto = $partes[0] . ' ' . $partes[2]; // Primer nombre + primer apellido
+                            } elseif ($cantidad === 3) {
+                                $nombreCorto = $partes[0] . ' ' . $partes[1]; // Primer nombre + segundo apellido
+                            } elseif ($cantidad === 2) {
+                                $nombreCorto = $partes[0] . ' ' . $partes[1]; // Primer nombre + primer apellido
+                            } else {
+                                $nombreCorto = $partes[0]; // Si solo hay un nombre
+                            }
+                            ?>
                             <p class="gray-text habitante-item"
                                 data-id="<?php echo $persona->id_habitante; ?>"
-                                data-nombre="<?php echo $persona->Pe_nombre . ' ' . $persona->Pe_apellidos; ?>"
+                                data-nombre="<?php echo $nombre; ?>"
                                 data-gmail="<?php echo $persona->Us_correo; ?>"
                                 data-telefono="<?php echo $persona->Pe_telefono; ?>"
                                 style="cursor:pointer;">
-                                <?php echo $persona->Pe_nombre . " " . $persona->Pe_apellidos; ?>
+                                <?php echo htmlspecialchars($nombreCorto); ?>
                             </p>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <p class="gray-text">Actualmente no cuenta con más habitantes</p>
                     <?php endif; ?>
                 </div>
+
             </div>
         </div>
         <br><br><br>
@@ -256,10 +273,6 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
                     editBtn.style.visibility = "hidden";
                 } else if (data.estado === 'aceptada') {
                     statusMsg.innerText = "Tu solicitud ha sido aceptada ✅";
-                    editBtn.style.display = "inline-block";
-                    editBtn.style.visibility = "visible";
-                } else if (data.estado === 'rechazada') {
-                    statusMsg.innerText = "Tu solicitud fue rechazada ❌";
                     editBtn.style.display = "inline-block";
                     editBtn.style.visibility = "visible";
                 } else {
@@ -482,7 +495,17 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
             nuevoItem.setAttribute("data-gmail", gmailActual);
             nuevoItem.setAttribute("data-telefono", telefonoActual);
             nuevoItem.style.cursor = "pointer";
-            nuevoItem.innerText = nombreActual;
+
+            // Aplicamos el formato corto al nombre antes de agregarlo a la lista
+            const partes = nombreActual.split(' ');
+            let nombreCorto = partes[0];
+            if (partes.length > 2) {
+                nombreCorto += ' ' + partes[2]; // Si tiene más de 2 partes, toma el primer apellido
+            } else if (partes.length === 2) {
+                nombreCorto += ' ' + partes[1]; // Si tiene 2 partes, toma el apellido
+            }
+
+            nuevoItem.innerText = nombreCorto;
             nuevoItem.addEventListener("click", function() {
                 cambiarHabitante(this);
             });
@@ -497,6 +520,7 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
 
         cargarHabitante(nuevoElemento);
     }
+
 
     function cargarHabitante(elemento) {
         const idHabitante = elemento.getAttribute("data-id");

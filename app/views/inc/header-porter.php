@@ -18,7 +18,7 @@
             <div class="ventana-emergente__caja ventana-emergente__caja--opciones">
             </div>
         </div>
-        <h3 class="var_sesion">Bienvenido <?= $_SESSION['datos']->Us_usuario ?></h3>
+        <h3 class="var_sesion">Bienvenido <?= explode(" ", trim($_SESSION['datos']->Us_usuario))[0]; ?></h3>
         <div class="cerrar-sescion">
             <a href="<?php echo RUTA_URL; ?>/HomeController/index"><button class="boton">Cerrar Sesión</button></a>
         </div>
