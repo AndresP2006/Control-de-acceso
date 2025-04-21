@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (id && isNaN(id)) {
       errores.push("El Documento debe ser un número.");
     }
-    if (telefono && isNaN(telefono)) {
+    if (telefono && isNaN(telefono) && telefono.length == 10) {
       errores.push("El Teléfono debe ser un número.");
     }
 

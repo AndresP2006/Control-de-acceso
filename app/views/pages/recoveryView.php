@@ -246,7 +246,7 @@ require_once RUTA_APP . '/views/inc/header-home.php';
                             realizado(resp.messageInfo);
                             setTimeout(() => {
                                 window.location.href = "<?php echo RUTA_URL; ?>/HomeController/index";
-                            }, "5000");
+                            }, "3000");
                         } else {
                             error(resp.messageError);
                         }
