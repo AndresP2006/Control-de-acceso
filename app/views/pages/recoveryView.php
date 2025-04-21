@@ -76,6 +76,7 @@ require_once RUTA_APP . '/views/inc/header-home.php';
     .titulo-codigo {
         text-align: center;
         margin: 10px;
+        color:black
     }
 
     .subtitulo {

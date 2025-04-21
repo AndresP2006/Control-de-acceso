@@ -337,7 +337,7 @@ class UserController extends Controlador
                 $apartamento = $_POST['apartamento'];
 
                 $this->apartamentModel->IngresarApartamento($torre, $apartamento);
-                $datos['messageInfo'] = 'Apartametno guardado correctamente';
+                $datos['messageInfo'] = 'Apartamento guardado correctamente';
             } else {
                 $datos['messageError'] = 'Datos incompletos.';
             }

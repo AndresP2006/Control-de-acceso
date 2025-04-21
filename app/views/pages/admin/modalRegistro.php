@@ -45,7 +45,7 @@
             <div id="sugerencias" style="color: red; margin-top: 5px;"></div>
 
             <center>
-                <input type="submit" value="Enviar" class="Enviar" name="registro" />
+                <input type="submit" value="Enviar" id="Enviar" class="Enviar" name="registro" />
             </center>
         </form>
     </div>
@@ -59,21 +59,18 @@
     const valor = clave.value;
     let mensajes = [];
 
-    if (valor.length > 15) {
-      mensajes.push("No debe tener más de 10 caracteres.");
-    }
+    if (valor.trim() === "") {
+           mensajes.push(""); // No muestra nada si está vacío
+        } else if (valor.length > 15) {
+            mensajes.push("No debe tener más de 10 caracteres.");
+        } else if (!/[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(valor)) {
+            mensajes.push("Agrega al menos un carácter especial (@, #, $, etc).");
+        } else if (valor.length < 6) {
+            mensajes.push("Mínimo 6 caracteres.");
+        } else if (!/[A-Z]/.test(valor)) {
+            mensajes.push("Agrega al menos una letra mayúscula.");
+        }
 
-    if (!/[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(valor)) {
-      mensajes.push("Agrega al menos un carácter especial (@, #, $, etc).");
-    }
-
-    if (valor.length < 6) {
-      mensajes.push("Mínimo 6 caracteres.");
-    }
-
-    if (!/[A-Z]/.test(valor)) {
-      mensajes.push("Agrega al menos una letra mayúscula.");
-    }
 
     sugerencias.innerHTML = mensajes.join("<br>");
   });

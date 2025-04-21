@@ -24,7 +24,10 @@
     </div>
 </footer>
 
-
+<script>
+    let año = new Date().getFullYear(); 
+    document.querySelector('.pie__copy p').innerHTML = `&copy; ${año} Villarica Malambo. Todos los derechos reservados.`; 
+</script>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="<?php echo RUTA_URL; ?>/js/alert.js"></script>
