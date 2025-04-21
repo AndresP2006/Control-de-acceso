@@ -65,7 +65,7 @@
                         }
                     }
                 } else {
-                    echo "<tr><td colspan='7'>No se encontraron paquetes para este rango de fechas.</td></tr>";
+                    echo "<tr><td colspan='7'>No se encontraron paquetes registrados.</td></tr>";
                 }
                 ?>
 
