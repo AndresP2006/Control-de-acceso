@@ -59,8 +59,7 @@ class PaquetModel
         // Si quieres solo coincidencias exactas, usa INNER JOIN.
         $this->db->query("SELECT
                     paquete.*, 
-                    persona.Pe_nombre,
-                    persona.Pe_apellidos
+                    persona.Pe_nombre
                 FROM paquete
                 INNER JOIN persona ON paquete.Pe_id = persona.Pe_id
                 WHERE DATE(Pa_fecha) BETWEEN :inicio AND :fin
@@ -79,11 +78,21 @@ class PaquetModel
 {
             $this->db->query("SELECT 
                 paquete.*, 
-                persona.Pe_nombre, 
-                persona.Pe_apellidos
+                persona.Pe_nombre
             FROM paquete
             INNER JOIN persona ON paquete.Pe_id = persona.Pe_id
             ORDER BY Pa_fecha ASC");
             return $this->db->registros();
+}
+public function getPacketePeopleId($id)
+{
+    $this->db->query("SELECT 
+		paquete.*, 
+		persona.Pe_nombre 
+            FROM paquete
+            INNER JOIN persona ON paquete.Pe_id = persona.Pe_id
+           where paquete.Pe_id = :id");
+    $this->db->bind(':id', $id);
+    return $this->db->registros();
 }
 }

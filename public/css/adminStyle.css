@@ -117,7 +117,7 @@
   align-items: center;
   width: 300px;
   border: 2px solid #ccc;
-  background: none ;
+  background: none;
   border-radius: 30px;
   padding: 5px;
 
@@ -136,12 +136,13 @@
   box-shadow: none; /* Elimina cualquier sombra */
 }
 
-.search-container input:focus, textarea:focus, select:focus {
-    outline: none !important;
-    box-shadow: none !important;
-    border-color: transparent !important; /* O el color que prefieras */
+.search-container input:focus,
+textarea:focus,
+select:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important; /* O el color que prefieras */
 }
-
 
 .search-container button {
   background-color: transparent;
@@ -275,4 +276,34 @@
 .accion {
   display: flex;
   flex-direction: row;
+}
+.buscarId form {
+  display: flex;
+  align-items: center;
+  position: relative;
+  left: 100px;
+  width: 500px;
+}
+
+#buscar_input {
+  padding: 8px 15px;
+  border: 1px solid #ccc;
+  margin-right: 5px;
+  font-size: 16px;
+  flex-grow: 1;
+}
+
+.buscarId form button {
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 8px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  position: relative;
+  left: 20px;
+}
+
+.buscarId form button:hover {
+  background-color: #e0e0e0;
 }

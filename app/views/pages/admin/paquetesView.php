@@ -12,6 +12,17 @@
         <button class="btn" type="submit">Filtrar</button>
     </form>
 </div>
+<div class="buscarId">
+<form action="<?php echo RUTA_URL; ?>/PaqueteIdController/buscarPorId" method="post">
+<div>
+<input type="text" name="id_persona" id="buscar_input" placeholder="Documento de la Persona">
+</div>
+<div>
+<button class="Buscar" type="submit">Buscar</button>
+</div>
+</form>
+</div>
+
 <div class="table-container">
 
     <div class="table-wrapper">

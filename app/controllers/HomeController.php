@@ -261,7 +261,26 @@ class HomeController extends Controlador
         }
     }
    
-
+    public function buscarPorId() {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_persona']) && !empty($_POST['id_persona'])) {
+            $idPersona = trim($_POST['id_persona']);
+            $paquetes = $this->paquetModel->getPacketePeopleId($idPersona);
+            $datos = [
+                'paquets' => $paquetes,
+                'filter_date' => false,
+                'filter_id' => true,
+                'id_persona' => $idPersona
+            ];
+            $this->vista('pages/admin/paquetesView', $datos);
+        } else {
+            $paquets = $this->paquetModel->getAllPackages();
+                $datos = [
+                    'paquets' => $paquets,
+                    'filter_date' => false
+                ];
+            $this->vista('pages/admin/paquetesView', $datos);
+        }
+    }
 
 
     public function Edificios()
