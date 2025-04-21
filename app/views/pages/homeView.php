@@ -36,39 +36,73 @@
                 para la convivencia familiar. Más que un conjunto residencial, LA RIBERA VILLA RICA es una comunidad que
                 promueve un estilo de vida seguro y accesible.
             </p>
-            
+
         </article>
 
         <!-- Galería de imágenes -->
         <div class="carrusel">
             <img src="<?php echo RUTA_URL; ?>/img/atras.png" alt="atras" class="atras" />
-            <img src="<?php echo RUTA_URL; ?>/img/departamento1-inicio.jpg" alt="foto1"  class="foto1" />
+            <img id="img2" src="<?php echo RUTA_URL; ?>/img/departamento1-inicio.jpg" alt="foto1" class="foto1" />
             <img src="<?php echo RUTA_URL; ?>/img/adelante.png" alt="adelante" class="adelante" />
         </div>
 
-        <!-- Script de funcionalidad -->
-        <script src="<?php echo RUTA_URL; ?>/js/main.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const conRivera = document.getElementById("img2");
+
+                // Array con las imágenes del carrusel
+                let fotosArray = [
+                    "<?php echo RUTA_URL; ?>/img/departamento1-inicio.jpg",
+                    "<?php echo RUTA_URL; ?>/img/departamento2-inicio.jpg",
+                    "<?php echo RUTA_URL; ?>/img/departamento3-inicio.jpg"
+                ];
+
+                let fotosPos = 0;
+
+                // Función para cambiar la imagen
+                function cambiarFoto(direccion) {
+                    // Actualiza la posición de la foto
+                    fotosPos = (fotosPos + direccion + fotosArray.length) % fotosArray.length;
+
+                    console.log("Cambio a la foto en la posición: ", fotosPos); // Depuración
+
+                    if (conRivera) {
+                        // Cambia la imagen mostrada
+                        conRivera.setAttribute("src", fotosArray[fotosPos]);
+                    }
+                }
+
+                const btnAtras = document.querySelector("img.atras");
+                const btnAdelante = document.querySelector("img.adelante");
+
+                // Asignar los eventos de clic para los botones
+                if (btnAtras) {
+                    btnAtras.onclick = () => cambiarFoto(-1);
+                }
+
+                if (btnAdelante) {
+                    btnAdelante.onclick = () => cambiarFoto(1);
+                }
+            });
+        </script>
     </section>
-
-    
-
 </main><!-- Sección de inicio de sesión -->
-    <section class="inicia_seccion">
-        <form action="<?php echo RUTA_URL; ?>/LoginController/index" method="post">
-            <div class="formulario">
-                <h1 class="Formulario__titulo">Iniciar Sesión</h1>
-                <input class="titulo-input" name="usuario" type="text" placeholder="     Usuario" required />
-                <input class="Formulario__titulo-input" name="password" type="password" placeholder="   Contraseña" required />
-                <a href="<?php echo RUTA_URL; ?>/RecoveryController/index" style="margin-bottom: 10px; color:#f00;">¿Olvidaste tu contraseña?</a>
-                <button type="submit" name="ingresar" class="Formulario__boton">Ingresar</button>
-            </div>
+<section class="inicia_seccion">
+    <form action="<?php echo RUTA_URL; ?>/LoginController/index" method="post">
+        <div class="formulario">
+            <h1 class="Formulario__titulo">Iniciar Sesión</h1>
+            <input class="titulo-input" name="usuario" type="text" placeholder="     Usuario" required />
+            <input class="Formulario__titulo-input" name="password" type="password" placeholder="   Contraseña" required />
+            <a href="<?php echo RUTA_URL; ?>/RecoveryController/index" style="margin-bottom: 10px; color:#f00;">¿Olvidaste tu contraseña?</a>
+            <button type="submit" name="ingresar" class="Formulario__boton">Ingresar</button>
+        </div>
 
-            <!-- Imagen lateral -->
-            <div class="imagen">
-                <img src="<?php echo RUTA_URL; ?>/img/mapa.png" alt="mapa" class="imagen__mapa" />
-            </div>
-        </form>
-    </section>
+        <!-- Imagen lateral -->
+        <div class="imagen">
+            <img src="<?php echo RUTA_URL; ?>/img/mapa.png" alt="mapa" class="imagen__mapa" />
+        </div>
+    </form>
+</section>
 <!-- Pie de página -->
 <?php require_once RUTA_APP . '/views/inc/footer-home.php'; ?>
 

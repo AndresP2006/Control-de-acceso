@@ -105,7 +105,6 @@ hr {
 .gray-text {
   width: 190px;
   color: #6b7280;
-  font-size: 1.3rem;
   background: transparent;
   border: none;
 }
@@ -191,7 +190,6 @@ hr {
   flex-direction: column;
   align-items: flex-start;
   gap: 5px;
-  font-size: 1.1rem;
   margin-top: 0.5rem;
 }
 

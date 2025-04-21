@@ -19,8 +19,8 @@
                     style="color: red; margin-left: 30px;">Entrada y Salida</samp>
             </h1>
             <div class="logos">
-    
-                <h3 class="var_sesion_admin">Bienvenido <?= $_SESSION['datos']->Us_usuario ?></h3>
+            
+                <h3 class="var_sesion_admin">Bienvenido <?= explode(" ", trim($_SESSION['datos']->Us_usuario))[0]; ?></h3>
                 <form action="<?php echo RUTA_URL; ?>/HomeController/notificaciones_admin" method="POST" style="display:inline;">
 
                     <div class="sistemas">

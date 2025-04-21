@@ -97,7 +97,7 @@
                     <p class="habitantes"><strong>Habitantes</strong></p>
                     <?php if (!empty($datos['people'])): ?>
                         <?php foreach ($datos['people'] as $persona): ?>
-                            <p class="gray-text"><?= $persona->Pe_nombre . " " . $persona->Pe_apellidos ?></p>
+                            <p class="gray-text"><?= explode(" ", trim($persona->Pe_nombre))[0] . " " . explode(" ", trim($persona->Pe_apellidos))[0] ?></p>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <p class="gray-text">Actualmente no cuenta con más habitantes</p>
