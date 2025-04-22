@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const id = document.getElementById("u_id").value.trim();
     const nombre = document.getElementById("U_Nombre").value.trim();
     const apellido = document.getElementById("U_Apellido").value.trim();
-    const telefono = document.getElementById("U_Telefono").value.trim();
+    const telefono = document.getElementById("U_Telefono").value;
     const correo = document.getElementById("U_Gmail").value.trim();
     const torre = document.getElementById("select_torre2").value.trim();
     const apartamento = document.getElementById("U_Departamento").value.trim();
@@ -53,20 +53,23 @@ document.addEventListener("DOMContentLoaded", () => {
     ) {
       errores.push("Por favor, complete todos los campos.");
     }
-    if (rol === "3") {
-      if (!torre || !apartamento) {
-        errores.push("Por favor, complete los campos Torre y Apartamento.");
-      }
-    }
 
     // Validar que documento y teléfono sean números
     if (id && isNaN(id)) {
       errores.push("El Documento debe ser un número.");
     }
-    if (telefono && isNaN(telefono) && telefono.length == 10) {
+    if (telefono && isNaN(telefono)) {
       errores.push("El Teléfono debe ser un número.");
+    } else if (telefono.length !== 10) {
+      // Cambiado de === a !==
+      errores.push("El Teléfono debe tener 10 dígitos.");
     }
 
+    if (rol === "3") {
+      if (!torre || !apartamento) {
+        errores.push("Por favor, complete los campos Torre y Apartamento.");
+      }
+    }
     // Validar correo
     const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (correo && !regexCorreo.test(correo)) {
@@ -108,6 +111,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       if (telefonoE && isNaN(telefonoE)) {
         errores.push("El Teléfono debe ser un número.");
+      } else if (telefonoE.length !== 10) {
+        errores.push("El Teléfono debe tener 10 dígitos.");
       }
       const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (correoE && !regexCorreo.test(correoE)) {
