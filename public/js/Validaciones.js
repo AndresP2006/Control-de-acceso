@@ -47,6 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (idV && isNaN(idV)) {
       errores.push("El Documento debe ser un número.");
+    } else if (idV.length !== 10) {
+      errores.push("El Documento debe tener 10 dígitos.");
     }
 
     if (telefonoV && isNaN(telefonoV)) {
