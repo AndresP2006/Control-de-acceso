@@ -51,6 +51,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (telefonoV && isNaN(telefonoV)) {
       errores.push("El Teléfono debe ser un número.");
+    } else if (telefonoV.length !== 10) {
+      errores.push("El Teléfono debe tener 10 dígitos.");
     }
 
     // NUEVA VALIDACIÓN PARA NOMBRE Y APELLIDO SIN NÚMEROS
