@@ -57,14 +57,15 @@ document.addEventListener("DOMContentLoaded", () => {
     // Validar que documento y teléfono sean números
     if (id && isNaN(id)) {
       errores.push("El Documento debe ser un número.");
+    } else if (id.length !== 10) {
+      errores.push("El Documento debe tener 10 dígitos.");
     }
+
     if (telefono && isNaN(telefono)) {
       errores.push("El Teléfono debe ser un número.");
     } else if (telefono.length !== 10) {
-      // Cambiado de === a !==
       errores.push("El Teléfono debe tener 10 dígitos.");
     }
-
     if (rol === "3") {
       if (!torre || !apartamento) {
         errores.push("Por favor, complete los campos Torre y Apartamento.");
@@ -108,6 +109,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (idE && isNaN(idE)) {
         errores.push("El Documento debe ser un número.");
+      } else if (idE.length !== 10) {
+        errores.push("El Documento debe tener 10 dígitos.");
       }
       if (telefonoE && isNaN(telefonoE)) {
         errores.push("El Teléfono debe ser un número.");
@@ -118,16 +121,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (correoE && !regexCorreo.test(correoE)) {
         errores.push("El Correo no es válido.");
       }
-      if (
-        !idE ||
-        !nombreE ||
-        !apellidoE ||
-        !telefonoE ||
-        !correoE ||
-        !torreE ||
-        !departamentoE ||
-        !rolE
-      ) {
+
+      if (!idE || !nombreE || !apellidoE || !telefonoE || !correoE) {
         errores.push("Por favor, complete todos los campos.");
       }
 
