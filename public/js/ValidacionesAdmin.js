@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
     editarPersonas[i].addEventListener("submit", (e) => {
       const errores = []; // Declara errores dentro del listener de cada formulario
 
-      const idE = document.getElementById("E_id").value.trim();
+      // const idE = document.getElementById("E_id").value.trim();
       const nombreE = document.getElementById("E_Nombre").value.trim();
       const apellidoE = document.getElementById("E_Apellido").value.trim();
       const telefonoE = document.getElementById("E_Telefono").value.trim();
@@ -107,11 +107,6 @@ document.addEventListener("DOMContentLoaded", () => {
         .value.trim();
       const rolE = document.getElementById("R_id").value.trim();
 
-      if (idE && isNaN(idE)) {
-        errores.push("El Documento debe ser un número.");
-      } else if (idE.length !== 10) {
-        errores.push("El Documento debe tener 10 dígitos.");
-      }
       if (telefonoE && isNaN(telefonoE)) {
         errores.push("El Teléfono debe ser un número.");
       } else if (telefonoE.length !== 10) {
@@ -122,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
         errores.push("El Correo no es válido.");
       }
 
-      if (!idE || !nombreE || !apellidoE || !telefonoE || !correoE) {
+      if (!nombreE || !apellidoE || !telefonoE || !correoE) {
         errores.push("Por favor, complete todos los campos.");
       }
 
