@@ -16,6 +16,14 @@ class VisitorModel
             return (array) $registro;
         }, $this->db->registros());
     }
+
+    public function getVisitors()
+    {
+        $this->db->query("SELECT * from visitantes , registro r where r.Use_visit = 'VisitaUser'");
+        return array_map(function ($registro) {
+            return (array) $registro;
+        }, $this->db->registros());
+    }
     public function obtenerVisitantesPorFecha($fecha)
     {
         $sql = "SELECT v.* 
