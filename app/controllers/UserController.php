@@ -698,4 +698,5 @@ class UserController extends Controlador
     }
     // En UserController.php
 
+
 }
