@@ -19,7 +19,10 @@ class VisitorModel
 
     public function getVisitors()
     {
-        $this->db->query("SELECT * from visitantes , registro r where r.Use_visit = 'VisitaUser'");
+        $this->db->query("SELECT * 
+                            FROM visitantes v
+                            INNER JOIN registro r ON v.Vi_id = r.Vi_id
+                            WHERE r.Use_visit = 'VisitaUser' and r.Re_hora_salida= '00:00:00';");
         return array_map(function ($registro) {
             return (array) $registro;
         }, $this->db->registros());
