@@ -224,4 +224,22 @@ class PorterController extends Controlador
             $this->vista('pages/user/registroView', $datos);
         }
     }
+
+    public function FiltroCedula() {
+        // Si no se envía ninguna cédula, mostrar todos los visitantes
+        if (!isset($_POST['cedula']) || empty(trim($_POST['cedula']))) {
+            $resultado = $this->peopleModel->Filtro();
+        } else {
+            $datos = [
+                'cedula' => trim($_POST['cedula']),
+            ];
+            $resultado = $this->peopleModel->FiltroCedula($datos);
+        }
+
+        $datos = [
+            'visitors' => $resultado,
+        ];
+
+        $this->vista('pages/porter/registroPView', $datos);
+    }
 }
