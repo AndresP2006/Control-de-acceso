@@ -15,8 +15,8 @@
       >Buscar</button>
     </form>
   </div>
-  <div style="position: relative;left: 85%;width: 50px; ">
-  <a href="<?php echo RUTA_URL; ?>/HomeController/guard"><button>Home</button></a>
+  <div class="Siquiente2">
+  <a href="<?php echo RUTA_URL; ?>/HomeController/guard"><button class="siquiente_registro">Porteria</button></a>
 </div>
 </div>
 
