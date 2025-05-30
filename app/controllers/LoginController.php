@@ -11,19 +11,20 @@ class LoginController extends Controlador
         //echo 'Controlador paginas cargado';
     }
 
+
     public function index()
     {
         $result = $this->userModel->getUserByEmailOrName($_POST['usuario']);
 
         if ($result && isset($result)) {
             if ($result->Us_contrasena === $_POST['password']) {
-                
+
                 $_SESSION['sesion_activa'] = true;
                 $_SESSION['datos'] = $result;
 
                 switch ($result->Ro_id) {
                     case "1": // administrador
-                
+
                         header('location:' . RUTA_URL . '/HomeController/admin');
                         break;
                     case "2": // guardia
@@ -31,9 +32,9 @@ class LoginController extends Controlador
                         header('location:' . RUTA_URL . '/HomeController/guard');
                         break;
                     case "3": // residente
-                        
+
                         // header('location:' . RUTA_URL . '/HomeController/notificaciones', );
-                        header('location:' . RUTA_URL . '/HomeController/resident', );
+                        header('location:' . RUTA_URL . '/HomeController/resident');
                         break;
                 }
             } else {
@@ -54,6 +55,4 @@ class LoginController extends Controlador
     {
         $this->vista('pages/porter/porterView', null);
     }
-    
-
 }

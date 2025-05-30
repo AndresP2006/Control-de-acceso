@@ -10,10 +10,10 @@
     <link rel="stylesheet" type="text/css" href="<?php echo RUTA_URL; ?>/css/Informacion.css">
     <title><?php echo NOMBRESITIO; ?></title>
     <style>
-        .container, .inicia_seccion {
+        .container,
+        .inicia_seccion {
             background-image: url("<?php echo RUTA_URL; ?>/img/backgroup.jpg");
         }
     </style>
 </head>
-
 <body>

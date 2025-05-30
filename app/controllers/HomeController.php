@@ -12,6 +12,7 @@ class HomeController extends Controlador
     private $peopleModel;
     private $notificacionModel;
 
+
     public function __construct()
     {
         $this->porterController = $this->controller('PorterController');
@@ -22,7 +23,9 @@ class HomeController extends Controlador
         $this->paquetModel = $this->modelo('PaquetModel');
         $this->peopleModel = $this->modelo('PeopleModel'); // Corregido
         $this->notificacionModel = $this->modelo('NotificacionModel'); // Corregido
+
     }
+
 
     public function index()
     {
@@ -120,10 +123,10 @@ class HomeController extends Controlador
             $resident = $this->peopleModel->getPersonaById($id_residente);
             $people = $this->peopleModel->getAllRedident($id_residente);
             $datos_resident = $this->peopleModel->getAllSolicitudes($id);
-            
+
             $datos = [
                 'resindents' => $resident,
-                'people'=>$people,
+                'people' => $people,
                 'datos_resident' => $datos_resident
             ];
             $this->vista("pages/admin/modalSolicitud", $datos);
@@ -137,11 +140,11 @@ class HomeController extends Controlador
             header('location:' . RUTA_URL . '/pages/homeView');
             exit;
         }
-        
+
         $datos = $this->userController->MostrarDatos();
-        
+
         $Torres = $this->torreModel->setTorres();
-        $notificacion= $this->notificacionModel->getPendingNotifications();
+        $notificacion = $this->notificacionModel->getPendingNotifications();
 
         $_SESSION['torre'] = $Torres;
         $_SESSION['notificaciones'] = $notificacion;
@@ -198,13 +201,11 @@ class HomeController extends Controlador
     public function BuscarPaquetes()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'GET') {
-    
-            $fechaInicio = isset($_POST['fecha_inicio']) ? trim($_POST['fecha_inicio']) :
-                           (isset($_GET['fecha_inicio']) ? trim($_GET['fecha_inicio']) : '');
-    
-            $fechaFin = isset($_POST['fecha_fin']) ? trim($_POST['fecha_fin']) :
-                        (isset($_GET['fecha_fin']) ? trim($_GET['fecha_fin']) : '');
-    
+
+            $fechaInicio = isset($_POST['fecha_inicio']) ? trim($_POST['fecha_inicio']) : (isset($_GET['fecha_inicio']) ? trim($_GET['fecha_inicio']) : '');
+
+            $fechaFin = isset($_POST['fecha_fin']) ? trim($_POST['fecha_fin']) : (isset($_GET['fecha_fin']) ? trim($_GET['fecha_fin']) : '');
+
             // Si las dos fechas están vacías o solo una está vacía, mostrar todos los paquetes
             if (empty($fechaInicio) || empty($fechaFin)) {
                 $paquets = $this->paquetModel->getAllPackages();
@@ -229,11 +230,11 @@ class HomeController extends Controlador
                     ];
                 }
             }
-    
+
             $this->vista('pages/admin/paquetesView', $datos);
         }
     }
-    
+
 
     public function DeletePaquete()
     {
@@ -260,8 +261,9 @@ class HomeController extends Controlador
             exit;
         }
     }
-   
-    public function buscarPorId() {
+
+    public function buscarPorId()
+    {
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_persona']) && !empty($_POST['id_persona'])) {
             $idPersona = trim($_POST['id_persona']);
             $paquetes = $this->paquetModel->getPacketePeopleId($idPersona);
@@ -274,10 +276,10 @@ class HomeController extends Controlador
             $this->vista('pages/admin/paquetesView', $datos);
         } else {
             $paquets = $this->paquetModel->getAllPackages();
-                $datos = [
-                    'paquets' => $paquets,
-                    'filter_date' => false
-                ];
+            $datos = [
+                'paquets' => $paquets,
+                'filter_date' => false
+            ];
             $this->vista('pages/admin/paquetesView', $datos);
         }
     }
@@ -290,12 +292,9 @@ class HomeController extends Controlador
 
         $data = [
             'torres' => $torres,
-             'apartaments' => $apartaments
+            'apartaments' => $apartaments
         ];
 
         $this->vista('pages/admin/edificiosView', $data);
     }
-
-    
-
 }
