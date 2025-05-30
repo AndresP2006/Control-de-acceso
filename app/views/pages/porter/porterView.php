@@ -1,6 +1,8 @@
 <?php require_once RUTA_APP . '/views/inc/header-porter.php'; ?>
 
-
+<div class="Siquiente" >
+    <a href="<?php echo RUTA_URL; ?>/HomeController/registroPorter"><button class="siquiente_registro">Registro</button></a>
+</div>
 <div class="cuerpo">
     <div class="contador_ingresos">
         <h2>Han Ingresado</h2>

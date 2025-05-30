@@ -1,4 +1,4 @@
-<?php require_once RUTA_APP . '/views/inc/header-user.php'; ?>
+    <?php require_once RUTA_APP . '/views/inc/header-user.php'; ?>
 
 <?php
 $pendiente = false;
@@ -206,6 +206,15 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
         <br><br><br>
         <div class="footer">
             <button id="edit-btn" onclick="habilitarEdicion()" style="display:none;">✏️ Editar</button>
+            <form action="<?php echo RUTA_URL; ?>/HomeController/registroView" method="POST" >
+                <div class="Siquiente">
+                    <button class="siquiente_registro" >Nueva Visita</button>
+                </div>
+                <input type="hidden" name="torre" value="<?php echo $datos['resindents'][0]->To_letra; ?>">
+                <input type="hidden" name="apartamento" value="<?php echo $datos['resindents'][0]->Ap_numero; ?>">
+                <input type="hidden" name="idUsuario" value="<?php echo $datos['resindents'][0]->Us_id; ?>">
+            </form>
+            
 
             <button
                 id="save-btn"
