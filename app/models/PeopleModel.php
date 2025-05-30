@@ -46,7 +46,7 @@ class PeopleModel
 
     public function getPersonaById($id)
     {
-        $this->db->query('SELECT persona.*, usuario.Ro_id, usuario.Us_correo, r.Ro_tipo, usuario.Us_contrasena, a.Ap_numero, t.To_letra,t.To_id FROM persona LEFT JOIN usuario ON persona.Pe_id = usuario.Us_id LEFT JOIN rol r ON usuario.Ro_id = r.Ro_id LEFT JOIN apartamento a ON persona.Ap_id = a.Ap_id LEFT JOIN torre t ON a.To_id = t.To_id   WHERE Pe_id = :id');
+        $this->db->query('SELECT persona.*, usuario.Ro_id, usuario.Us_correo,usuario.estado, r.Ro_tipo, usuario.Us_contrasena, a.Ap_numero, t.To_letra,t.To_id FROM persona LEFT JOIN usuario ON persona.Pe_id = usuario.Us_id LEFT JOIN rol r ON usuario.Ro_id = r.Ro_id LEFT JOIN apartamento a ON persona.Ap_id = a.Ap_id LEFT JOIN torre t ON a.To_id = t.To_id   WHERE Pe_id = :id');
         $this->db->bind(':id', $id);
         return $this->db->registro(); // Devuelve un solo registro
     }
@@ -100,37 +100,46 @@ class PeopleModel
     }
 
     //No tocar este metodo
-    public function getAllUsuario($roleId = null)
+    public function getAllUsuario($roleId = null, $estado = null)
     {
+        echo "<script>console.log('Hola, $estado desde PHP');</script>";
+
         if ($roleId) {
             // Consulta con filtro por Rol
             $this->db->query('
-            SELECT persona.*, usuario.Ro_id, usuario.Us_correo, r.Ro_tipo, usuario.Us_contrasena, a.Ap_numero, t.To_letra, t.To_id,a.Ap_id 
-            FROM persona 
-            LEFT JOIN usuario ON persona.Pe_id = usuario.Us_id 
-            LEFT JOIN rol r ON usuario.Ro_id = r.Ro_id 
-            LEFT JOIN apartamento a ON persona.Ap_id = a.Ap_id 
-            LEFT JOIN torre t ON a.To_id = t.To_id 
-            WHERE usuario.Ro_id = :roleId
-        ');
+        SELECT persona.*, usuario.Ro_id, usuario.Us_correo, r.Ro_tipo, usuario.Us_contrasena, a.Ap_numero, t.To_letra, t.To_id, a.Ap_id,usuario.estado 
+        FROM persona 
+        LEFT JOIN usuario ON persona.Pe_id = usuario.Us_id 
+        LEFT JOIN rol r ON usuario.Ro_id = r.Ro_id 
+        LEFT JOIN apartamento a ON persona.Ap_id = a.Ap_id 
+        LEFT JOIN torre t ON a.To_id = t.To_id 
+        WHERE usuario.Ro_id = :roleId AND usuario.estado = :estado
+    ');
             $this->db->bind(':roleId', $roleId);
+            $this->db->bind(':estado', $estado ?? 'activo');
         } else {
             // Consulta sin filtro por Rol
             $this->db->query('
-            SELECT persona.*, usuario.Ro_id, usuario.Us_correo, r.Ro_tipo, usuario.Us_contrasena, a.Ap_numero, t.To_letra, t.To_id 
-            FROM persona 
-            LEFT JOIN usuario ON persona.Pe_id = usuario.Us_id 
-            LEFT JOIN rol r ON usuario.Ro_id = r.Ro_id 
-            LEFT JOIN apartamento a ON persona.Ap_id = a.Ap_id 
-            LEFT JOIN torre t ON a.To_id = t.To_id
-        ');
+        SELECT persona.*, usuario.Ro_id, usuario.Us_correo, r.Ro_tipo, usuario.Us_contrasena, a.Ap_numero, t.To_letra, t.To_id, usuario.estado 
+        FROM persona 
+        LEFT JOIN usuario ON persona.Pe_id = usuario.Us_id 
+        LEFT JOIN rol r ON usuario.Ro_id = r.Ro_id 
+        LEFT JOIN apartamento a ON persona.Ap_id = a.Ap_id 
+        LEFT JOIN torre t ON a.To_id = t.To_id
+        WHERE usuario.estado = :estado
+    ');
+            $this->db->bind(':estado', $estado ?? 'activo');
         }
 
-        return $this->db->registros(); // Devuelve todos los registros
+        return $this->db->registros();
     }
 
-    public function getAllResident($result)
-
+    public function getUsuario($id){
+        $this->db->query('SELECT * FROM usuario WHERE Us_id = :id');
+        $this->db->bind(':id', $id);
+        return $this->db->registro(); // Devuelve un solo registro
+    }
+    public function getAllResident($result) 
     {
 
         $this->db->query("SELECT
@@ -238,12 +247,12 @@ WHERE p1.Pe_id = '$result' AND p2.Pe_id <> '$result'",);
     }
 
     public function obtenerEstadoSolicitud($idHabitante)
-{
-    $this->db->query("SELECT estado FROM solicitudes_actualizacion WHERE id_residente = :id ORDER BY id DESC LIMIT 1");
-    $this->db->bind(':id', $idHabitante);
-    $resultado = $this->db->registro();
-    return $resultado ? $resultado->estado : null;
-}
+    {
+        $this->db->query("SELECT estado FROM solicitudes_actualizacion WHERE id_residente = :id ORDER BY id DESC LIMIT 1");
+        $this->db->bind(':id', $idHabitante);
+        $resultado = $this->db->registro();
+        return $resultado ? $resultado->estado : null;
+    }
 
 public function obtenerUsuarioPorId($u_id){
     $this->db->query("SELECT Vi_nombres, Vi_apellidos, Vi_telefono FROM visitantes WHERE Vi_id = :u_id");
