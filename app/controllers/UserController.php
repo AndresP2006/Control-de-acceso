@@ -55,7 +55,9 @@ class UserController extends Controlador
         $messageError = nUll;
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registro'])) {
             if (!empty(trim($_POST['Pe_id'])) && !empty(trim($_POST['U_Nombre']))  && !empty(trim($_POST['U_Apellido'])) && !empty(trim($_POST['U_Telefono'])) && !empty(trim($_POST['U_Gmail'])) && !empty(trim($_POST['U_id']))) {
-
+                if(!$this->peopleModel->getAllPeople($_POST['Pe_id'])){
+                    
+                }
 
                 // Recoger los datos del formulario
                 $departamento = isset($_POST['U_Departamento']) && !empty($_POST['U_Departamento'])
@@ -266,7 +268,7 @@ class UserController extends Controlador
 
     public function Torre()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['borrar']) && isset($_POST['id'])) {
                 $id = $_POST['id'];
 
@@ -329,7 +331,7 @@ class UserController extends Controlador
                     $datos['messageInfo'] = 'Apartamento eliminado correctamente.';
                 } else {
                     $hay = $this->apartamentModel->peopleApartamento($torre, $apartamento);
-                    
+
                     $datos['messageError'] = 'Hay personas viviendo en este apartamento';
                 }
             } elseif (isset($_POST['guardar']) && isset($_POST['torre']) && isset($_POST['apartamento'])) {
@@ -358,7 +360,7 @@ class UserController extends Controlador
         $roleId = isset($_POST['select_id']) && $_POST['select_id'] !== '' ? intval($_POST['select_id']) : null;
 
         // Obtén todos los registros de usuarios con o sin filtro
-        $registros = $this->peopleModel->getAllUsuario($roleId);
+        $registros = $this->peopleModel->getAllUsuario($roleId,"activo");
 
         // Si no hay registros, devuelve un mensaje
         if (empty($registros)) {
@@ -383,6 +385,7 @@ class UserController extends Controlador
                 'To_letra' => $registro->To_letra,
                 'To_id' => $registro->To_id,
                 'Ro_tipo' => $registro->Ro_tipo,
+                'Estado' => $registro->estado,
             ];
         }
 
@@ -424,27 +427,33 @@ class UserController extends Controlador
 
         // Verifica la acción de búsqueda o filtrado
         if (isset($_POST['action'])) {
-            // Filtrado por rol
+            // Filtrado por rol o por estado
             if ($_POST['action'] === 'filter') {
-                $rolId = $_POST['select_rol'] ?? null; // Asignamos el valor de select_rol o null si no está definido
-                $usuarios = $rolId ? $this->peopleModel->getAllUsuario($rolId) : $this->peopleModel->getAllUsuario();
-                $filter = $rolId ?: 'Todos';
-                // No hay necesidad de mostrar error si no se encuentra ningún resultado en el filtro
-                if (empty($usuarios)) {
+                $rolId = $_POST['select_rol'] ?? null;
+
+                if ($rolId === 'inactivo') {
+                    // Solo usuarios inactivos
+                    $usuarios = $this->peopleModel->getAllUsuario(null, "inactivo");
+                    $filter = 'inactivo';
+                } else {
+                    // Usuarios activos, con o sin filtro por rol
+                    $usuarios = $rolId ? $this->peopleModel->getAllUsuario($rolId, "activo") : $this->peopleModel->getAllUsuario(null, "activo");
+                    $filter = $rolId ?: 'Todos';
                 }
             }
-            // Búsqueda por id_usuario
+            // Búsqueda por ID
             elseif ($_POST['action'] === 'search' && !empty($_POST['id_usuario'])) {
                 $usuario = $this->peopleModel->getPersonaById($_POST['id_usuario']);
 
                 if ($usuario) {
-                    $usuarios = [$usuario]; // Mostrar solo el usuario encontrado
-                    $filter = $usuario->Ro_id; // Cambia el filtro automáticamente según el rol del usuario encontrado
+                    $usuarios = [$usuario];
+                    $filter = $usuario->Ro_id;
                 } else {
-                    $messageError = 'Usuario no encontrado con la cédula proporcionada.'; // Mensaje de error para búsqueda
+                    $messageError = 'Usuario no encontrado con la cédula proporcionada.';
                 }
             }
         }
+
 
         // Convertir los usuarios a formato array si hay usuarios encontrados
         if (!empty($usuarios)) {
@@ -461,6 +470,7 @@ class UserController extends Controlador
                     'To_letra' => $usuario->To_letra,
                     'Us_contrasena' => $usuario->Us_contrasena,
                     'Ro_tipo' => $usuario->Ro_tipo,
+                    'Estado' => $usuario->estado,
                 ];
             }, $usuarios);
 
@@ -697,5 +707,61 @@ class UserController extends Controlador
         exit;
     }
     // En UserController.php
+    public function ActivarUsuario()
+    {
+        $mensaje = null;
+        $mensajeError = null;
 
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
+            $usuario_id = $_POST['delete_id'];
+            // Obtener el usuario por su ID
+            $usuario = $this->peopleModel->getPersonaById($usuario_id);
+            if ($usuario) {
+                // Verificar si está inactivo
+                if ($usuario->estado === 'inactivo') {
+                    // Cambiar estado a activo
+                    if ($this->adminModel->cambiarEstadoUsuario($usuario_id, 'activo')) {
+                        $mensaje = 'Usuario activado correctamente.';
+                    } else {
+                        $mensajeError = 'No se pudo activar el usuario.';
+                    }
+                } else {
+                    $mensajeError = 'El usuario ya está activo.';
+                }
+            } else {
+                $mensajeError = 'Usuario no encontrado.';
+            }
+        }
+
+        // Recargar lista de usuarios
+        $filter = $_POST['select_rol'] ?? 'Todos';
+        $registros = ($filter === 'Todos')
+            ? $this->peopleModel->getAllUsuario()
+            : $this->peopleModel->getAllUsuario($filter);
+
+        $usuarios = [];
+        foreach ($registros as $registro) {
+            $usuarios[] = [
+                'Cedula' => $registro->Pe_id,
+                'Pe_nombre' => $registro->Pe_nombre,
+                'Pe_apellidos' => $registro->Pe_apellidos,
+                'Pe_telefono' => $registro->Pe_telefono,
+                'Us_correo' => $registro->Us_correo,
+                'Ap_id' => $registro->Ap_id,
+                'To_letra' => $registro->To_letra,
+                'Ap_numero' => $registro->Ap_numero,
+                'Ro_tipo' => $registro->Ro_tipo,
+                'estado' => $registro->estado,
+            ];
+        }
+
+        $datos = [
+            'usuarios' => $usuarios,
+            'filter' => $filter,
+            'messageAct' => $mensaje,
+            'messageError' => $mensajeError
+        ];
+
+        $this->vista('pages/admin/adminView', $datos);
+    }
 }

@@ -23,21 +23,23 @@ class AdminModel
             }
 
             // Insertar en tabla 'usuario'
-            $this->db->query('INSERT INTO usuario (Us_id, Us_usuario, Us_contrasena, Us_correo, Ro_id) VALUES (:Cedula, :Usuario, :Contrasena, :Correo, :Rol)');
+            $this->db->query('INSERT INTO usuario (Us_id, Us_usuario, Us_contrasena, Us_correo, Ro_id,estado) VALUES (:Cedula, :Usuario, :Contrasena, :Correo, :Rol,:estado)');
             $this->db->bind(':Cedula', $datos['Cedula']);
             $this->db->bind(':Usuario', $datos['Nombre']);
             $this->db->bind(':Contrasena', $datos['Contrasena']); // Cifrar contraseña
             $this->db->bind(':Correo', $datos['Gmail']);
             $this->db->bind(':Rol', $datos['Rol']);
+            $this->db->bind(':estado', 'activo');
             $this->db->execute();
 
             // Insertar en tabla 'persona'
-            $this->db->query('INSERT INTO persona (Pe_id, Pe_nombre, Pe_apellidos, Pe_telefono, Ap_id, Us_id) VALUES (:Cedula, :Nombre, :Apellidos, :Telefono, :Departamento, :Cedula)');
+            $this->db->query('INSERT INTO persona (Pe_id, Pe_nombre, Pe_apellidos, Pe_telefono, Ap_id, Us_id,estado) VALUES (:Cedula, :Nombre, :Apellidos, :Telefono, :Departamento, :Cedula,:estado)');
             $this->db->bind(':Cedula', $datos['Cedula']);
             $this->db->bind(':Nombre', $datos['Nombre']);
             $this->db->bind(':Apellidos', $datos['Apellidos']);
             $this->db->bind(':Telefono', $datos['Telefono']);
             $this->db->bind(':Departamento', $datos['Departamento']);
+                        $this->db->bind(':estado', 'activo');
             $this->db->execute();
 
             $this->db->commit();
@@ -54,30 +56,32 @@ class AdminModel
         try {
             // Iniciar una transacción
             $this->db->beginTransaction();
-            $sql = "DELETE FROM paquete WHERE Pe_id = :id";
-            $this->db->query($sql);
-            $this->db->bind(':id', $id);
-            $this->db->execute();
-            $sql0 = "DELETE FROM solicitudes_actualizacion WHERE id_residente = :id";
-            $this->db->query($sql0);
-            $this->db->bind(':id', $id);
-            $this->db->execute();
+            // $sql = "DELETE FROM paquete WHERE Pe_id = :id";
+            // $this->db->query($sql);
+            // $this->db->bind(':id', $id);
+            // $this->db->execute();
+            // $sql0 = "DELETE FROM solicitudes_actualizacion WHERE id_residente = :id";
+            // $this->db->query($sql0);
+            // $this->db->bind(':id', $id);
+            // $this->db->execute();
             // Luego eliminar el registro de la tabla 'usuario'
-            $sql1 = "DELETE FROM registro WHERE Pe_id = :id";
-            $this->db->query($sql1);
-            $this->db->bind(':id', $id);
-            $this->db->execute();
+            // $sql1 = "DELETE FROM registro WHERE Pe_id = :id";
+            // $this->db->query($sql1);
+            // $this->db->bind(':id', $id);
+            // $this->db->execute();
 
             // Eliminar el registro de la tabla 'persona' primero
-            $sql2 = "DELETE FROM persona WHERE Pe_id = :id";
+            $sql2 = "UPDATE persona SET estado =:mensaje WHERE Pe_id = :id";
             $this->db->query($sql2);
             $this->db->bind(':id', $id);
+            $this->db->bind(':mensaje', "inactivo");
             $this->db->execute();
 
             // Luego eliminar el registro de la tabla 'usuario'
-            $sql3 = "DELETE FROM usuario WHERE Us_id = :id";
+            $sql3 = "UPDATE usuario SET estado =:mensaje WHERE Us_id = :id";
             $this->db->query($sql3);
             $this->db->bind(':id', $id);
+            $this->db->bind(':mensaje', "inactivo");
             $this->db->execute();
 
 
@@ -297,6 +301,35 @@ class AdminModel
             $this->db->rollBack();
             echo "Error: " . $e->getMessage();
             return false;
+        }
+    }
+    public function cambiarEstadoUsuario($id)
+    {try {
+            // Iniciar una transacción
+            $this->db->beginTransaction();
+            $sql2 = "UPDATE persona SET estado =:mensaje WHERE Pe_id = :id";
+            $this->db->query($sql2);
+            $this->db->bind(':id', $id);
+            $this->db->bind(':mensaje', "activo");
+            $this->db->execute();
+
+            // Luego eliminar el registro de la tabla 'usuario'
+            $sql3 = "UPDATE usuario SET estado =:mensaje WHERE Us_id = :id";
+            $this->db->query($sql3);
+            $this->db->bind(':id', $id);
+            $this->db->bind(':mensaje', "activo");
+            $this->db->execute();
+
+
+            // Confirmar la transacción si ambas consultas fueron exitosas
+            $this->db->commit();
+
+            return true; // Indica que la eliminación fue exitosa
+        } catch (Exception $e) {
+            // Si hay un error, revertir la transacción
+            $this->db->rollBack();
+            echo "Error: " . $e->getMessage(); // Esto mostrará el error exacto
+            return false; // Indica que ocurrió un error
         }
     }
 }

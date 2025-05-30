@@ -16,6 +16,10 @@
                 <option value="3" <?php echo isset($datos['filter']) && $datos['filter'] == 3 ? 'selected' : ''; ?>>
                     Residente
                 </option>
+                <option value="inactivo" <?php echo isset($datos['filter']) && $datos['filter'] == 'inactivo' ? 'selected' : ''; ?>>
+                    Inactivo
+                </option>
+
             </select>
             <input type="hidden" name="action" value="filter">
 
@@ -83,12 +87,16 @@
 
                                     <input type='hidden' name='delete_id' value='" . htmlspecialchars($registro['Cedula'] ?? '') . "'>
 
-                                    <button type='button'
+                                    <button 
+                                        type='button'
                                         id='delete-btn-admin'
                                         class='delete-btn'
                                         data-id='" . htmlspecialchars($registro['Cedula'] ?? '') . "'
                                         data-rol='" . htmlspecialchars($registro['Ro_tipo'] ?? '') . "'
-                                    >🗑️</button>
+                                        data-estado='" . htmlspecialchars($registro['Estado'] ?? '') . "'
+                                    >
+                                        🗑️
+                                    </button>
                                 </td>";
 
                             echo "</tr>";
@@ -129,6 +137,9 @@
     <?php } ?>
     <?php if (isset($datos['messageDelet'])) { ?>
         realizadoDelet()
+    <?php } ?>
+    <?php if (isset($datos['messageAct'])) { ?>
+        realizadoActivar()
     <?php } ?>
 
     $(document).ready(function() {
