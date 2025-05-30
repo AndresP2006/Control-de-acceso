@@ -38,4 +38,9 @@ class UserModel
         // $this->db->bind(':rol_id', (int) $ValueRol);
         return $this->db->registros();
     }
+     public function obtenerTorreYApartamento($usuario_id) {
+        $this->db->query("SELECT torre, apartamento FROM usuarios WHERE id = :id");
+        $this->db->bind(':id', $usuario_id);
+        return $this->db->registro();
+    }
 }

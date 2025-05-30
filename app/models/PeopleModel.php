@@ -251,11 +251,28 @@ WHERE p1.Pe_id = '$result' AND p2.Pe_id <> '$result'",);
         return $resultado ? $resultado->estado : null;
     }
 
-    public function obtenerUsuarioPorId($u_id)
-    {
-        $this->db->query("SELECT Vi_nombres, Vi_apellidos, Vi_telefono FROM visitantes WHERE Vi_id = :u_id");
-        $this->db->bind(':u_id', $u_id);
-        return $this->db->registro();
+public function obtenerUsuarioPorId($u_id){
+    $this->db->query("SELECT Vi_nombres, Vi_apellidos, Vi_telefono FROM visitantes WHERE Vi_id = :u_id");
+    $this->db->bind(':u_id', $u_id);
+    return $this->db->registro();
+}
+    public function FiltroCedula($datos){
+        $id = $datos['cedula'];
+        $this->db->query("SELECT * from visitantes v  inner join registro r   on v.Vi_id = r.Vi_id where v.Vi_id = :cedula and r.Re_hora_salida='00:00:00';");
+        $this->db->bind(':cedula',$id);
+
+        return array_map(function ($registro) {
+            return (array) $registro;
+        }, $this->db->registros());
     }
-    
+
+    public function Filtro(){
+        $this->db->query('SELECT * 
+                            FROM visitantes v
+                            INNER JOIN registro r ON v.Vi_id = r.Vi_id
+                            WHERE r.Use_visit = "VisitaUser" and r.Re_hora_salida= "00:00:00";');
+        return array_map(function ($registro) {
+            return (array) $registro;
+        }, $this->db->registros());
+    }
 }

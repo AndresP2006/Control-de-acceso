@@ -49,6 +49,30 @@ class HomeController extends Controlador
     {
         $this->vista("pages/user/userView");
     }
+
+public function registroView() {
+    $torre = isset($_POST['torre']) ? $_POST['torre'] : '';
+    $apartamento = isset($_POST['apartamento']) ? $_POST['apartamento'] : '';
+    $idUsuario = isset($_POST['idUsuario']) ? $_POST['idUsuario'] : '';
+    // var_dump($_POST);
+    $datos = [
+        'torre' => $torre,
+        'apartamento' => $apartamento,
+        'isUsuario'=> $idUsuario,
+    ];
+
+    $this->vista('pages/user/registroView', $datos);
+}
+
+public function registroPorter(){
+    $visitors = $this->visitorModel->getVisitors();
+
+        $datos = [
+            'visitors' => $visitors,
+        ];
+
+    $this->vista("pages/porter/registroPView" , $datos);
+}
     public function notificaciones_admin()
     {
         // Obtener todas las solicitudes de actualización pendientes desde el modelo
