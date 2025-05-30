@@ -134,9 +134,12 @@ class PeopleModel
         return $this->db->registros();
     }
 
-
-    public function getAllResident($result)
-
+    public function getUsuario($id){
+        $this->db->query('SELECT * FROM usuario WHERE Us_id = :id');
+        $this->db->bind(':id', $id);
+        return $this->db->registro(); // Devuelve un solo registro
+    }
+    public function getAllResident($result) 
     {
 
         $this->db->query("SELECT

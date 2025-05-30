@@ -51,43 +51,49 @@ class UserController extends Controlador
 
     public function createUser()
     {
+        $estado = null;
+        $idUsuario = null;
         $messageInfo = null;
         $messageError = nUll;
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registro'])) {
             if (!empty(trim($_POST['Pe_id'])) && !empty(trim($_POST['U_Nombre']))  && !empty(trim($_POST['U_Apellido'])) && !empty(trim($_POST['U_Telefono'])) && !empty(trim($_POST['U_Gmail'])) && !empty(trim($_POST['U_id']))) {
-                if(!$this->peopleModel->getAllPeople($_POST['Pe_id'])){
-                    
-                }
-
-                // Recoger los datos del formulario
-                $departamento = isset($_POST['U_Departamento']) && !empty($_POST['U_Departamento'])
-                    ? trim($_POST['U_Departamento'])
-                    : trim($_POST['U_Departamento2']);
-
-                $datos = [
-                    'Cedula' => trim($_POST['Pe_id']),
-                    'Nombre' => trim($_POST['U_Nombre']),
-                    'Apellidos' => trim($_POST['U_Apellido']),
-                    'Telefono' => trim($_POST['U_Telefono']),
-                    'Gmail' => trim($_POST['U_Gmail']),
-                    'Departamento' => !empty($departamento) ? $departamento : null,
-                    'Rol' => trim($_POST['U_id']),
-                    'Contrasena' => trim($_POST['U_contrasena']),
-                ];
-
-                // Intentar registrar al usuario
-                $regist = $this->adminModel->addUser($datos);
-
-                if ($regist === true) {
-                    $messageInfo = 'Usuario guardado correctamente.';
-                    $messageError = null;
+                $usuario = $this->peopleModel->getUsuario($_POST['Pe_id']);
+                if ($usuario->estado == 'inactivo') {
+                    $estado = "inactivo";
+                    $idUsuario = $_POST['Pe_id'];
                 } else {
-                    $messageInfo = null;
-                    $messageError = 'El usuario con la cedula ' . $datos['Cedula'] . ' ya existe.';
+
+                    // Recoger los datos del formulario
+                    $departamento = isset($_POST['U_Departamento']) && !empty($_POST['U_Departamento'])
+                        ? trim($_POST['U_Departamento'])
+                        : trim($_POST['U_Departamento2']);
+
+                    $datos = [
+                        'Cedula' => trim($_POST['Pe_id']),
+                        'Nombre' => trim($_POST['U_Nombre']),
+                        'Apellidos' => trim($_POST['U_Apellido']),
+                        'Telefono' => trim($_POST['U_Telefono']),
+                        'Gmail' => trim($_POST['U_Gmail']),
+                        'Departamento' => !empty($departamento) ? $departamento : null,
+                        'Rol' => trim($_POST['U_id']),
+                        'Contrasena' => trim($_POST['U_contrasena']),
+                    ];
+
+                    // Intentar registrar al usuario
+                    $regist = $this->adminModel->addUser($datos);
+
+                    if ($regist === true) {
+                        $messageInfo = 'Usuario guardado correctamente.';
+                        $messageError = null;
+                    } else {
+                        $messageInfo = null;
+                        $messageError = 'El usuario con la cedula ' . $datos['Cedula'] . ' ya existe.';
+                    }
                 }
             } else {
                 $messageError = 'Error al momento de ingresar los datos';
             }
+
             // Obtener todos los usuarios registrados
             $registros = $this->peopleModel->getAllUsuario();
             $usuarios = array_map(function ($registro) {
@@ -110,6 +116,8 @@ class UserController extends Controlador
                 'usuarios' => $usuarios,
                 'messageError' => $messageError,
                 'messageInfo' => $messageInfo,
+                'estado'=> $estado,
+                'idUsuario'=>$idUsuario,
             ];
 
             $this->vista('pages/admin/AdminView', $datosVista);
@@ -360,7 +368,7 @@ class UserController extends Controlador
         $roleId = isset($_POST['select_id']) && $_POST['select_id'] !== '' ? intval($_POST['select_id']) : null;
 
         // Obtén todos los registros de usuarios con o sin filtro
-        $registros = $this->peopleModel->getAllUsuario($roleId,"activo");
+        $registros = $this->peopleModel->getAllUsuario($roleId, "activo");
 
         // Si no hay registros, devuelve un mensaje
         if (empty($registros)) {
@@ -712,8 +720,8 @@ class UserController extends Controlador
         $mensaje = null;
         $mensajeError = null;
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
-            $usuario_id = $_POST['delete_id'];
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registro_id'])) {
+            $usuario_id = $_POST['registro_id'];
             // Obtener el usuario por su ID
             $usuario = $this->peopleModel->getPersonaById($usuario_id);
             if ($usuario) {

@@ -71,11 +71,6 @@ class AdminModel
             // $this->db->execute();
 
             // Eliminar el registro de la tabla 'persona' primero
-            $sql2 = "UPDATE persona SET estado =:mensaje WHERE Pe_id = :id";
-            $this->db->query($sql2);
-            $this->db->bind(':id', $id);
-            $this->db->bind(':mensaje', "inactivo");
-            $this->db->execute();
 
             // Luego eliminar el registro de la tabla 'usuario'
             $sql3 = "UPDATE usuario SET estado =:mensaje WHERE Us_id = :id";
@@ -307,15 +302,10 @@ class AdminModel
     {try {
             // Iniciar una transacción
             $this->db->beginTransaction();
-            $sql2 = "UPDATE persona SET estado =:mensaje WHERE Pe_id = :id";
-            $this->db->query($sql2);
-            $this->db->bind(':id', $id);
-            $this->db->bind(':mensaje', "activo");
-            $this->db->execute();
 
             // Luego eliminar el registro de la tabla 'usuario'
-            $sql3 = "UPDATE usuario SET estado =:mensaje WHERE Us_id = :id";
-            $this->db->query($sql3);
+            $sql = "UPDATE usuario SET estado =:mensaje WHERE Us_id = :id";
+            $this->db->query($sql);
             $this->db->bind(':id', $id);
             $this->db->bind(':mensaje', "activo");
             $this->db->execute();

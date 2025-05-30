@@ -141,7 +141,9 @@
     <?php if (isset($datos['messageAct'])) { ?>
         realizadoActivar()
     <?php } ?>
-
+    <?php if (isset($datos['estado'])) { ?>
+        confirmarRegistro("<?php echo $datos['estado']; ?>","<?php echo $datos['idUsuario']; ?>")
+    <?php } ?>
     $(document).ready(function() {
 
 
