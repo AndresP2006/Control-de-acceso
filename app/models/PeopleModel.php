@@ -261,7 +261,25 @@ public function obtenerUsuarioPorId($u_id){
 }
     public function FiltroCedula($datos){
         $id = $datos['cedula'];
-        $this->db->query("SELECT * from visitantes v  inner join registro r   on v.Vi_id = r.Vi_id where v.Vi_id = :cedula and r.Re_hora_salida='00:00:00';");
+        $this->db->query("SELECT 
+                            v.Vi_id,
+                            v.Vi_nombres,
+                            v.Vi_apellidos,
+                            v.Vi_telefono,
+                            r.Re_fecha_entrada,
+                            r.Re_hora_entrada,
+                            r.Re_hora_salida,
+                            r.Re_motivo,
+                            a.Ap_numero,
+                            t.To_letra,
+                            p.Pe_id
+                        FROM visitantes v
+                        INNER JOIN registro r ON v.Vi_id = r.Vi_id
+                        INNER JOIN persona p ON r.Pe_id = p.Pe_id
+                        INNER JOIN apartamento a ON p.Ap_id = a.Ap_id
+                        INNER JOIN torre t ON a.To_id = t.To_id
+                        WHERE r.Use_visit = 'VisitaUser' 
+                        AND r.Re_hora_salida = '00:00:00' AND v.Vi_id = :cedula;");
         $this->db->bind(':cedula',$id);
 
         return array_map(function ($registro) {

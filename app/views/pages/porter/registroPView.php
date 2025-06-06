@@ -32,8 +32,9 @@
     <th>Hora Entrada</th>
     <th>Hora Salida</th>
     <th>Motivo</th>
+    <th>Torre</th>
     <th>Departamento</th>
-    <th>Cedula del residente</th>
+    <th>Permitir Entrada</th>
   </tr>
   </thead>
   <tbody>
@@ -52,14 +53,16 @@
         <td><?= htmlspecialchars($visita['Re_hora_entrada']) ?></td>
         <td><?= htmlspecialchars($visita['Re_hora_salida']) ?></td>
         <td><?= htmlspecialchars($visita['Re_motivo']) ?></td>
-        <td><?= htmlspecialchars($visita['Vi_departamento']) ?></td>
-        <td><?= htmlspecialchars($visita['Pe_id']) ?></td>
+        <td><?= htmlspecialchars($visita['To_letra']) ?></td>
+        <td><?= htmlspecialchars($visita['Ap_numero']) ?></td>
+        <td><button>✅</button></td>
       </tr>
     <?php endforeach; ?>
   <?php endif; ?>
   </tbody>
 </table>
-
+<!-- ✅  -->
+ <!-- 🛂 -->
 </div>
 <?php require_once RUTA_APP . '/views/inc/footer-porter.php'; ?>
 

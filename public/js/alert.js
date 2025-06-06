@@ -74,7 +74,7 @@ function advertencia(mensaje) {
 
           const inputId = document.createElement('input');
           inputId.type = 'hidden';
-          inputId.name = 'delete_id';
+          inputId.name = 'registro_id';
           inputId.value = deleteId;
 
           const inputBtn = document.createElement('input');
@@ -145,7 +145,7 @@ function confirmarRegistro(estadoRegistro, idRegistro) {
 
         const form = document.createElement('form');
         form.method = 'POST';
-        form.action = RUTA_URL + '/UserController/DeleteUser';
+        form.action = RUTA_URL + '/UserController/ActivarUsuario';
 
         const inputId = document.createElement('input');
         inputId.type = 'hidden';
