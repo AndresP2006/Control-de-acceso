@@ -728,7 +728,7 @@ class UserController extends Controlador
                 // Verificar si está inactivo
                 if ($usuario->estado === 'inactivo') {
                     // Cambiar estado a activo
-                    if ($this->adminModel->cambiarEstadoUsuario($usuario_id, 'activo')) {
+                    if ($this->adminModel->cambiarEstadoUsuario($usuario_id)) {
                         $mensaje = 'Usuario activado correctamente.';
                     } else {
                         $mensajeError = 'No se pudo activar el usuario.';

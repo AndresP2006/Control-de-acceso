@@ -123,13 +123,15 @@ class PorterModel
 
         // Crear un nuevo registro en la tabla "registro" para el visitante
         $this->db->query('
-        INSERT INTO registro (Re_fecha_entrada, Re_hora_entrada, Re_motivo,Vi_departamento,Use_visit,Pe_id, Vi_id) 
-        VALUES (CURRENT_DATE, CURRENT_TIME, :Motivo,:Departamento,"VisitaUser",:PeopleId, :Cedula)
+        INSERT INTO registro (Re_fecha_entrada,  Re_motivo,Vi_departamento,Use_visit,Pe_id, Vi_id) 
+        VALUES (CURRENT_DATE,  :Motivo,:Departamento,"VisitaUser",:PeopleId, :Cedula)
     ');
         $this->db->bind(':Cedula', $datos['Cedula']);
         $this->db->bind(':Motivo', $datos['Motivo']);
         $this->db->bind(':Departamento', $datos['Departamento']);
         $this->db->bind(':PeopleId', $datos['PeopleId']);
+
+        // CURRENT_TIME,
 
         return $this->db->execute();
     }

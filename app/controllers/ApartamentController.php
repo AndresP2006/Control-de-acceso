@@ -10,7 +10,7 @@ class ApartamentController extends Controlador
     }
     
     public function getApartamentByTower()
-    {
+    { // muestra los apartamentos traidos del modelo mediante su id
         $respuesta =  $this->apartamentModel->getApartamentByTower($_POST['TowerId']);
         echo json_encode($respuesta);
     
