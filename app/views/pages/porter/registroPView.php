@@ -43,7 +43,7 @@
       <td colspan="10">No hay registros</td>
     </tr>
   <?php else: ?>
-    <?php foreach ($datos['visitors'] as $visita): ?>
+    <?php foreach ($datos['visitors'] as $visita):?>
       <tr>
         <td><?= htmlspecialchars($visita['Vi_id']) ?></td>
         <td><?= htmlspecialchars($visita['Vi_nombres']) ?></td>
@@ -55,7 +55,10 @@
         <td><?= htmlspecialchars($visita['Re_motivo']) ?></td>
         <td><?= htmlspecialchars($visita['To_letra']) ?></td>
         <td><?= htmlspecialchars($visita['Ap_numero']) ?></td>
-        <td><button>✅</button></td>
+        <td><form action="<?php echo RUTA_URL;?>/PorterController/AllowVisit" method="post">
+          <input type="hidden" name="Id_visita" value="<?php echo htmlspecialchars($visita['Vi_id']) ?>">
+          <button class="Permiso">✅</button>
+        </form></td>
       </tr>
     <?php endforeach; ?>
   <?php endif; ?>
@@ -137,5 +140,11 @@
     }
     .btn_buscar:hover {
       background: #1a4e9b;
+    }
+    .Permiso{
+      border: none;
+      background-color: transparent;
+      font-size: 25px;
+      cursor: pointer;
     }
 </style>

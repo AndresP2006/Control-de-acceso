@@ -242,4 +242,20 @@ class PorterController extends Controlador
 
         $this->vista('pages/porter/registroPView', $datos);
     }
+
+    public function AllowVisit(){
+        if(!isset($_POST['Id_visita']) || empty(trim($_POST['Id_visita']))){
+            $resultado = $this->peopleModel->Filtro();
+        }else{
+            $datos=[
+                'cedula'=>trim($_POST['Id_visita'])
+            ];
+            $resultado = $this->peopleModel->PermisoVisita($datos);
+        }
+
+        $datos=[
+            'visitors'=>$resultado,
+        ];
+        $this->vista('pages/porter/registroPView', $datos);
+    }
 }
