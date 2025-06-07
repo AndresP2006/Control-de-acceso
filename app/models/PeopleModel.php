@@ -134,12 +134,13 @@ class PeopleModel
         return $this->db->registros();
     }
 
-    public function getUsuario($id){
+    public function getUsuario($id)
+    {
         $this->db->query('SELECT * FROM usuario WHERE Us_id = :id');
         $this->db->bind(':id', $id);
         return $this->db->registro(); // Devuelve un solo registro
     }
-    public function getAllResident($result) 
+    public function getAllResident($result)
     {
 
         $this->db->query("SELECT
@@ -254,12 +255,14 @@ WHERE p1.Pe_id = '$result' AND p2.Pe_id <> '$result'",);
         return $resultado ? $resultado->estado : null;
     }
 
-public function obtenerUsuarioPorId($u_id){
-    $this->db->query("SELECT Vi_nombres, Vi_apellidos, Vi_telefono FROM visitantes WHERE Vi_id = :u_id");
-    $this->db->bind(':u_id', $u_id);
-    return $this->db->registro();
-}
-    public function FiltroCedula($datos){
+    public function obtenerUsuarioPorId($u_id)
+    {
+        $this->db->query("SELECT Vi_nombres, Vi_apellidos, Vi_telefono FROM visitantes WHERE Vi_id = :u_id");
+        $this->db->bind(':u_id', $u_id);
+        return $this->db->registro();
+    }
+    public function FiltroCedula($datos)
+    {
         $id = $datos['cedula'];
         $this->db->query("SELECT 
                             v.Vi_id,
@@ -280,18 +283,50 @@ public function obtenerUsuarioPorId($u_id){
                         INNER JOIN torre t ON a.To_id = t.To_id
                         WHERE r.Use_visit = 'VisitaUser' 
                         AND r.Re_hora_salida = '00:00:00' AND v.Vi_id = :cedula;");
-        $this->db->bind(':cedula',$id);
+        $this->db->bind(':cedula', $id);
 
         return array_map(function ($registro) {
             return (array) $registro;
         }, $this->db->registros());
     }
 
-    public function Filtro(){
-        $this->db->query('SELECT * 
-                            FROM visitantes v
-                            INNER JOIN registro r ON v.Vi_id = r.Vi_id
-                            WHERE r.Use_visit = "VisitaUser" and r.Re_hora_salida= "00:00:00";');
+    public function Filtro()
+    {
+        $this->db->query("SELECT 
+                            v.Vi_id,
+                            v.Vi_nombres,
+                            v.Vi_apellidos,
+                            v.Vi_telefono,
+                            r.Re_fecha_entrada,
+                            r.Re_hora_entrada,
+                            r.Re_hora_salida,
+                            r.Re_motivo,
+                            a.Ap_numero,
+                            t.To_letra,
+                            p.Pe_id
+                        FROM visitantes v
+                        INNER JOIN registro r ON v.Vi_id = r.Vi_id
+                        INNER JOIN persona p ON r.Pe_id = p.Pe_id
+                        INNER JOIN apartamento a ON p.Ap_id = a.Ap_id
+                        INNER JOIN torre t ON a.To_id = t.To_id
+                        WHERE r.Use_visit = 'VisitaUser' 
+                        AND r.Re_hora_salida = '00:00:00'");
+        return array_map(function ($registro) {
+            return (array) $registro;
+        }, $this->db->registros());
+    }
+
+    public function PermisoVisita($datos)
+    {
+        $id = $datos['cedula'];
+        $this->db->query("UPDATE registro
+                    SET 
+                    Use_visit = 'Permitido',
+                    Re_hora_entrada = CURTIME()
+                    WHERE Vi_id = :cedula
+                    AND Re_hora_entrada = '00:00:00';");
+        $this->db->bind(':cedula', $id);
+
         return array_map(function ($registro) {
             return (array) $registro;
         }, $this->db->registros());
