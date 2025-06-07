@@ -135,6 +135,12 @@ class PorterModel
 
         return $this->db->execute();
     }
+    public function verificarVisitante($cedula)
+    {
+        $this->db->query("SELECT * FROM registro r, visitantes v WHERE v.Vi_id =:cedula AND (r.Use_visit = 'VisitaUser' OR r.Re_hora_salida != '00:00:00');");
+        $this->db->bind(':cedula', $cedula);
+        return $this->db->registro(); // o fetch(), dependiendo de tu clase DB
+    }
     
 }
 
