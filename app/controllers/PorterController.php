@@ -180,50 +180,56 @@ class PorterController extends Controlador
         }
     }
     public function userPeopleVisit()
-    {
-        if (
-            isset($_POST['Visitantes']) &&
-            !empty(trim($_POST['u_id'])) &&
-            !empty(trim($_POST['U_Nombre'])) &&
-            !empty(trim($_POST['U_Apellido'])) &&
-            !empty(trim($_POST['U_Telefono'])) &&
-            !empty(trim($_POST['U_Motivo'])) &&
-            !empty(trim($_POST['torre'])) &&
-            !empty(trim($_POST['apartamento'])) &&
-            !empty(trim($_POST['idResidente']))
-        ) {
+{
+    if (
+        isset($_POST['Visitantes']) &&
+        !empty(trim($_POST['u_id'])) &&
+        !empty(trim($_POST['U_Nombre'])) &&
+        !empty(trim($_POST['U_Apellido'])) &&
+        !empty(trim($_POST['U_Telefono'])) &&
+        !empty(trim($_POST['U_Motivo'])) &&
+        !empty(trim($_POST['torre'])) &&
+        !empty(trim($_POST['apartamento'])) &&
+        !empty(trim($_POST['idResidente']))
+    ) {
+        $cedula = trim($_POST['u_id']);
+        
+        // Verificar si ya está registrado con estado no válido
+        $visitanteExistente = $this->porterModel->verificarVisitante($cedula);
+
+        if ($visitanteExistente) {
+            $datos = $this->index('El visitante con cédula ' . $cedula . ' ya está registrado con estado pendiente o ya ha salido.', null);
+        } else {
             $datos1 = [
-                'Cedula' => trim($_POST['u_id']),
+                'Cedula' => $cedula,
                 'Nombre' => trim($_POST['U_Nombre']),
                 'Apellido' => trim($_POST['U_Apellido']),
                 'Telefono' => trim($_POST['U_Telefono']),
                 'Motivo' => trim($_POST['U_Motivo']),
-                // 'torre'=>trim($_POST['torre']),
                 'Departamento'=>trim($_POST['apartamento']),
                 'PeopleId'=>trim($_POST['idResidente']),
             ];
 
-            // Llamar al modelo para agregar el visitante
             $result = $this->porterModel->addGuestUser($datos1);
 
-            // Verificar el resultado y pasar el mensaje adecuado
             if ($result === false) {
                 $datos = $this->index('El visitante ' . $_POST['U_Nombre'] . ' ' . $_POST['U_Apellido'] . ', no ha salido', null);
             } else {
                 $datos = $this->index(null, 'Visitante guardado correctamente');
             }
-            $datos=[
-                'torre'=>trim($_POST['torre']),
-                'apartamento'=>trim($_POST['apartamento']),
-                'isUsuario'=>trim($_POST['idResidente']),
-            ];
-
-            $this->vista('pages/user/registroView', $datos);
-        } else {
-            $datos = $this->index('Error al momento de ingresar un visitante', null);
-            $this->vista('pages/user/registroView', $datos);
         }
+
+        $datos['torre'] = trim($_POST['torre']);
+        $datos['apartamento'] = trim($_POST['apartamento']);
+        $datos['isUsuario'] = trim($_POST['idResidente']);
+
+        $this->vista('pages/user/registroView', $datos);
+
+    } else {
+        $datos = $this->index('Error al momento de ingresar un visitante', null);
+        $this->vista('pages/user/registroView', $datos);
     }
+}
 
     public function FiltroCedula() {
         // Si no se envía ninguna cédula, mostrar todos los visitantes
@@ -245,12 +251,13 @@ class PorterController extends Controlador
 
     public function AllowVisit(){
         if(!isset($_POST['Id_visita']) || empty(trim($_POST['Id_visita']))){
-            $resultado = $this->peopleModel->Filtro();
         }else{
             $datos=[
                 'cedula'=>trim($_POST['Id_visita'])
             ];
-            $resultado = $this->peopleModel->PermisoVisita($datos);
+            // Cambia el estado de la visita usando el modelo
+            $permitido = $this->peopleModel->PermisoVisita($datos);
+            $resultado = $this->peopleModel->Filtro();
         }
 
         $datos=[

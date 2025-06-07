@@ -25,7 +25,7 @@ class PeopleModel
     public function getNumberGuest()
     {
 
-        $this->db->query("SELECT count(*) as total FROM registro WHERE Re_hora_salida = '00:00:00';");
+        $this->db->query("SELECT count(*) as total FROM registro WHERE Re_hora_salida = '00:00:00' and  Re_hora_entrada  != '00:00:00' ;");
 
         return $this->db->registro();
     }
@@ -264,6 +264,7 @@ WHERE p1.Pe_id = '$result' AND p2.Pe_id <> '$result'",);
     public function FiltroCedula($datos)
     {
         $id = $datos['cedula'];
+        $hoy = date("Y-m-d");
         $this->db->query("SELECT 
                             v.Vi_id,
                             v.Vi_nombres,
@@ -281,9 +282,10 @@ WHERE p1.Pe_id = '$result' AND p2.Pe_id <> '$result'",);
                         INNER JOIN persona p ON r.Pe_id = p.Pe_id
                         INNER JOIN apartamento a ON p.Ap_id = a.Ap_id
                         INNER JOIN torre t ON a.To_id = t.To_id
-                        WHERE r.Use_visit = 'VisitaUser' 
-                        AND r.Re_hora_salida = '00:00:00' AND v.Vi_id = :cedula;");
+                        WHERE r.Use_visit = 'VisitaUser' OR r.Use_visit='Permitido'
+                        AND v.Vi_id = :cedula AND r.Re_fecha_entrada= :fecha");
         $this->db->bind(':cedula', $id);
+        $this->db->bind(':fecha',$hoy);
 
         return array_map(function ($registro) {
             return (array) $registro;
@@ -292,6 +294,7 @@ WHERE p1.Pe_id = '$result' AND p2.Pe_id <> '$result'",);
 
     public function Filtro()
     {
+        $hoy = date("Y-m-d");
         $this->db->query("SELECT 
                             v.Vi_id,
                             v.Vi_nombres,
@@ -309,8 +312,9 @@ WHERE p1.Pe_id = '$result' AND p2.Pe_id <> '$result'",);
                         INNER JOIN persona p ON r.Pe_id = p.Pe_id
                         INNER JOIN apartamento a ON p.Ap_id = a.Ap_id
                         INNER JOIN torre t ON a.To_id = t.To_id
-                        WHERE r.Use_visit = 'VisitaUser' 
-                        AND r.Re_hora_salida = '00:00:00'");
+                        WHERE r.Use_visit = 'VisitaUser' OR r.Use_visit='Permitido'
+                        AND r.Re_fecha_entrada= :fecha");
+                        $this->db->bind(':fecha',$hoy);
         return array_map(function ($registro) {
             return (array) $registro;
         }, $this->db->registros());

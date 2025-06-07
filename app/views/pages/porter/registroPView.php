@@ -40,7 +40,7 @@
   <tbody>
   <?php if (empty($datos['visitors'])): ?>
     <tr>
-      <td colspan="10">No hay registros</td>
+      <td colspan="11">No hay registros</td>
     </tr>
   <?php else: ?>
     <?php foreach ($datos['visitors'] as $visita):?>
@@ -55,10 +55,20 @@
         <td><?= htmlspecialchars($visita['Re_motivo']) ?></td>
         <td><?= htmlspecialchars($visita['To_letra']) ?></td>
         <td><?= htmlspecialchars($visita['Ap_numero']) ?></td>
-        <td><form action="<?php echo RUTA_URL;?>/PorterController/AllowVisit" method="post">
-          <input type="hidden" name="Id_visita" value="<?php echo htmlspecialchars($visita['Vi_id']) ?>">
-          <button class="Permiso">✅</button>
-        </form></td>
+        <td>
+          <?php
+            // Si la hora de entrada es mayor a 00:00:00 (es decir, ya tiene hora de entrada)
+            $horaEntrada = $visita['Re_hora_entrada'];
+            if ($horaEntrada > '00:00:00') {
+          ?>
+            <button class="Permiso" disabled>🛂</button>
+          <?php } else { ?>
+            <form action="<?php echo RUTA_URL;?>/PorterController/AllowVisit" method="post">
+              <input type="hidden" name="Id_visita" value="<?php echo htmlspecialchars($visita['Vi_id']) ?>">
+              <button class="Permiso">✅</button>
+            </form>
+          <?php } ?>
+        </td>
       </tr>
     <?php endforeach; ?>
   <?php endif; ?>
