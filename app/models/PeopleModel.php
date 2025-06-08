@@ -264,6 +264,7 @@ WHERE p1.Pe_id = '$result' AND p2.Pe_id <> '$result'",);
     public function FiltroCedula($datos)
     {
         $id = $datos['cedula'];
+        date_default_timezone_set('America/Bogota');
         $hoy = date("Y-m-d");
         $this->db->query("SELECT 
                             v.Vi_id,
@@ -294,6 +295,7 @@ WHERE p1.Pe_id = '$result' AND p2.Pe_id <> '$result'",);
 
     public function Filtro()
     {
+        date_default_timezone_set('America/Bogota');
         $hoy = date("Y-m-d");
         $this->db->query("SELECT 
                             v.Vi_id,

@@ -19,6 +19,7 @@ class VisitorModel
 
     public function getVisitors()
     {
+        date_default_timezone_set('America/Bogota');
         $hoy = date("Y-m-d");
         $this->db->query("SELECT 
                                 v.Vi_id,
