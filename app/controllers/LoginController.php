@@ -10,6 +10,7 @@ class LoginController extends Controlador
         $this->userModel = $this->modelo('UserModel');
     }
 
+
     public function index()
     {
         // Busca usuario por email o nombre
