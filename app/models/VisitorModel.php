@@ -16,6 +16,17 @@ class VisitorModel
             return (array) $registro;
         }, $this->db->registros());
     }
+
+    public function getVisitors()
+    {
+        $this->db->query("SELECT * 
+                            FROM visitantes v
+                            INNER JOIN registro r ON v.Vi_id = r.Vi_id
+                            WHERE r.Use_visit = 'VisitaUser' and r.Re_hora_salida= '00:00:00';");
+        return array_map(function ($registro) {
+            return (array) $registro;
+        }, $this->db->registros());
+    }
     public function obtenerVisitantesPorFecha($fecha)
     {
         $sql = "SELECT v.* 
