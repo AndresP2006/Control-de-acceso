@@ -5,7 +5,6 @@
 // Se encarga de poder cargar los modelos y las vistasS
 class Controlador
 {
-
     //cargar metodo 
     public function modelo($modelo)
     {
@@ -14,7 +13,6 @@ class Controlador
         //instanciamos el modelo 
         return new $modelo();
     }
-    
     public function controller($controller)
     {
         //cargar modelo 
@@ -22,7 +20,6 @@ class Controlador
         //instanciamos el modelo 
         return new $controller();
     }
-
     //cargamos la vista
     public function vista($vista, $datos = [])
     {
