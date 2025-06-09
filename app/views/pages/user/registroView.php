@@ -27,6 +27,19 @@
 
 <?php require_once RUTA_APP .'/views/inc/footer-user.php'; ?>
 
+
+<?php if (!empty($datos['messageError'])): ?>
+    <script>
+        advertencia("<?php echo addslashes($datos['messageError']); ?>");
+    </script>
+<?php endif; ?>
+
+<?php if (!empty($datos['messageInfo'])): ?>
+    <script>
+        realizado("<?php echo addslashes($datos['messageInfo']); ?>");
+    </script>
+<?php endif; ?>
+
 <style> 
 form {
     background: #fff;

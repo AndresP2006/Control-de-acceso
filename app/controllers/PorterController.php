@@ -16,17 +16,19 @@ class PorterController extends Controlador
         $this->paquetModel = $this->modelo('PaquetModel');
     }
 
-    public function index($messageError = null, $messageInfo = null)
+    public function index($messageError = null, $messageInfo = null, $isUsuario = null, $torre = null, $apartamento = null)
     {
         $countGuest = $this->peopleModel->getNumberGuest();
         $Torres = $this->torreModel->setTorres();
 
-        // Retorna tanto el mensaje de error como el de éxito (si existen)
         return [
             'messageError' => $messageError,
             'messageInfo' => $messageInfo,
+            'isUsuario' => $isUsuario,
+            'torre' => $torre,
+            'apartamento' => $apartamento,
             'total' => $countGuest->total,
-            'torre' => $Torres,
+            'torres' => $Torres,
         ];
     }
 
@@ -179,58 +181,69 @@ class PorterController extends Controlador
             echo json_encode(['error' => 'Petición inválida']);
         }
     }
+    
     public function userPeopleVisit()
-{
-    if (
-        isset($_POST['Visitantes']) &&
-        !empty(trim($_POST['u_id'])) &&
-        !empty(trim($_POST['U_Nombre'])) &&
-        !empty(trim($_POST['U_Apellido'])) &&
-        !empty(trim($_POST['U_Telefono'])) &&
-        !empty(trim($_POST['U_Motivo'])) &&
-        !empty(trim($_POST['torre'])) &&
-        !empty(trim($_POST['apartamento'])) &&
-        !empty(trim($_POST['idResidente']))
-    ) {
-        $cedula = trim($_POST['u_id']);
-        
-        // Verificar si ya está registrado con estado no válido
-        $visitanteExistente = $this->porterModel->verificarVisitante($cedula);
+    {
 
-        if ($visitanteExistente) {
-            $datos = $this->index('El visitante con cédula ' . $cedula . ' ya está registrado con estado pendiente o ya ha salido.', null);
-        } else {
-            $datos1 = [
-                'Cedula' => $cedula,
-                'Nombre' => trim($_POST['U_Nombre']),
-                'Apellido' => trim($_POST['U_Apellido']),
-                'Telefono' => trim($_POST['U_Telefono']),
-                'Motivo' => trim($_POST['U_Motivo']),
-                'Departamento'=>trim($_POST['apartamento']),
-                'PeopleId'=>trim($_POST['idResidente']),
+        // Siempre obtener estos datos
+        $torre = isset($_POST['torre']) ? trim($_POST['torre']) : '';
+        $apartamento = isset($_POST['apartamento']) ? trim($_POST['apartamento']) : '';
+        $idResidente = isset($_POST['idResidente']) ? trim($_POST['idResidente']) : '';
+
+        if (
+            isset($_POST['Visitantes']) &&
+            !empty(trim($_POST['u_id'])) &&
+            !empty(trim($_POST['U_Nombre'])) &&
+            !empty(trim($_POST['U_Apellido'])) &&
+            !empty(trim($_POST['U_Telefono'])) &&
+            !empty(trim($_POST['U_Motivo'])) &&
+            !empty($torre) &&
+            !empty($apartamento) &&
+            !empty($idResidente)
+        ) {
+            $visitas = [
+                "cedula"    => trim($_POST['u_id']),
+                "nombre"    => trim($_POST['U_Nombre']),
+                "apellido"  => trim($_POST['U_Apellido']),
+                "telefono"  => trim($_POST['U_Telefono']),
+            ];
+            $registro = [
+                "motivo"        => trim($_POST['U_Motivo']),
+                "departamento"  => $apartamento,
+                "idResidente"   => $idResidente,
+                "cedula"        => trim($_POST['u_id']),
             ];
 
-            $result = $this->porterModel->addGuestUser($datos1);
+            // Verificar si la visita ya está dentro
+            $verificarEntrada = $this->porterModel->VerificarEnt($visitas);
 
-            if ($result === false) {
-                $datos = $this->index('El visitante ' . $_POST['U_Nombre'] . ' ' . $_POST['U_Apellido'] . ', no ha salido', null);
+            if ($verificarEntrada) {
+                $messageInfo = "La visita " . $visitas['nombre'] . " " . $visitas['apellido'] . " ya se encuentra dentro del conjunto";
+                $datos = $this->index(null, $messageInfo, $idResidente, $torre, $apartamento);
             } else {
-                $datos = $this->index(null, 'Visitante guardado correctamente');
+                // Registrar visitante y registro
+                $verificarRegistro = $this->porterModel->VirificamosRegistro($visitas);
+                if($verificarRegistro){
+                    $IngresarRegistro = $this->porterModel->IngresarRegistro($registro);
+                    $datos = $this->index(null, "Visita ingresada en espera de permiso", $idResidente, $torre, $apartamento);
+                }else{
+                    $IngresarVisita = $this->porterModel->IngresarVisit($visitas);
+                    $IngresarRegistro = $this->porterModel->IngresarRegistro($registro);
+
+                if ($IngresarVisita && $IngresarRegistro) {
+                    $datos = $this->index(null, "Visita ingresada en espera de permiso", $idResidente, $torre, $apartamento);
+                } else {
+                    $datos = $this->index("Error al ingresar la visita", null, $idResidente, $torre, $apartamento);
+                }
+                }
             }
+            $this->vista('pages/user/registroView', $datos);
+        } else {
+            // Siempre enviar torre, apartamento e idResidente aunque falten otros datos
+            $datos = $this->index('Error al momento de ingresar un visitante', null, $idResidente, $torre, $apartamento);
+            $this->vista('pages/user/registroView', $datos);
         }
-
-        $datos['torre'] = trim($_POST['torre']);
-        $datos['apartamento'] = trim($_POST['apartamento']);
-        $datos['isUsuario'] = trim($_POST['idResidente']);
-
-        $this->vista('pages/user/registroView', $datos);
-
-    } else {
-        $datos = $this->index('Error al momento de ingresar un visitante', null);
-        $this->vista('pages/user/registroView', $datos);
     }
-}
-
     public function FiltroCedula() {
         // Si no se envía ninguna cédula, mostrar todos los visitantes
         if (!isset($_POST['cedula']) || empty(trim($_POST['cedula']))) {
