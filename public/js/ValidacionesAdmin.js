@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const id = document.getElementById("u_id").value.trim();
     const nombre = document.getElementById("U_Nombre").value.trim();
     const apellido = document.getElementById("U_Apellido").value.trim();
-    const telefono = document.getElementById("U_Telefono").value.trim();
+    const telefono = document.getElementById("U_Telefono").value;
     const correo = document.getElementById("U_Gmail").value.trim();
     const torre = document.getElementById("select_torre2").value.trim();
     const apartamento = document.getElementById("U_Departamento").value.trim();
@@ -53,20 +53,24 @@ document.addEventListener("DOMContentLoaded", () => {
     ) {
       errores.push("Por favor, complete todos los campos.");
     }
+
+    // Validar que documento y teléfono sean números
+    if (id && isNaN(id)) {
+      errores.push("El Documento debe ser un número.");
+    } else if (id.length !== 10) {
+      errores.push("El Documento debe tener 10 dígitos.");
+    }
+
+    if (telefono && isNaN(telefono)) {
+      errores.push("El Teléfono debe ser un número.");
+    } else if (telefono.length !== 10) {
+      errores.push("El Teléfono debe tener 10 dígitos.");
+    }
     if (rol === "3") {
       if (!torre || !apartamento) {
         errores.push("Por favor, complete los campos Torre y Apartamento.");
       }
     }
-
-    // Validar que documento y teléfono sean números
-    if (id && isNaN(id)) {
-      errores.push("El Documento debe ser un número.");
-    }
-    if (telefono && isNaN(telefono) && telefono.length == 10) {
-      errores.push("El Teléfono debe ser un número.");
-    }
-
     // Validar correo
     const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (correo && !regexCorreo.test(correo)) {
@@ -92,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
     editarPersonas[i].addEventListener("submit", (e) => {
       const errores = []; // Declara errores dentro del listener de cada formulario
 
-      const idE = document.getElementById("E_id").value.trim();
+      // const idE = document.getElementById("E_id").value.trim();
       const nombreE = document.getElementById("E_Nombre").value.trim();
       const apellidoE = document.getElementById("E_Apellido").value.trim();
       const telefonoE = document.getElementById("E_Telefono").value.trim();
@@ -103,26 +107,17 @@ document.addEventListener("DOMContentLoaded", () => {
         .value.trim();
       const rolE = document.getElementById("R_id").value.trim();
 
-      if (idE && isNaN(idE)) {
-        errores.push("El Documento debe ser un número.");
-      }
       if (telefonoE && isNaN(telefonoE)) {
         errores.push("El Teléfono debe ser un número.");
+      } else if (telefonoE.length !== 10) {
+        errores.push("El Teléfono debe tener 10 dígitos.");
       }
       const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (correoE && !regexCorreo.test(correoE)) {
         errores.push("El Correo no es válido.");
       }
-      if (
-        !idE ||
-        !nombreE ||
-        !apellidoE ||
-        !telefonoE ||
-        !correoE ||
-        !torreE ||
-        !departamentoE ||
-        !rolE
-      ) {
+
+      if (!nombreE || !apellidoE || !telefonoE || !correoE) {
         errores.push("Por favor, complete todos los campos.");
       }
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 21-04-2025 a las 15:46:21
+-- Tiempo de generación: 07-06-2025 a las 20:36:12
 -- Versión del servidor: 9.1.0
 -- Versión de PHP: 8.3.14
 
@@ -87,8 +87,10 @@ CREATE TABLE IF NOT EXISTS `persona` (
 --
 
 INSERT INTO `persona` (`Pe_id`, `Pe_nombre`, `Pe_apellidos`, `Pe_telefono`, `Us_id`, `Ap_id`) VALUES
+(123, 'David', 'Rua Porta', '30000000', 123, 107),
 (2006, 'admin', 'admin', '3202116434', 2006, 106),
-(2020, 'porter david', 'porter', '3202116434', 2020, 106),
+(2020, 'porter', 'porter', '3202116434', 2020, 106),
+(12345, 'Juan', 'Rua', '30000000', 12345, 107),
 (1042851729, 'Andres', 'Pereira', '3202116434', 1042851729, 106);
 
 -- --------------------------------------------------------
@@ -104,6 +106,7 @@ CREATE TABLE IF NOT EXISTS `registro` (
   `Re_hora_entrada` time NOT NULL,
   `Re_hora_salida` time NOT NULL,
   `Re_motivo` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `Use_visit` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `Vi_departamento` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `Pe_id` int NOT NULL,
   `Vi_id` int NOT NULL,
@@ -111,7 +114,16 @@ CREATE TABLE IF NOT EXISTS `registro` (
   PRIMARY KEY (`Re_id`),
   KEY `Vi_id` (`Vi_id`),
   KEY `Pe_id` (`Pe_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `registro`
+--
+
+INSERT INTO `registro` (`Re_id`, `Re_fecha_entrada`, `Re_hora_entrada`, `Re_hora_salida`, `Re_motivo`, `Use_visit`, `Vi_departamento`, `Pe_id`, `Vi_id`, `vista`) VALUES
+(60, '2025-06-07', '15:32:37', '00:00:00', 'ver a un amigo', NULL, '107', 12345, 1042851729, 0),
+(61, '2025-06-07', '15:32:59', '00:00:00', 'ver a un amigo', NULL, '106', 1042851729, 1042851730, 0),
+(62, '2025-06-07', '15:33:36', '15:33:47', 'ver a un amigo', 'Permitido', '302', 1042851729, 1042851731, 0);
 
 -- --------------------------------------------------------
 
@@ -124,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `rol` (
   `Ro_id` int NOT NULL AUTO_INCREMENT,
   `Ro_tipo` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`Ro_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `rol`
@@ -192,6 +204,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `Us_contrasena` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `Us_correo` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   `Ro_id` int NOT NULL,
+  `estado` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`Us_id`),
   KEY `C_id` (`Ro_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -200,10 +213,12 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`Us_id`, `Us_usuario`, `Us_contrasena`, `Us_correo`, `Ro_id`) VALUES
-(2006, 'admin', 'Hola_papu', 'jrua1043@gmail.com', 1),
-(2020, 'porter david', 'Hola_papu', 'jcharryme@gmail.com', 2),
-(1042851729, 'Andres', 'Andres_2006', 'pereirapuelloandresdavid@gmail.com', 3);
+INSERT INTO `usuario` (`Us_id`, `Us_usuario`, `Us_contrasena`, `Us_correo`, `Ro_id`, `estado`) VALUES
+(123, 'David', 'Juan12345$', 'DSDSAAS@gmail.com', 3, 'inactivo'),
+(2006, 'admin', 'Hola_papu', 'jrua1043@gmail.com', 1, 'activo'),
+(2020, 'porter', 'Hola_papu', 'jcharryme@gmail.com', 2, 'activo'),
+(12345, 'Juan', 'Juan12345$', 'jrua1043@gmail.com', 3, 'activo'),
+(1042851729, 'Andres', 'Andres_2006', 'pereirapuelloandresdavid@gmail.com', 3, 'inactivo');
 
 -- --------------------------------------------------------
 
@@ -217,8 +232,18 @@ CREATE TABLE IF NOT EXISTS `visitantes` (
   `Vi_nombres` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `Vi_apellidos` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `Vi_telefono` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `estado` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`Vi_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `visitantes`
+--
+
+INSERT INTO `visitantes` (`Vi_id`, `Vi_nombres`, `Vi_apellidos`, `Vi_telefono`, `estado`) VALUES
+(1042851729, 'Andres', 'Padilla', '3202116434', ''),
+(1042851730, 'stiven', 'Padilla', '3202116434', ''),
+(1042851731, 'luis', 'Padilla', '3202116434', '');
 
 --
 -- Restricciones para tablas volcadas
