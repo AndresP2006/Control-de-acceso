@@ -7,75 +7,76 @@
         type="text" 
         name="cedula" 
         placeholder="Buscar por cédula"
-        class="input_cedula"
+        class="input_cedula translatable"
       >
       <button 
         type="submit"
-        class="btn_buscar"
+        class="btn_buscar translatable"
       >Buscar</button>
     </form>
   </div>
   <div class="Siquiente2">
-  <a href="<?php echo RUTA_URL; ?>/HomeController/guard"><button class="siquiente_registro">Porteria</button></a>
-</div>
+    <a href="<?php echo RUTA_URL; ?>/HomeController/guard">
+      <button class="siquiente_registro translatable">Porteria</button>
+    </a>
+  </div>
 </div>
 
 <div class="content_table">
   <table border="1" cellpadding="8" cellspacing="0">
-  <thead>
-  <tr>
-    <th>Cedula</th>
-    <th>Nombres</th>
-    <th>Apellidos</th>
-    <th>Teléfono</th>
-    <th>Fecha Entrada</th>
-    <th>Hora Entrada</th>
-    <th>Hora Salida</th>
-    <th>Motivo</th>
-    <th>Torre</th>
-    <th>Departamento</th>
-    <th>Permitir Entrada</th>
-  </tr>
-  </thead>
-  <tbody>
-  <?php if (empty($datos['visitors'])): ?>
-    <tr>
-      <td colspan="11">No hay registros</td>
-    </tr>
-  <?php else: ?>
-    <?php foreach ($datos['visitors'] as $visita):?>
+    <thead>
       <tr>
-        <td><?= htmlspecialchars($visita['Vi_id']) ?></td>
-        <td><?= htmlspecialchars($visita['Vi_nombres']) ?></td>
-        <td><?= htmlspecialchars($visita['Vi_apellidos']) ?></td>
-        <td><?= htmlspecialchars($visita['Vi_telefono']) ?></td>
-        <td><?= htmlspecialchars($visita['Re_fecha_entrada']) ?></td>
-        <td><?= htmlspecialchars($visita['Re_hora_entrada']) ?></td>
-        <td><?= htmlspecialchars($visita['Re_hora_salida']) ?></td>
-        <td><?= htmlspecialchars($visita['Re_motivo']) ?></td>
-        <td><?= htmlspecialchars($visita['To_letra']) ?></td>
-        <td><?= htmlspecialchars($visita['Ap_numero']) ?></td>
-        <td>
-          <?php
-            // Si la hora de entrada es mayor a 00:00:00 (es decir, ya tiene hora de entrada)
-            $horaEntrada = $visita['Re_hora_entrada'];
-            if ($horaEntrada > '00:00:00') {
-          ?>
-            <button class="Permiso" disabled>🛂</button>
-          <?php } else { ?>
-            <form action="<?php echo RUTA_URL;?>/PorterController/AllowVisit" method="post">
-              <input type="hidden" name="Id_visita" value="<?php echo htmlspecialchars($visita['Vi_id']) ?>">
-              <button class="Permiso">✅</button>
-            </form>
-          <?php } ?>
-        </td>
+        <th class="translatable">Cedula</th>
+        <th class="translatable">Nombres</th>
+        <th class="translatable">Apellidos</th>
+        <th class="translatable">Teléfono</th>
+        <th class="translatable">Fecha Entrada</th>
+        <th class="translatable">Hora Entrada</th>
+        <th class="translatable">Hora Salida</th>
+        <th class="translatable">Motivo</th>
+        <th class="translatable">Torre</th>
+        <th class="translatable">Departamento</th>
+        <th class="translatable">Permitir Entrada</th>
       </tr>
-    <?php endforeach; ?>
-  <?php endif; ?>
-  </tbody>
-</table>
-<!-- ✅  -->
- <!-- 🛂 -->
+    </thead>
+    <tbody>
+      <?php if (empty($datos['visitors'])): ?>
+        <tr>
+          <td colspan="11" class="translatable">No hay registros</td>
+        </tr>
+      <?php else: ?>
+        <?php foreach ($datos['visitors'] as $visita):?>
+          <tr>
+            <td><?= htmlspecialchars($visita['Vi_id']) ?></td>
+            <td><?= htmlspecialchars($visita['Vi_nombres']) ?></td>
+            <td><?= htmlspecialchars($visita['Vi_apellidos']) ?></td>
+            <td><?= htmlspecialchars($visita['Vi_telefono']) ?></td>
+            <td><?= htmlspecialchars($visita['Re_fecha_entrada']) ?></td>
+            <td><?= htmlspecialchars($visita['Re_hora_entrada']) ?></td>
+            <td><?= htmlspecialchars($visita['Re_hora_salida']) ?></td>
+            <td><?= htmlspecialchars($visita['Re_motivo']) ?></td>
+            <td><?= htmlspecialchars($visita['To_letra']) ?></td>
+            <td><?= htmlspecialchars($visita['Ap_numero']) ?></td>
+            <td>
+              <?php
+                $horaEntrada = $visita['Re_hora_entrada'];
+                if ($horaEntrada > '00:00:00') {
+              ?>
+                <button class="Permiso" disabled>🛂</button>
+              <?php } else { ?>
+                <form action="<?php echo RUTA_URL;?>/PorterController/AllowVisit" method="post">
+                  <input type="hidden" name="Id_visita" value="<?php echo htmlspecialchars($visita['Vi_id']) ?>">
+                  <button class="Permiso">✅</button>
+                </form>
+              <?php } ?>
+            </td>
+          </tr>
+        <?php endforeach; ?>
+      <?php endif; ?>
+    </tbody>
+  </table>
+  <!-- ✅  -->
+  <!-- 🛂 -->
 </div>
 <?php require_once RUTA_APP . '/views/inc/footer-porter.php'; ?>
 

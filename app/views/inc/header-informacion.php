@@ -16,4 +16,12 @@
         }
     </style>
 </head>
+
 <body>
+    <div style="position: absolute; top: 10px; right: 20px; z-index: 9999;">
+        <select id="language-selector">
+            <option value="es">Español</option>
+            <option value="en">English</option>
+            <option value="fr">Français</option>
+        </select>
+    </div>
