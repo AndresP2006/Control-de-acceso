@@ -22,3 +22,4 @@ class ApartamentController extends Controlador
     }
     
 }
+?>
