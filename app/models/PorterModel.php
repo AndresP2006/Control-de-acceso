@@ -120,7 +120,11 @@ class PorterModel
         $this->db->bind(":cedula", $datos['cedula']);
         return $this->db->registro();
     }
-    
+    public function buscarVisitantePorCedula($cedula) {
+    $this->db->query("SELECT * FROM visitantes WHERE Vi_id = :cedula");
+    $this->db->bind(':cedula', $cedula);
+    return $this->db->registro(); 
+}
 }
 
 

@@ -38,9 +38,9 @@
 
         <!-- Galería de imágenes -->
         <div class="carrusel">
-            <img src="<?php echo RUTA_URL; ?>/img/atras.png" alt="atras" class="atras" />
+            <!-- <img src="<?php echo RUTA_URL; ?>/img/atras.png" alt="atras" class="atras" /> -->
             <img id="img2" src="<?php echo RUTA_URL; ?>/img/departamento1-inicio.jpg" alt="foto1" class="foto1" />
-            <img src="<?php echo RUTA_URL; ?>/img/adelante.png" alt="adelante" class="adelante" />
+            <!-- <img src="<?php echo RUTA_URL; ?>/img/adelante.png" alt="adelante" class="adelante" /> -->
         </div>
 
         <script>
@@ -57,29 +57,17 @@
                 let fotosPos = 0;
 
                 // Función para cambiar la imagen
-                function cambiarFoto(direccion) {
-                    // Actualiza la posición de la foto
+                function cambiarFoto(direccion = 1) {
                     fotosPos = (fotosPos + direccion + fotosArray.length) % fotosArray.length;
-
-                    console.log("Cambio a la foto en la posición: ", fotosPos); // Depuración
-
                     if (conRivera) {
-                        // Cambia la imagen mostrada
                         conRivera.setAttribute("src", fotosArray[fotosPos]);
                     }
                 }
 
-                const btnAtras = document.querySelector("img.atras");
-                const btnAdelante = document.querySelector("img.adelante");
-
-                // Asignar los eventos de clic para los botones
-                if (btnAtras) {
-                    btnAtras.onclick = () => cambiarFoto(-1);
-                }
-
-                if (btnAdelante) {
-                    btnAdelante.onclick = () => cambiarFoto(1);
-                }
+                // Cambio automático cada 2 segundos
+                setInterval(() => {
+                    cambiarFoto(1);
+                }, 2000);
             });
         </script>
     </section>

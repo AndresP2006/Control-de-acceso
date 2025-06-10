@@ -278,4 +278,20 @@ class PorterController extends Controlador
         ];
         $this->vista('pages/porter/registroPView', $datos);
     }
+    public function BuscarVisitante(){
+       if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['u_id'])) {
+        $cedula = trim($_POST['u_id']);
+        $visitante = $this->porterModel->buscarVisitantePorCedula($cedula); 
+        if ($visitante) {
+            echo json_encode([
+                'nombre' => $visitante->Vi_nombres,
+                'apellido' => $visitante->Vi_apellidos,
+                'telefono' => $visitante->Vi_telefono
+            ]);
+        } else {
+            echo json_encode([]);
+        }
+        exit;
+    }
+}
 }
