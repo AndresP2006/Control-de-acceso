@@ -13,9 +13,9 @@ echo "<tr>
                     <table class='tabla-nueva'>
                         <thead class='tabla-nueva__encabezado'>
                             <tr class='tabla-nueva__fila'>
-                                <th class='tabla-nueva__celda'>Fecha</th>
-                                <th class='tabla-nueva__celda'>Hora de entrada</th>
-                                <th class='tabla-nueva__celda'>Hora de salida</th>
+                                <th class='tabla-nueva__celda translatable'>Fecha</th>
+                                <th class='tabla-nueva__celda translatable'>Hora de entrada</th>
+                                <th class='tabla-nueva__celda translatable'>Hora de salida</th>
                             </tr>
                         </thead>
                         <tbody class='tabla-nueva__cuerpo'>

@@ -19,7 +19,17 @@
             <!-- <div class="logos">
                 <h3 class="var_sesion">Bienvenido <?= $_SESSION['datos']->Us_usuario ?></h3>
             </div> -->
-            <div class="cerrar-sescion">
-                <a href="<?php echo RUTA_URL; ?>/HomeController/index"><button class="boton">Cerrar Sesión</button></a>
+            <div style="display: flex; padding: 10px; align-items: center; justify-content: space-between;margin-right: 20px;"> 
+                <div class="cerrar-sescion">
+                    <a href="<?php echo RUTA_URL; ?>/HomeController/index"><button class="boton">Cerrar Sesión</button></a>
+                </div>
+                <div style="font-size: 30px; position: relative; bottom:3px; margin-left:30px;">
+                    <select id="language-selector">
+                        <option value="es">Español</option>
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
+                    </select>
+                </div>
             </div>
         </div>
+        <script src="<?php echo RUTA_URL; ?>/js/translate.js"></script>

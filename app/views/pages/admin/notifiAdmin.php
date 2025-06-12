@@ -1,7 +1,7 @@
 <?php require_once RUTA_APP . "/views/inc/header-notificacion.php"; ?>
 <?php date_default_timezone_set("America/Bogota"); ?>
 <div class="contenedor">
-    <div class="titulo">NOTIFICACIONES
+    <div class="titulo translatable">NOTIFICACIONES
         <a href="<?php echo RUTA_URL; ?>/HomeController/admin" class="enlaces">
             <span class="icons exit" style="top:20px; font-size: 40px;">↩️</span>
         </a>
@@ -19,17 +19,14 @@
                     $fechaNotificacion = date("Y-m-d", $timestamp);
 
                     if ($fechaNotificacion === $fechaHoy) {
-                        // Si es hoy, mostrar hora en formato 12h con am/pm
-                        $fechaFormateada = date("g:i a", $timestamp); // Ejemplo: 7:54 pm
+                        $fechaFormateada = date("g:i a", $timestamp);
                     } else {
-                        // Si no es hoy, mostrar día y mes abreviado
                         $meses = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
                         $dia = date("j", $timestamp);
                         $mes = $meses[date("n", $timestamp) - 1];
                         $fechaFormateada = $dia . " " . $mes;
                     }
 
-                    // Generamos un ID único para el formulario
                     $formId = "form_" . $index;
                     ?>
                     <!-- Formulario oculto para enviar datos por POST -->
@@ -45,10 +42,10 @@
                         style="cursor: pointer;">
                         <div class="contenido-notificacion">
                             <div class="texto">
-                                <p>
+                                <p class="translatable">
                                     Se ha recibido una solicitud de actualización por parte del residente <strong><?php echo
                                             $notificacion['data']->nombre; ?></strong>.<br>
-                                    Estado: <strong><?php echo ucfirst($notificacion['data']->estado); ?></strong>
+                                    Estado: <strong class="translatable"><?php echo ucfirst($notificacion['data']->estado); ?></strong>
                                 </p>
                             </div>
                             <div class="fecha">
@@ -61,7 +58,7 @@
         <?php else: ?>
             <div class="notificacion">
                 <div class="texto">
-                    <p>No hay notificaciones disponibles.</p>
+                    <p class="translatable">No hay notificaciones disponibles.</p>
                 </div>
             </div>
         <?php endif; ?>

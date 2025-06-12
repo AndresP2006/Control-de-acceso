@@ -1,21 +1,22 @@
+
 <!-- Asegúrate de que este modal esté correctamente en la vista -->
 <center>
-<div id="myModalHistorial" class="modal"  >
-    <div style="width: 800px; margin: auto; position: relative; top: 25%; background: #fff; max-height: 500px; overflow-y: auto; padding: 10px; border-radius: 5px; ">
-         <div class="boton-cerrar_modal_registro" > 
-            <h2 class="historia_visitantes_titulo" >Historial de Visitas</h2>
-            <span class=" close_historial " id="closeHistorial" style="color: black;" >&times;</span>
-        </div>       
-            <table class="tabla_registro_modal" >
+<div id="myModalHistorial" class="modal">
+    <div style="width: 800px; margin: auto; position: relative; top: 25%; background: #fff; max-height: 500px; overflow-y: auto; padding: 10px; border-radius: 5px;">
+         <div class="boton-cerrar_modal_registro">
+            <h2 class="historia_visitantes_titulo translatable">Historial de Visitas</h2>
+            <span class="close_historial" id="closeHistorial" style="color: black;">&times;</span>
+        </div>
+        <table class="tabla_registro_modal">
             <thead>
                 <tr>
-                    <th>Fecha de Entrada</th>
-                    <th>Hora de Entrada</th>
-                    <th>Hora de Salida</th>
-                    <th>Motivo</th>
-                    <th>Departamento</th>
-                    <th>Torre</th>
-                    <th>Residente</th>
+                    <th class="translatable">Fecha de Entrada</th>
+                    <th class="translatable">Hora de Entrada</th>
+                    <th class="translatable">Hora de Salida</th>
+                    <th class="translatable">Motivo</th>
+                    <th class="translatable">Departamento</th>
+                    <th class="translatable">Torre</th>
+                    <th class="translatable">Residente</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,7 +34,7 @@
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="6">No hay registros disponibles.</td>
+                        <td colspan="7" class="translatable">No hay registros disponibles.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>

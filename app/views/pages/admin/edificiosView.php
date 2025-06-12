@@ -9,8 +9,8 @@
                     <table class="styled-table">
                         <thead class="table-head">
                             <tr class="table-row">
-                                <th class="table-header">NUMERO</th>
-                                <th class="table-header">TORRE</th>
+                                <th class="table-header translatable">NUMERO</th>
+                                <th class="table-header translatable">TORRE</th>
                             </tr>
                         </thead>
                         <tbody class="table-body">
@@ -29,19 +29,19 @@
 
                 <!-- Formulario de torres -->
                 <div class="form-wrapper">
-                    <h3>Ingresar Torre</h3>
+                    <h3 class="translatable">Ingresar Torre</h3>
                     <form class="dataForm" id="torre" action="<?php echo RUTA_URL; ?>/UserController/Torre" method="POST">
                         <div class="form-group">
-                            <label for="departamento1">ID de Torre</label>
-                            <input type="text" id="ID" name="id" placeholder="Numero de Torre">
+                            <label for="departamento1" class="translatable">ID de Torre</label>
+                            <input type="text" id="ID" name="id" placeholder="Numero de Torre" class="translatable">
                         </div>
                         <div class="form-group">
-                            <label for="torre1">Torre</label>
-                            <input type="text" id="torre1" name="torre" placeholder="Ingrese la torre">
+                            <label for="torre1" class="translatable">Torre</label>
+                            <input type="text" id="torre1" name="torre" placeholder="Ingrese la torre" class="translatable">
                         </div>
                         <div class="accion">
-                            <button type="submit" name="guardar" class="submit-btn">Guardar</button>
-                            <button type="submit" name="borrar" class="submit-btn">Eliminar</button>
+                            <button type="submit" name="guardar" class="submit-btn translatable">Guardar</button>
+                            <button type="submit" name="borrar" class="submit-btn translatable">Eliminar</button>
                         </div>
                     </form>
                 </div>
@@ -56,8 +56,8 @@
                     <table class="styled-table">
                         <thead class="table-head">
                             <tr class="table-row">
-                                <th class="table-header">TORRE</th>
-                                <th class="table-header">APARTAMENTO</th>
+                                <th class="table-header translatable">TORRE</th>
+                                <th class="table-header translatable">APARTAMENTO</th>
                             </tr>
                         </thead>
                         <tbody class="table-body">
@@ -76,19 +76,19 @@
 
                 <!-- Formulario de apartamento -->
                 <div class="form-wrapper">
-                    <h3>Ingresar Apartamento</h3>
+                    <h3 class="translatable">Ingresar Apartamento</h3>
                     <form class="dataForm" id="apartamento" action="<?php echo RUTA_URL; ?>/UserController/Apartamento" method="POST">
                         <div class="form-group">
-                            <label for="departamento2">Torre</label>
-                            <input type="text" id="torre" name="torre" placeholder="Numero de Torre">
+                            <label for="departamento2" class="translatable">Torre</label>
+                            <input type="text" id="torre" name="torre" placeholder="Numero de Torre" class="translatable">
                         </div>
                         <div class="form-group">
-                            <label for="torre2">Apartamento</label>
-                            <input type="text" id="torre2" name="apartamento" placeholder="Ingrese el Apartamento">
+                            <label for="torre2" class="translatable">Apartamento</label>
+                            <input type="text" id="torre2" name="apartamento" placeholder="Ingrese el Apartamento" class="translatable">
                         </div>
                         <div class="accion">
-                            <button type="submit" name="guardar" class="submit-btn">Guardar</button>
-                            <button type="submit" name="borrar" class="submit-btn">Eliminar</button>
+                            <button type="submit" name="guardar" class="submit-btn translatable">Guardar</button>
+                            <button type="submit" name="borrar" class="submit-btn translatable">Eliminar</button>
                         </div>
                     </form>
                 </div>
@@ -97,12 +97,10 @@
 
     </div>
     <div class="action-buttons">
-        <a href="<?php echo RUTA_URL; ?>/HomeController/admin"><button class="action-btn">Usuarios</button></a>
-        <a href="<?php echo RUTA_URL; ?>/HomeController/HistoryRecords"><button
-                class="action-btn">Registros</button></a>
-        <a href="<?php echo RUTA_URL; ?>/HomeController/HistoryPackages"><button
-                class="action-btn">Paquetes</button></a>
-        <a href="<?php echo RUTA_URL; ?>/HomeController/Edificios"><button class="action-btn">Edificio</button></a>
+        <a href="<?php echo RUTA_URL; ?>/HomeController/admin"><button class="action-btn translatable">Usuarios</button></a>
+        <a href="<?php echo RUTA_URL; ?>/HomeController/HistoryRecords"><button class="action-btn translatable">Registros</button></a>
+        <a href="<?php echo RUTA_URL; ?>/HomeController/HistoryPackages"><button class="action-btn translatable">Paquetes</button></a>
+        <a href="<?php echo RUTA_URL; ?>/HomeController/Edificios"><button class="action-btn translatable">Edificio</button></a>
     </div>
 </div>
 <?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>

@@ -51,4 +51,5 @@
                 </div>
             </div>
         </div>
+        <script src="<?php echo RUTA_URL; ?>/js/translate.js"></script>
     </header>

@@ -3,7 +3,7 @@
 <div class="container">
     <div class="card">
         <div class="header">
-            <h1>Residente</h1>
+            <h1 class="translatable">Residente</h1>
             <hr>
             <div class="icons">
                 <form action="<?php echo RUTA_URL; ?>/HomeController/notificaciones" method="POST" style="display:inline;">
@@ -26,14 +26,14 @@
 
             <table class="info-table">
                 <tr>
-                    <td><strong>Cédula</strong></td>
+                    <td><strong class="translatable">Cédula</strong></td>
                     <td class="gray-text">
                         <?= $datos['resindents']->Us_id ?>
                         <input type="hidden" id="cedula" value="<?= $datos['resindents']->Us_id ?>">
                     </td>
                 </tr>
                 <tr>
-                    <td><strong>Email</strong></td>
+                    <td><strong class="translatable">Email</strong></td>
                     <td>
                         <p style="font-size: 25px; width:100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                             <?php
@@ -52,7 +52,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><strong>Teléfono</strong></td>
+                    <td><strong class="translatable">Teléfono</strong></td>
                     <td>
                         <p style="font-size: 25px; width:100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                             <?php
@@ -80,13 +80,13 @@
                 <div>
                     <table class="info-table">
                         <tr>
-                            <td><strong>Torre</strong></td>
+                            <td><strong class="translatable">Torre</strong></td>
                             <td class="gray-text">
                                 <input class="gray-text1" type="text" id="torre" value="<?= $datos['resindents']->To_letra ?>" disabled>
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>Departamento</strong></td>
+                            <td><strong class="translatable">Departamento</strong></td>
                             <td class="gray-text">
                                 <input class="gray-text1" type="text" id="apartamento" value="<?= $datos['resindents']->Ap_numero ?>" disabled>
                             </td>
@@ -94,13 +94,13 @@
                     </table>
                 </div>
                 <div class="habitantes">
-                    <p class="habitantes"><strong>Habitantes</strong></p>
+                    <p class="habitantes"><strong class="translatable">Habitantes</strong></p>
                     <?php if (!empty($datos['people'])): ?>
                         <?php foreach ($datos['people'] as $persona): ?>
                             <p class="gray-text"><?= explode(" ", trim($persona->Pe_nombre))[0] . " " . explode(" ", trim($persona->Pe_apellidos))[0] ?></p>
                         <?php endforeach; ?>
                     <?php else: ?>
-                        <p class="gray-text">Actualmente no cuenta con más habitantes</p>
+                        <p class="gray-text translatable">Actualmente no cuenta con más habitantes</p>
                     <?php endif; ?>
                 </div>
             </div>
@@ -111,8 +111,8 @@
         <!-- Botones Aceptar/Rechazar solo si el estado es pendiente -->
         <?php if (strtolower($datos['datos_resident'][0]->estado ?? '') === 'pendiente'): ?>
             <div class="buttons">
-                <button id="acceptBtn" class="btn" onclick="guardarDatos()">Aceptar</button>
-                <button id="rejectBtn" class="btn btn-dr">Rechazar</button>
+                <button id="acceptBtn" class="btn translatable" onclick="guardarDatos()">Aceptar</button>
+                <button id="rejectBtn" class="btn btn-dr translatable">Rechazar</button>
             </div>
         <?php endif; ?>
 
@@ -121,17 +121,17 @@
         <!-- Mostrar motivo si ya fue rechazado -->
         <?php if ($datos['datos_resident'][0]->estado === 'rechazada'): ?>
             <div id="rejectReason" style="display: block;">
-                <label for="reason"><strong>Motivo del rechazo</strong></label>
-                <textarea id="reason" class="form-control" name="reject_reason" rows="3" disabled><?= htmlspecialchars($datos['datos_resident'][0]->razon_rechazo) ?></textarea>
+                <label for="reason"><strong class="translatable">Motivo del rechazo</strong></label>
+                <textarea id="reason" class="form-control translatable" name="reject_reason" rows="3" disabled><?= htmlspecialchars($datos['datos_resident'][0]->razon_rechazo) ?></textarea>
                 <br>
             </div>
         <?php else: ?>
             <div id="rejectReason" style="display: none;">
-                <label for="reason"><strong>Motivo del rechazo</strong></label>
-                <textarea id="reason" class="form-control" name="reject_reason" rows="3"></textarea>
+                <label for="reason"><strong class="translatable">Motivo del rechazo</strong></label>
+                <textarea id="reason" class="form-control translatable" name="reject_reason" rows="3"></textarea>
                 <br>
-                <button id="submitRejection" class="btn btn-primary" onclick="rechazo()">Enviar</button>
-                <button id="cancelRejection" class="btn btn-secondary">Cancelar</button>
+                <button id="submitRejection" class="btn btn-primary translatable" onclick="rechazo()">Enviar</button>
+                <button id="cancelRejection" class="btn btn-secondary translatable">Cancelar</button>
             </div>
         <?php endif; ?>
     </div>
