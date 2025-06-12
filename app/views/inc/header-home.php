@@ -12,6 +12,9 @@
     <style>
         .container, .inicia_seccion {
             background-image: url("<?php echo RUTA_URL; ?>/img/backgroup.jpg");
+            background-attachment: fixed;
+            background-size: cover;
+            background-repeat: no-repeat;
         }
     </style>
 </head>
