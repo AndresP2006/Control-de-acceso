@@ -18,7 +18,7 @@ class ApartamentModel
 
     public function getPeopleByApartament($apartamento_id)
     {
-        $this->db->query("SELECT * FROM persona p WHERE p.Ap_id = $apartamento_id");
+        $this->db->query("SELECT * FROM persona p LEFT JOIN usuario u ON p.Us_id = u.Us_id  WHERE p.Ap_id = $apartamento_id AND u.estado = 'activo'");
 
         return $this->db->registros();
     }

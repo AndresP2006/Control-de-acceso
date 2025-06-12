@@ -13,7 +13,7 @@ class UserModel
 
     public function getUserByEmailOrName($emailOrName)
     {
-        $this->db->query("select * from usuario u where u.Us_usuario='$emailOrName' or u.Us_correo='$emailOrName'");
+        $this->db->query("select * from usuario u where (u.Us_usuario='$emailOrName' or u.Us_correo='$emailOrName') and u.estado = 'activo'");
 
         return $this->db->registro();
     }
