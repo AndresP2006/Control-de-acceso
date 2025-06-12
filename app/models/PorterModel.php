@@ -100,7 +100,7 @@ class PorterModel
     public function IngresarRegistro($datos){
         $this->db->query("INSERT INTO registro (Re_fecha_entrada, Re_hora_entrada, Re_hora_salida, Re_motivo, Use_visit, Vi_departamento, Pe_id, Vi_id)
                   VALUES (CURRENT_DATE, '00:00:00', '00:00:00', :motivo, 'solicitar', :departamento, :idResidente, :cedula)");
-
+        // var_dump($datos);
         $this->db->bind(":motivo", $datos['motivo']);
         $this->db->bind(":departamento", $datos['departamento']);
         $this->db->bind(":idResidente", $datos['idResidente']);
