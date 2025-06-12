@@ -1,11 +1,11 @@
 <?php require_once RUTA_APP . '/views/inc/header-porter.php'; ?>
 
-<div class="Siquiente" >
-    <a href="<?php echo RUTA_URL; ?>/HomeController/registroPorter"><button class="siquiente_registro">Registro</button></a>
+<div class="Siquiente">
+    <a href="<?php echo RUTA_URL; ?>/HomeController/registroPorter"><button class="siquiente_registro translatable">Registro</button></a>
 </div>
 <div class="cuerpo">
     <div class="contador_ingresos">
-        <h2>Han Ingresado</h2>
+        <h2 class="translatable">Han Ingresado</h2>
         <div class="contador">
             <?php
             if (isset($datos['total'])) {
@@ -21,7 +21,7 @@
                 <input id="texto" class="PeopleId" type="text" name="residente"
                     placeholder="Buscar Persona con paquetes" />
                 <center>
-                    <button class="Buscar" id="abrirMiModal" name="Busca" type="button">Buscar</button>
+                    <button class="Buscar translatable" id="abrirMiModal" name="Busca" type="button">Buscar</button>
                 </center>
             </form>
         </div>
@@ -30,55 +30,52 @@
         <div class="miModal" id="miModal">
             <form class="miModal__contenido">
                 <button class="miModal__cerrar close" id="cerrarMiModal" type="button">&times;</button>
-                <h2 class="miModal__titulo">Información del Residente</h2>
-
+                <h2 class="miModal__titulo translatable">Información del Residente</h2>
 
                 <div class="miModal__grupo">
-                    <label class="miModal__label" for="nombres">Nombre:</label>
+                    <label class="miModal__label translatable" for="nombres">Nombre:</label>
                     <input class="miModal__input" type="text" id="nombres" readonly name="nombres">
                 </div>
 
                 <div class="miModal__grupo">
-                    <label class="miModal__label" for="apellidos">Apellido:</label>
+                    <label class="miModal__label translatable" for="apellidos">Apellido:</label>
                     <input class="miModal__input" type="text" id="apellidos" readonly name="apellidos">
                 </div>
 
                 <div class="miModal__grupo">
-                    <label class="miModal__label" for="telefono">Teléfono:</label>
+                    <label class="miModal__label translatable" for="telefono">Teléfono:</label>
                     <input class="miModal__input" type="text" id="telefono" readonly name="telefono">
                 </div>
 
                 <div class="miModal__grupo">
-                    <label class="miModal__label" for="torre">Torre:</label>
+                    <label class="miModal__label translatable" for="torre">Torre:</label>
                     <input class="miModal__input" type="text" id="torre" readonly name="torre">
                 </div>
                 <div class="miModal__grupo">
-                    <label class="miModal__label" for="apartamento">Número de Departamento:</label>
+                    <label class="miModal__label translatable" for="apartamento">Número de Departamento:</label>
                     <input class="miModal__input" type="text" id="apartamento" readonly name="apartamento">
                 </div>
 
                 <div class="miModal__grupo">
-                    <label class="miModal__label" for="Paquete">Total de paquetes:</label>
+                    <label class="miModal__label translatable" for="Paquete">Total de paquetes:</label>
                     <input class="miModal__input" type="text" id="Paquete" readonly name="Paquete">
                 </div>
 
-                <button class="boton-flotante" id="abrirTablaFlotante" type="button">Paquetes</button>
+                <button class="boton-flotante translatable" id="abrirTablaFlotante" type="button">Paquetes</button>
 
                 <div class="tabla-flotante" id="tablaFlotante">
                     <div class="tabla-flotante__contenido">
-                        <h2>Tabla de datos</h2>
+                        <h2 class="translatable">Tabla de datos</h2>
                         <table class="tabla-flotante__tabla">
                             <thead>
                                 <tr>
-                                    <th>Fecha</th>
-                                    <th>Descripcion</th>
-                                    <th>Estado</th>
-                                    <th>Entregar</th>
+                                    <th class="translatable">Fecha</th>
+                                    <th class="translatable">Descripcion</th>
+                                    <th class="translatable">Estado</th>
+                                    <th class="translatable">Entregar</th>
                                 </tr>
                             </thead>
                             <tbody id="paquetesTable">
-
-
 
                             </tbody>
                         </table>
@@ -88,19 +85,16 @@
             </form>
         </div>
 
-
         <form action="<?php echo RUTA_URL; ?>/PorterController/dropGuest" method="post">
             <input id="texto" type="text" placeholder="Salida de visitante" name="salida_visita" />
             <center>
-                <input type="submit" value="Salida" class="Buscar" id="Actualizar" name="salida">
+                <input type="submit" class="Buscar translatable" value="Salida" id="Actualizar" name="salida">
             </center>
         </form>
-
         <!-- fin -->
 
-
         <div class="registros">
-            <button class="nuevo_registro" id="nuevo_registro">
+            <button class="nuevo_registro translatable" id="nuevo_registro">
                 Nuevo Visitante
             </button>
 
@@ -108,20 +102,18 @@
             <div id="VisitasModal" class="modal_v">
                 <div class="modal-content">
                     <div class="cerrado">
-                        <h3 class="titulo-form">Nuevo registro</h3>
+                        <h3 class="titulo-form translatable">Nuevo registro</h3>
                         <button class="miModal__cerrar_v close" id="close" type="button">&times;</button>
-
-                        <!-- <span class="close" id="close">&times;</span> -->
                     </div>
                     <form id="myForm" action="<?php echo RUTA_URL; ?>/PorterController/createGuest" method="post">
-                    <h4>Documento: <input type="text" id="u_id" name="u_id" autocomplete="off" /></h4>
-                        <h4>Nombre: <input type="text" id="U_Nombre" name="U_Nombre" /></h4>
-                        <h4>Apellido: <input type="text" id="U_Apellido" name="U_Apellido" /></h4>
-                        <h4>Telefono: <input type="text" id="U_Telefono" name="U_Telefono" /></h4>
-                        <h4>Motivo de visita: <input type="text" id="U_Motivo" name="U_Motivo" /></h4>
+                        <h4 class="translatable">Documento: <input type="text" id="u_id" name="u_id" autocomplete="off" /></h4>
+                        <h4 class="translatable">Nombre: <input type="text" id="U_Nombre" name="U_Nombre" /></h4>
+                        <h4 class="translatable">Apellido: <input type="text" id="U_Apellido" name="U_Apellido" /></h4>
+                        <h4 class="translatable">Telefono: <input type="text" id="U_Telefono" name="U_Telefono" /></h4>
+                        <h4 class="translatable">Motivo de visita: <input type="text" id="U_Motivo" name="U_Motivo" /></h4>
                         <div class="titulo_torre">
-                            <h4>Torre</h4>
-                            <h4 class="ap">Apartamento</h4>
+                            <h4 class="translatable">Torre</h4>
+                            <h4 class="ap translatable">Apartamento</h4>
                         </div>
                         <div class="select_torre">
                             <select id="select_torre" class="filter-select">
@@ -135,10 +127,10 @@
                             </select>
                         </div>
                         <select name="select_personas" id="select_personas" class="filter-select_personas">
-                            <option value="0">Residentes</option>
+                            <option value="0" class="translatable">Residentes</option>
                         </select>
                         <center>
-                            <input type="submit" value="Enviar" class="Enviar" id="enviarVisita" name="Visitantes" />
+                            <input type="submit" value="Enviar" class="Enviar translatable" id="enviarVisita" name="Visitantes" />
                         </center>
                     </form>
                 </div>
@@ -149,32 +141,28 @@
         <br />
         <br />
         <!-- formulario del Paquete -->
-        <button class="paquetes" id="openModalBtn">Nuevo Paquete</button>
+        <button class="paquetes translatable" id="openModalBtn">Nuevo Paquete</button>
 
         <!-- Formulario modal de paquetes -->
         <div id="packageModal" class="modal">
             <div class="modal-content2">
                 <div class="cerrado">
-                    <h3 class="titulo-form">Registro de paquetes</h3>
+                    <h3 class="titulo-form translatable">Registro de paquetes</h3>
                     <span class="close2" id="closeModal">&times;</span>
                 </div>
                 <form id="packageForm" action="<?php echo RUTA_URL; ?>/PorterController/enterPackage" method="post">
-                    <h4>Descripcion: <textarea id="Pa_Descripcion" name="descripcion"></textarea></h4>
+                    <h4 class="translatable">Descripcion: <textarea id="Pa_Descripcion" name="descripcion"></textarea></h4>
                     <?php
                     date_default_timezone_set('America/Bogota');
                     $ahora = date('Y-m-d\TH:i'); // formato correcto sin segundos
                     ?>
-                    <h4>Fecha de entrega:
+                    <h4 class="translatable">Fecha de entrega:
                         <input type="datetime-local" id="Pa_Fecha" name="fecha" max="<?= $ahora ?>" value="<?= $ahora ?>" />
                     </h4>
-
-
-
-                    <h4>Recibidor: <input type="text" id="Pa_Firma" name="recibidor" /></h4>
-
+                    <h4 class="translatable">Recibidor: <input type="text" id="Pa_Firma" name="recibidor" /></h4>
                     <div class="titulo_torre">
-                        <h4>Torre</h4>
-                        <h4 class="ap">Apartamento</h4>
+                        <h4 class="translatable">Torre</h4>
+                        <h4 class="ap translatable">Apartamento</h4>
                     </div>
                     <div class="select_torre">
                         <select id="select_torre_p" class="filter-select">
@@ -188,10 +176,10 @@
                         </select>
                     </div>
                     <select name="select_personas" id="select_personas_p" class="filter-select_personas">
-                        <option value="0">Residentes</option>
+                        <option value="0" class="translatable">Residentes</option>
                     </select>
                     <center>
-                        <input type="submit" value="Enviar" name="paquetes" class="Enviar" />
+                        <input type="submit" value="Enviar" name="paquetes" class="Enviar translatable" />
                     </center>
                 </form>
             </div>
@@ -205,43 +193,43 @@
 
 <?php require_once RUTA_APP . '/views/inc/footer-porter.php'; ?>
 <script>
-  document.getElementById("u_id").addEventListener("blur", function () {
-    const documento = this.value;
+    document.getElementById("u_id").addEventListener("blur", function() {
+        const documento = this.value;
 
-    fetch("<?php echo RUTA_URL; ?>/PorterController/buscarUsuario", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: "u_id=" + encodeURIComponent(documento)
-    })
-    .then(response => response.text())
-    .then(text => {
-        console.log("Respuesta cruda:", text);
-        try {
-            const data = JSON.parse(text);
-            console.log("JSON:", data);
-            if (data.existe) {
-                document.getElementById("U_Nombre").value = data.nombre;
-                document.getElementById("U_Apellido").value = data.apellido;
-                document.getElementById("U_Telefono").value = data.telefono;
-            } else {
-                document.getElementById("U_Nombre").value = "";
-                document.getElementById("U_Apellido").value = "";
-                document.getElementById("U_Telefono").value = "";
-                console.log("Usuario no encontrado.");
-                // Opcional: Puedes mostrar un mensaje visual al usuario aquí
-            }
-        } catch (error) {
-            console.error("Error al parsear la respuesta JSON:", error);
-            // Opcional: Manejar el error de parseo, por ejemplo, mostrar un mensaje al usuario
-        }
-    })
-    .catch(error => {
-        console.error("Error en la petición:", error);
-        // Opcional: Manejar el error de la petición, por ejemplo, mostrar un mensaje al usuario
+        fetch("<?php echo RUTA_URL; ?>/PorterController/buscarUsuario", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: "u_id=" + encodeURIComponent(documento)
+            })
+            .then(response => response.text())
+            .then(text => {
+                console.log("Respuesta cruda:", text);
+                try {
+                    const data = JSON.parse(text);
+                    console.log("JSON:", data);
+                    if (data.existe) {
+                        document.getElementById("U_Nombre").value = data.nombre;
+                        document.getElementById("U_Apellido").value = data.apellido;
+                        document.getElementById("U_Telefono").value = data.telefono;
+                    } else {
+                        document.getElementById("U_Nombre").value = "";
+                        document.getElementById("U_Apellido").value = "";
+                        document.getElementById("U_Telefono").value = "";
+                        console.log("Usuario no encontrado.");
+                        // Opcional: Puedes mostrar un mensaje visual al usuario aquí
+                    }
+                } catch (error) {
+                    console.error("Error al parsear la respuesta JSON:", error);
+                    // Opcional: Manejar el error de parseo, por ejemplo, mostrar un mensaje al usuario
+                }
+            })
+            .catch(error => {
+                console.error("Error en la petición:", error);
+                // Opcional: Manejar el error de la petición, por ejemplo, mostrar un mensaje al usuario
+            });
     });
-});
 </script>
 <script>
     <?php if (isset($datos['messageError']) && $datos['messageError'] != null) { ?>

@@ -32,7 +32,6 @@
                     // Generamos un ID único para el formulario
                     $formId = "form_" . $index;
                     ?>
-
                     <!-- Formulario oculto para enviar datos por POST -->
                     <form id="<?php echo $formId; ?>" action="<?php echo RUTA_URL; ?>/HomeController/solicitud_user" method="post" style="display: none;">
                         <input type="hidden" name="id_residente" value="<?php echo $notificacion['data']->id_residente; ?>">
@@ -42,16 +41,15 @@
 
                     <!-- Div notificación clickeable -->
                     <div class="notificacion"
-
                         onclick="document.getElementById('<?php echo $formId; ?>').submit();"
                         style="cursor: pointer;">
                         <div class="contenido-notificacion">
                             <div class="texto">
                                 <p>
-                                    Se ha recibido una solicitud de actualización por parte del residente <strong><?php echo $notificacion['data']->nombre; ?></strong>.<br>
+                                    Se ha recibido una solicitud de actualización por parte del residente <strong><?php echo
+                                            $notificacion['data']->nombre; ?></strong>.<br>
                                     Estado: <strong><?php echo ucfirst($notificacion['data']->estado); ?></strong>
                                 </p>
-
                             </div>
                             <div class="fecha">
                                 <?php echo $fechaFormateada; ?>
