@@ -16,19 +16,17 @@ class PorterController extends Controlador
         $this->paquetModel = $this->modelo('PaquetModel');
     }
 
-    public function index($messageError = null, $messageInfo = null, $isUsuario = null, $torre = null, $apartamento = null)
+    public function index($messageError = null, $messageInfo = null)
     {
         $countGuest = $this->peopleModel->getNumberGuest();
         $Torres = $this->torreModel->setTorres();
 
+        // Retorna tanto el mensaje de error como el de éxito (si existen)
         return [
             'messageError' => $messageError,
             'messageInfo' => $messageInfo,
-            'isUsuario' => $isUsuario,
-            'torre' => $torre,
-            'apartamento' => $apartamento,
             'total' => $countGuest->total,
-            'torres' => $Torres,
+            'torre' => $Torres,
         ];
     }
 
@@ -218,31 +216,36 @@ class PorterController extends Controlador
             $verificarEntrada = $this->porterModel->VerificarEnt($visitas);
 
             if ($verificarEntrada) {
-                $messageInfo = "La visita " . $visitas['nombre'] . " " . $visitas['apellido'] . " ya se encuentra dentro del conjunto";
-                $datos = $this->index(null, $messageInfo, $idResidente, $torre, $apartamento);
+                $messageError = "La visita " . $visitas['nombre'] . " " . $visitas['apellido'] . " ya se encuentra dentro del conjunto";
+                $datos = $this->index( $messageError,null);
             } else {
                 // Registrar visitante y registro
                 $verificarRegistro = $this->porterModel->VirificamosRegistro($visitas);
                 if($verificarRegistro){
                     $IngresarRegistro = $this->porterModel->IngresarRegistro($registro);
-                    $datos = $this->index(null, "Visita ingresada en espera de permiso", $idResidente, $torre, $apartamento);
+                    $messageError= "Visita ingresada en espera de permiso";
+                    $datos = $this->index( $messageError,null);
                 }else{
                     $IngresarVisita = $this->porterModel->IngresarVisit($visitas);
                     $IngresarRegistro = $this->porterModel->IngresarRegistro($registro);
 
                 if ($IngresarVisita && $IngresarRegistro) {
-                    $datos = $this->index(null, "Visita ingresada en espera de permiso", $idResidente, $torre, $apartamento);
+                    $datos = $this->index(null, "Visita ingresada en espera de permiso");
                 } else {
-                    $datos = $this->index("Error al ingresar la visita", null, $idResidente, $torre, $apartamento);
+                    $datos = $this->index("Error al ingresar la visita", null);
                 }
                 }
             }
-            $this->vista('pages/user/registroView', $datos);
         } else {
-            // Siempre enviar torre, apartamento e idResidente aunque falten otros datos
-            $datos = $this->index('Error al momento de ingresar un visitante', null, $idResidente, $torre, $apartamento);
-            $this->vista('pages/user/registroView', $datos);
+            $datos = $this->index('Error al momento de ingresar un visitante', null);
         }
+
+        // Asegura que siempre se incluyan estos valores en el arreglo de datos
+        $datos['isUsuario'] = $idResidente;
+        $datos['torre'] = $torre;
+        $datos['apartamento'] = $apartamento;
+
+        $this->vista('pages/user/registroView', $datos);
     }
     public function FiltroCedula() {
         // Si no se envía ninguna cédula, mostrar todos los visitantes
