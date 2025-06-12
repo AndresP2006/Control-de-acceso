@@ -18,7 +18,7 @@
         <!-- Buscar  -->
         <div>
             <form>
-                <input id="texto" class="PeopleId" type="text" name="residente"
+                <input id="texto" class="PeopleId translatable" type="text" name="residente"
                     placeholder="Buscar Persona con paquetes" />
                 <center>
                     <button class="Buscar translatable" id="abrirMiModal" name="Busca" type="button">Buscar</button>
@@ -86,7 +86,7 @@
         </div>
 
         <form action="<?php echo RUTA_URL; ?>/PorterController/dropGuest" method="post">
-            <input id="texto" type="text" placeholder="Salida de visitante" name="salida_visita" />
+            <input id="texto" type="text" class="translatable" placeholder="Salida de visitante" name="salida_visita" />
             <center>
                 <input type="submit" class="Buscar translatable" value="Salida" id="Actualizar" name="salida">
             </center>
@@ -106,11 +106,11 @@
                         <button class="miModal__cerrar_v close" id="close" type="button">&times;</button>
                     </div>
                     <form id="myForm" action="<?php echo RUTA_URL; ?>/PorterController/createGuest" method="post">
-                        <h4 class="translatable">Documento: <input type="text" id="u_id" name="u_id" autocomplete="off" /></h4>
-                        <h4 class="translatable">Nombre: <input type="text" id="U_Nombre" name="U_Nombre" /></h4>
-                        <h4 class="translatable">Apellido: <input type="text" id="U_Apellido" name="U_Apellido" /></h4>
-                        <h4 class="translatable">Telefono: <input type="text" id="U_Telefono" name="U_Telefono" /></h4>
-                        <h4 class="translatable">Motivo de visita: <input type="text" id="U_Motivo" name="U_Motivo" /></h4>
+                        <h4 class="translatable">Documento: <input type="text" id="u_id" name="u_id" autocomplete="off" class="translatable" placeholder="Documento" /></h4>
+                        <h4 class="translatable">Nombre: <input type="text" id="U_Nombre" name="U_Nombre" class="translatable" placeholder="Nombre" /></h4>
+                        <h4 class="translatable">Apellido: <input type="text" id="U_Apellido" name="U_Apellido" class="translatable" placeholder="Apellido" /></h4>
+                        <h4 class="translatable">Telefono: <input type="text" id="U_Telefono" name="U_Telefono" class="translatable" placeholder="Telefono" /></h4>
+                        <h4 class="translatable">Motivo de visita: <input type="text" id="U_Motivo" name="U_Motivo" class="translatable" placeholder="Motivo de visita" /></h4>
                         <div class="titulo_torre">
                             <h4 class="translatable">Torre</h4>
                             <h4 class="ap translatable">Apartamento</h4>
@@ -151,15 +151,15 @@
                     <span class="close2" id="closeModal">&times;</span>
                 </div>
                 <form id="packageForm" action="<?php echo RUTA_URL; ?>/PorterController/enterPackage" method="post">
-                    <h4 class="translatable">Descripcion: <textarea id="Pa_Descripcion" name="descripcion"></textarea></h4>
+                    <h4 class="translatable">Descripcion: <textarea id="Pa_Descripcion" name="descripcion" class="translatable" placeholder="Descripcion"></textarea></h4>
                     <?php
                     date_default_timezone_set('America/Bogota');
                     $ahora = date('Y-m-d\TH:i'); // formato correcto sin segundos
                     ?>
                     <h4 class="translatable">Fecha de entrega:
-                        <input type="datetime-local" id="Pa_Fecha" name="fecha" max="<?= $ahora ?>" value="<?= $ahora ?>" />
+                        <input type="datetime-local" id="Pa_Fecha" name="fecha" class="translatable" />
                     </h4>
-                    <h4 class="translatable">Recibidor: <input type="text" id="Pa_Firma" name="recibidor" /></h4>
+                    <h4 class="translatable">Recibidor: <input type="text" id="Pa_Firma" name="recibidor" class="translatable" placeholder="Recibidor" /></h4>
                     <div class="titulo_torre">
                         <h4 class="translatable">Torre</h4>
                         <h4 class="ap translatable">Apartamento</h4>

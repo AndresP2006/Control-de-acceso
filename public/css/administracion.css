@@ -3,6 +3,18 @@
   font-family: "Inter", sans-serif;
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 body,
 html {
   background-color: #f4f6f8;
@@ -20,11 +32,12 @@ html {
 
 /* Contenido se expande pero deja espacio para footer */
 .main-content {
-  flex: 1;
+    flex: 1 0 auto;
 }
 
 /* Footer fijo al fondo cuando hay poco contenido */
 .footer-global {
+    flex-shrink: 0;
   background-color: #1f2a36;
   color: white;
   padding: 40px 40px;
@@ -382,7 +395,7 @@ button:hover {
 .logos {
   display: flex;
   position: relative;
-  width: 600px;
+  width: 720px;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
@@ -392,19 +405,6 @@ button:hover {
   display: flex;
   padding-top: 10px;
   width: 70px;
-  justify-content: space-around;
-}
-
-/* Estilos para el modal */
-.modal {
-  display: none;
-  /* Ocultarlo por defecto */
-  position: fixed;
-  z-index: 1;
-  /* Asegurarse de que esté por encima del contenido principal */
-  left: 0;
-  top: 0;
-  width: 100%;
   height: 100%;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
