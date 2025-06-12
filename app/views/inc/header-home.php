@@ -12,19 +12,17 @@
     <style>
         .container, .inicia_seccion {
             background-image: url("<?php echo RUTA_URL; ?>/img/backgroup.jpg");
-            background-attachment: fixed;
-            background-size: cover;
-            background-repeat: no-repeat;
         }
     </style>
 </head>
 
 <body>
-    <!-- Selector de idioma global -->
-    <div style="position: absolute; top: 10px; right: 20px; z-index: 9999;">
-      <select id="language-selector">
-        <option value="es">Español</option>
-        <option value="en">English</option>
-        <option value="fr">Français</option>
-      </select>
-    </div>
+  <!-- Selector de idioma global -->
+  <div style="position: absolute; top: 10px; right: 20px; z-index: 9999;">
+    <select id="language-selector">
+      <option value="es">Español</option>
+      <option value="en">English</option>
+      <option value="fr">Français</option>
+    </select>
+    <script src="<?php echo RUTA_URL; ?>/js/translate.js"></script>
+  </div>

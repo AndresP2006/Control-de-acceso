@@ -1,11 +1,28 @@
 async function translatePage(targetLang) {
     const elements = document.querySelectorAll('.translatable');
     for (const el of elements) {
-        // Guarda el HTML original solo una vez
+        // Traduce innerHTML
         const original = el.getAttribute('data-original') || el.innerHTML;
         el.setAttribute('data-original', original);
         const translated = await translateText(original, targetLang);
         el.innerHTML = translated;
+
+        // Traduce placeholder si existe
+        if (el.placeholder !== undefined && el.hasAttribute('placeholder')) {
+            const originalPlaceholder = el.getAttribute('data-original-placeholder') || el.placeholder;
+            el.setAttribute('data-original-placeholder', originalPlaceholder);
+            el.placeholder = await translateText(originalPlaceholder, targetLang);
+        }
+
+        // Traduce value si es un botón o input submit/reset/button
+        if (
+            (el.tagName === 'INPUT' && ['submit', 'button', 'reset'].includes(el.type)) ||
+            el.tagName === 'BUTTON'
+        ) {
+            const originalValue = el.getAttribute('data-original-value') || el.value;
+            el.setAttribute('data-original-value', originalValue);
+            el.value = await translateText(originalValue, targetLang);
+        }
     }
 }
 
@@ -40,6 +57,7 @@ function updateSelectOptions(lang) {
         selector.options[1].text = "Anglais";
         selector.options[2].text = "Français";
     }
+    
 }
  
 document.addEventListener("DOMContentLoaded", function () {
