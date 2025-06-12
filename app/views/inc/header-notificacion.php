@@ -19,7 +19,7 @@
             <!-- <div class="logos">
                 <h3 class="var_sesion">Bienvenido <?= $_SESSION['datos']->Us_usuario ?></h3>
             </div> -->
-            <div style="display: flex; padding: 10px; align-items: center; justify-content: space-between;margin-right: 20px;"> 
+            <div style="display: flex; padding: 10px; align-items: center; justify-content: space-between;margin-right: 20px;">
                 <div class="cerrar-sescion">
                     <a href="<?php echo RUTA_URL; ?>/HomeController/index"><button class="boton">Cerrar Sesión</button></a>
                 </div>
@@ -28,6 +28,12 @@
                         <option value="es">Español</option>
                         <option value="en">English</option>
                         <option value="fr">Français</option>
+                        <option value="pt">Portugues </option>
+                        <option value="ja">Japonés </option>
+                        <option value="ja">Japonés </option>
+                        <option value="zh">Chino </option>
+
+
                     </select>
                 </div>
             </div>
