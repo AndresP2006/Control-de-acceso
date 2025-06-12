@@ -386,7 +386,6 @@ button:hover {
     flex-direction: column;
     align-items: stretch;
   }
-
   .action-buttons {
     margin-top: 20px;
     width: 100%;
@@ -395,7 +394,7 @@ button:hover {
 .logos {
   display: flex;
   position: relative;
-  width: 720px;
+  width: 820px;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;

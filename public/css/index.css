@@ -6,7 +6,34 @@
 }
 
 /* Encabezado */
+.language-wrapper {
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 2px 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 160px; /* Reduce el ancho general */
+  font-size: 13px;
+}
 
+.language-icon {
+  font-size: 14px;
+  margin-right: 4px;
+}
+
+.language-select {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 13px;
+  cursor: pointer;
+  width: 100%;
+  padding: 2px;
+  appearance: none;
+
+}
 h1 {
   font-size: 2em;
   text-align: center;
@@ -52,6 +79,7 @@ header nav {
   flex-direction: column;
   align-items: center;
   padding-bottom: 10px;
+  margin-top: 23px;
 }
 
 /* Cuerpo */
