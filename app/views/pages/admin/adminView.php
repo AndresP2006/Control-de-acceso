@@ -2,41 +2,38 @@
 
 <div class="controls">
     <div class="control-group">
-        <button class="add-btn" id="nuevo_registro">➕ Agregar Nuevo Registro</button>
+        <button class="add-btn translatable" id="nuevo_registro">➕ Agregar Nuevo Registro</button>
         <!-- Formulario de Filtro por Rol -->
         <form action="<?php echo RUTA_URL; ?>/UserController/BuscarUsuario" method="POST">
-            <select name="select_rol" class="filter-rol" onchange="this.form.submit()">
-                <option value="">Todos</option>
-                <option value="1" <?php echo isset($datos['filter']) && $datos['filter'] == 1 ? 'selected' : ''; ?>>
+            <select name="select_rol" class="filter-rol translatable" onchange="this.form.submit()">
+                <option value="" class="translatable">Todos</option>
+                <option value="1" <?php echo isset($datos['filter']) && $datos['filter'] == 1 ? 'selected' : ''; ?> class="translatable">
                     Administrador
                 </option>
-                <option value="2" <?php echo isset($datos['filter']) && $datos['filter'] == 2 ? 'selected' : ''; ?>>
+                <option value="2" <?php echo isset($datos['filter']) && $datos['filter'] == 2 ? 'selected' : ''; ?> class="translatable">
                     Guardia
                 </option>
-                <option value="3" <?php echo isset($datos['filter']) && $datos['filter'] == 3 ? 'selected' : ''; ?>>
+                <option value="3" <?php echo isset($datos['filter']) && $datos['filter'] == 3 ? 'selected' : ''; ?> class="translatable">
                     Residente
                 </option>
-                <option value="inactivo" <?php echo isset($datos['filter']) && $datos['filter'] == 'inactivo' ? 'selected' : ''; ?>>
+                <option value="inactivo" <?php echo isset($datos['filter']) && $datos['filter'] == 'inactivo' ? 'selected' : ''; ?> class="translatable">
                     Inactivo
                 </option>
-
             </select>
             <input type="hidden" name="action" value="filter">
-
         </form>
     </div>
 
     <div class="control-group">
         <!-- Formulario de Búsqueda por ID -->
         <form class="search-container" action="<?php echo RUTA_URL; ?>/UserController/BuscarUsuario" method="POST">
-            <input id="id" type="text" class="buscar_id" name="id_usuario" placeholder="Buscar...">
+            <input id="id" type="text" class="buscar_id translatable" name="id_usuario" placeholder="Buscar...">
             <input type="hidden" name="action" value="search">
             <button type="submit" name="buscar">
                 <img style="width:20px; height:20px;" src="<?php echo RUTA_URL; ?>/img/lupa.png" alt="Icono Buscar">
             </button>
         </form>
     </div>
-
 </div>
 
 <div class="table-container tabla-especifica">
@@ -44,15 +41,15 @@
         <table>
             <thead>
                 <tr>
-                    <th>DOCUMENTO</th>
-                    <th>NOMBRE</th>
-                    <th>APELLIDO</th>
-                    <th>TELEFONO</th>
-                    <th>CORREO</th>
-                    <th>APARTAMENTO</th>
-                    <th>TORRE</th>
-                    <th>ROL</th>
-                    <th>ACCIONES</th>
+                    <th class="translatable">DOCUMENTO</th>
+                    <th class="translatable">NOMBRE</th>
+                    <th class="translatable">APELLIDO</th>
+                    <th class="translatable">TELEFONO</th>
+                    <th class="translatable">CORREO</th>
+                    <th class="translatable">APARTAMENTO</th>
+                    <th class="translatable">TORRE</th>
+                    <th class="translatable">ROL</th>
+                    <th class="translatable">ACCIONES</th>
                 </tr>
             </thead>
             <tbody class="table-body">
@@ -101,24 +98,21 @@
 
                             echo "</tr>";
                         } else {
-                            echo "<tr><td colspan='9'>Datos incorrectos para este usuario</td></tr>";
+                            echo "<tr><td colspan='9' class='translatable'>Datos incorrectos para este usuario</td></tr>";
                         }
                     }
                 } else {
-                    echo "<tr><td colspan='8'>No hay registros disponibles</td></tr>";
+                    echo "<tr><td colspan='8' class='translatable'>No hay registros disponibles</td></tr>";
                 }
                 ?>
-
             </tbody>
         </table>
     </div>
     <div class="action-buttons">
-        <a href="<?php echo RUTA_URL; ?>/HomeController/admin"><button class="action-btn">Usuarios</button></a>
-        <a href="<?php echo RUTA_URL; ?>/HomeController/HistoryRecords"><button
-                class="action-btn">Registros</button></a>
-        <a href="<?php echo RUTA_URL; ?>/HomeController/HistoryPackages"><button
-                class="action-btn">Paquetes</button></a>
-        <a href="<?php echo RUTA_URL; ?>/HomeController/Edificios"><button class="action-btn">Edificio</button></a>
+        <a href="<?php echo RUTA_URL; ?>/HomeController/admin"><button class="action-btn translatable">Usuarios</button></a>
+        <a href="<?php echo RUTA_URL; ?>/HomeController/HistoryRecords"><button class="action-btn translatable">Registros</button></a>
+        <a href="<?php echo RUTA_URL; ?>/HomeController/HistoryPackages"><button class="action-btn translatable">Paquetes</button></a>
+        <a href="<?php echo RUTA_URL; ?>/HomeController/Edificios"><button class="action-btn translatable">Edificio</button></a>
     </div>
 </div>
 <?php include RUTA_APP . '/views/pages/admin/modalRegistro.php'; ?>
@@ -158,7 +152,7 @@
                 success: function(respuesta) {
                     const res = JSON.parse(respuesta)
 
-                    let optionSelect = '<option value="0">Apartamento</option>'
+                    let optionSelect = '<option value="0" class="translatable">Apartamento</option>'
 
                     for (let item of res)
                         optionSelect += '<option value="' + item.Ap_id + '">' + item.Ap_numero +
@@ -181,7 +175,7 @@
                 success: function(respuesta) {
                     const res = JSON.parse(respuesta)
 
-                    let optionSelect = '<option value="0">Apartamento</option>'
+                    let optionSelect = '<option value="0" class="translatable">Apartamento</option>'
 
                     for (let item of res)
                         optionSelect += '<option value="' + item.Ap_id + '">' + item.Ap_numero +
