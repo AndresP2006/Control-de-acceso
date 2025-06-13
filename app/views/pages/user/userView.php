@@ -1,4 +1,4 @@
-    <?php require_once RUTA_APP . '/views/inc/header-user.php'; ?>
+<?php require_once RUTA_APP . '/views/inc/header-user.php'; ?>
 
 <?php
 $pendiente = false;
@@ -96,7 +96,7 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
 <div class="container">
     <div class="card">
         <div class="header">
-            <h1>Informacion de los Residentes</h1>
+            <h1 class="translatable">Informacion de los Residentes</h1>
             <form action="<?php echo RUTA_URL; ?>/HomeController/notificaciones" method="POST" style="display:inline;">
                 <div class="logos">
                     <button type="submit" class="enlaces" style="background:none; border:none; cursor:pointer; position: relative;">
@@ -123,13 +123,13 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
             <br>
             <table class="info-table">
                 <tr>
-                    <td><strong>Cédula</strong></td>
+                    <td><strong class="translatable">Cédula</strong></td>
                     <td>
                         <input class="gray-text" type="text" id="cedula" name="E_id" value="<?php echo $datos['resindents'][0]->Us_id; ?>" disabled>
                     </td>
                 </tr>
                 <tr>
-                    <td><strong>Email</strong></td>
+                    <td><strong class="translatable">Email</strong></td>
                     <td>
                         <input class="gray-text1" type="text" id="gmail" name="E_Gmail"
                             value="<?php echo $datos['resindents'][0]->Us_correo; ?>" disabled style="width:500px;">
@@ -138,7 +138,7 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
                     </td>
                 </tr>
                 <tr>
-                    <td><strong>Teléfono</strong></td>
+                    <td><strong class="translatable">Teléfono</strong></td>
                     <td>
                         <input class="gray-text1" type="text" id="telefono" name="E_Telefono"
                             value="<?php echo $datos['resindents'][0]->Pe_telefono; ?>" disabled>
@@ -152,14 +152,14 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
                 <div>
                     <table class="info-table">
                         <tr>
-                            <td><strong>Torre</strong></td>
+                            <td><strong class="translatable">Torre</strong></td>
                             <td class="gray-text">
                                 <input class="gray-text1" type="text" id="torre" name="To_id"
                                     value="<?php echo $datos['resindents'][0]->To_letra; ?>" disabled>
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>Departamento</strong></td>
+                            <td><strong class="translatable">Departamento</strong></td>
                             <td class="gray-text">
                                 <input class="gray-text1" type="text" id="apartamento" name="Ap_numero"
                                     value="<?php echo $datos['resindents'][0]->Ap_numero; ?>" disabled>
@@ -168,7 +168,7 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
                     </table>
                 </div>
                 <div class="habitantes">
-                    <p class="habitantes-title"><strong>Habitantes</strong></p>
+                    <p class="habitantes-title"><strong class="translatable">Habitantes</strong></p>
                     <?php if (!empty($datos['people'])): ?>
                         <?php foreach ($datos['people'] as $persona): ?>
                             <?php
@@ -197,7 +197,7 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
                             </p>
                         <?php endforeach; ?>
                     <?php else: ?>
-                        <p class="gray-text">Actualmente no cuenta con más habitantes</p>
+                        <p class="gray-text translatable">Actualmente no cuenta con más habitantes</p>
                     <?php endif; ?>
                 </div>
 
@@ -205,10 +205,10 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
         </div>
         <br><br><br>
         <div class="footer">
-            <button id="edit-btn" onclick="habilitarEdicion()" style="display:none;">✏️ Editar</button>
+            <button id="edit-btn" onclick="habilitarEdicion()" style="display:none;" class="translatable">✏️ Editar</button>
             <form action="<?php echo RUTA_URL; ?>/HomeController/registroView" method="POST" >
                 <div class="Siquiente">
-                    <button class="siquiente_registro" >Nueva Visita</button>
+                    <button class="siquiente_registro translatable" >Nueva Visita</button>
                 </div>
                 <input type="hidden" name="torre" value="<?php echo $datos['resindents'][0]->To_letra; ?>">
                 <input type="hidden" name="apartamento" value="<?php echo $datos['resindents'][0]->Ap_numero; ?>">
@@ -219,21 +219,18 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
             <button
                 id="save-btn"
                 onclick="guardarDatos()"
-                style="display: none; min-width: 130px; position: relative; padding: 10px 20px;">
+                style="display: none; min-width: 130px; position: relative; padding: 10px 20px;"
+                class="translatable">
                 <span
                     id="spinner"
                     class="spinner"
                     style="display: none;"></span>
-                <span id="save-text">✔️ Guardar</span>
+                <span id="save-text" class="translatable">✔️ Guardar</span>
             </button>
 
+            <button id="cancel-btn" onclick="cancelEditing()" style="display:none;" class="translatable">❌ Cancelar</button>
 
-
-
-
-            <button id="cancel-btn" onclick="cancelEditing()" style="display:none;">❌ Cancelar</button>
-
-            <p id="status-msg" class="access-control">
+            <p id="status-msg" class="access-control translatable">
                 <?= ($pendiente ? "Tu solicitud está en proceso, por favor espera..." : "") ?>
             </p>
         </div>

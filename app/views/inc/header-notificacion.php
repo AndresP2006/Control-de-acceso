@@ -16,25 +16,26 @@
                 <h1 class="titulo_1">Control De <b>Acceso</b> </h1>
             </div>
 
-            <!-- <div class="logos">
+            <div class="logos">
                 <h3 class="var_sesion">Bienvenido <?= $_SESSION['datos']->Us_usuario ?></h3>
-            </div> -->
+            </div>
             <div style="display: flex; padding: 10px; align-items: center; justify-content: space-between;margin-right: 20px;">
                 <div class="cerrar-sescion">
                     <a href="<?php echo RUTA_URL; ?>/HomeController/index"><button class="boton">Cerrar Sesión</button></a>
                 </div>
-                <div style="font-size: 30px; position: relative; bottom:3px; margin-left:30px;">
-                    <select id="language-selector">
-                        <option value="es">Español</option>
-                        <option value="en">English</option>
-                        <option value="fr">Français</option>
-                        <option value="pt">Portugues </option>
-                        <option value="ja">Japonés </option>
-                        <option value="ja">Japonés </option>
-                        <option value="zh">Chino </option>
-
-
-                    </select>
+                <div style="position: absolute; top: 10px; right: 20px; z-index: 9999;">
+                    <div class="language-wrapper">
+                        <span class="language-icon">🌐</span>
+                        <select id="language-selector" class="language-select">
+                            <option value="es">Español</option>
+                            <option value="en">English</option>
+                            <option value="fr">Français</option>
+                            <option value="pt">Português</option>
+                            <option value="ja">Japones</option>
+                            <option value="zh">Chino</option>
+                            <option value="ru">Ruso</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
