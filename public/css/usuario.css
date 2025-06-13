@@ -431,3 +431,140 @@ hr {
   font-size: 15px;
   cursor: pointer;
 }
+
+/* Registro de visita desde usuario */
+.container_registros{
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+.registro-usuario-form {
+  background: #fff;
+  border-radius: 10px;
+  padding: 30px 40px;
+  width: 400px;
+  margin: 40px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  position: relative;
+  animation: registro-usuario-fadeIn 0.3s;
+}
+
+@keyframes registro-usuario-fadeIn {
+  from {
+  transform: translateY(-30px);
+  opacity: 0;
+  }
+  to {
+  transform: translateY(0);
+  opacity: 1;
+  }
+}
+.registro-usuario-enlaces{
+  text-decoration: none;
+  font-size: 30px;
+  align-items: end;
+  padding: 30px 40px;
+  position: relative;
+  top: 50px;
+}
+
+.registro-usuario-cerrado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.registro-usuario-titulo-form {
+  margin: 0;
+  font-size: 1.5em;
+  color: #333;
+}
+.registro-usuario-miModal__cerrar_v {
+  display: none;
+}
+
+/* Inputs y selects */
+.registro-usuario-label {
+  margin: 10px 0 5px 0;
+  font-size: 1em;
+  color: #444;
+}
+.registro-usuario-input,
+.registro-usuario-select {
+  width: 100%;
+  padding: 8px 10px;
+  margin-top: 3px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1em;
+  background: #f9f9f9;
+  transition: border 0.2s;
+}
+.registro-usuario-input:focus,
+.registro-usuario-select:focus {
+  border: 1.5px solid #3498db;
+  outline: none;
+}
+
+/* Botón enviar */
+.registro-usuario-enviar {
+  background: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 30px;
+  font-size: 1.1em;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background 0.2s;
+}
+.registro-usuario-enviar:hover {
+  background: #217dbb;
+}
+.visitas_Costantes{
+    background: #fff;
+    border-radius: 10px;
+    padding: 16px 14px;
+    width: 705px;
+    margin: 40px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: registro-usuario-fadeIn 0.3s;
+}
+.visitas-constantes-tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    margin-bottom: 20px;
+  }
+
+  .visitas-constantes-th {
+    background-color: #041d35;
+    color: white;
+    padding: 12px 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+    font-weight: bold;
+  }
+
+  .visitas-constantes-td {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+
+  .visitas-constantes-tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  .visitas-constantes-tbody tr:hover {
+    background-color: #ddd;
+    cursor: pointer;
+  }
+
+  .visitas-constantes-td:empty::before {
+    content: '-';
+    color: #999;
+  }

@@ -338,4 +338,18 @@ WHERE p1.Pe_id = '$result' AND p2.Pe_id <> '$result'",);
             return (array) $registro;
         }, $this->db->registros());
     }
+    public function VisitasConstanes(){
+        $this->db->query("SELECT DISTINCT v.Vi_id, v.Vi_nombres, v.Vi_apellidos, v.Vi_telefono, r.Use_visit
+                            FROM visitantes v
+                            INNER JOIN registro r ON v.Vi_id = r.Vi_id where r.Use_visit = 'Permitido'
+                            and v.Vi_id IN (
+                                SELECT Vi_id
+                                FROM registro
+                                GROUP BY Vi_id
+                                HAVING COUNT(*) > 2
+                            );");
+        return array_map(function ($registro) {
+            return (array) $registro;
+        }, $this->db->registros());
+    }
 }

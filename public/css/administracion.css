@@ -406,6 +406,7 @@ button:hover {
   width: 70px;
   height: 100%;
   overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
   /* Fondo oscuro */
   padding-top: 60px;
 }
