@@ -341,7 +341,7 @@ WHERE p1.Pe_id = '$result' AND p2.Pe_id <> '$result'",);
     public function VisitasConstanes(){
         $this->db->query("SELECT DISTINCT v.Vi_id, v.Vi_nombres, v.Vi_apellidos, v.Vi_telefono, r.Use_visit
                             FROM visitantes v
-                            INNER JOIN registro r ON v.Vi_id = r.Vi_id where r.Use_visit = 'Permitido'
+                            INNER JOIN registro r ON v.Vi_id = r.Vi_id where r.Use_visit = 'Permitido' or 'solicitar'
                             and v.Vi_id IN (
                                 SELECT Vi_id
                                 FROM registro
