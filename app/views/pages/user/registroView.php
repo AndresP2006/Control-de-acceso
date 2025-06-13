@@ -45,12 +45,6 @@
           <td class="visitas-constantes-td"><?= htmlspecialchars($visita['Vi_apellidos']) ?></td>
           <td class="visitas-constantes-td"><?= htmlspecialchars($visita['Vi_telefono']) ?></td>
           <td class="visitas-constantes-td">
-            <?php
-              $solicitar = $visita['Use_visit'] ?? ''; 
-              if ($solicitar = is_array($visita['Use_visit']) ? $visita['Use_visit'][0] : $visita['Use_visit']) {
-            ?>
-              <button class="Permiso" disabled>🛂</button>
-            <?php } else  { ?>
               <form action="<?= RUTA_URL; ?>/PorterController/userPeopleVisit" method="post">
                 <input type="hidden" name="u_id" value="<?= htmlspecialchars($visita['Vi_id']) ?>">
                 <input type="hidden" name="U_Nombre" value="<?= htmlspecialchars($visita['Vi_nombres']) ?>">
@@ -62,7 +56,6 @@
                 <input type="hidden" name="apartamento" value="<?= htmlspecialchars($datos['apartamento']) ?>">
                 <button class="Permiso">✅</button>
               </form>
-            <?php } ?>
           </td>
         </tr>
       <?php endforeach; ?>
