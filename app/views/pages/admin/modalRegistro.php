@@ -1,51 +1,51 @@
 <div id="myModal" class="modal">
     <div class="modal-content">
         <div class="cerrado">
-            <h3 class="titulo-form">Nuevo registro</h3>
+            <h3 class="titulo-form translatable">Nuevo registro</h3>
             <span class="close" id="close">&times;</span>
         </div>
         <form id="myForm" action="<?php echo RUTA_URL; ?>/UserController/createUser" method="post">
-            <label for="" class="label_new_registro" >Documento</label><br>
-            <input type="text" id="u_id" class="imput_new_registro" name="Pe_id" />
-            <label for="" class="label_new_registro" >Nombre</label><br>
-            <input type="text" id="U_Nombre" class="imput_new_registro" name="U_Nombre" />
-            <label for="" class="label_new_registro" >Apellidos</label><br>
-            <input type="text" id="U_Apellido" class="imput_new_registro" name="U_Apellido" />
-            <label for="" class="label_new_registro" >Telefono</label><br>
-            <input type="text" id="U_Telefono" class="imput_new_registro" name="U_Telefono" />
-            <label for="" class="label_new_registro" >Correo</label><br>
-            <input type="email" id="U_Gmail" class="imput_new_registro" name="U_Gmail" requiere/>
+            <label for="" class="label_new_registro translatable">Documento</label><br>
+            <input type="text" id="u_id" class="imput_new_registro translatable" name="Pe_id" placeholder="Documento" />
+            <label for="" class="label_new_registro translatable">Nombre</label><br>
+            <input type="text" id="U_Nombre" class="imput_new_registro translatable" name="U_Nombre" placeholder="Nombre" />
+            <label for="" class="label_new_registro translatable">Apellidos</label><br>
+            <input type="text" id="U_Apellido" class="imput_new_registro translatable" name="U_Apellido" placeholder="Apellidos" />
+            <label for="" class="label_new_registro translatable">Telefono</label><br>
+            <input type="text" id="U_Telefono" class="imput_new_registro translatable" name="U_Telefono" placeholder="Telefono" />
+            <label for="" class="label_new_registro translatable">Correo</label><br>
+            <input type="email" id="U_Gmail" class="imput_new_registro translatable" name="U_Gmail" placeholder="Correo" required />
             <div class="titulo_torre">
-                <h4 class="label_new_registro" >Torre</h4>
-                <h4 class="ap label_new_registro "  >Apartamento</h4>
+                <h4 class="label_new_registro translatable">Torre</h4>
+                <h4 class="ap label_new_registro translatable">Apartamento</h4>
             </div>
             <div class="select_torre">
                 <div class="select_torre2">
-                    <select id="select_torre2" class="filter-select">
-                        <option value="">Torre</option>
+                    <select id="select_torre2" class="filter-select translatable">
+                        <option value="" class="translatable">Torre</option>
                         <?php foreach ($_SESSION['torre'] as $torre) {
                             echo "<option value='{$torre->To_id}'>{$torre->To_letra}</option>";
                         } ?>
                     </select>
-                    <select name="U_Departamento" id="U_Departamento" class="filter-select">
-                        <option value="">Apartamento</option>
+                    <select name="U_Departamento" id="U_Departamento" class="filter-select translatable">
+                        <option value="" class="translatable">Apartamento</option>
                     </select>
                     <input type="text" style="display: none;" name="U_Departamento2" id="U_Departamento2">
                 </div>
             </div>
 
-            <select name="U_id" class="Rol" id="U_id">
-                <option value="">Rol</option>
-                <option value=1>Administrador</option>
-                <option value=2>Guardia</option>
-                <option value=3>Residente</option>
+            <select name="U_id" class="Rol translatable" id="U_id">
+                <option value="" class="translatable">Rol</option>
+                <option value=1 class="translatable">Administrador</option>
+                <option value=2 class="translatable">Guardia</option>
+                <option value=3 class="translatable">Residente</option>
             </select>
-            <label for="" id="passwordLabel">Contraseña</label><br>
-            <input type="text" id="U_password" name="U_contrasena" />
+            <label for="" id="passwordLabel" class="translatable">Contraseña</label><br>
+            <input type="text" id="U_password" name="U_contrasena" class="translatable" placeholder="Contraseña" />
             <div id="sugerencias" style="color: red; margin-top: 5px;"></div>
 
             <center>
-                <input type="submit" value="Enviar" id="Enviar" class="Enviar" name="registro" />
+                <input type="submit" value="Enviar" id="Enviar" class="Enviar translatable" name="registro" />
             </center>
         </form>
     </div>
@@ -70,7 +70,6 @@
         } else if (!/[A-Z]/.test(valor)) {
             mensajes.push("Agrega al menos una letra mayúscula.");
         }
-
 
     sugerencias.innerHTML = mensajes.join("<br>");
   });
