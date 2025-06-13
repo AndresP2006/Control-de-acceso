@@ -217,14 +217,13 @@ class PorterController extends Controlador
 
             if ($verificarEntrada) {
                 $messageError = "La visita " . $visitas['nombre'] . " " . $visitas['apellido'] . " ya se encuentra dentro del conjunto";
-                $datos = $this->index( $messageError,null);
+                $datos = $this->index($messageError,null);
             } else {
                 // Registrar visitante y registro
                 $verificarRegistro = $this->porterModel->VirificamosRegistro($visitas);
                 if($verificarRegistro){
                     $IngresarRegistro = $this->porterModel->IngresarRegistro($registro);
-                    $messageInfo= "Visita ingresada en espera de permiso";
-                    $datos = $this->index( $messageInfo,null);
+                    $datos = $this->index(null,"Visita ingresada en espera de permiso" );
                 }else{
                     $IngresarVisita = $this->porterModel->IngresarVisit($visitas);
                     $IngresarRegistro = $this->porterModel->IngresarRegistro($registro);
@@ -232,12 +231,12 @@ class PorterController extends Controlador
                 if ($IngresarVisita && $IngresarRegistro) {
                     $datos = $this->index(null, "Visita ingresada en espera de permiso");
                 } else {
-                    $datos = $this->index("Error al ingresar la visita", null);
+                    $datos = $this->index(null,"Error al ingresar la visita",);
                 }
                 }
             }
         } else {
-            $datos = $this->index('Error al momento de ingresar un visitante', null);
+            $datos = $this->index(null,'Error al momento de ingresar un visitante');
         }
         $conteoRegistros = $this->peopleModel->VisitasConstanes(); 
 

@@ -116,7 +116,7 @@
   }
   .content_table{
     overflow-x: auto;
-    height: 250px;
+    height: 410px;
   }
     .filtros_visitas {
       position: relative;
