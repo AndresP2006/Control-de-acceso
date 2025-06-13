@@ -33,13 +33,12 @@ class AdminModel
             $this->db->execute();
 
             // Insertar en tabla 'persona'
-            $this->db->query('INSERT INTO persona (Pe_id, Pe_nombre, Pe_apellidos, Pe_telefono, Ap_id, Us_id,estado) VALUES (:Cedula, :Nombre, :Apellidos, :Telefono, :Departamento, :Cedula,:estado)');
+            $this->db->query('INSERT INTO persona (Pe_id, Pe_nombre, Pe_apellidos, Pe_telefono, Ap_id, Us_id) VALUES (:Cedula, :Nombre, :Apellidos, :Telefono, :Departamento, :Cedula)');
             $this->db->bind(':Cedula', $datos['Cedula']);
             $this->db->bind(':Nombre', $datos['Nombre']);
             $this->db->bind(':Apellidos', $datos['Apellidos']);
             $this->db->bind(':Telefono', $datos['Telefono']);
             $this->db->bind(':Departamento', $datos['Departamento']);
-                        $this->db->bind(':estado', 'activo');
             $this->db->execute();
 
             $this->db->commit();
