@@ -26,7 +26,7 @@
 </form>
   </div>
   <div class="visitas_Costantes">
-    
+    <h2>Visitas Constantes</h2>
     <table class="visitas-constantes-tabla">
       <thead class="visitas-constantes-thead">
       <tr class="visitas-constantes-tr">
@@ -38,13 +38,34 @@
       </tr>
       </thead>
       <tbody class="visitas-constantes-tbody">
-      <tr class="visitas-constantes-tr">
-        <td class="visitas-constantes-td">1042851729</td>
-        <td class="visitas-constantes-td">ANDRES</td>
-        <td class="visitas-constantes-td">1042851729</td>
-        <td class="visitas-constantes-td">1042851729</td>
-        <td class="visitas-constantes-td">✅</td>
-      </tr>
+       <?php foreach ($datos['registros'] as $visita): ?>
+        <tr class="visitas-constantes-tr">
+          <td class="visitas-constantes-td"><?= htmlspecialchars($visita['Vi_id']) ?></td>
+          <td class="visitas-constantes-td"><?= htmlspecialchars($visita['Vi_nombres']) ?></td>
+          <td class="visitas-constantes-td"><?= htmlspecialchars($visita['Vi_apellidos']) ?></td>
+          <td class="visitas-constantes-td"><?= htmlspecialchars($visita['Vi_telefono']) ?></td>
+          <td class="visitas-constantes-td">
+            <?php
+              $solicitar = $visita['Use_visit'] ?? ''; 
+              if ($solicitar = is_array($visita['Use_visit']) ? $visita['Use_visit'][0] : $visita['Use_visit']) {
+            ?>
+              <button class="Permiso" disabled>🛂</button>
+            <?php } else  { ?>
+              <form action="<?= RUTA_URL; ?>/PorterController/userPeopleVisit" method="post">
+                <input type="hidden" name="u_id" value="<?= htmlspecialchars($visita['Vi_id']) ?>">
+                <input type="hidden" name="U_Nombre" value="<?= htmlspecialchars($visita['Vi_nombres']) ?>">
+                <input type="hidden" name="U_Apellido" value="<?= htmlspecialchars($visita['Vi_apellidos']) ?>">
+                <input type="hidden" name="U_Telefono" value="<?= htmlspecialchars($visita['Vi_telefono']) ?>">
+                <input type="hidden" name="U_Motivo" value="Visitas a un amigo">
+                <input type="hidden" name="idResidente" value="<?= htmlspecialchars($datos['isUsuario']) ?>">
+                <input type="hidden" name="torre" value="<?= htmlspecialchars($datos['torre']) ?>">
+                <input type="hidden" name="apartamento" value="<?= htmlspecialchars($datos['apartamento']) ?>">
+                <button class="Permiso">✅</button>
+              </form>
+            <?php } ?>
+          </td>
+        </tr>
+      <?php endforeach; ?>
       </tbody>
     </table>
   </div>

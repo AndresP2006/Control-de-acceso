@@ -193,7 +193,7 @@ class PorterController extends Controlador
             !empty(trim($_POST['u_id'])) &&
             !empty(trim($_POST['U_Nombre'])) &&
             !empty(trim($_POST['U_Apellido'])) &&
-            !empty(trim($_POST['U_Telefono'])) &&
+            !empty(trim($_POST['U_Telefono'])) ||
             !empty(trim($_POST['U_Motivo'])) &&
             !empty($torre) &&
             !empty($apartamento) &&
@@ -223,8 +223,8 @@ class PorterController extends Controlador
                 $verificarRegistro = $this->porterModel->VirificamosRegistro($visitas);
                 if($verificarRegistro){
                     $IngresarRegistro = $this->porterModel->IngresarRegistro($registro);
-                    $messageError= "Visita ingresada en espera de permiso";
-                    $datos = $this->index( $messageError,null);
+                    $messageInfo= "Visita ingresada en espera de permiso";
+                    $datos = $this->index( $messageInfo,null);
                 }else{
                     $IngresarVisita = $this->porterModel->IngresarVisit($visitas);
                     $IngresarRegistro = $this->porterModel->IngresarRegistro($registro);
@@ -239,11 +239,13 @@ class PorterController extends Controlador
         } else {
             $datos = $this->index('Error al momento de ingresar un visitante', null);
         }
+        $conteoRegistros = $this->peopleModel->VisitasConstanes(); 
 
         // Asegura que siempre se incluyan estos valores en el arreglo de datos
         $datos['isUsuario'] = $idResidente;
         $datos['torre'] = $torre;
         $datos['apartamento'] = $apartamento;
+        $datos['registros']=$conteoRegistros;
 
         $this->vista('pages/user/registroView', $datos);
     }
