@@ -45,17 +45,24 @@
           <td class="visitas-constantes-td"><?= htmlspecialchars($visita['Vi_apellidos']) ?></td>
           <td class="visitas-constantes-td"><?= htmlspecialchars($visita['Vi_telefono']) ?></td>
           <td class="visitas-constantes-td">
-              <form action="<?= RUTA_URL; ?>/PorterController/userPeopleVisit" method="post">
-                <input type="hidden" name="u_id" value="<?= htmlspecialchars($visita['Vi_id']) ?>">
-                <input type="hidden" name="U_Nombre" value="<?= htmlspecialchars($visita['Vi_nombres']) ?>">
-                <input type="hidden" name="U_Apellido" value="<?= htmlspecialchars($visita['Vi_apellidos']) ?>">
-                <input type="hidden" name="U_Telefono" value="<?= htmlspecialchars($visita['Vi_telefono']) ?>">
-                <input type="hidden" name="U_Motivo" value="Visitas a un amigo">
-                <input type="hidden" name="idResidente" value="<?= htmlspecialchars($datos['isUsuario']) ?>">
-                <input type="hidden" name="torre" value="<?= htmlspecialchars($datos['torre']) ?>">
-                <input type="hidden" name="apartamento" value="<?= htmlspecialchars($datos['apartamento']) ?>">
-                <button class="Permiso">✅</button>
-              </form>
+              <?php
+                  $solicitar = $visita['Vi_permiso'] ?? '';
+                  if ($solicitar == 'solicitado') {
+                ?>
+                  <button class="Permiso" disabled>🛂</button>
+                <?php } else{ ?>
+                  <form action="<?= RUTA_URL; ?>/PorterController/userPeopleVisit" method="post">
+                    <input type="hidden" name="u_id" value="<?= htmlspecialchars($visita['Vi_id']) ?>">
+                    <input type="hidden" name="U_Nombre" value="<?= htmlspecialchars($visita['Vi_nombres']) ?>">
+                    <input type="hidden" name="U_Apellido" value="<?= htmlspecialchars($visita['Vi_apellidos']) ?>">
+                    <input type="hidden" name="U_Telefono" value="<?= htmlspecialchars($visita['Vi_telefono']) ?>">
+                    <input type="hidden" name="U_Motivo" value="Visitas a un amigo">
+                    <input type="hidden" name="idResidente" value="<?= htmlspecialchars($datos['isUsuario']) ?>">
+                    <input type="hidden" name="torre" value="<?= htmlspecialchars($datos['torre']) ?>">
+                    <input type="hidden" name="apartamento" value="<?= htmlspecialchars($datos['apartamento']) ?>">
+                    <button class="Permiso">✅</button>
+                  </form>
+                <?php } ?>
           </td>
         </tr>
       <?php endforeach; ?>

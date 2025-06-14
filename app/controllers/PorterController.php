@@ -73,6 +73,7 @@ class PorterController extends Controlador
         $result = $this->peopleModel->getVisitantes($_POST['salida_visita']);
         if ($result) {
             $this->peopleModel->getGuestById($_POST['salida_visita']);
+            $this->peopleModel->getGuestByIdVisita($_POST['salida_visita']);
             $datos = $this->index(null, 'Salida registrada exitosamente');
         } else {
             $datos = $this->index("No se encontró el visitante con el id: " . $_POST['salida_visita'], null);
@@ -223,9 +224,11 @@ class PorterController extends Controlador
                 $verificarRegistro = $this->porterModel->VirificamosRegistro($visitas);
                 if($verificarRegistro){
                     $IngresarRegistro = $this->porterModel->IngresarRegistro($registro);
+                    $this->porterModel->actualizarEstado($visitas);
                     $datos = $this->index(null,"Visita ingresada en espera de permiso" );
                 }else{
                     $IngresarVisita = $this->porterModel->IngresarVisit($visitas);
+                    // $this->porterModel->actualizarEstado($visitas);
                     $IngresarRegistro = $this->porterModel->IngresarRegistro($registro);
 
                 if ($IngresarVisita && $IngresarRegistro) {

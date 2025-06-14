@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 10-06-2025 a las 09:49:14
+-- Tiempo de generación: 14-06-2025 a las 19:47:26
 -- Versión del servidor: 9.1.0
 -- Versión de PHP: 8.3.14
 
@@ -61,7 +61,15 @@ CREATE TABLE IF NOT EXISTS `paquete` (
   `vista` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Pa_id`),
   KEY `Pe_id` (`Pe_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `paquete`
+--
+
+INSERT INTO `paquete` (`Pa_id`, `Pa_estado`, `Pa_descripcion`, `Pa_fecha`, `Pa_responsable`, `Pe_id`, `vista`) VALUES
+(27, 'Entregado', 'Cafetera', '2025-06-11 19:30:00', 'portero del conjunto', 1042851729, 1),
+(28, 'Bodega', 'cama doble', '2025-06-02 19:00:00', 'portero del conjunto', 1042851729, 1);
 
 -- --------------------------------------------------------
 
@@ -112,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `registro` (
   PRIMARY KEY (`Re_id`),
   KEY `Vi_id` (`Vi_id`),
   KEY `Pe_id` (`Pe_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -157,7 +165,15 @@ CREATE TABLE IF NOT EXISTS `solicitudes_actualizacion` (
   `vista` tinyint(1) NOT NULL DEFAULT '0',
   `vista_resident` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `solicitudes_actualizacion`
+--
+
+INSERT INTO `solicitudes_actualizacion` (`id`, `id_residente`, `nombre`, `correo_nuevo`, `correo_viejo`, `telefono_nuevo`, `telefono_viejo`, `estado`, `razon_rechazo`, `fecha_solicitud`, `vista`, `vista_resident`) VALUES
+(27, 1042851729, 'Andres Pereira', 'Andres@gmail.com', 'pereirapuelloandresdavid@gmail.com', '3202116434', '3202116434', 'aprobada', NULL, '2025-06-13 01:01:01', 1, 1),
+(28, 1042851729, 'Andres Pereira', 'pereirapuelloandresdavid@gmail.com', 'Andres@gmail.com', '3202116434', '3202116434', 'aprobada', NULL, '2025-06-13 01:23:09', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -220,6 +236,7 @@ CREATE TABLE IF NOT EXISTS `visitantes` (
   `Vi_apellidos` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `Vi_telefono` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `estado` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `Vi_permiso` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`Vi_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
