@@ -88,13 +88,19 @@ class PorterModel
     }
 
     public function IngresarVisit($datos){
-        $this->db->query("INSERT INTO visitantes (Vi_id, Vi_nombres, Vi_apellidos, Vi_telefono, estado) VALUES (:cedula, :nombre, :apellido, :telefono, 0)");
+        $this->db->query("INSERT INTO visitantes (Vi_id, Vi_nombres, Vi_apellidos, Vi_telefono,estado,Vi_permiso) VALUES
+                        (:cedula, :nombre, :apellido, :telefono, 0,'solicitado')");
 
         $this->db->bind(":cedula", $datos['cedula']);
         $this->db->bind(":nombre", $datos['nombre']);
         $this->db->bind(":apellido", $datos['apellido']);
         $this->db->bind(":telefono", $datos['telefono']);
 
+        return $this->db->execute();
+    }
+    public function actualizarEstado($datos){
+        $this->db->query("UPDATE visitantes SET Vi_permiso ='solicitado' WHERE Vi_id =:cedula");
+        $this->db->bind(":cedula",$datos['cedula']);
         return $this->db->execute();
     }
     public function IngresarRegistro($datos){
@@ -123,7 +129,7 @@ class PorterModel
     public function buscarVisitantePorCedula($cedula) {
     $this->db->query("SELECT * FROM visitantes WHERE Vi_id = :cedula");
     $this->db->bind(':cedula', $cedula);
-    return $this->db->registro(); 
+    return $this->db->registro();   
 }
 }
 
