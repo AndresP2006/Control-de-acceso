@@ -241,7 +241,7 @@ class PorterController extends Controlador
         } else {
             $datos = $this->index(null,'Error al momento de ingresar un visitante');
         }
-        $conteoRegistros = $this->peopleModel->VisitasConstanes(); 
+        $conteoRegistros = $this->peopleModel->VisitasConstanes($idResidente); 
 
         // Asegura que siempre se incluyan estos valores en el arreglo de datos
         $datos['isUsuario'] = $idResidente;
