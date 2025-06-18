@@ -57,8 +57,7 @@ public function registroView() {
     $torre = isset($_POST['torre']) ? $_POST['torre'] : '';
     $apartamento = isset($_POST['apartamento']) ? $_POST['apartamento'] : '';
     $idUsuario = isset($_POST['idUsuario']) ? $_POST['idUsuario'] : '';
-    $conteoRegistros = $this->peopleModel->VisitasConstanes(); 
-    // var_dump($_POST);
+    $conteoRegistros = $this->peopleModel->VisitasConstanes($idUsuario); 
     $datos = [
         'torre' => $torre,
         'apartamento' => $apartamento,
