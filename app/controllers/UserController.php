@@ -57,8 +57,9 @@ class UserController extends Controlador
         $messageError = null;
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registro'])) {
             if (!empty(trim($_POST['Pe_id'])) && !empty(trim($_POST['U_Nombre']))  && !empty(trim($_POST['U_Apellido'])) && !empty(trim($_POST['U_Telefono'])) && !empty(trim($_POST['U_Gmail'])) && !empty(trim($_POST['U_id']))) {
+                echo $_POST['Pe_id'];
                 $usuario = $this->peopleModel->getUsuario($_POST['Pe_id']);
-                if ($usuario == "false") {
+                if ($usuario) {
                     $estado = "inactivo";
                     $idUsuario = $_POST['Pe_id'];
                 } else {

@@ -132,3 +132,4 @@ document.addEventListener("DOMContentLoaded", () => {
   // Establece la fecha al cargar el formulario
   campoFecha.value = getFechaActualFormateada();
 });
+
