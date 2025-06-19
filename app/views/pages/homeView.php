@@ -22,7 +22,7 @@
     <section id="hero">
         <article>
             <h2 class="translatable">
-                ¡La Ribera Villa Rica <samp class="translatable">Apartamentos!</samp>
+                ¡La Ribera Villa Rica Apartamentos! 
             </h2>
             <p class="translatable">
                 LA RIBERA VILLA RICA es un proyecto de viviendas de interés social en Malambo - Atlántico,

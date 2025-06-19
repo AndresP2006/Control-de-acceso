@@ -12,16 +12,18 @@
 <body>
     <div class="content">
         <div class="encabezado">
-            <div class="titulo">
-                <h1 class="titulo_1">Control De <b>Acceso</b> </h1>
+             <div class="">
+             <h1>
+            <span class="titulo_1 translatable">Control de</span> <samp style="color:#f00;" class="translatable">Acceso</samp>
+        </h1>
             </div>
-
             <div class="logos">
-                <h3 class="var_sesion">Bienvenido <?= $_SESSION['datos']->Us_usuario ?></h3>
+                <h3 class="var_sesion translatable">Bienvenido <?= $_SESSION['datos']->Us_usuario ?></h3>
             </div>
+    
             <div style="display: flex; padding: 10px; align-items: center; justify-content: space-between;margin-right: 20px;">
                 <div class="cerrar-sescion">
-                    <a href="<?php echo RUTA_URL; ?>/HomeController/index"><button class="boton">Cerrar Sesión</button></a>
+                    <a href="<?php echo RUTA_URL; ?>/HomeController/index"><button class="boton translatable">Cerrar Sesión</button></a>
                 </div>
                 <div style="position: absolute; top: 10px; right: 20px; z-index: 9999;">
                     <div class="language-wrapper">

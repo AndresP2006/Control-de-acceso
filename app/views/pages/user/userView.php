@@ -205,7 +205,7 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
         </div>
         <br><br><br>
         <div class="footer">
-            <button id="edit-btn" onclick="habilitarEdicion()" style="display:none;" class="translatable">✏️ Editar</button>
+            <button id="edit-btn" class="translatable" onclick="habilitarEdicion()">✏️Editar</button>
             <form action="<?php echo RUTA_URL; ?>/HomeController/registroView" method="POST" >
                 <div class="Siquiente">
                     <button class="siquiente_registro translatable" >Nueva Visita</button>
@@ -219,16 +219,15 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
             <button
                 id="save-btn"
                 onclick="guardarDatos()"
-                style="display: none; min-width: 130px; position: relative; padding: 10px 20px;"
-                class="translatable">
+                style="display: none; min-width: 130px; position: relative; padding: 10px 20px;">
+                <span id="save-text" class="translatable">Guardar</span>
                 <span
                     id="spinner"
                     class="spinner"
                     style="display: none;"></span>
-                <span id="save-text" class="translatable">✔️ Guardar</span>
             </button>
 
-            <button id="cancel-btn" onclick="cancelEditing()" style="display:none;" class="translatable">❌ Cancelar</button>
+            <button id="cancel-btn" onclick="cancelEditing()" style="display:none;" class="translatable">Cancelar</button>
 
             <p id="status-msg" class="access-control translatable">
                 <?= ($pendiente ? "Tu solicitud está en proceso, por favor espera..." : "") ?>

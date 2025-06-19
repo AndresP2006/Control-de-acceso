@@ -35,7 +35,7 @@
                 <tr>
                     <td><strong class="translatable">Email</strong></td>
                     <td>
-                        <p style="font-size: 25px; width:100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        <p style="font-size: 25px; width:100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; white-space: normal;">
                             <?php
                             $correo_viejo = $datos['datos_resident'][0]->correo_viejo ?? "";
                             $correo_nuevo = $datos['datos_resident'][0]->correo_nuevo ?? "";
