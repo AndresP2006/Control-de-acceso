@@ -16,12 +16,12 @@
     <div class="content">
         <div class="encabezado">
             <div class="titulo">
-                <h1 class="titulo_1">Control De <b>Acceso</b> </h1>
+                <h1 class="titulo_1 translatable">Control De Acceso</b> </h1>
             </div>
 
             <!-- <h3 class="var_sesion">Bienvenido <?= $_SESSION['datos']->Us_usuario ?></h3> -->
             <div class="cerrar-sescion">
-                <a href="<?php echo RUTA_URL; ?>/HomeController/index"><button class="boton">Cerrar Sesión</button></a>
+                <a href="<?php echo RUTA_URL; ?>/HomeController/index"><button class="boton  translatable">Cerrar Sesión</button></a>
             </div>
             <div style="position: absolute; top: 10px; right: 20px; z-index: 9999;">
                 <div class="language-wrapper">
