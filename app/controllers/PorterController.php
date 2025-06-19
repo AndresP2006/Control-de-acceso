@@ -73,6 +73,7 @@ class PorterController extends Controlador
         $result = $this->peopleModel->getVisitantes($_POST['salida_visita']);
         if ($result) {
             $this->peopleModel->getGuestById($_POST['salida_visita']);
+            $this->peopleModel->getGuestByIdVisita($_POST['salida_visita']);
             $datos = $this->index(null, 'Salida registrada exitosamente');
         } else {
             $datos = $this->index("No se encontró el visitante con el id: " . $_POST['salida_visita'], null);
@@ -193,7 +194,7 @@ class PorterController extends Controlador
             !empty(trim($_POST['u_id'])) &&
             !empty(trim($_POST['U_Nombre'])) &&
             !empty(trim($_POST['U_Apellido'])) &&
-            !empty(trim($_POST['U_Telefono'])) &&
+            !empty(trim($_POST['U_Telefono'])) ||
             !empty(trim($_POST['U_Motivo'])) &&
             !empty($torre) &&
             !empty($apartamento) &&
@@ -217,33 +218,36 @@ class PorterController extends Controlador
 
             if ($verificarEntrada) {
                 $messageError = "La visita " . $visitas['nombre'] . " " . $visitas['apellido'] . " ya se encuentra dentro del conjunto";
-                $datos = $this->index( $messageError,null);
+                $datos = $this->index($messageError,null);
             } else {
                 // Registrar visitante y registro
                 $verificarRegistro = $this->porterModel->VirificamosRegistro($visitas);
                 if($verificarRegistro){
                     $IngresarRegistro = $this->porterModel->IngresarRegistro($registro);
-                    $messageError= "Visita ingresada en espera de permiso";
-                    $datos = $this->index( $messageError,null);
+                    $this->porterModel->actualizarEstado($visitas);
+                    $datos = $this->index(null,"Visita ingresada en espera de permiso" );
                 }else{
                     $IngresarVisita = $this->porterModel->IngresarVisit($visitas);
+                    // $this->porterModel->actualizarEstado($visitas);
                     $IngresarRegistro = $this->porterModel->IngresarRegistro($registro);
 
                 if ($IngresarVisita && $IngresarRegistro) {
                     $datos = $this->index(null, "Visita ingresada en espera de permiso");
                 } else {
-                    $datos = $this->index("Error al ingresar la visita", null);
+                    $datos = $this->index(null,"Error al ingresar la visita",);
                 }
                 }
             }
         } else {
-            $datos = $this->index('Error al momento de ingresar un visitante', null);
+            $datos = $this->index(null,'Error al momento de ingresar un visitante');
         }
+        $conteoRegistros = $this->peopleModel->VisitasConstanes($idResidente); 
 
         // Asegura que siempre se incluyan estos valores en el arreglo de datos
         $datos['isUsuario'] = $idResidente;
         $datos['torre'] = $torre;
         $datos['apartamento'] = $apartamento;
+        $datos['registros']=$conteoRegistros;
 
         $this->vista('pages/user/registroView', $datos);
     }

@@ -35,6 +35,10 @@ class PeopleModel
         $this->db->query("UPDATE registro SET Re_hora_salida = CURRENT_TIME() WHERE Vi_id ='$idGuest'");
         return $this->db->registro();
     }
+    public function getGuestByIdVisita($idGuest){
+        $this->db->query("UPDATE visitantes SET Vi_permiso ='salida' WHERE Vi_id ='$idGuest'");
+        return $this->db->registro();
+    }
 
     public function getVisitantes($id)
     {
@@ -334,6 +338,21 @@ WHERE p1.Pe_id = '$result' AND p2.Pe_id <> '$result'",);
                     AND Re_hora_entrada = '00:00:00';");
         $this->db->bind(':cedula', $id);
 
+        return array_map(function ($registro) {
+            return (array) $registro;
+        }, $this->db->registros());
+    }
+    public function VisitasConstanes($datos){
+        $this->db->query("SELECT DISTINCT v.Vi_id, v.Vi_nombres, v.Vi_apellidos, v.Vi_telefono, v.Vi_permiso
+                            FROM visitantes v
+                            INNER JOIN registro r ON v.Vi_id = r.Vi_id WHERE r.Pe_id= :cedula
+                            AND v.Vi_id IN (
+                                SELECT Vi_id
+                                FROM registro
+                                GROUP BY Vi_id
+                                HAVING COUNT(*) > 2
+                            )");
+        $this->db->bind(":cedula",$datos);
         return array_map(function ($registro) {
             return (array) $registro;
         }, $this->db->registros());

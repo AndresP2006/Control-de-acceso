@@ -4,7 +4,7 @@
 // Ordenar las notificaciones por timestamp descendente
 date_default_timezone_set("America/Bogota");
 
-usort($datos['notificaciones'], function($a, $b) {
+usort($datos['notificaciones'], function ($a, $b) {
     $fechaA = 0;
     $fechaB = 0;
 
@@ -29,7 +29,8 @@ usort($datos['notificaciones'], function($a, $b) {
 ?>
 
 <div class="contenedor">
-    <div class="titulo">NOTIFICACIONES
+    <div class="titulo">
+        <h1 class="titulo translatable">NOTIFICACIONES</h1>
         <a href="<?php echo RUTA_URL; ?>/HomeController/resident" class="enlaces">
             <span class="icons exit">↩️</span>
         </a>
@@ -69,8 +70,8 @@ usort($datos['notificaciones'], function($a, $b) {
                     <div class="notificacion">
                         <div class="contenido-notificacion">
                             <div class="texto">
-                                <p>Se ha registrado la persona <strong><?php echo $notificacion['data']->Vi_nombres . " " . $notificacion['data']->Vi_apellidos; ?></strong> para usted en la entrada del edificio.</p>
-                                <p><strong>Motivo:</strong> <?php echo $notificacion['data']->Re_motivo; ?></p>
+                                <p class="translatable">Se ha registrado la persona <strong><?php echo $notificacion['data']->Vi_nombres . " " . $notificacion['data']->Vi_apellidos; ?></strong> para usted en la entrada del edificio.</p>
+                                <p><strong class="translatable">Motivo:</strong> <span><?php echo $notificacion['data']->Re_motivo; ?></span></p>
                             </div>
                             <div class="fecha"><?php echo $fechaFormateada; ?></div>
                         </div>
@@ -79,10 +80,10 @@ usort($datos['notificaciones'], function($a, $b) {
                     <div class="notificacion">
                         <div class="contenido-notificacion">
                             <div class="texto">
-                                <p>¡Tienes un nuevo paquete en recepción!</p>
-                                <p><strong>Descripción:</strong> <?php echo $notificacion['data']->Pa_descripcion; ?></p>
-                                <p><strong>Estado:</strong> <?php echo $notificacion['data']->Pa_estado; ?></p>
-                                <p><strong>Responsable:</strong> <?php echo $notificacion['data']->Pa_responsable; ?></p>
+                                <p class="translatable">¡Tienes un nuevo paquete en recepción!</p>
+                                <p><strong class="translatable">Descripción:</strong> <span><?php echo $notificacion['data']->Pa_descripcion; ?></span></p>
+                                <p><strong class="translatable">Estado:</strong> <span><?php echo $notificacion['data']->Pa_estado; ?></span></p>
+                                <p><strong class="translatable">Responsable:</strong> <span><?php echo $notificacion['data']->Pa_responsable; ?></span></p>
                             </div>
                             <div class="fecha"><?php echo $fechaFormateada; ?></div>
                         </div>
@@ -91,8 +92,8 @@ usort($datos['notificaciones'], function($a, $b) {
                     <div class="notificacion">
                         <div class="contenido-notificacion">
                             <div class="texto">
-                                <p>La solicitud de cambio de información ha sido rechazada.</p>
-                                <p><strong>Motivo del rechazo:</strong> <?php echo $notificacion['data']->razon_rechazo; ?></p>
+                                <p class="translatable">La solicitud de cambio de información ha sido rechazada.</p>
+                                <p><strong class="translatable">Motivo del rechazo:</strong> <span><?php echo $notificacion['data']->razon_rechazo; ?></span></p>
                             </div>
                             <div class="fecha"><?php echo $fechaFormateada; ?></div>
                         </div>
@@ -102,7 +103,7 @@ usort($datos['notificaciones'], function($a, $b) {
         <?php else: ?>
             <div class="notificacion">
                 <div class="texto">
-                    <p>No hay notificaciones disponibles.</p>
+                    <p class="translatable">No hay notificaciones disponibles.</p>
                 </div>
             </div>
         <?php endif; ?>
@@ -110,7 +111,7 @@ usort($datos['notificaciones'], function($a, $b) {
 
     <div class="acciones">
         <div class="control">
-            <span style="color: black !important;">Control de </span> <span style="color: red;">Acceso</span>
+            <span class="translatable" style="color: black !important;">Control de </span> <span class="translatable" style="color: red;">Acceso</span>
         </div>
     </div>
 </div>
