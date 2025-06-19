@@ -17,9 +17,9 @@ class PaquetModel
 
     public function deletePaquetById($id)
     {
-        $this->db->query("DELETE FROM paquete WHERE Pa_id = :Id");
+        $this->db->query("DELETE FROM paquete WHERE Pa_id = :Id and Pa_estado='Entregado'");
         $this->db->bind(':Id', $id);
-        return $this->db->registros();
+        return $this->db->registro();
     }
 
     public function getPackegesBy($id)
