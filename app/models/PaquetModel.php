@@ -35,15 +35,22 @@ class PaquetModel
         return $this->db->registros();
     }
 
-    public function actualizarPaquete($paqueteId, $nuevoEstado)
+    public function actualizarPaquete($paqueteId, $nuevoEstado, $paRecibe)
     {
-        $sql = "UPDATE paquete SET Pa_estado = :estado WHERE Pa_id = :id";
+        $sql = "UPDATE paquete 
+            SET Pa_estado = :estado,
+                Pa_recibe = :recibe,
+                Pa_fecha_recibido = NOW()
+            WHERE Pa_id = :id";
+
         $this->db->query($sql);
         $this->db->bind(':estado', $nuevoEstado);
+        $this->db->bind(':recibe', $paRecibe);
         $this->db->bind(':id', $paqueteId);
 
         return $this->db->execute();
     }
+
 
     public function getPaquetesPorUsuario($usuario)
     {
@@ -75,24 +82,24 @@ class PaquetModel
     }
 
     public function getAllPackages()
-{
-            $this->db->query("SELECT 
+    {
+        $this->db->query("SELECT 
                 paquete.*, 
                 persona.Pe_nombre
             FROM paquete
             INNER JOIN persona ON paquete.Pe_id = persona.Pe_id
             ORDER BY Pa_fecha ASC");
-            return $this->db->registros();
-}
-public function getPacketePeopleId($id)
-{
-    $this->db->query("SELECT 
+        return $this->db->registros();
+    }
+    public function getPacketePeopleId($id)
+    {
+        $this->db->query("SELECT 
 		paquete.*, 
 		persona.Pe_nombre 
             FROM paquete
             INNER JOIN persona ON paquete.Pe_id = persona.Pe_id
            where paquete.Pe_id = :id");
-    $this->db->bind(':id', $id);
-    return $this->db->registros();
-}
+        $this->db->bind(':id', $id);
+        return $this->db->registros();
+    }
 }
