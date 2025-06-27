@@ -52,6 +52,41 @@
 </div>
 <script src="<?php echo RUTA_URL;?>/js/ValidacionesAdmin.js"></script>
 <script>
+    document.getElementById("U_Gmail").addEventListener("blur", function() {
+        let correo = this.value.trim();
+        if (correo === "") return;
+        const input = this;
+
+        fetch("<?php echo RUTA_URL ?>/UserController/ValidarCorreo", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: "correo=" + encodeURIComponent(correo)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.existe)
+            if (data.existe === true) {
+                advertencia("El correo ya ha sido registrado.");
+                input.value = "";
+                input.focus();
+            }
+        })
+        .catch(error => {
+            console.error("Error al validar el correo:", error);
+        });
+    });
+    function advertencia(mensaje) {
+        Swal.fire({
+            title: "ADVERTENCIA!",
+            text: mensaje,
+            icon: "warning",
+        });
+    }
+</script>
+</script>
+<script>
   const clave = document.getElementById('U_password');
   const sugerencias = document.getElementById('sugerencias');
 
