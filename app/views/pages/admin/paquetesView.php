@@ -13,7 +13,7 @@
     </form>
 </div>
 <div class="buscarId">
-<form action="<?php echo RUTA_URL; ?>/PaqueteIdController/buscarPorId" method="post">
+<form action="<?php echo RUTA_URL; ?>/HomeController/buscarPorId" method="post">
 <div>
 <input type="text" name="id_persona" id="buscar_input" placeholder="Documento de la Persona" class="translatable">
 </div>
@@ -32,6 +32,7 @@
                 <tr>
                     <th class="translatable">DOCUMENTO</th>
                     <th class="translatable">DESTINATARIO</th>
+                    <th class="translatable">ENTREGADO</th>
                     <th class="translatable">ESTADO</th>
                     <th class="translatable">FECHA</th>
                     <th class="translatable">DESCRIPCION</th>
@@ -46,7 +47,8 @@
                         if (is_object($historial)) {
                             echo "<tr>";
                             echo "<td>" . htmlspecialchars($historial->Pe_id ?? '') . "</td>";
-                            echo "<td>" . htmlspecialchars($historial->Pe_nombre ?? '') . " " . htmlspecialchars($historial->Pe_apellidos ?? '') . "</td>";
+                            echo "<td>" . htmlspecialchars($historial->nombre_remitente ?? '') . " " . htmlspecialchars($historial->apellido_remitente?? '') . "</td>";
+                            echo "<td>" . htmlspecialchars($historial->nombre_receptor ?? '') . " " . htmlspecialchars($historial->apellido_receptor ?? '') . "</td>";
                             echo "<td>" . htmlspecialchars($historial->Pa_estado ?? '') . "</td>";
                             echo "<td>" . htmlspecialchars($historial->Pa_fecha ?? '') . "</td>";
                             echo "<td>" . htmlspecialchars($historial->Pa_descripcion ?? '') . "</td>";

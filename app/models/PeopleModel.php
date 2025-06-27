@@ -357,4 +357,11 @@ WHERE p1.Pe_id = '$result' AND p2.Pe_id <> '$result'",);
             return (array) $registro;
         }, $this->db->registros());
     }
+    public function ValidadCorreo($correo){
+        $this->db->query("SELECT * from usuario where Us_correo = :correo");
+        $this->db->bind(":correo",$correo);
+        $this->db->registro();
+     
+        return $this->db->rowCount() > 0;
+    }
 }
