@@ -246,6 +246,7 @@ b {
   position: relative;
   left: 85%;
   width: 50px;
+  display: flex;
 }
 .Siquiente2 {
   position: relative;
