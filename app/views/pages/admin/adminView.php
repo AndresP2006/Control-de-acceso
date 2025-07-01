@@ -25,7 +25,7 @@
     </div>
 
     <div class="control-group">
-        <a href="<?php echo RUTA_URL?>/manual/AA3_MANUAL DE USUARIO.pdf" class="manual" target="_blank">
+        <a href="<?php echo RUTA_URL?>/manual/PANTALLA ADMINISTRATIVA.pdf" class="manual" target="_blank">
             <button type="button" style="font-size: 30px; background-color: transparent; border: none; cursor: pointer;" title="Manual de Usuario">
             ⬇️
             </button>
@@ -84,8 +84,7 @@
                                         data-torre='" . htmlspecialchars($registro['To_id'] ?? '') . "'
                                         data-departamento='" . htmlspecialchars($registro['Ap_numero'] ?? '') . "'
                                         data-departamento-id='" . htmlspecialchars($registro['Ap_id'] ?? '') . "'
-                                        data-rol='" . htmlspecialchars($registro['Ro_tipo'] ?? '') . "'
-                                    >✏️</button>
+                                        data-rol='" . htmlspecialchars($registro['Ro_tipo'] ?? '') . "'>✏️</button>
 
                                     <input type='hidden' name='delete_id' value='" . htmlspecialchars($registro['Cedula'] ?? '') . "'>
 
