@@ -41,7 +41,6 @@ html {
   flex-shrink: 0;
   background-color: #1f2a36;
   color: white;
-  padding: 40px 40px;
   font-size: 16px;
   box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.2);
 }
@@ -536,7 +535,6 @@ input:focus {
   margin-top: 267 px;
   background-color: #1f2a36;
   color: white;
-  padding: 40px 40px;
   bottom: 0;
   position: relative;
   font-size: 16px;
