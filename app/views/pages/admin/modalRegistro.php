@@ -109,7 +109,7 @@
     });
     document.getElementById("u_id").addEventListener("input", function() {
         // Reemplaza todo lo que no sea número por vacío
-        this.value = this.value.replace(/\D/g, "");
+        this.value = this.value.replace(/\D/g, "").slice(0, 10);
     });
     document.getElementById("U_Telefono").addEventListener("input", function() {
         // Solo números y máximo 10 dígitos

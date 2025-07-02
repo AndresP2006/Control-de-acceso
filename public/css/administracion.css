@@ -3,16 +3,17 @@
   font-family: "Inter", sans-serif;
 }
 
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 body,
@@ -32,12 +33,12 @@ html {
 
 /* Contenido se expande pero deja espacio para footer */
 .main-content {
-    flex: 1 0 auto;
+  flex: 1 0 auto;
 }
 
 /* Footer fijo al fondo cuando hay poco contenido */
 .footer-global {
-    flex-shrink: 0;
+  flex-shrink: 0;
   background-color: #1f2a36;
   color: white;
   padding: 40px 40px;
@@ -159,7 +160,6 @@ html {
   background: transparent;
   border-radius: 8px;
   /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
-  overflow-x: auto;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -168,12 +168,9 @@ html {
 
 .table-wrapper {
   width: 85%;
-  max-height: 400px;
-  /* Altura máxima para la tabla */
-  overflow-y: auto;
-  /* Desplazamiento solo vertical para la tabla */
+  max-height: 292px;
+  overflow-x: auto;
   border: 1px solid #ccc;
-  /* Opcional, para que sea visible el borde del contenedor */
 }
 
 .table-titulo {
