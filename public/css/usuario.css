@@ -1,6 +1,6 @@
 * {
   margin: 0;
-  font-family: "Inter", sans-serif !important;
+  font-family: 'Inter', sans-serif !important;
 }
 
 body {
@@ -154,7 +154,7 @@ hr {
   gap: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.25s ease-in-out;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 #edit-btn {
@@ -199,7 +199,7 @@ hr {
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 15px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   resize: vertical;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
   background-color: #fff;
@@ -272,9 +272,9 @@ hr {
 .footer-global {
   background-color: #1f2a36;
   color: white;
-  padding: 40px 40px;
   position: relative;
   top: 46px;
+  padding: 15px 10px;
   font-size: 16px;
   box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.2);
   display: flex;
@@ -462,7 +462,7 @@ hr {
 }
 
 /* Registro de visita desde usuario */
-.container_registros{
+.container_registros {
   display: flex;
   width: 100%;
   justify-content: space-evenly;
@@ -481,15 +481,15 @@ hr {
 
 @keyframes registro-usuario-fadeIn {
   from {
-  transform: translateY(-30px);
-  opacity: 0;
+    transform: translateY(-30px);
+    opacity: 0;
   }
   to {
-  transform: translateY(0);
-  opacity: 1;
+    transform: translateY(0);
+    opacity: 1;
   }
 }
-.registro-usuario-enlaces{
+.registro-usuario-enlaces {
   text-decoration: none;
   font-size: 30px;
   align-items: end;
@@ -552,55 +552,55 @@ hr {
 .registro-usuario-enviar:hover {
   background: #217dbb;
 }
-.visitas_Costantes{
-    background: #fff;
-    border-radius: 10px;
-    padding: 16px 14px;
-    width: 705px;
-    margin: 40px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    position: relative;
-    animation: registro-usuario-fadeIn 0.3s;
+.visitas_Costantes {
+  background: #fff;
+  border-radius: 10px;
+  padding: 16px 14px;
+  width: 705px;
+  margin: 40px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  position: relative;
+  animation: registro-usuario-fadeIn 0.3s;
 }
 .visitas-constantes-tabla {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: Arial, sans-serif;
-    margin-bottom: 20px;
-    max-height: 600px;
-    overflow-y: hidden;
-  }
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  margin-bottom: 20px;
+  max-height: 600px;
+  overflow-y: hidden;
+}
 
-  .visitas-constantes-th {
-    background-color: #041d35;
-    color: white;
-    padding: 12px 15px;
-    text-align: center;
-    border: 1px solid #ddd;
-    font-weight: bold;
-  }
+.visitas-constantes-th {
+  background-color: #041d35;
+  color: white;
+  padding: 12px 15px;
+  text-align: center;
+  border: 1px solid #ddd;
+  font-weight: bold;
+}
 
-  .visitas-constantes-td {
-    padding: 10px 15px;
-    border: 1px solid #ddd;
-    text-align: center;
-  }
+.visitas-constantes-td {
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
 
-  .visitas-constantes-tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
+.visitas-constantes-tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
 
-  .visitas-constantes-tbody tr:hover {
-    background-color: #ddd;
-    cursor: pointer;
-  }
+.visitas-constantes-tbody tr:hover {
+  background-color: #ddd;
+  cursor: pointer;
+}
 
-  .visitas-constantes-td:empty::before {
-    content: '-';
-    color: #999;
-  }
-  .Permiso{
-    border: none;
-    font-size: 30px;
-    background-color: transparent;
-  }
+.visitas-constantes-td:empty::before {
+  content: '-';
+  color: #999;
+}
+.Permiso {
+  border: none;
+  font-size: 30px;
+  background-color: transparent;
+}
