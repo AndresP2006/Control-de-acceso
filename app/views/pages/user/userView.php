@@ -99,11 +99,6 @@ if (isset($datos['datos_resident']) && is_array($datos['datos_resident']) && cou
             <h1 class="translatable">Informacion de los Residentes</h1>
             <form action="<?php echo RUTA_URL; ?>/HomeController/notificaciones" method="POST" style="display:inline;">
                 <div class="logos">
-                    <a href="<?php echo RUTA_URL?>/manual/PANTALLA DE RESIDENTE.pdf" class="manual" target="_blank">
-                        <button type="button" style="font-size: 30px; background-color: transparent; border: none; cursor: pointer;position: relative;top:-13px" title="Manual de Residente">
-                            ⬇️
-                        </button>
-                    </a>
                     <button type="submit" class="enlaces" style="background:none; border:none; cursor:pointer; position: relative;">
                         <span class="icons2">🔔</span>
                         <?php if (!empty($datos['paquets']) || !empty($datos['visitante']) || !empty($datos['rechazo'])): ?>
