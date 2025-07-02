@@ -175,7 +175,7 @@ class AdminModel
             SET 
                 Pe_nombre = :Nombre, 
                 Pe_apellidos = :Apellidos, 
-                Pe_telefono = :Telefon
+                Pe_telefono = :Telefono
             WHERE Us_id = :Cedula
         ");
             $this->db->bind(':Cedula', $datos['Cedula']);
