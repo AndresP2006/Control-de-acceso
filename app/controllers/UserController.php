@@ -773,4 +773,14 @@ class UserController extends Controlador
 
         $this->vista('pages/admin/adminView', $datos);
     }
+    public function ValidarCorreo()
+    {
+         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $correo = isset($_POST['correo']) ? trim($_POST['correo']) : '';
+
+        $existe = $this->peopleModel->ValidadCorreo($correo);
+        echo json_encode(['existe' => $existe]);
+        exit;
+    }
+    }
 }
