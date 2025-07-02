@@ -45,7 +45,7 @@ class PorterController extends Controlador
             ];
 
             // Llamar al modelo para agregar el visitante
-            
+
             $result = $this->porterModel->addGuest($datos);
 
             // Verificar el resultado y pasar el mensaje adecuado
@@ -59,11 +59,12 @@ class PorterController extends Controlador
 
             // Llamamos a la vista con los datos (mensaje de error o éxito)
             $this->vista('pages/porter/porterView', $datos);
-        }else{
+        } else {
             $datos = $this->index('Error al momento de ingresar un visitante', null);
-            $this->vista('pages/porter/porterView', $datos);
+            $this->vista('pages/user/porterView', $datos);
         }
     }
+
 
 
 
@@ -72,6 +73,7 @@ class PorterController extends Controlador
         $result = $this->peopleModel->getVisitantes($_POST['salida_visita']);
         if ($result) {
             $this->peopleModel->getGuestById($_POST['salida_visita']);
+            $this->peopleModel->getGuestByIdVisita($_POST['salida_visita']);
             $datos = $this->index(null, 'Salida registrada exitosamente');
         } else {
             $datos = $this->index("No se encontró el visitante con el id: " . $_POST['salida_visita'], null);
@@ -112,7 +114,7 @@ class PorterController extends Controlador
     {
         return $this->peopleModel->getPackeges();
     }
-    
+
     public function showRegistro()
     {
         return $this->peopleModel->showRegistro();
@@ -137,15 +139,172 @@ class PorterController extends Controlador
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $paqueteId = $_POST['paquete_id'];
             $nuevoEstado = $_POST['nuevo_estado'];
+            $paRecibe = $_POST['pa_recibe']; // 👈 ID del recibidor
 
-            $resultado = $this->paquetModel->actualizarPaquete($paqueteId, $nuevoEstado);
+            $resultado = $this->paquetModel->actualizarPaquete($paqueteId, $nuevoEstado, $paRecibe);
 
             echo json_encode(['success' => $resultado]);
         }
     }
 
+
     public function getTorres()
     {
         $this->torreModel->getTorreByTable();
+    }
+
+    public function buscarUsuario()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['u_id'])) {
+            $u_id = $_POST['u_id'];
+
+            // Llama a la función del modelo para obtener el usuario por ID
+            $usuario = $this->peopleModel->obtenerUsuarioPorId($u_id);
+
+            if ($usuario) {
+                // Codifica los datos del usuario como JSON y los envía
+                $response = [
+                    'existe' => true,
+                    'nombre' => $usuario->Vi_nombres, // Ajusta los nombres de las propiedades según tu modelo
+                    'apellido' => $usuario->Vi_apellidos,
+                    'telefono' => $usuario->Vi_telefono
+                ];
+                header('Content-Type: application/json');
+                echo json_encode($response);
+            } else {
+                // Si no se encuentra el usuario, envía una respuesta JSON indicando que no existe
+                $response = ['existe' => false];
+                header('Content-Type: application/json');
+                echo json_encode($response);
+            }
+        } else {
+            // Si la petición no es POST o no se envió el 'u_id', puedes enviar un error
+            http_response_code(400); // Bad Request
+            echo json_encode(['error' => 'Petición inválida']);
+        }
+    }
+
+    public function userPeopleVisit()
+    {
+
+        // Siempre obtener estos datos
+        $torre = isset($_POST['torre']) ? trim($_POST['torre']) : '';
+        $apartamento = isset($_POST['apartamento']) ? trim($_POST['apartamento']) : '';
+        $idResidente = isset($_POST['idResidente']) ? trim($_POST['idResidente']) : '';
+
+        if (
+            isset($_POST['Visitantes']) &&
+            !empty(trim($_POST['u_id'])) &&
+            !empty(trim($_POST['U_Nombre'])) &&
+            !empty(trim($_POST['U_Apellido'])) &&
+            !empty(trim($_POST['U_Telefono'])) ||
+            !empty(trim($_POST['U_Motivo'])) &&
+            !empty($torre) &&
+            !empty($apartamento) &&
+            !empty($idResidente)
+        ) {
+            $visitas = [
+                "cedula"    => trim($_POST['u_id']),
+                "nombre"    => trim($_POST['U_Nombre']),
+                "apellido"  => trim($_POST['U_Apellido']),
+                "telefono"  => trim($_POST['U_Telefono']),
+            ];
+            $registro = [
+                "motivo"        => trim($_POST['U_Motivo']),
+                "departamento"  => $apartamento,
+                "idResidente"   => $idResidente,
+                "cedula"        => trim($_POST['u_id']),
+            ];
+
+            // Verificar si la visita ya está dentro
+            $verificarEntrada = $this->porterModel->VerificarEnt($visitas);
+
+            if ($verificarEntrada) {
+                $messageError = "La visita " . $visitas['nombre'] . " " . $visitas['apellido'] . " ya se encuentra dentro del conjunto";
+                $datos = $this->index($messageError, null);
+            } else {
+                // Registrar visitante y registro
+                $verificarRegistro = $this->porterModel->VirificamosRegistro($visitas);
+                if ($verificarRegistro) {
+                    $IngresarRegistro = $this->porterModel->IngresarRegistro($registro);
+                    $this->porterModel->actualizarEstado($visitas);
+                    $datos = $this->index(null, "Visita ingresada en espera de permiso");
+                } else {
+                    $IngresarVisita = $this->porterModel->IngresarVisit($visitas);
+                    // $this->porterModel->actualizarEstado($visitas);
+                    $IngresarRegistro = $this->porterModel->IngresarRegistro($registro);
+
+                    if ($IngresarVisita && $IngresarRegistro) {
+                        $datos = $this->index(null, "Visita ingresada en espera de permiso");
+                    } else {
+                        $datos = $this->index(null, "Error al ingresar la visita",);
+                    }
+                }
+            }
+        } else {
+            $datos = $this->index(null, 'Error al momento de ingresar un visitante');
+        }
+        $conteoRegistros = $this->peopleModel->VisitasConstanes($idResidente);
+
+        // Asegura que siempre se incluyan estos valores en el arreglo de datos
+        $datos['isUsuario'] = $idResidente;
+        $datos['torre'] = $torre;
+        $datos['apartamento'] = $apartamento;
+        $datos['registros'] = $conteoRegistros;
+
+        $this->vista('pages/user/registroView', $datos);
+    }
+    public function FiltroCedula()
+    {
+        // Si no se envía ninguna cédula, mostrar todos los visitantes
+        if (!isset($_POST['cedula']) || empty(trim($_POST['cedula']))) {
+            $resultado = $this->peopleModel->Filtro();
+        } else {
+            $datos = [
+                'cedula' => trim($_POST['cedula']),
+            ];
+            $resultado = $this->peopleModel->FiltroCedula($datos);
+        }
+
+        $datos = [
+            'visitors' => $resultado,
+        ];
+
+        $this->vista('pages/porter/registroPView', $datos);
+    }
+
+    public function AllowVisit()
+    {
+        if (!isset($_POST['Id_visita']) || empty(trim($_POST['Id_visita']))) {
+        } else {
+            $datos = [
+                'cedula' => trim($_POST['Id_visita'])
+            ];
+            // Cambia el estado de la visita usando el modelo
+            $permitido = $this->peopleModel->PermisoVisita($datos);
+            $resultado = $this->peopleModel->Filtro();
+        }
+
+        $datos = [
+            'visitors' => $resultado,
+        ];
+        $this->vista('pages/porter/registroPView', $datos);
+    }
+    public function BuscarVisitante()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['u_id'])) {
+            $cedula = trim($_POST['u_id']);
+            $visitante = $this->porterModel->buscarVisitantePorCedula($cedula);
+            if ($visitante) {
+                echo json_encode([
+                    'nombre' => $visitante->Vi_nombres,
+                    'apellido' => $visitante->Vi_apellidos,
+                    'telefono' => $visitante->Vi_telefono
+                ]);
+            } else {
+                echo json_encode([]);
+            }
+            exit;
+        }
     }
 }

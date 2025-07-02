@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8" />
@@ -9,19 +9,38 @@
     <link rel="stylesheet" href="<?php echo RUTA_URL ?>/css/porter.css">
     <title>Guardia</title>
 </head>
-<div class="content">
-    <div class="encabezado">
-        <div class="titulo">
-            <h1 class="titulo_1">Control De Registro <b>Entrada y Salida</b></h1>
-        </div>
-        <div id="popup-cambiar" class="ventana-emergente">
-            <div class="ventana-emergente__caja ventana-emergente__caja--opciones">
+
+<body>
+    <div class="content">
+        <div class="encabezado">
+            <div class="titulo">
+                <h1 class="titulo_1">
+                    <span class="translatable">Control De Registro</span> <b class="translatable">Entrada y Salida</b>
+                </h1>
+            </div>
+            <div id="popup-cambiar" class="ventana-emergente">
+                <div class="ventana-emergente__caja ventana-emergente__caja--opciones">
+                </div>
+            </div>
+            <h3 class="var_sesion translatable">Bienvenido <?= explode(" ", trim($_SESSION['datos']->Us_usuario))[0]; ?></h3>
+            <div class="cerrar-sescion">
+                <a href="<?php echo RUTA_URL; ?>/HomeController/index">
+                    <button class="boton translatable">Cerrar Sesión</button>
+                </a>
+            </div>
+            <div style="position: absolute; top: 10px; right: 20px; z-index: 9999;">
+                <div class="language-wrapper">
+                    <span class="language-icon">🌐</span>
+                    <select id="language-selector" class="language-select">
+                        <option value="es">Español</option>
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
+                        <option value="pt">Português</option>
+                        <option value="ja">Japones</option>
+                        <option value="zh">Chino</option>
+                        <option value="ru">Ruso</option>
+                    </select>
+                </div>
             </div>
         </div>
-        <h3 class="var_sesion">Bienvenido <?= $_SESSION['datos']->Us_usuario ?></h3>
-        <div class="cerrar-sescion">
-            <a href="<?php echo RUTA_URL; ?>/HomeController/index"><button class="boton">Cerrar Sesión</button></a>
-        </div>
-    </div>
-
-    <body>
+        <script src="<?php echo RUTA_URL; ?>/js/translate.js"></script>

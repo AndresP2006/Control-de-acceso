@@ -1,25 +1,56 @@
 <?php require_once RUTA_APP . "/views/inc/header-notificacion.php"; ?>
+<?php date_default_timezone_set("America/Bogota"); ?>
 <div class="contenedor">
-    <div class="titulo">NOTIFICACIONES
+    <div class="titulo translatable">NOTIFICACIONES
         <a href="<?php echo RUTA_URL; ?>/HomeController/admin" class="enlaces">
-            <span class="icons exit">↩️</span>
+            <span class="icons exit" style="top:20px; font-size: 40px;">↩️</span>
         </a>
     </div>
 
     <div class="overflo">
         <?php if (!empty($datos['notificaciones'])): ?>
-            <?php foreach ($datos['notificaciones'] as $notificacion): ?>
+            <?php foreach ($datos['notificaciones'] as $index => $notificacion): ?>
                 <?php if ($notificacion['tipo'] === 'solicitud_actualizacion'): ?>
-                    <div class="notificacion">
-                        <div class="texto">
-                            <p>El residente <strong><?php echo $notificacion['data']->nombre; ?></strong> ha solicitado actualizar su información.</p>
-                            <p><strong>Estado:</strong> <?php echo ucfirst($notificacion['data']->estado); ?></p>
-                            <!-- Botón que abrirá el modal cargando el contenido desde "modelSolicitud.php" -->
-                            <form action="<?php echo RUTA_URL; ?>/HomeController/solicitud_user" method="post">
-                                <input type="hidden" name="id" value="<?php echo $notificacion['data']->id_residente; ?>">
-                                <input type="submit"  name="detalles"value="ver detalles">
-                            </form>
+                    <?php
+                    $fechaOriginal = $notificacion['data']->fecha_solicitud;
+                    $timestamp = strtotime($fechaOriginal);
 
+                    $fechaHoy = date("Y-m-d");
+                    $fechaNotificacion = date("Y-m-d", $timestamp);
+
+                    if ($fechaNotificacion === $fechaHoy) {
+                        $fechaFormateada = date("g:i a", $timestamp);
+                    } else {
+                        $meses = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+                        $dia = date("j", $timestamp);
+                        $mes = $meses[date("n", $timestamp) - 1];
+                        $fechaFormateada = $dia . " " . $mes;
+                    }
+
+                    $formId = "form_" . $index;
+                    ?>
+                    <!-- Formulario oculto para enviar datos por POST -->
+                    <form id="<?php echo $formId; ?>" action="<?php echo RUTA_URL; ?>/HomeController/solicitud_user" method="post" style="display: none;">
+                        <input type="hidden" name="id_residente" value="<?php echo $notificacion['data']->id_residente; ?>">
+                        <input type="hidden" name="id" value="<?php echo $notificacion['data']->id; ?>">
+                        <input type="hidden" name="detalles" value="1">
+                    </form>
+
+                    <!-- Div notificación clickeable -->
+                    <div class="notificacion"
+                        onclick="document.getElementById('<?php echo $formId; ?>').submit();"
+                        style="cursor: pointer;">
+                        <div class="contenido-notificacion">
+                            <div class="texto">
+                                <p class="translatable">
+                                    Se ha recibido una solicitud de actualización por parte del residente <strong><?php echo
+                                            $notificacion['data']->nombre; ?></strong>.<br>
+                                    Estado: <strong class="translatable"><?php echo ucfirst($notificacion['data']->estado); ?></strong>
+                                </p>
+                            </div>
+                            <div class="fecha">
+                                <?php echo $fechaFormateada; ?>
+                            </div>
                         </div>
                     </div>
                 <?php endif; ?>
@@ -27,15 +58,10 @@
         <?php else: ?>
             <div class="notificacion">
                 <div class="texto">
-                    <p>No hay notificaciones disponibles.</p>
+                    <p class="translatable">No hay notificaciones disponibles.</p>
                 </div>
             </div>
         <?php endif; ?>
     </div>
-
-    <div class="acciones">
-        <div class="control">Control de <span style="color: black;">Acceso</span></div>
-    </div>
 </div>
-
-<script>
+<?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>

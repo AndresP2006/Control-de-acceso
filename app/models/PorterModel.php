@@ -64,6 +64,8 @@ class PorterModel
         return $this->db->execute();
     }
 
+    
+
     public function enterPackage($paquete)
     {
         $this->db->query('INSERT INTO paquete (Pa_estado, Pa_descripcion, Pa_fecha, Pa_responsable, Pe_id)VALUES
@@ -78,5 +80,58 @@ class PorterModel
 
     public function leavePackage($paquete) {}
 
-    
+    public function verificarVisitante($cedula)
+    {
+        $this->db->query("SELECT * FROM registro r, visitantes v WHERE v.Vi_id = :cedula AND (r.Use_visit = 'solicitar' OR r.Re_hora_salida = '00:00:00')");
+        $this->db->bind(':cedula', $cedula);
+        return $this->db->registro(); // o fetch(), dependiendo de tu clase DB
+    }
+
+    public function IngresarVisit($datos){
+        $this->db->query("INSERT INTO visitantes (Vi_id, Vi_nombres, Vi_apellidos, Vi_telefono,estado,Vi_permiso) VALUES
+                        (:cedula, :nombre, :apellido, :telefono, 0,'solicitado')");
+
+        $this->db->bind(":cedula", $datos['cedula']);
+        $this->db->bind(":nombre", $datos['nombre']);
+        $this->db->bind(":apellido", $datos['apellido']);
+        $this->db->bind(":telefono", $datos['telefono']);
+
+        return $this->db->execute();
+    }
+    public function actualizarEstado($datos){
+        $this->db->query("UPDATE visitantes SET Vi_permiso ='solicitado' WHERE Vi_id =:cedula");
+        $this->db->bind(":cedula",$datos['cedula']);
+        return $this->db->execute();
+    }
+    public function IngresarRegistro($datos){
+        $this->db->query("INSERT INTO registro (Re_fecha_entrada, Re_hora_entrada, Re_hora_salida, Re_motivo, Use_visit, Vi_departamento, Pe_id, Vi_id)
+                  VALUES (CURRENT_DATE, '00:00:00', '00:00:00', :motivo, 'solicitar', :departamento, :idResidente, :cedula)");
+        // var_dump($datos);
+        $this->db->bind(":motivo", $datos['motivo']);
+        $this->db->bind(":departamento", $datos['departamento']);
+        $this->db->bind(":idResidente", $datos['idResidente']);
+        $this->db->bind(":cedula", $datos['cedula']);
+
+        return $this->db->execute();
+    }
+
+    public function VerificarEnt($datos){
+        $this->db->query("SELECT * FROM registro WHERE Vi_id = :cedula AND (Use_visit = 'solicitar' OR Re_hora_salida = '00:00:00')");
+        $this->db->bind(":cedula", $datos['cedula']);
+        return $this->db->registro(); // o fetch(), según tu clase DB
+    }
+
+    public function VirificamosRegistro($datos){
+        $this->db->query("SELECT * from visitantes where Vi_id =:cedula;");
+        $this->db->bind(":cedula", $datos['cedula']);
+        return $this->db->registro();
+    }
+    public function buscarVisitantePorCedula($cedula) {
+    $this->db->query("SELECT * FROM visitantes WHERE Vi_id = :cedula");
+    $this->db->bind(':cedula', $cedula);
+    return $this->db->registro();   
 }
+}
+
+
+
