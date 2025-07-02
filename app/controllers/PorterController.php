@@ -45,8 +45,8 @@ class PorterController extends Controlador
             ];
 
             // Llamar al modelo para agregar el visitante
-            
-             $result = $this->porterModel->addGuest ($datos);
+
+            $result = $this->porterModel->addGuest($datos);
 
             // Verificar el resultado y pasar el mensaje adecuado
             if ($result === false) {
@@ -59,12 +59,12 @@ class PorterController extends Controlador
 
             // Llamamos a la vista con los datos (mensaje de error o éxito)
             $this->vista('pages/porter/porterView', $datos);
-        }else{
+        } else {
             $datos = $this->index('Error al momento de ingresar un visitante', null);
             $this->vista('pages/user/porterView', $datos);
         }
     }
-    
+
 
 
 
@@ -114,7 +114,7 @@ class PorterController extends Controlador
     {
         return $this->peopleModel->getPackeges();
     }
-    
+
     public function showRegistro()
     {
         return $this->peopleModel->showRegistro();
@@ -139,19 +139,22 @@ class PorterController extends Controlador
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $paqueteId = $_POST['paquete_id'];
             $nuevoEstado = $_POST['nuevo_estado'];
+            $paRecibe = $_POST['pa_recibe']; // 👈 ID del recibidor
 
-            $resultado = $this->paquetModel->actualizarPaquete($paqueteId, $nuevoEstado);
+            $resultado = $this->paquetModel->actualizarPaquete($paqueteId, $nuevoEstado, $paRecibe);
 
             echo json_encode(['success' => $resultado]);
         }
     }
+
 
     public function getTorres()
     {
         $this->torreModel->getTorreByTable();
     }
 
-    public function buscarUsuario(){
+    public function buscarUsuario()
+    {
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['u_id'])) {
             $u_id = $_POST['u_id'];
 
@@ -180,7 +183,7 @@ class PorterController extends Controlador
             echo json_encode(['error' => 'Petición inválida']);
         }
     }
-    
+
     public function userPeopleVisit()
     {
 
@@ -218,40 +221,41 @@ class PorterController extends Controlador
 
             if ($verificarEntrada) {
                 $messageError = "La visita " . $visitas['nombre'] . " " . $visitas['apellido'] . " ya se encuentra dentro del conjunto";
-                $datos = $this->index($messageError,null);
+                $datos = $this->index($messageError, null);
             } else {
                 // Registrar visitante y registro
                 $verificarRegistro = $this->porterModel->VirificamosRegistro($visitas);
-                if($verificarRegistro){
+                if ($verificarRegistro) {
                     $IngresarRegistro = $this->porterModel->IngresarRegistro($registro);
                     $this->porterModel->actualizarEstado($visitas);
-                    $datos = $this->index(null,"Visita ingresada en espera de permiso" );
-                }else{
+                    $datos = $this->index(null, "Visita ingresada en espera de permiso");
+                } else {
                     $IngresarVisita = $this->porterModel->IngresarVisit($visitas);
                     // $this->porterModel->actualizarEstado($visitas);
                     $IngresarRegistro = $this->porterModel->IngresarRegistro($registro);
 
-                if ($IngresarVisita && $IngresarRegistro) {
-                    $datos = $this->index(null, "Visita ingresada en espera de permiso");
-                } else {
-                    $datos = $this->index(null,"Error al ingresar la visita",);
-                }
+                    if ($IngresarVisita && $IngresarRegistro) {
+                        $datos = $this->index(null, "Visita ingresada en espera de permiso");
+                    } else {
+                        $datos = $this->index(null, "Error al ingresar la visita",);
+                    }
                 }
             }
         } else {
-            $datos = $this->index(null,'Error al momento de ingresar un visitante');
+            $datos = $this->index(null, 'Error al momento de ingresar un visitante');
         }
-        $conteoRegistros = $this->peopleModel->VisitasConstanes($idResidente); 
+        $conteoRegistros = $this->peopleModel->VisitasConstanes($idResidente);
 
         // Asegura que siempre se incluyan estos valores en el arreglo de datos
         $datos['isUsuario'] = $idResidente;
         $datos['torre'] = $torre;
         $datos['apartamento'] = $apartamento;
-        $datos['registros']=$conteoRegistros;
+        $datos['registros'] = $conteoRegistros;
 
         $this->vista('pages/user/registroView', $datos);
     }
-    public function FiltroCedula() {
+    public function FiltroCedula()
+    {
         // Si no se envía ninguna cédula, mostrar todos los visitantes
         if (!isset($_POST['cedula']) || empty(trim($_POST['cedula']))) {
             $resultado = $this->peopleModel->Filtro();
@@ -269,36 +273,38 @@ class PorterController extends Controlador
         $this->vista('pages/porter/registroPView', $datos);
     }
 
-    public function AllowVisit(){
-        if(!isset($_POST['Id_visita']) || empty(trim($_POST['Id_visita']))){
-        }else{
-            $datos=[
-                'cedula'=>trim($_POST['Id_visita'])
+    public function AllowVisit()
+    {
+        if (!isset($_POST['Id_visita']) || empty(trim($_POST['Id_visita']))) {
+        } else {
+            $datos = [
+                'cedula' => trim($_POST['Id_visita'])
             ];
             // Cambia el estado de la visita usando el modelo
             $permitido = $this->peopleModel->PermisoVisita($datos);
             $resultado = $this->peopleModel->Filtro();
         }
 
-        $datos=[
-            'visitors'=>$resultado,
+        $datos = [
+            'visitors' => $resultado,
         ];
         $this->vista('pages/porter/registroPView', $datos);
     }
-    public function BuscarVisitante(){
-       if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['u_id'])) {
-        $cedula = trim($_POST['u_id']);
-        $visitante = $this->porterModel->buscarVisitantePorCedula($cedula); 
-        if ($visitante) {
-            echo json_encode([
-                'nombre' => $visitante->Vi_nombres,
-                'apellido' => $visitante->Vi_apellidos,
-                'telefono' => $visitante->Vi_telefono
-            ]);
-        } else {
-            echo json_encode([]);
+    public function BuscarVisitante()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['u_id'])) {
+            $cedula = trim($_POST['u_id']);
+            $visitante = $this->porterModel->buscarVisitantePorCedula($cedula);
+            if ($visitante) {
+                echo json_encode([
+                    'nombre' => $visitante->Vi_nombres,
+                    'apellido' => $visitante->Vi_apellidos,
+                    'telefono' => $visitante->Vi_telefono
+                ]);
+            } else {
+                echo json_encode([]);
+            }
+            exit;
         }
-        exit;
     }
-}
 }

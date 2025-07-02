@@ -50,17 +50,51 @@
         </form>
     </div>
 </div>
-<script src="<?php echo RUTA_URL;?>/js/ValidacionesAdmin.js"></script>
+<script src="<?php echo RUTA_URL; ?>/js/ValidacionesAdmin.js"></script>
 <script>
-  const clave = document.getElementById('U_password');
-  const sugerencias = document.getElementById('sugerencias');
+    document.getElementById("U_Gmail").addEventListener("blur", function() {
+        let correo = this.value.trim();
+        if (correo === "") return;
+        const input = this;
 
-  clave.addEventListener('input', () => {
-    const valor = clave.value;
-    let mensajes = [];
+        fetch("<?php echo RUTA_URL ?>/UserController/ValidarCorreo", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: "correo=" + encodeURIComponent(correo)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.existe)
+                if (data.existe === true) {
+                    advertencia("El correo ya ha sido registrado.");
+                    input.value = "";
+                    input.focus();
+                }
+            })
+            .catch(error => {
+                console.error("Error al validar el correo:", error);
+            });
+    });
 
-    if (valor.trim() === "") {
-           mensajes.push(""); // No muestra nada si está vacío
+    function advertencia(mensaje) {
+        Swal.fire({
+            title: "ADVERTENCIA!",
+            text: mensaje,
+            icon: "warning",
+        });
+    }
+
+    const clave = document.getElementById('U_password');
+    const sugerencias = document.getElementById('sugerencias');
+
+    clave.addEventListener('input', () => {
+        const valor = clave.value;
+        let mensajes = [];
+
+        if (valor.trim() === "") {
+            mensajes.push(""); // No muestra nada si está vacío
         } else if (valor.length > 15) {
             mensajes.push("No debe tener más de 10 caracteres.");
         } else if (!/[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(valor)) {
@@ -71,6 +105,77 @@
             mensajes.push("Agrega al menos una letra mayúscula.");
         }
 
-    sugerencias.innerHTML = mensajes.join("<br>");
-  });
+        sugerencias.innerHTML = mensajes.join("<br>");
+    });
+    document.getElementById("u_id").addEventListener("input", function() {
+        // Reemplaza todo lo que no sea número por vacío
+        this.value = this.value.replace(/\D/g, "").slice(0, 10);
+    });
+    document.getElementById("U_Telefono").addEventListener("input", function() {
+        // Solo números y máximo 10 dígitos
+        this.value = this.value.replace(/\D/g, "").slice(0, 10);
+    });
+
+
+
+    document.getElementById("myForm").addEventListener("submit", function(e) {
+        let errores = [];
+
+        const documento = document.getElementById("u_id");
+        const nombre = document.getElementById("U_Nombre");
+        const apellido = document.getElementById("U_Apellido");
+        const telefono = document.getElementById("U_Telefono");
+        const correo = document.getElementById("U_Gmail");
+        const contrasena = document.getElementById("U_password");
+        const rol = document.getElementById("U_id");
+
+        const torre = document.getElementById("select_torre2").value.trim();
+        const apartamento = document.getElementById("U_Departamento").value.trim();
+
+        // Validaciones del documento
+        if (!/^\d{7,10}$/.test(documento.value.trim())) {
+            errores.push("Documento: solo números entre 7 y 10 dígitos.");
+        }
+
+        // Validaciones del nombre
+        if (!/^[a-zA-ZÁÉÍÓÚáéíóúÑñ\s]{2,}$/.test(nombre.value.trim())) {
+            errores.push("Nombre: solo letras, mínimo 2 caracteres.");
+        }
+
+        // Validaciones del apellido
+        if (!/^[a-zA-ZÁÉÍÓÚáéíóúÑñ\s]{2,}$/.test(apellido.value.trim())) {
+            errores.push("Apellidos: solo letras, mínimo 2 caracteres.");
+        }
+
+        // Validación del teléfono
+        if (!/^\d{10}$/.test(telefono.value.trim())) {
+            errores.push("Teléfono: debe contener exactamente 10 números.");
+        }
+
+        // Validación de correo vació (estructura se valida con HTML5 y ya tienes AJAX)
+        if (correo.value.trim() === "") {
+            errores.push("Correo: campo obligatorio.");
+        }
+
+        // Contraseña ya tiene sus validaciones propias, pero aseguramos que no esté vacía
+        if (contrasena.value.trim() === "") {
+            errores.push("Contraseña: campo obligatorio.");
+        }
+
+        // Validación de selección de rol
+        if (rol.value.trim() === "") {
+            errores.push("Rol: selecciona una opción.");
+        }
+
+        // Torre y apartamento combinados
+        if ((torre !== "" && apartamento === "") || (torre === "" && apartamento !== "")) {
+            errores.push("Torre/Apartamento: debes seleccionar ambos o dejar ambos vacíos.");
+        }
+
+        // Mostrar errores si los hay
+        if (errores.length > 0) {
+            e.preventDefault();
+            advertencia(errores.join("\n"));
+        }
+    });
 </script>

@@ -57,7 +57,6 @@ class UserController extends Controlador
         $messageError = null;
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registro'])) {
             if (!empty(trim($_POST['Pe_id'])) && !empty(trim($_POST['U_Nombre']))  && !empty(trim($_POST['U_Apellido'])) && !empty(trim($_POST['U_Telefono'])) && !empty(trim($_POST['U_Gmail'])) && !empty(trim($_POST['U_id']))) {
-                echo $_POST['Pe_id'];
                 $usuario = $this->peopleModel->getUsuario($_POST['Pe_id']);
                 if ($usuario) {
                     $estado = "inactivo";
@@ -117,8 +116,8 @@ class UserController extends Controlador
                 'usuarios' => $usuarios,
                 'messageError' => $messageError,
                 'messageInfo' => $messageInfo,
-                'estado'=> $estado,
-                'idUsuario'=>$idUsuario,
+                'estado' => $estado,
+                'idUsuario' => $idUsuario,
             ];
 
             $this->vista('pages/admin/AdminView', $datosVista);
@@ -140,66 +139,77 @@ class UserController extends Controlador
 
 
     public function EditarUser()
-    {
-        $messageInfo = '';
-        $messageError = '';
+{
+    $messageInfo = '';
+    $messageError = '';
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['udate'])) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['udate'])) {
 
-            // Recoger los datos correctamente desde $_POST
-            $datos = [
-                'Cedula'      => trim($_POST['E_id']),
-                'Nombre'      => trim($_POST['E_Nombre']),
-                'Apellidos'   => trim($_POST['E_Apellido']),
-                'Telefono'    => trim($_POST['E_Telefono']),
-                'Gmail'       => trim($_POST['E_Gmail']),
-                'Torre'       => trim($_POST['E_torre']),
-                'Ap_numero'   => trim($_POST['E_Departamento2']),
-                'Departamento' => trim($_POST['E_Departamento']),
-                'Rol'         => trim($_POST['R_id']),
-            ];
+        $torre = !empty(trim($_POST['E_torre'])) ? trim($_POST['E_torre']) : ' ';
+        $departamento = !empty(trim($_POST['E_Departamento'])) ? trim($_POST['E_Departamento']) : ' ';
+        $ap_numero = !empty(trim($_POST['E_Departamento2'])) ? trim($_POST['E_Departamento2']) : ' ';
 
+        // Recoger los datos comunes
+        $datos = [
+            'Cedula'      => trim($_POST['E_id']),
+            'Nombre'      => trim($_POST['E_Nombre']),
+            'Apellidos'   => trim($_POST['E_Apellido']),
+            'Telefono'    => trim($_POST['E_Telefono']),
+            'Gmail'       => trim($_POST['E_Gmail']),
+            'Rol'         => trim($_POST['R_id']),
+        ];
+
+        // Si trae apartamento válido, agregarlo y llamar al método completo
+        if (trim($departamento) !== '') {
+            $datos['Departamento'] = $departamento;
+            $datos['Ap_numero'] = $ap_numero;
+            $datos['Torre'] = $torre;
 
             $resultado = $this->adminModel->updateUser($datos);
-            $registros = $this->peopleModel->getAllUsuario();
-
-            // Formatear los datos de los usuarios
-            $usuarios = [];
-            foreach ($registros as $registro) {
-                $usuarios[] = [
-                    'Cedula'    => $registro->Pe_id,
-                    'Pe_nombre' => $registro->Pe_nombre,
-                    'Pe_apellidos' => $registro->Pe_apellidos,
-                    'Pe_telefono'  => $registro->Pe_telefono,
-                    'Us_correo'    => $registro->Us_correo,
-                    'Ap_id'        => $registro->Ap_id,
-                    'Ap_numero'    => $registro->Ap_numero,
-                    'To_letra'     => $registro->To_letra,
-                    'To_id'        => $registro->To_id,
-                    'Ro_tipo'      => $registro->Ro_tipo,
-                ];
-            }
-
-            if ($resultado) {
-                $messageInfo = 'Usuario actualizado correctamente';
-            } else {
-                $messageError = 'Error al actualizar el usuario';
-            }
-
-            $datos = [
-                'usuarios'      => $usuarios,
-                'messageError'  => $messageError,
-                'messageInfo'   => $messageInfo,
-            ];
         } else {
-            $messageError = 'Error: No se pudo procesar la solicitud';
-            $datos = [
-                'messageError' => $messageError,
+            // Si no tiene apartamento, usamos método sin Ap_id
+            $resultado = $this->adminModel->updateUser2($datos);
+        }
+
+        if ($resultado) {
+            $messageInfo = 'Usuario actualizado correctamente';
+        } else {
+            $messageError = 'Error al actualizar el usuario';
+        }
+
+        // Obtener todos los usuarios registrados
+        $registros = $this->peopleModel->getAllUsuario();
+        $usuarios = [];
+        foreach ($registros as $registro) {
+            $usuarios[] = [
+                'Cedula'    => $registro->Pe_id,
+                'Pe_nombre' => $registro->Pe_nombre,
+                'Pe_apellidos' => $registro->Pe_apellidos,
+                'Pe_telefono'  => $registro->Pe_telefono,
+                'Us_correo'    => $registro->Us_correo,
+                'Ap_id'        => $registro->Ap_id,
+                'Ap_numero'    => $registro->Ap_numero,
+                'To_letra'     => $registro->To_letra,
+                'To_id'        => $registro->To_id,
+                'Ro_tipo'      => $registro->Ro_tipo,
             ];
         }
-        $this->vista('pages/admin/adminView', $datos);
-        exit;
+
+        $datos = [
+            'usuarios'      => $usuarios,
+            'messageError'  => $messageError,
+            'messageInfo'   => $messageInfo,
+        ];
+    } else {
+        $datos = [
+            'messageError' => 'Error: No se pudo procesar la solicitud',
+        ];
     }
+
+    $this->vista('pages/admin/adminView', $datos);
+    exit;
+}
+
 
 
     public function DeleteUser()
@@ -772,5 +782,15 @@ class UserController extends Controlador
         ];
 
         $this->vista('pages/admin/adminView', $datos);
+    }
+    public function ValidarCorreo()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $correo = isset($_POST['correo']) ? trim($_POST['correo']) : '';
+
+            $existe = $this->peopleModel->ValidadCorreo($correo);
+            echo json_encode(['existe' => $existe]);
+            exit;
+        }
     }
 }

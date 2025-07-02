@@ -17,9 +17,9 @@ class PaquetModel
 
     public function deletePaquetById($id)
     {
-        $this->db->query("DELETE FROM paquete WHERE Pa_id = :Id");
+        $this->db->query("DELETE FROM paquete WHERE Pa_id = :Id and Pa_estado='Entregado'");
         $this->db->bind(':Id', $id);
-        return $this->db->registros();
+        return $this->db->registro();
     }
 
     public function getPackegesBy($id)
@@ -31,19 +31,34 @@ class PaquetModel
 
     public function getpaquetesByTable()
     {
-        $this->db->query("select a.Pe_id,a.Pe_nombre,p.* from paquete p , persona a where a.Pe_id=p.Pe_id;");
+        $this->db->query("SELECT 
+                            remitente.Pe_nombre AS nombre_remitente,
+                            remitente.Pe_apellidos AS apellido_remitente,
+                            receptor.Pe_nombre AS nombre_receptor,
+                            receptor.Pe_apellidos AS apellido_receptor,
+                            p.*
+                            FROM paquete p
+                            JOIN persona remitente ON p.Pe_id = remitente.Pe_id
+                            LEFT JOIN persona receptor ON p.Pa_recibe = receptor.Pe_id;");
         return $this->db->registros();
     }
 
-    public function actualizarPaquete($paqueteId, $nuevoEstado)
+    public function actualizarPaquete($paqueteId, $nuevoEstado, $paRecibe)
     {
-        $sql = "UPDATE paquete SET Pa_estado = :estado WHERE Pa_id = :id";
+        $sql = "UPDATE paquete 
+            SET Pa_estado = :estado,
+                Pa_recibe = :recibe,
+                Pa_fecha_recibido = NOW()
+            WHERE Pa_id = :id";
+
         $this->db->query($sql);
         $this->db->bind(':estado', $nuevoEstado);
+        $this->db->bind(':recibe', $paRecibe);
         $this->db->bind(':id', $paqueteId);
 
         return $this->db->execute();
     }
+
 
     public function getPaquetesPorUsuario($usuario)
     {
@@ -57,42 +72,50 @@ class PaquetModel
     {
         // Usamos LEFT JOIN para traer datos aunque no haya coincidencia (opcional).
         // Si quieres solo coincidencias exactas, usa INNER JOIN.
-        $this->db->query("SELECT
-                    paquete.*, 
-                    persona.Pe_nombre
-                FROM paquete
-                INNER JOIN persona ON paquete.Pe_id = persona.Pe_id
-                WHERE DATE(Pa_fecha) BETWEEN :inicio AND :fin
-                ORDER BY Pa_fecha ASC
-                ");
+         $this->db->query("SELECT 
+                        remitente.Pe_nombre AS nombre_remitente,
+                        remitente.Pe_apellidos AS apellido_remitente,
+                        receptor.Pe_nombre AS nombre_receptor,
+                        receptor.Pe_apellidos AS apellido_receptor,
+                        p.*
+                     FROM paquete p
+                     JOIN persona remitente ON p.Pe_id = remitente.Pe_id
+                     LEFT JOIN persona receptor ON p.Pa_recibe = receptor.Pe_id
+                     WHERE p.Pa_fecha BETWEEN :inicio AND :fin");
 
-        // Asignamos los valores de las fechas
-        $this->db->bind(':inicio', $fechaInicio);
-        $this->db->bind(':fin', $fechaFin);
+    // Asignamos los valores de las fechas
+    $this->db->bind(':inicio', $fechaInicio . ' 00:00:00');
+    $this->db->bind(':fin', $fechaFin . ' 23:59:59');
 
         // Ejecutamos y retornamos los resultados
         return $this->db->registros();
     }
 
     public function getAllPackages()
-{
-            $this->db->query("SELECT 
-                paquete.*, 
-                persona.Pe_nombre
-            FROM paquete
-            INNER JOIN persona ON paquete.Pe_id = persona.Pe_id
-            ORDER BY Pa_fecha ASC");
-            return $this->db->registros();
-}
-public function getPacketePeopleId($id)
-{
-    $this->db->query("SELECT 
-		paquete.*, 
-		persona.Pe_nombre 
-            FROM paquete
-            INNER JOIN persona ON paquete.Pe_id = persona.Pe_id
-           where paquete.Pe_id = :id");
-    $this->db->bind(':id', $id);
-    return $this->db->registros();
-}
+    {
+        $this->db->query("SELECT 
+                        remitente.Pe_nombre AS nombre_remitente,
+                        remitente.Pe_apellidos AS apellido_remitente,
+                        receptor.Pe_nombre AS nombre_receptor,
+                        receptor.Pe_apellidos AS apellido_receptor,
+                        p.*
+                        FROM paquete p
+                        JOIN persona remitente ON p.Pe_id = remitente.Pe_id
+                        LEFT JOIN persona receptor ON p.Pa_recibe = receptor.Pe_id");
+        return $this->db->registros();
+    }
+    public function getPacketePeopleId($id)
+    {
+        $this->db->query("SELECT 
+                        remitente.Pe_nombre AS nombre_remitente,
+                        remitente.Pe_apellidos AS apellido_remitente,
+                        receptor.Pe_nombre AS nombre_receptor,
+                        receptor.Pe_apellidos AS apellido_receptor,
+                        p.*
+                        FROM paquete p
+                        JOIN persona remitente ON p.Pe_id = remitente.Pe_id
+                        LEFT JOIN persona receptor ON p.Pa_recibe = receptor.Pe_id WHERE  remitente.Pe_id=:id");
+        $this->db->bind(':id', $id);
+        return $this->db->registros();
+    }
 }

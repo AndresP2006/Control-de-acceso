@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 14-06-2025 a las 19:47:26
+-- Tiempo de generación: 01-07-2025 a las 23:27:54
 -- Versión del servidor: 9.1.0
 -- Versión de PHP: 8.3.14
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `apartamento` (
   `Ap_numero` int NOT NULL,
   PRIMARY KEY (`Ap_id`),
   KEY `To_id` (`To_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `apartamento`
@@ -42,7 +42,15 @@ CREATE TABLE IF NOT EXISTS `apartamento` (
 
 INSERT INTO `apartamento` (`Ap_id`, `To_id`, `Ap_numero`) VALUES
 (106, 1, 302),
-(107, 2, 212);
+(107, 2, 212),
+(115, 3, 100),
+(116, 3, 101),
+(117, 4, 400),
+(118, 5, 500),
+(119, 5, 501),
+(120, 5, 502),
+(121, 4, 401),
+(122, 4, 402);
 
 -- --------------------------------------------------------
 
@@ -58,18 +66,26 @@ CREATE TABLE IF NOT EXISTS `paquete` (
   `Pa_fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Pa_responsable` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `Pe_id` int DEFAULT NULL,
+  `Pa_recibe` int DEFAULT NULL,
+  `Pa_fecha_recibido` timestamp NULL DEFAULT NULL,
   `vista` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Pa_id`),
   KEY `Pe_id` (`Pe_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `paquete`
 --
 
-INSERT INTO `paquete` (`Pa_id`, `Pa_estado`, `Pa_descripcion`, `Pa_fecha`, `Pa_responsable`, `Pe_id`, `vista`) VALUES
-(27, 'Entregado', 'Cafetera', '2025-06-11 19:30:00', 'portero del conjunto', 1042851729, 1),
-(28, 'Bodega', 'cama doble', '2025-06-02 19:00:00', 'portero del conjunto', 1042851729, 1);
+INSERT INTO `paquete` (`Pa_id`, `Pa_estado`, `Pa_descripcion`, `Pa_fecha`, `Pa_responsable`, `Pe_id`, `Pa_recibe`, `Pa_fecha_recibido`, `vista`) VALUES
+(32, 'Entregado', 'Una cama grander', '2025-06-21 17:23:00', 'Luis', 123, 1042851730, '2025-07-01 23:15:18', 0),
+(37, 'Bodega', 'cama doble', '2025-07-01 23:15:00', 'portero del conjunto', 1042851730, NULL, NULL, 0),
+(38, 'Bodega', 'cocina portatil', '2025-07-01 23:15:00', 'portero del conjunto', 1042851732, NULL, NULL, 0),
+(39, 'Bodega', 'mancuernas', '2025-07-01 23:15:00', 'portero del conjunto', 1042851733, NULL, NULL, 0),
+(40, 'Bodega', 'ropa de casa', '2025-07-01 23:16:00', 'portero del conjunto', 1042851729, NULL, NULL, 1),
+(41, 'Bodega', 'bicicleta', '2025-07-01 23:16:00', 'portero del conjunto', 1042851731, NULL, NULL, 0),
+(42, 'Bodega', 'sillas de madera', '2025-07-01 23:16:00', 'portero del conjunto', 1042851730, NULL, NULL, 0),
+(43, 'Bodega', 'baldes de agua', '2025-07-01 23:17:00', 'portero del conjunto', 1042851732, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -95,9 +111,19 @@ CREATE TABLE IF NOT EXISTS `persona` (
 --
 
 INSERT INTO `persona` (`Pe_id`, `Pe_nombre`, `Pe_apellidos`, `Pe_telefono`, `Us_id`, `Ap_id`) VALUES
-(2006, 'admin', 'admin', '3202116434', 2006, 106),
+(123, 'Juan David', 'Rua', '30000000', 123, 106),
+(999, 'Juan David', 'Celeste', '30000000', 999, 106),
+(2006, 'admin', 'admin', '3202116439', 2006, 106),
 (2020, 'porter', 'porter', '3202116434', 2020, 106),
-(1042851729, 'Andres', 'Pereira', '3202116434', 1042851729, 106);
+(1042851729, 'Andres', 'Pereira', '3202116434', 1042851729, 106),
+(1042851730, 'stiven', 'catalan', '3202116434', 1042851730, 107),
+(1042851731, 'yasmith', 'zuñiga', '3003489600', 1042851731, 106),
+(1042851732, 'luis', 'perez', '3082482938', 1042851732, 121),
+(1042851733, 'Josue', 'sining', '3058295839', 1042851733, 120),
+(1042851734, 'santiago', 'sining', '30582759374', 1042851734, 117),
+(1042851740, 'Jose', 'fontalbo', '30582759374', 1042851740, NULL),
+(1042851742, 'saray', 'flores', '3273849273', 1042851742, 115),
+(1727462549, 'marlis', 'martines', '3625394760', 1727462549, 116);
 
 -- --------------------------------------------------------
 
@@ -120,7 +146,25 @@ CREATE TABLE IF NOT EXISTS `registro` (
   PRIMARY KEY (`Re_id`),
   KEY `Vi_id` (`Vi_id`),
   KEY `Pe_id` (`Pe_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `registro`
+--
+
+INSERT INTO `registro` (`Re_id`, `Re_fecha_entrada`, `Re_hora_entrada`, `Re_hora_salida`, `Re_motivo`, `Use_visit`, `Vi_departamento`, `Pe_id`, `Vi_id`, `vista`) VALUES
+(104, '2025-07-01', '18:05:49', '00:00:00', 'ver a un amigo', NULL, '117', 1042851734, 1042851729, 0),
+(105, '2025-07-01', '18:06:21', '00:00:00', 'ver a un amigo', NULL, '107', 1042851730, 1042851730, 0),
+(106, '2025-07-01', '18:11:09', '00:00:00', 'ver a un amigo', NULL, '120', 1042851733, 1042841731, 0),
+(107, '2025-07-01', '18:11:46', '00:00:00', 'ver a un amigo', NULL, '107', 1042851730, 1042851732, 0),
+(108, '2025-07-01', '18:12:52', '00:00:00', 'arreglar un aire', NULL, '121', 1042851732, 1927493758, 0),
+(109, '2025-07-01', '18:13:38', '00:00:00', 'dejar un recado', NULL, '106', 123, 1946283549, 0),
+(110, '2025-07-01', '18:14:24', '00:00:00', 'pasar la noche con mi pareja', NULL, '107', 1042851730, 1027354937, 0),
+(111, '2025-07-01', '18:21:33', '18:21:39', 'ver a un amigo', 'Permitido', '302', 1042851729, 1826492730, 0),
+(112, '2025-07-01', '18:25:27', '00:00:00', 'arreglar un aire', 'Permitido', '302', 1042851729, 1826492730, 0),
+(113, '2025-07-01', '18:25:28', '18:26:30', 'ver a un amigo', 'Permitido', '302', 1042851729, 1927384956, 0),
+(114, '2025-07-01', '18:26:00', '18:26:30', 'ver a un amigo', 'Permitido', '302', 1042851729, 1927384956, 0),
+(115, '2025-07-01', '18:26:26', '18:26:30', 'arreglar un aire', 'Permitido', '302', 1042851729, 1927384956, 0);
 
 -- --------------------------------------------------------
 
@@ -194,7 +238,10 @@ CREATE TABLE IF NOT EXISTS `torre` (
 
 INSERT INTO `torre` (`To_id`, `To_letra`) VALUES
 (1, 'A'),
-(2, 'B');
+(2, 'B'),
+(3, 'C'),
+(4, 'D'),
+(5, 'H');
 
 -- --------------------------------------------------------
 
@@ -219,9 +266,19 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 --
 
 INSERT INTO `usuario` (`Us_id`, `Us_usuario`, `Us_contrasena`, `Us_correo`, `Ro_id`, `estado`) VALUES
+(123, 'Juan David', 'Juan12345$', 'jrua1043@gmail.com', 3, 'activo'),
+(999, 'Juan David', 'Juan12345$', 'Maria@gmail.com', 3, 'inactivo'),
 (2006, 'admin', 'Admin_2025', 'jrua1043@gmail.com', 1, 'activo'),
 (2020, 'porter', 'Porter_2025', 'jcharryme@gmail.com', 2, 'activo'),
-(1042851729, 'Andres', 'Andres_2025', 'pereirapuelloandresdavid@gmail.com', 3, 'activo');
+(1042851729, 'Andres', 'Andres_2025', 'pereirapuelloandresdavid@gmail.com', 3, 'activo'),
+(1042851730, 'stiven', 'Stiven_2025', 'Dariosilgado@gmail.com', 3, 'activo'),
+(1042851731, 'yasmith', 'Yasmith_2020', 'yasmithpatricia@gmail.com', 3, 'activo'),
+(1042851732, 'luis', 'Luis_2011', 'luisPerez@gmail.com', 3, 'activo'),
+(1042851733, 'Josue', 'Josue$3030', 'JosueGomez@gmail.com', 3, 'activo'),
+(1042851734, 'santiago', 'Santiago@sinig', 'santiagosining@gmail.com', 2, 'activo'),
+(1042851740, 'Jose', 'Jose@fontalbo', 'Jose@gmail.com', 1, 'activo'),
+(1042851742, 'saray', 'Saray$123', 'saray@gmail.com', 3, 'activo'),
+(1727462549, 'marlis', 'Marlis@martines', 'marli@gmail.com', 3, 'activo');
 
 -- --------------------------------------------------------
 
@@ -239,6 +296,21 @@ CREATE TABLE IF NOT EXISTS `visitantes` (
   `Vi_permiso` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`Vi_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `visitantes`
+--
+
+INSERT INTO `visitantes` (`Vi_id`, `Vi_nombres`, `Vi_apellidos`, `Vi_telefono`, `estado`, `Vi_permiso`) VALUES
+(1027354937, 'kuranlli', 'puello', '3947264957', '', NULL),
+(1042841731, 'luis', 'Padilla', '3927493720', '', NULL),
+(1042851729, 'Andres', 'Pereira', '3202116434', '', NULL),
+(1042851730, 'stiven', 'Pereira', '3048273849', '', NULL),
+(1042851732, 'jhon', 'jinete', '3048372649', '', NULL),
+(1826492730, '', '', '3828463945', '0', 'solicitado'),
+(1927384956, 'joa', 'martines', '2823629323', '0', 'salida'),
+(1927493758, 'jhonatan', 'gomez', '3957451943', '', NULL),
+(1946283549, 'legolas', 'puello', '3846582649', '', NULL);
 
 --
 -- Restricciones para tablas volcadas
