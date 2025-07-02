@@ -25,11 +25,6 @@
     </div>
 
     <div class="control-group">
-        <a href="<?php echo RUTA_URL?>/manual/PANTALLA ADMINISTRATIVA.pdf" class="manual" target="_blank">
-            <button type="button" style="font-size: 30px; background-color: transparent; border: none; cursor: pointer;" title="Manual de Usuario">
-            ⬇️
-            </button>
-        </a>
         <!-- Formulario de Búsqueda por ID -->
         <form class="search-container" action="<?php echo RUTA_URL; ?>/UserController/BuscarUsuario" method="POST">
             <input id="id" type="text" class="buscar_id translatable" name="id_usuario" placeholder="Buscar...">

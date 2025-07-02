@@ -1,11 +1,6 @@
 <?php require_once RUTA_APP . '/views/inc/header-porter.php'; ?>
 
 <div class="Siquiente">
-    <a href="<?php echo RUTA_URL?>/manual/PANTALLA DE PORTERIA.pdf" class="manual" target="_blank">
-       <button type="button" style="font-size: 30px; background-color: transparent; border: none; cursor: pointer;" title="Manual de Porteria">
-        ⬇️
-       </button>
-    </a>
     <a href="<?php echo RUTA_URL; ?>/HomeController/registroPorter"><button class="siquiente_registro translatable">Registro</button></a>
 </div>
 <div class="cuerpo">
