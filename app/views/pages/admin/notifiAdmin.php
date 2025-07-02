@@ -1,9 +1,10 @@
 <?php require_once RUTA_APP . "/views/inc/header-notificacion.php"; ?>
 <?php date_default_timezone_set("America/Bogota"); ?>
 <div class="contenedor">
-    <div class="titulo translatable">NOTIFICACIONES
+    <div class="titulo">
+        <h1 class="titulo_1 translatable">NOTIFICACIONES</h1>
         <a href="<?php echo RUTA_URL; ?>/HomeController/admin" class="enlaces">
-            <span class="icons exit" style="top:20px; font-size: 40px;">↩️</span>
+            <span class="icons exit translatable" style="top:20px; font-size: 40px;">↩️</span>
         </a>
     </div>
 
@@ -30,23 +31,25 @@
                     $formId = "form_" . $index;
                     ?>
                     <!-- Formulario oculto para enviar datos por POST -->
-                    <form id="<?php echo $formId; ?>" action="<?php echo RUTA_URL; ?>/HomeController/solicitud_user" method="post" style="display: none;">
+                    <form id="<?php echo $formId; ?>" action="<?php echo RUTA_URL; ?>/HomeController/solicitud_user" method="post"
+                        style="display: none;">
                         <input type="hidden" name="id_residente" value="<?php echo $notificacion['data']->id_residente; ?>">
                         <input type="hidden" name="id" value="<?php echo $notificacion['data']->id; ?>">
                         <input type="hidden" name="detalles" value="1">
                     </form>
 
                     <!-- Div notificación clickeable -->
-                    <div class="notificacion"
-                        onclick="document.getElementById('<?php echo $formId; ?>').submit();"
+                    <div class="notificacion" onclick="document.getElementById('<?php echo $formId; ?>').submit();"
                         style="cursor: pointer;">
                         <div class="contenido-notificacion">
                             <div class="texto">
-                                <p class="translatable">
-                                    Se ha recibido una solicitud de actualización por parte del residente <strong><?php echo
-                                            $notificacion['data']->nombre; ?></strong>.<br>
-                                    Estado: <strong class="translatable"><?php echo ucfirst($notificacion['data']->estado); ?></strong>
-                                </p>
+                                <span class="translatable">
+                                    Se ha recibido una solicitud de actualización por parte del residente
+                                </span>
+                                <strong><?php echo $notificacion['data']->nombre; ?></strong>
+                                <br>
+                                <span class="translatable">Estado:</span>
+                                <strong class="translatable"><?php echo ucfirst($notificacion['data']->estado); ?></strong>
                             </div>
                             <div class="fecha">
                                 <?php echo $fechaFormateada; ?>

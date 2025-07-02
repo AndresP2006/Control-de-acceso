@@ -1,6 +1,6 @@
 <footer class="footer-global">
     <div class="footer-content">
-        <div class="footer-left">© <?php echo date("Y-M-d"); ?> Control de Acceso</div>
+        <div class="footer-lef translatable">© <?php echo date("Y-M-d"); ?> Control de Acceso</div>
         <div class="footer-right">
             <!-- Puedes agregar enlaces o información adicional aquí -->
         </div>

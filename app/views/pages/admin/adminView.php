@@ -7,18 +7,13 @@
         <form action="<?php echo RUTA_URL; ?>/UserController/BuscarUsuario" method="POST">
             <select name="select_rol" class="filter-rol translatable" onchange="this.form.submit()">
                 <option value="" class="translatable">Todos</option>
-                <option value="1" <?php echo isset($datos['filter']) && $datos['filter'] == 1 ? 'selected' : ''; ?> class="translatable">
-                    Administrador
-                </option>
-                <option value="2" <?php echo isset($datos['filter']) && $datos['filter'] == 2 ? 'selected' : ''; ?> class="translatable">
-                    Guardia
-                </option>
-                <option value="3" <?php echo isset($datos['filter']) && $datos['filter'] == 3 ? 'selected' : ''; ?> class="translatable">
-                    Residente
-                </option>
-                <option value="inactivo" <?php echo isset($datos['filter']) && $datos['filter'] == 'inactivo' ? 'selected' : ''; ?> class="translatable">
-                    Inactivo
-                </option>
+                <option value="1" <?php echo isset($datos['filter']) && $datos['filter'] == 1 ? 'selected' : ''; ?>
+                    class="translatable">Administrador</option>
+                <option value="2" <?php echo isset($datos['filter']) && $datos['filter'] == 2 ? 'selected' : ''; ?>
+                    class="translatable">Guardia</option>
+                <option value="3" <?php echo isset($datos['filter']) && $datos['filter'] == 3 ? 'selected' : ''; ?>
+                    class="translatable">Residente</option>
+                <option value="inactivo" <?php echo isset($datos['filter']) && $datos['filter'] == 'inactivo' ? 'selected' : ''; ?> class="translatable">Inactivo</option>
             </select>
             <input type="hidden" name="action" value="filter">
         </form>
@@ -67,8 +62,8 @@
                             echo "<td>" . htmlspecialchars($registro['Us_correo'] ?? '') . "</td>";
                             echo "<td>" . htmlspecialchars($registro['Ap_numero'] ?? '') . "</td>";  // APARTAMENTO
                             echo "<td>" . htmlspecialchars($registro['To_letra'] ?? '') . "</td>";   // TORRE
-                            echo "<td>" . htmlspecialchars($registro['Ro_tipo'] ?? '') . "</td>";    // ROL
-
+                            echo "<td class ='translatable'>" . htmlspecialchars($registro['Ro_tipo'] ?? '') . "</td>";    // ROL
+                
                             echo "<td>
                                     <button class='edit-btn'
                                         data-id='" . htmlspecialchars($registro['Cedula'] ?? '') . "'
@@ -109,10 +104,14 @@
         </table>
     </div>
     <div class="action-buttons">
-        <a href="<?php echo RUTA_URL; ?>/HomeController/admin"><button class="action-btn translatable">Usuarios</button></a>
-        <a href="<?php echo RUTA_URL; ?>/HomeController/HistoryRecords"><button class="action-btn translatable">Registros</button></a>
-        <a href="<?php echo RUTA_URL; ?>/HomeController/HistoryPackages"><button class="action-btn translatable">Paquetes</button></a>
-        <a href="<?php echo RUTA_URL; ?>/HomeController/Edificios"><button class="action-btn translatable">Edificio</button></a>
+        <a href="<?php echo RUTA_URL; ?>/HomeController/admin"><button
+                class="action-btn translatable">Usuarios</button></a>
+        <a href="<?php echo RUTA_URL; ?>/HomeController/HistoryRecords"><button
+                class="action-btn translatable">Registros</button></a>
+        <a href="<?php echo RUTA_URL; ?>/HomeController/HistoryPackages"><button
+                class="action-btn translatable">Paquetes</button></a>
+        <a href="<?php echo RUTA_URL; ?>/HomeController/Edificios"><button
+                class="action-btn translatable">Edificio</button></a>
     </div>
 </div>
 <?php include RUTA_APP . '/views/pages/admin/modalRegistro.php'; ?>
@@ -138,10 +137,10 @@
     <?php if (isset($datos['estado'])) { ?>
         confirmarRegistro("<?php echo $datos['estado']; ?>", "<?php echo $datos['idUsuario']; ?>")
     <?php } ?>
-    $(document).ready(function() {
+    $(document).ready(function () {
 
 
-        $('#select_torre').change(function() {
+        $('#select_torre').change(function () {
             let ValueTower = $('#select_torre').val();
             $.ajax({
                 url: '<?php echo RUTA_URL ?>/ApartamentController/getApartamentByTower',
@@ -149,14 +148,14 @@
                 data: {
                     TowerId: ValueTower
                 },
-                success: function(respuesta) {
+                success: function (respuesta) {
                     const res = JSON.parse(respuesta)
 
                     let optionSelect = '<option value="0" class="translatable">Apartamento</option>'
 
                     for (let item of res)
                         optionSelect += '<option value="' + item.Ap_id + '">' + item.Ap_numero +
-                        '</option>'
+                            '</option>'
 
                     $('#E_Departamento').html(optionSelect)
 
@@ -164,7 +163,7 @@
             })
         })
 
-        $('#select_torre2').change(function() {
+        $('#select_torre2').change(function () {
             let ValueTower = $('#select_torre2').val();
             $.ajax({
                 url: '<?php echo RUTA_URL ?>/ApartamentController/getApartamentByTower',
@@ -172,14 +171,14 @@
                 data: {
                     TowerId: ValueTower
                 },
-                success: function(respuesta) {
+                success: function (respuesta) {
                     const res = JSON.parse(respuesta)
 
                     let optionSelect = '<option value="0" class="translatable">Apartamento</option>'
 
                     for (let item of res)
                         optionSelect += '<option value="' + item.Ap_id + '">' + item.Ap_numero +
-                        '</option>'
+                            '</option>'
 
                     $('#U_Departamento').html(optionSelect)
 
@@ -188,7 +187,7 @@
         })
 
 
-        $(document).on('click', '.delete-btn', function() {
+        $(document).on('click', '.delete-btn', function () {
             const boton = $(this);
             const rolUsuario = boton.data('rol');
             $.ajax({
@@ -196,7 +195,7 @@
                 type: 'POST',
                 data: {},
                 dataType: 'json',
-                success: function(respuesta) {
+                success: function (respuesta) {
                     console.log('Respuesta cruda:', respuesta) // Ver la respuesta antes de procesarla
 
                     if (respuesta.length === 1 && respuesta[0].Ro_id == 1 && rolUsuario === 'Administrador') {
@@ -204,7 +203,7 @@
 
                     }
                 },
-                error: function(jqXHR, textStatus, errorThrown) {
+                error: function (jqXHR, textStatus, errorThrown) {
                     console.error('Error en la petición AJAX:', textStatus, errorThrown)
                 }
             })

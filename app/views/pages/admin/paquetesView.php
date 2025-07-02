@@ -47,16 +47,16 @@
                             echo "<tr>";
                             echo "<td>" . htmlspecialchars($historial->Pe_id ?? '') . "</td>";
                             echo "<td>" . htmlspecialchars($historial->Pe_nombre ?? '') . " " . htmlspecialchars($historial->Pe_apellidos ?? '') . "</td>";
-                            echo "<td>" . htmlspecialchars($historial->Pa_estado ?? '') . "</td>";
+                            echo "<td class='translatable'>" . htmlspecialchars($historial->Pa_estado ?? '') . "</td>";
                             echo "<td>" . htmlspecialchars($historial->Pa_fecha ?? '') . "</td>";
-                            echo "<td>" . htmlspecialchars($historial->Pa_descripcion ?? '') . "</td>";
-                            echo "<td>" . htmlspecialchars($historial->Pa_responsable ?? '') . "</td>";
+                            echo "<td class='translatable'>" . htmlspecialchars($historial->Pa_descripcion ?? '') . "</td>";
+                            echo "<td class='translatable'>" . htmlspecialchars($historial->Pa_responsable ?? '') . "</td>";
                             echo "<td>
                     <form action='" . RUTA_URL . "/HomeController/DeletePaquete' method='POST' style='display:inline;'>
                         <input type='hidden' name='delete_pid' value='" . htmlspecialchars($historial->Pa_id ?? '') . "'>
                         <input type='hidden' name='fecha_inicio' value='" . htmlspecialchars($datos['fecha_inicio'] ?? '') . "'>
                         <input type='hidden' name='fecha_fin' value='" . htmlspecialchars($datos['fecha_fin'] ?? '') . "'>
-                        <button type='submit' name='deletePaquetes' class='delete-btn-pq translatable'>🗑️</button>
+                        <button type='submit' name='deletePaquetes' class='delete-btn-pq'>🗑️</button>
                     </form>
                 </td>";
                             echo "</tr>";

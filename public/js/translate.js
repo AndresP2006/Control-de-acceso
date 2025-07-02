@@ -79,7 +79,7 @@ function updateSelectOptions(lang) {
     selector.options[5].text = "Chinês";
     selector.options[6].text = "Russo";
   } else if (lang === "ja") {
-    selector.options[0].text = "スペイン語";
+    selector.options[0].text = "Español";
     selector.options[1].text = "英語";
     selector.options[2].text = "フランス語";
     selector.options[3].text = "ポルトガル語";
@@ -87,7 +87,7 @@ function updateSelectOptions(lang) {
     selector.options[5].text = "中国語";
     selector.options[6].text = "ロシア語";
   } else if (lang === "zh") {
-    selector.options[0].text = "西班牙语";
+    selector.options[0].text = "Español";
     selector.options[1].text = "英语";
     selector.options[2].text = "法语";
     selector.options[3].text = "葡萄牙语";
@@ -95,7 +95,7 @@ function updateSelectOptions(lang) {
     selector.options[5].text = "中文";
     selector.options[6].text = "俄语";
   } else if (lang === "ru") {
-    selector.options[0].text = "Испанский";
+    selector.options[0].text = "Español";
     selector.options[1].text = "Английский";
     selector.options[2].text = "Французский";
     selector.options[3].text = "Португальский";
