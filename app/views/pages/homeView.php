@@ -89,7 +89,7 @@
     <form action="<?php echo RUTA_URL; ?>/LoginController/index" method="post">
         <div class="formulario">
             <h1 class="Formulario__titulo translatable">Iniciar Sesión</h1>
-            <input class="titulo-input translatable" name="usuario" type="text" placeholder="Usuario" required data-original="Usuario" />
+            <input class="titulo-input translatable" name="usuario" type="text" placeholder="Identificacion o Correo" required data-original="Identificacion o Correo" />
             <input class="Formulario__titulo-input translatable" name="password" type="password" placeholder="Contraseña" required data-original="Contraseña" />
             <a href="<?php echo RUTA_URL; ?>/RecoveryController/index" style="margin-bottom: 10px; color:#f00;" class="translatable">¿Olvidaste tu contraseña?</a>
             <button type="submit" name="ingresar" class="Formulario__boton translatable">Ingresar</button>

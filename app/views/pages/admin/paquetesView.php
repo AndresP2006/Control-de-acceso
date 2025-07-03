@@ -35,6 +35,7 @@
                     <th class="translatable">ENTREGADO</th>
                     <th class="translatable">ESTADO</th>
                     <th class="translatable">FECHA</th>
+                    <th class="translatable">FECHA DE fENTREGA</th>
                     <th class="translatable">DESCRIPCION</th>
                     <th class="translatable">RECIBIDOR</th>
                     <th class="translatable">ACCION</th>
@@ -51,6 +52,7 @@
                             echo "<td>" . htmlspecialchars($historial->nombre_receptor ?? '') . " " . htmlspecialchars($historial->apellido_receptor ?? '') . "</td>";
                             echo "<td>" . htmlspecialchars($historial->Pa_estado ?? '') . "</td>";
                             echo "<td>" . htmlspecialchars($historial->Pa_fecha ?? '') . "</td>";
+                            echo "<td>" . htmlspecialchars($historial->Pa_fecha_recibido ?? '') . "</td>";
                             echo "<td>" . htmlspecialchars($historial->Pa_descripcion ?? '') . "</td>";
                             echo "<td>" . htmlspecialchars($historial->Pa_responsable ?? '') . "</td>";
                             echo "<td>
