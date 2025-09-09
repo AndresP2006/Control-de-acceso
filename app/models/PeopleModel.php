@@ -25,7 +25,7 @@ class PeopleModel
     public function getNumberGuest()
     {
 
-        $this->db->query("SELECT count(*) as total FROM registro WHERE Re_hora_salida = '00:00:00';");
+        $this->db->query("SELECT count(*) as total FROM registro WHERE Re_hora_salida = '00:00:00' and  Re_hora_entrada  != '00:00:00' ;");
 
         return $this->db->registro();
     }
@@ -33,6 +33,10 @@ class PeopleModel
     public function getGuestById($idGuest)
     {
         $this->db->query("UPDATE registro SET Re_hora_salida = CURRENT_TIME() WHERE Vi_id ='$idGuest'");
+        return $this->db->registro();
+    }
+    public function getGuestByIdVisita($idGuest){
+        $this->db->query("UPDATE visitantes SET Vi_permiso ='salida' WHERE Vi_id ='$idGuest'");
         return $this->db->registro();
     }
 
@@ -46,14 +50,14 @@ class PeopleModel
 
     public function getPersonaById($id)
     {
-        $this->db->query('SELECT persona.*, usuario.Ro_id, usuario.Us_correo, r.Ro_tipo, usuario.Us_contrasena, a.Ap_numero, t.To_letra,t.To_id FROM persona LEFT JOIN usuario ON persona.Pe_id = usuario.Us_id LEFT JOIN rol r ON usuario.Ro_id = r.Ro_id LEFT JOIN apartamento a ON persona.Ap_id = a.Ap_id LEFT JOIN torre t ON a.To_id = t.To_id   WHERE Pe_id = :id');
+        $this->db->query('SELECT persona.*, usuario.Ro_id, usuario.Us_correo,usuario.estado, r.Ro_tipo, usuario.Us_contrasena, a.Ap_numero, t.To_letra,t.To_id FROM persona LEFT JOIN usuario ON persona.Pe_id = usuario.Us_id LEFT JOIN rol r ON usuario.Ro_id = r.Ro_id LEFT JOIN apartamento a ON persona.Ap_id = a.Ap_id LEFT JOIN torre t ON a.To_id = t.To_id   WHERE Pe_id = :id');
         $this->db->bind(':id', $id);
         return $this->db->registro(); // Devuelve un solo registro
     }
 
     public function getAllRegistro($id)
     {
-        $this->db->query("SELECT * FROM registro WHERE Vi_id = :id");
+        $this->db->query("SELECT r.*, Ap_numero,To_letra FROM registro r JOIN persona p ON r.Pe_id = p.Pe_id JOIN apartamento a ON p.Ap_id = a.Ap_id JOIN torre t ON a.To_id = t.To_id WHERE Vi_id = :id");
         $this->db->bind(':id', $id); // Usa parámetros para evitar inyección SQL
         $result = $this->db->registros(); // Asegúrate de usar 'registros()' para obtener múltiples resultados
 
@@ -87,8 +91,9 @@ class PeopleModel
                             ap.Ap_numero AS Apartamento,
                             t.To_letra AS Torre FROM persona p  
                             LEFT JOIN paquete a ON p.Pe_id = a.Pe_id AND a.Pa_estado != 'Entregado'
-                            LEFT JOIN apartamento ap ON p.Ap_id = ap.Ap_id 
-                            LEFT JOIN torre t ON ap.To_id = t.To_id WHERE p.Pe_id = $id GROUP BY p.Pe_id, p.Pe_nombre, p.Pe_apellidos, ap.Ap_numero, t.To_letra;");
+                            LEFT JOIN apartamento ap ON p.Ap_id = ap.Ap_id
+                            LEFT JOIN usuario u ON p.Us_id = u.Us_id 
+                            LEFT JOIN torre t ON ap.To_id = t.To_id WHERE p.Pe_id = $id AND u.estado = 'activo' GROUP BY p.Pe_id, p.Pe_nombre, p.Pe_apellidos, ap.Ap_numero, t.To_letra;");
 
         return $this->db->registro();
     }
@@ -100,37 +105,47 @@ class PeopleModel
     }
 
     //No tocar este metodo
-    public function getAllUsuario($roleId = null)
+    public function getAllUsuario($roleId = null, $estado = null)
     {
+        echo "<script>console.log('Hola, $estado desde PHP');</script>";
+
         if ($roleId) {
             // Consulta con filtro por Rol
             $this->db->query('
-            SELECT persona.*, usuario.Ro_id, usuario.Us_correo, r.Ro_tipo, usuario.Us_contrasena, a.Ap_numero, t.To_letra, t.To_id 
-            FROM persona 
-            LEFT JOIN usuario ON persona.Pe_id = usuario.Us_id 
-            LEFT JOIN rol r ON usuario.Ro_id = r.Ro_id 
-            LEFT JOIN apartamento a ON persona.Ap_id = a.Ap_id 
-            LEFT JOIN torre t ON a.To_id = t.To_id 
-            WHERE usuario.Ro_id = :roleId
-        ');
+        SELECT persona.*, usuario.Ro_id, usuario.Us_correo, r.Ro_tipo, usuario.Us_contrasena, a.Ap_numero, t.To_letra, t.To_id, a.Ap_id,usuario.estado 
+        FROM persona 
+        LEFT JOIN usuario ON persona.Pe_id = usuario.Us_id 
+        LEFT JOIN rol r ON usuario.Ro_id = r.Ro_id 
+        LEFT JOIN apartamento a ON persona.Ap_id = a.Ap_id 
+        LEFT JOIN torre t ON a.To_id = t.To_id 
+        WHERE usuario.Ro_id = :roleId AND usuario.estado = :estado
+    ');
             $this->db->bind(':roleId', $roleId);
+            $this->db->bind(':estado', $estado ?? 'activo');
         } else {
             // Consulta sin filtro por Rol
             $this->db->query('
-            SELECT persona.*, usuario.Ro_id, usuario.Us_correo, r.Ro_tipo, usuario.Us_contrasena, a.Ap_numero, t.To_letra, t.To_id 
-            FROM persona 
-            LEFT JOIN usuario ON persona.Pe_id = usuario.Us_id 
-            LEFT JOIN rol r ON usuario.Ro_id = r.Ro_id 
-            LEFT JOIN apartamento a ON persona.Ap_id = a.Ap_id 
-            LEFT JOIN torre t ON a.To_id = t.To_id
-        ');
+        SELECT persona.*, usuario.Ro_id, usuario.Us_correo, r.Ro_tipo, usuario.Us_contrasena, a.Ap_numero, t.To_letra, t.To_id, usuario.estado 
+        FROM persona 
+        LEFT JOIN usuario ON persona.Pe_id = usuario.Us_id 
+        LEFT JOIN rol r ON usuario.Ro_id = r.Ro_id 
+        LEFT JOIN apartamento a ON persona.Ap_id = a.Ap_id 
+        LEFT JOIN torre t ON a.To_id = t.To_id
+        WHERE usuario.estado = :estado
+    ');
+            $this->db->bind(':estado', $estado ?? 'activo');
         }
 
-        return $this->db->registros(); // Devuelve todos los registros
+        return $this->db->registros();
     }
 
+    public function getUsuario($id)
+    {
+        $this->db->query('SELECT * FROM usuario WHERE Us_id = :id');
+        $this->db->bind(':id', $id);
+        return $this->db->registro(); // Devuelve un solo registro
+    }
     public function getAllResident($result)
-
     {
 
         $this->db->query("SELECT
@@ -152,11 +167,17 @@ class PeopleModel
     public function getAllRedident($result)
     {
 
-        $this->db->query("SELECT p2.Pe_nombre, p2.Pe_apellidos 
-                           FROM persona p1 
-                           JOIN apartamento a ON p1.Ap_id = a.Ap_id 
-                           JOIN persona p2 ON a.Ap_id = p2.Ap_id 
-                           WHERE p1.Pe_nombre = '$result' AND p2.Pe_id <> p1.Pe_id",);
+        $this->db->query("SELECT 
+    p2.Pe_id AS id_habitante,
+    p2.Pe_nombre, 
+    p2.Pe_apellidos,
+    u.Us_correo,
+    p2.Pe_telefono
+FROM persona p1
+JOIN apartamento a ON p1.Ap_id = a.Ap_id
+JOIN persona p2 ON a.Ap_id = p2.Ap_id
+JOIN usuario u ON p2.Us_id = u.Us_id
+WHERE p1.Pe_id = '$result' AND p2.Pe_id <> '$result'",);
 
         return $this->db->registros();
     }
@@ -175,7 +196,7 @@ class PeopleModel
 
     public function getNotificaciones($usuario)
     {
-        $this->db->query("SELECT * FROM notificaciones WHERE usuario = :usuario");
+        $this->db->query("SELECT * FROM notificaciones WHERE usuario = :usuario ");
         $this->db->bind(':usuario', $usuario);
         return $this->db->registros();
     }
@@ -184,11 +205,23 @@ class PeopleModel
     public function getAllSolicitudes($id_usuario)
     {
         // Corregir la consulta SQL (eliminar uno de los WHERE)
-        $this->db->query("SELECT * FROM solicitudes_actualizacion WHERE id_residente = :id_usuario AND estado = :estado");
+        $this->db->query("SELECT * FROM solicitudes_actualizacion WHERE id = :id_usuario");
 
         // Vincular los parámetros a la consulta
         $this->db->bind(':id_usuario', $id_usuario);
-        $this->db->bind(':estado', 'pendiente');  // Asegúrate de que el estado sea 'pendiente', no 'prendiente'
+        // Asegúrate de que el estado sea 'pendiente', no 'prendiente'
+
+        // Ejecutar la consulta y devolver los registros
+        return $this->db->registros();
+    }
+    public function getAllSolicitudesUser($id_usuario)
+    {
+        // Corregir la consulta SQL (eliminar uno de los WHERE)
+        $this->db->query("SELECT * FROM solicitudes_actualizacion WHERE id_residente = :id_usuario");
+
+        // Vincular los parámetros a la consulta
+        $this->db->bind(':id_usuario', $id_usuario);
+        // Asegúrate de que el estado sea 'pendiente', no 'prendiente'
 
         // Ejecutar la consulta y devolver los registros
         return $this->db->registros();
@@ -196,12 +229,139 @@ class PeopleModel
 
     public function getAllSolicitudesNotifi()
     {
-        $this->db->query("SELECT * FROM solicitudes_actualizacion ");
+
+        $this->db->query("SELECT * FROM solicitudes_actualizacion ORDER BY fecha_solicitud DESC;");
         return  $this->db->registros();
 
         // echo "<pre>";
         // print_r($resultados);
         // echo "</pre>";
         // exit(); // Detener la ejecución para ver el resultado
+    }
+    public function getNotifi($usuario)
+    {
+
+        $this->db->query("SELECT * FROM solicitudes_actualizacion WHERE id_residente = :Cedula AND estado = :estado");
+        $this->db->bind(':Cedula', $usuario);
+        $this->db->bind(':estado', 'rechazada');
+        return  $this->db->registros();
+
+        // echo "<pre>";
+        // print_r($resultados);
+        // echo "</pre>";
+        // exit(); // Detener la ejecución para ver el resultado
+    }
+
+    public function obtenerEstadoSolicitud($idHabitante)
+    {
+        $this->db->query("SELECT estado FROM solicitudes_actualizacion WHERE id_residente = :id ORDER BY id DESC LIMIT 1");
+        $this->db->bind(':id', $idHabitante);
+        $resultado = $this->db->registro();
+        return $resultado ? $resultado->estado : null;
+    }
+
+    public function obtenerUsuarioPorId($u_id)
+    {
+        $this->db->query("SELECT Vi_nombres, Vi_apellidos, Vi_telefono FROM visitantes WHERE Vi_id = :u_id");
+        $this->db->bind(':u_id', $u_id);
+        return $this->db->registro();
+    }
+    public function FiltroCedula($datos)
+    {
+        $id = $datos['cedula'];
+        date_default_timezone_set('America/Bogota');
+        $hoy = date("Y-m-d");
+        $this->db->query("SELECT 
+                            v.Vi_id,
+                            v.Vi_nombres,
+                            v.Vi_apellidos,
+                            v.Vi_telefono,
+                            r.Re_fecha_entrada,
+                            r.Re_hora_entrada,
+                            r.Re_hora_salida,
+                            r.Re_motivo,
+                            a.Ap_numero,
+                            t.To_letra,
+                            p.Pe_id
+                        FROM visitantes v
+                        INNER JOIN registro r ON v.Vi_id = r.Vi_id
+                        INNER JOIN persona p ON r.Pe_id = p.Pe_id
+                        INNER JOIN apartamento a ON p.Ap_id = a.Ap_id
+                        INNER JOIN torre t ON a.To_id = t.To_id
+                        WHERE r.Use_visit = 'solicitar' OR r.Use_visit='Permitido'
+                        AND v.Vi_id = :cedula AND r.Re_fecha_entrada= :fecha");
+        $this->db->bind(':cedula', $id);
+        $this->db->bind(':fecha',$hoy);
+
+        return array_map(function ($registro) {
+            return (array) $registro;
+        }, $this->db->registros());
+    }
+
+    public function Filtro()
+    {
+        date_default_timezone_set('America/Bogota');
+        $hoy = date("Y-m-d");
+        $this->db->query("SELECT 
+                            v.Vi_id,
+                            v.Vi_nombres,
+                            v.Vi_apellidos,
+                            v.Vi_telefono,
+                            r.Re_fecha_entrada,
+                            r.Re_hora_entrada,
+                            r.Re_hora_salida,
+                            r.Re_motivo,
+                            a.Ap_numero,
+                            t.To_letra,
+                            p.Pe_id
+                        FROM visitantes v
+                        INNER JOIN registro r ON v.Vi_id = r.Vi_id
+                        INNER JOIN persona p ON r.Pe_id = p.Pe_id
+                        INNER JOIN apartamento a ON p.Ap_id = a.Ap_id
+                        INNER JOIN torre t ON a.To_id = t.To_id
+                        WHERE r.Use_visit = 'solicitar' OR r.Use_visit='Permitido'
+                        AND r.Re_fecha_entrada= :fecha");
+                        $this->db->bind(':fecha',$hoy);
+        return array_map(function ($registro) {
+            return (array) $registro;
+        }, $this->db->registros());
+    }
+
+    public function PermisoVisita($datos)
+    {
+        $id = $datos['cedula'];
+        $this->db->query("UPDATE registro
+                    SET 
+                    Use_visit = 'Permitido',
+                    Re_hora_entrada = CURTIME()
+                    WHERE Vi_id = :cedula
+                    AND Re_hora_entrada = '00:00:00';");
+        $this->db->bind(':cedula', $id);
+
+        return array_map(function ($registro) {
+            return (array) $registro;
+        }, $this->db->registros());
+    }
+    public function VisitasConstanes($datos){
+        $this->db->query("SELECT DISTINCT v.Vi_id, v.Vi_nombres, v.Vi_apellidos, v.Vi_telefono, v.Vi_permiso
+                            FROM visitantes v
+                            INNER JOIN registro r ON v.Vi_id = r.Vi_id WHERE r.Pe_id= :cedula
+                            AND v.Vi_id IN (
+                                SELECT Vi_id
+                                FROM registro
+                                GROUP BY Vi_id
+                                HAVING COUNT(*) > 2
+                            )");
+        $this->db->bind(":cedula",$datos);
+        return array_map(function ($registro) {
+            return (array) $registro;
+        }, $this->db->registros());
+    }
+    public function ValidadCorreo($correo){
+        $this->db->query("SELECT * from usuario where Us_correo = :correo");
+        $this->db->bind(":correo",$correo);
+        $this->db->registro();
+     
+        return $this->db->rowCount() > 0;
     }
 }

@@ -10,10 +10,25 @@
     <link rel="stylesheet" type="text/css" href="<?php echo RUTA_URL; ?>/css/Informacion.css">
     <title><?php echo NOMBRESITIO; ?></title>
     <style>
-        .cabeza, .inicia_seccion {
+        .container,
+        .inicia_seccion {
             background-image: url("<?php echo RUTA_URL; ?>/img/backgroup.jpg");
         }
     </style>
 </head>
 
 <body>
+    <div style="position: absolute; top: 10px; right: 20px; z-index: 9999;">
+        <div class="language-wrapper">
+            <span class="language-icon">🌐</span>
+            <select id="language-selector" class="language-select">
+                <option value="es">Español</option>
+                <option value="en">English</option>
+                <option value="fr">Français</option>
+                <option value="pt">Português</option>
+                <option value="ja">Japones</option>
+                <option value="zh">Chino</option>
+                <option value="ru">Ruso</option>
+            </select>
+        </div>
+    </div>

@@ -1,21 +1,21 @@
 <?php require_once RUTA_APP . '/views/inc/header-admin.php'; ?>
 <div class="select">
-    <h1 class="table-titulo">Lista de visitantes</h1>
+    <h1 class="table-titulo2 translatable">Lista de visitantes</h1>
     <form method="POST" action="<?php echo RUTA_URL; ?>/UserController/VisitantesPorFecha">
         <input type="date" name="fecha" id="fecha" value="<?php echo htmlspecialchars($_POST['fecha'] ?? ''); ?>">
-        <button type="submit" class="filter-btn" style="position: relative; top: 33px; left:20px;">Filtrar</button>
+        <button type="submit" class="btn translatable" style="position: relative; left:266px;">Filtrar</button>
     </form>
 </div>
 <div class="table-container">
     <div class="table-wrapper">
         <table>
-            <thead> 
+            <thead>
                 <tr>
-                    <th>Documento</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Telefono</th>
-                    <th>Registro</th>
+                    <th class="translatable">DOCUMENTO</th>
+                    <th class="translatable">NOMBRE</th>
+                    <th class="translatable">APELLIDO</th>
+                    <th class="translatable">TELEFONO</th>
+                    <th class="translatable">REGISTRO</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,14 +34,14 @@
                             <form id='historial-form' action='" . RUTA_URL . "/UserController/MostrarHistorial' method='POST'>
                                 <input type='hidden' name='historial_id' value='" . htmlspecialchars($historial['Vi_id'] ?? '') . "'>
                                 <input type='hidden' name='fecha' value='" . htmlspecialchars($_POST['fecha'] ?? '') . "'>
-                                <button class='historial-btn' name='historial-btn'>✏️</button>
+                                <button class='historial-btn translatable' name='historial-btn'>✏️</button>
                             </form>
                         </td>";
 
                         echo "</tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='5'>No hubo visitas en la fecha seleccionada.</td></tr>";
+                    echo "<tr><td colspan='5' class='translatable'>No hubo visitas en la fecha seleccionada.</td></tr>";
                 }
                 ?>
             </tbody>
@@ -52,14 +52,13 @@
 
     </div>
     <div class="action-buttons">
-        <a href="<?php echo RUTA_URL; ?>/HomeController/admin"><button class="action-btn">Usuarios</button></a>
-        <a href="<?php echo RUTA_URL; ?>/HomeController/HistoryRecords"><button
-                class="action-btn">Registros</button></a>
-        <a href="<?php echo RUTA_URL; ?>/HomeController/HistoryPackages"><button
-                class="action-btn">Paquetes</button></a>
-        <a href="<?php echo RUTA_URL; ?>/HomeController/Edificios"><button class="action-btn">Edificio</button></a>
+        <a href="<?php echo RUTA_URL; ?>/HomeController/admin"><button class="action-btn translatable">Usuarios</button></a>
+        <a href="<?php echo RUTA_URL; ?>/HomeController/HistoryRecords"><button class="action-btn translatable">Registros</button></a>
+        <a href="<?php echo RUTA_URL; ?>/HomeController/HistoryPackages"><button class="action-btn translatable">Paquetes</button></a>
+        <a href="<?php echo RUTA_URL; ?>/HomeController/Edificios"><button class="action-btn translatable">Edificio</button></a>
     </div>
 </div>
 
 <?php include RUTA_APP . '/views/pages/admin/modalHistorial.php'; ?>
 <?php include RUTA_APP . '/views/inc/footer-visitante.php'; ?>
+<?php require_once RUTA_APP . '/views/inc/footer-admin.php'; ?>

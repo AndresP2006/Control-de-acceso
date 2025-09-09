@@ -1,3 +1,16 @@
+<footer class="footer-global">
+    <div class="footer-content">
+        <div class="footer-left">© <?php echo date("Y-M-d"); ?> Control de Acceso</div>
+        <div class="footer-right">
+            <!-- Puedes agregar enlaces o información adicional aquí -->
+        </div>
+    </div>
+    <a href="<?php echo RUTA_URL?>/manual/PANTALLA ADMINISTRATIVA.pdf" class="manual" target="_blank">
+            <button type="button" style="font-size: 30px; background-color: transparent; border: none; cursor: pointer;" title="Manual de Administracion">
+            ❓
+            </button>
+        </a>
+</footer>
 <script src="<?php echo RUTA_URL; ?>/js/usuarios.js"></script>
 <script src="<?php echo RUTA_URL; ?>/js/alert.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
