@@ -14,6 +14,33 @@
 } */
 
 /* Encabezado de la tarjeta */
+.language-wrapper {
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 2px 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 160px; /* Reduce el ancho general */
+  font-size: 13px;
+}
+
+.language-icon {
+  font-size: 14px;
+  margin-right: 4px;
+}
+
+.language-select {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 13px;
+  cursor: pointer;
+  width: 100%;
+  padding: 2px;
+  appearance: none;
+}
 .id-card-header {
   background: linear-gradient(135deg, #002b5b, #00509e);
   color: #ffffff;
@@ -117,7 +144,7 @@
   align-items: center;
   width: 300px;
   border: 2px solid #ccc;
-  background: none ;
+  background: none;
   border-radius: 30px;
   padding: 5px;
 
@@ -136,12 +163,13 @@
   box-shadow: none; /* Elimina cualquier sombra */
 }
 
-.search-container input:focus, textarea:focus, select:focus {
-    outline: none !important;
-    box-shadow: none !important;
-    border-color: transparent !important; /* O el color que prefieras */
+.search-container input:focus,
+textarea:focus,
+select:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important; /* O el color que prefieras */
 }
-
 
 .search-container button {
   background-color: transparent;
@@ -275,4 +303,34 @@
 .accion {
   display: flex;
   flex-direction: row;
+}
+.buscarId form {
+  display: flex;
+  align-items: center;
+  position: relative;
+  left: 100px;
+  width: 500px;
+}
+
+#buscar_input {
+  padding: 8px 15px;
+  border: 1px solid #ccc;
+  margin-right: 5px;
+  font-size: 16px;
+  flex-grow: 1;
+}
+
+.buscarId form button {
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 8px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  position: relative;
+  left: 20px;
+}
+
+.buscarId form button:hover {
+  background-color: #e0e0e0;
 }

@@ -13,7 +13,7 @@ class UserModel
 
     public function getUserByEmailOrName($emailOrName)
     {
-        $this->db->query("select * from usuario u where u.Us_usuario='$emailOrName' or u.Us_correo='$emailOrName'");
+        $this->db->query("select * from usuario u where (u.Us_id='$emailOrName' or u.Us_correo='$emailOrName') and u.estado = 'activo'");
 
         return $this->db->registro();
     }
@@ -25,10 +25,22 @@ class UserModel
         return $this->db->registro();
     }
 
-    public function updatePassword($newpass,$correo)
+    public function updatePassword($newpass, $correo)
     {
         $this->db->query("UPDATE usuario SET Us_contrasena = '$newpass' WHERE Us_correo = '$correo';");
 
+        return $this->db->registro();
+    }
+
+    public function getUserByRol()
+    {
+        $this->db->query("SELECT u.* FROM usuario u INNER JOIN rol r ON u.Ro_id = r.Ro_id WHERE r.Ro_id = 1");
+        // $this->db->bind(':rol_id', (int) $ValueRol);
+        return $this->db->registros();
+    }
+     public function obtenerTorreYApartamento($usuario_id) {
+        $this->db->query("SELECT torre, apartamento FROM usuarios WHERE id = :id");
+        $this->db->bind(':id', $usuario_id);
         return $this->db->registro();
     }
 }

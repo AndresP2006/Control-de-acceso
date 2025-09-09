@@ -13,6 +13,14 @@ function realizadoDelet(){
     icon: "success"
 });
 }
+function realizadoActivar() {
+  Swal.fire({
+    title: "¡Activado!",
+    text: "El usuario ha sido activado correctamente.",
+    icon: "success"
+  });
+}
+
 function error(mensaje) {
   Swal.fire({
     title: "ERROR!",
@@ -31,51 +39,134 @@ function advertencia(mensaje) {
 
 //---------Delete User-----------
 
-document.querySelectorAll('.delete-btn').forEach(button => {
-  button.addEventListener('click', async function() {
-    const deleteId = this.getAttribute('data-id'); // Obtener el ID del usuario
 
-    // Confirmación de la eliminación
-    const result = await Swal.fire({
-      title: "¿Estás seguro?",
-      text: "¡No podrás revertir esto!",
+  document.querySelectorAll('.delete-btn').forEach(button => {
+    const estado = button.getAttribute('data-estado');
+
+    // Si el usuario está inactivo, cambiamos el botón a "activar"
+    if (estado === 'inactivo') {
+      button.innerText = '✅'; // Cambia el icono
+      button.style.backgroundColor = 'green'; // Cambia el color
+      button.title = 'Activar usuario';
+    }
+
+    button.addEventListener('click', async function () {
+      const deleteId = this.getAttribute('data-id');
+      const estadoActual = this.getAttribute('data-estado');
+
+      if (estadoActual === 'inactivo') {
+        // Confirmar activación
+        const result = await Swal.fire({
+          title: "¿Deseas activar este usuario?",
+          text: "El usuario volverá a estar activo",
+          icon: "question",
+          showCancelButton: true,
+          confirmButtonColor: "#28a745",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "¡Sí, activarlo!"
+        });
+
+        if (result.isConfirmed) {
+          // Crear formulario para eliminar usuario
+          const form = document.createElement('form');
+          form.method = 'POST';
+          form.action = RUTA_URL + '/UserController/ActivarUsuario';
+
+          const inputId = document.createElement('input');
+          inputId.type = 'hidden';
+          inputId.name = 'registro_id';
+          inputId.value = deleteId;
+
+          const inputBtn = document.createElement('input');
+          inputBtn.type = 'hidden';
+          inputBtn.name = 'deletebtn';
+          inputBtn.value = '1';
+
+          form.appendChild(inputId);
+          form.appendChild(inputBtn);
+          document.body.appendChild(form);
+          form.submit();
+        }
+      } else {
+        // Confirmar eliminación
+        const result = await Swal.fire({
+          title: "¿Estás seguro?",
+          text: "¡No podrás revertir esto!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "¡Sí, eliminarlo!"
+        });
+
+        if (result.isConfirmed) {
+          // Crear formulario para eliminar usuario
+          const form = document.createElement('form');
+          form.method = 'POST';
+          form.action = RUTA_URL + '/UserController/DeleteUser';
+
+          const inputId = document.createElement('input');
+          inputId.type = 'hidden';
+          inputId.name = 'delete_id';
+          inputId.value = deleteId;
+
+          const inputBtn = document.createElement('input');
+          inputBtn.type = 'hidden';
+          inputBtn.name = 'deletebtn';
+          inputBtn.value = '1';
+
+          form.appendChild(inputId);
+          form.appendChild(inputBtn);
+          document.body.appendChild(form);
+          form.submit();
+        }
+      }
+    });
+  });
+
+
+
+//----- Confirmar registro ----------
+//Este codigo esta para activar los usuarios cuando estas registrando 
+function confirmarRegistro(estadoRegistro, idRegistro) {
+  if (estadoRegistro === "inactivo") {
+    Swal.fire({
+      title: "Registro inactivo",
+      text: "Este registro ya existe y está inactivo. ¿Deseas activarlo?",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#28a745",
       cancelButtonColor: "#d33",
-      confirmButtonText: "¡Sí, eliminarlo!"
+      confirmButtonText: "Sí, activarlo",
+      cancelButtonText: "Cancelar",
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = RUTA_URL + '/UserController/ActivarUsuario';
+
+        const inputId = document.createElement('input');
+        inputId.type = 'hidden';
+        inputId.name = 'registro_id';
+        inputId.value = idRegistro;
+
+        const inputBtn = document.createElement('input');
+        inputBtn.type = 'hidden';
+        inputBtn.name = 'activar_btn';
+        inputBtn.value = '1';
+
+        form.appendChild(inputId);
+        form.appendChild(inputBtn);
+        document.body.appendChild(form);
+        form.submit();
+      }
     });
+  }
+}
 
-    if (result.isConfirmed) {
-      // Crear el formulario para eliminar el registro
-      let form = document.createElement('form');
-      form.method = 'POST';
-      form.action = 'http://localhost/Control-de-acceso/UserController/DeleteUser';  // Cambiar la URL de acuerdo con tu ruta
 
-      // Crear el campo para el ID de eliminación
-      let deleteInput = document.createElement('input');
-      deleteInput.type = 'hidden';
-      deleteInput.name = 'delete_id';  // El nombre del campo
-      deleteInput.value = deleteId;  // Asignar el ID del usuario
-      form.appendChild(deleteInput);
-
-      // Crear el campo para confirmar el botón de eliminación
-      let deleteBtnInput = document.createElement('input');
-      deleteBtnInput.type = 'hidden';
-      deleteBtnInput.name = 'deletebtn'; // El nombre del botón de confirmación
-      deleteBtnInput.value = '1';
-      form.appendChild(deleteBtnInput);
-
-      // Añadir el formulario al cuerpo del documento
-      document.body.appendChild(form);
-
-      // Enviar el formulario para realizar la eliminación
-      form.submit();  
-    }
-  });
-});
-
-//----- Paquete----------
 
 
 

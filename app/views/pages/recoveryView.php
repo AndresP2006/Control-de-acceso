@@ -6,25 +6,21 @@ require_once RUTA_APP . '/views/inc/header-home.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<header class="cabeza">
-    <h1 class="title">Control de <b>Acceso</b></h1>
-    <nav class="menu">
-        <ul>
-            <li class="menu__lista">
-                <a class="menu__lista-a" href="<?php echo RUTA_URL; ?>/HomeController/index">Inicio</a>
-            </li>
-            <li class="menu__lista">
-        </ul>
-    </nav>
+<header>
+    <div class="container">
+        <h1>Control de <b>Acceso</b></h1>
+        <nav>
+            <a class="menu__lista-a" href="<?php echo RUTA_URL; ?>/HomeController/index">Inicio</a>
+        </nav>
 
-    <div id="loading" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; text-align: center;">
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 20px;">
-            <p style="font-size: 50px; color: white;">Enviando correo...</p>
-            <img src="https://i.gifer.com/ZKZg.gif" width="50" alt="Cargando...">
+        <div id="loading" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; text-align: center;">
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 20px;">
+                <p style="font-size: 50px; color: white;">Enviando correo...</p>
+                <img src="https://i.gifer.com/ZKZg.gif" width="50" alt="Cargando...">
+            </div>
         </div>
+
     </div>
-
-
 </header>
 
 <style>
@@ -33,7 +29,7 @@ require_once RUTA_APP . '/views/inc/header-home.php';
         align-items: center;
         justify-content: center;
         width: 100%;
-        height: 55%;
+        height: 70%;
     }
 
     .Formulario {
@@ -48,6 +44,7 @@ require_once RUTA_APP . '/views/inc/header-home.php';
     .title_correo {
         text-align: center;
         margin: 10px;
+        color:black;
     }
 
     .newpassdiv {
@@ -79,6 +76,7 @@ require_once RUTA_APP . '/views/inc/header-home.php';
     .titulo-codigo {
         text-align: center;
         margin: 10px;
+        color:black
     }
 
     .subtitulo {
@@ -130,8 +128,9 @@ require_once RUTA_APP . '/views/inc/header-home.php';
         <h1 class="titulo-codigo" id="Bienvenida"></h1>
         <h3 class="subtitulo">Por favor digite su nueva contraseña</h3>
         <input class="Formulario__titulo-input" type="text" name="newpassinput" id="newPassInput" placeholder="      Nueva contraseña" required>
+        <div id="sugerencias" style="color: red; margin-top: -10px; margin-bottom: 10px; "></div>
         <input class="Formulario__titulo-input" type="text" name="newpassinput" id="newPassInputC" placeholder="      Confirmar contraseña" required>
-        <button id="newpassbuton" class="Formulario__boton">
+        <button id="newpassbuton" class="Formulario__boton" disabled>
             Cambiar
         </button>
     </div>
@@ -139,6 +138,33 @@ require_once RUTA_APP . '/views/inc/header-home.php';
 </div>
 
 <?php require_once RUTA_APP . '/views/inc/footer-home.php'; ?>
+<script>
+    const inputConfirmar = document.getElementById('newPassInput');
+    const sugerencias = document.getElementById('sugerencias');
+    const botonCambiar = document.getElementById('newpassbuton');
+
+    inputConfirmar.addEventListener('input', () => {
+        const valor = inputConfirmar.value;
+        let mensaje = "";
+
+        if (valor.trim() === "") {
+            mensaje = ""; // No muestra nada si está vacío
+        } else if (valor.length > 15) {
+            mensaje = "No debe tener más de 10 caracteres.";
+        } else if (!/[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(valor)) {
+            mensaje = "Agrega al menos un carácter especial (@, #, $, etc).";
+        } else if (valor.length < 6) {
+            mensaje = "Mínimo 6 caracteres.";
+        } else if (!/[A-Z]/.test(valor)) {
+            mensaje = "Agrega al menos una letra mayúscula.";
+        }
+
+        sugerencias.innerHTML = mensaje;
+
+        // Si hay mensaje, desactiva el botón
+        botonCambiar.disabled = mensaje !== "";
+    });
+</script>
 <script>
     $(document).ready(function() {
         var resp = null;
@@ -164,8 +190,6 @@ require_once RUTA_APP . '/views/inc/header-home.php';
                             (typeof resp.resul === 'string' ? resp.resul.trim() !== '' : true)) {
 
                             $('#myModal').addClass('miModal--activo');
-                        } else if (resp.messageError) {
-                            error(resp.messageError);
                         }
 
                     },
@@ -174,7 +198,12 @@ require_once RUTA_APP . '/views/inc/header-home.php';
                     },
                     complete: function() {
                         // Habilitar el botón nuevamente después de completar la solicitud
-                        realizado('Se ha enviado un correo a ' + correo + '.           Revise su bandeja de entrada o carpeta de spam.');
+                        if (resp.resul && resp.resul !== false && resp.resul !== 'false' &&
+                            (typeof resp.resul === 'string' ? resp.resul.trim() !== '' : true)) {
+                            realizado('Se ha enviado un correo a ' + correo + '.           Revise su bandeja de entrada o carpeta de spam.');
+                        } else {
+                            error('Digite un correo electronico valido');
+                        }
                         setTimeout(() => {}, "2000");
                         $('#openModal').prop('disabled', false).text('Enviar Código');
                         $('#loading').hide(); // Oculta el loader
@@ -217,7 +246,7 @@ require_once RUTA_APP . '/views/inc/header-home.php';
                             realizado(resp.messageInfo);
                             setTimeout(() => {
                                 window.location.href = "<?php echo RUTA_URL; ?>/HomeController/index";
-                            }, "5000");
+                            }, "3000");
                         } else {
                             error(resp.messageError);
                         }
